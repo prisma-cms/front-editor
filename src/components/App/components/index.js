@@ -67,8 +67,8 @@ class EditorComponent extends ObjectEditable {
     } = this.props;
 
     // console.log("result saveObject", data, mutate);
-    console.log("result saveObject this._dirty", { ...this.state._dirty });
-    console.log("result saveObject this", this);
+    // console.log("result saveObject this._dirty", { ...this.state._dirty });
+    // console.log("result saveObject this", this);
 
 
     if (mutate && mutate !== emptyMutate) {
@@ -117,14 +117,33 @@ class EditorComponent extends ObjectEditable {
   }
 
 
+  updateObject(data) {
 
-  // constructor(props) {
+    super.updateObject(data);
 
-  //   super(props);
+    const {
+      forceUpdate,
+    } = this.context;
 
-  //   // this.id = module.id;
 
-  // }
+    /**
+     * Обновляем рутовый компонент, чтобы применить изменения ко всем элементам
+     */
+    forceUpdate();
+
+  }
+
+
+  constructor(props) {
+
+    super(props);
+
+    this.updateComponentProperty = this.updateComponentProperty.bind(this);
+    this.updateObject = this.updateObject.bind(this);
+    this.onChangeProps = this.onChangeProps.bind(this);
+    this.updateProps = this.updateProps.bind(this);
+
+  }
 
 
   onDragStart() {
@@ -192,6 +211,9 @@ class EditorComponent extends ObjectEditable {
       // container,
     } = this.props;
 
+    console.log("onDrop dragItem", dragItem);
+    console.log("onDrop dragTarget", dragTarget);
+
 
     if (dragItem && dragTarget && dragTarget === this) {
 
@@ -202,6 +224,7 @@ class EditorComponent extends ObjectEditable {
       const newItem = this.prepareNewItem();
 
 
+      console.log("onDrop newItem", newItem);
 
       if (newItem) {
 
@@ -210,6 +233,10 @@ class EditorComponent extends ObjectEditable {
         } = this.getObjectWithMutations();
 
         const components = oldComponents.slice(0);
+
+        components.push(newItem);
+
+        console.log("onDrop components", components);
 
         this.updateObject({
           components,
@@ -373,15 +400,23 @@ class EditorComponent extends ObjectEditable {
       deletable,
       deleteItem,
       parent,
-      components,
-      component: {
-        name,
-        components: itemComponents,
-        props: componentProps,
-      },
-      props,
+      // components,
+      // component: {
+      //   name,
+      //   components: itemComponents,
+      //   props: componentProps,
+      // },
+      // props,
+      // errorDelay,
       ...other
     } = component.props;
+
+    const {
+      name,
+      components,
+      props: componentProps,
+
+    } = component.getObjectWithMutations();
 
     // const {
     //   // mode,
@@ -530,7 +565,7 @@ class EditorComponent extends ObjectEditable {
       return null;
     }
 
-    console.log("activeItem ", activeItem);
+    console.log("renderSettingsView activeItem ", activeItem);
 
     const {
       name,
@@ -538,10 +573,12 @@ class EditorComponent extends ObjectEditable {
 
     } = activeItem.getObjectWithMutations();
 
-    return activeItem.renderHeader();
+    // return activeItem.renderHeader();
     // return activeItem.getButtons();
 
     // return null;
+
+    let header = activeItem.renderHeader();
 
     const {
       Grid,
@@ -575,43 +612,12 @@ class EditorComponent extends ObjectEditable {
 
     const componentProps = this.getComponentProps(activeItem);
 
+    console.log("renderSettingsView componentProps ", componentProps);
 
     const structure = this.getStructure(activeItem);
 
 
     let settings = [];
-
-    // if (propTypes) {
-
-    //   const names = Object.keys(propTypes);
-
-
-
-    //   names.map(name => {
-
-
-
-    //     const propType = propTypes[name];
-
-
-
-    //     if (propType === PropTypes.string || PropTypes.string.isRequired) {
-
-    //       settings.push(<TextField
-    //         key={name}
-    //         name={name}
-    //         label={name}
-    //         value={component[name] || ""}
-    //         fullWidth
-    //         onChange={event => this.onChangeProps(event)}
-    //       />);
-
-    //     }
-
-    //   })
-
-    // }
-
 
 
 
@@ -641,58 +647,6 @@ class EditorComponent extends ObjectEditable {
         if (field) {
           settings.push(field);
         }
-
-        // if (type === "boolean") {
-
-        //   settings.push(<FormControlLabel
-        //     key={name}
-        //     control={
-        //       <Switch
-        //         checked={value}
-        //         // onChange={this.handleChange('checkedB')}
-        //         // value="checkedB"
-        //         color="primary"
-        //       />
-        //     }
-        //     label={name}
-        //   />);
-
-        // }
-
-        // else if (type === "string") {
-
-        //   settings.push(<TextField
-        //     key={name}
-        //     name={name}
-        //     label={name}
-        //     value={component[name] || ""}
-        //     fullWidth
-        //     onChange={event => this.onChangeProps(event)}
-        //   />);
-
-        // }
-        // else if (type === "number") {
-
-        //   settings.push(this.getEditorField({
-        //     key: name,
-        //     type: "number",
-        //     name: name,
-        //     label: name,
-        //     value: value || "",
-        //     fullWidth: true,
-        //   }));
-
-        //   // settings.push(<TextField
-        //   //   key={name}
-        //   //   type="number"
-        //   //   name={name}
-        //   //   label={name}
-        //   //   value={component[name] || ""}
-        //   //   fullWidth
-        //   //   onChange={event => this.onChangeProps(event)}
-        //   // />);
-        // }
-
 
       })
 
@@ -756,6 +710,12 @@ class EditorComponent extends ObjectEditable {
 
       </Grid>
 
+      <Grid
+        item
+        xs={12}
+      >
+        {header}
+      </Grid>
 
       {settings && settings.length ?
         <Grid
@@ -844,22 +804,24 @@ class EditorComponent extends ObjectEditable {
   getStructure(item) {
 
     // console.log("getStructure component", component, JSON.stringify(component));
-    console.log("getStructure component", item);
+    // console.log("getStructure component", item);
+
+    // // return component;
+
+    // let {
+    //   // name: component.constructor.Name,
+    //   props: {
+    //     // type,
+    //     // props,
+    //     // components,
+    //     component,
+    //   },
+
+    // } = item;
 
     // return component;
 
-    let {
-      // name: component.constructor.Name,
-      props: {
-        // type,
-        // props,
-        // components,
-        component,
-      },
-
-    } = item;
-
-    return component;
+    return item.getObjectWithMutations();
 
     // return {
     //   type,
@@ -999,6 +961,10 @@ class EditorComponent extends ObjectEditable {
 
   onChangeProps(event) {
 
+    // console.log("onChangeProps this", this);
+    console.log("onChangeProps this.getActiveItem", this.getActiveItem());
+
+    // return;
 
     return this.updateProps(event.target);
   }
@@ -1027,7 +993,10 @@ class EditorComponent extends ObjectEditable {
     //   },
     // } = activeItem;
 
-    const component = this.getActiveComponent();
+    // const component = this.getActiveComponent();
+
+    // console.log("updateProps getActiveComponent", component);
+    // return;
 
     switch (type) {
 
@@ -1050,29 +1019,32 @@ class EditorComponent extends ObjectEditable {
     }
 
 
-    this.updateComponentProperty(component, name, value);
+
+    // this.updateComponentProperty(component, name, value);
+    this.updateComponentProperty(name, value);
 
   }
 
 
-  getActiveComponent() {
+  // getActiveComponent() {
+
+  //   const activeItem = this.getActiveItem();
+
+  //   let {
+  //     props: {
+  //       component,
+  //     },
+  //   } = activeItem;
+
+  //   return component;
+  // }
+
+
+  updateComponentProperty(name, value) {
 
     const activeItem = this.getActiveItem();
 
-    let {
-      props: {
-        component,
-      },
-    } = activeItem;
-
-    return component;
-  }
-
-
-  updateComponentProperty(component, name, value) {
-
-
-    console.log("updateComponentProperty component", component);
+    console.log("updateComponentProperty activeItem", activeItem);
     console.log("updateComponentProperty name", name);
     console.log("updateComponentProperty value", value);
 
@@ -1084,18 +1056,64 @@ class EditorComponent extends ObjectEditable {
     //   [name]: value,
     // });
 
-    return this.updateComponentProps(component, {
+    // return this.updateComponentProps(component, {
+    //   [name]: value,
+    // });
+
+    return this.updateComponentProps({
       [name]: value,
     });
   }
 
 
-  updateComponentProps(component, data) {
+  // updateComponentProps(component, data) {
 
-    console.log("updateComponentProps component", component);
+  //   console.log("updateComponentProps component", component);
+  //   console.log("updateComponentProps data", data);
+
+  //   let props = component.props || {};
+
+  //   if (data) {
+
+  //     const keys = Object.keys(data);
+
+  //     keys.map(name => {
+
+  //       const value = data[name];
+
+  //       if (value === undefined) {
+  //         delete props[name];
+  //       }
+  //       else {
+  //         props[name] = value;
+  //       }
+
+  //     });
+
+  //   }
+
+
+  //   return this.updateComponent(component, {
+  //     props,
+  //   });
+  // }
+
+  // updateComponentProps(component, data) {
+  updateComponentProps(data) {
+
+    const activeItem = this.getActiveItem();
+
+    console.log("updateComponentProps activeItem", activeItem);
     console.log("updateComponentProps data", data);
+    console.log("updateComponentProps this", this);
 
-    let props = component.props || {};
+    const {
+      props: oldProps,
+    } = activeItem.getObjectWithMutations();
+
+    let props = {
+      ...oldProps,
+    };
 
     if (data) {
 
@@ -1116,48 +1134,67 @@ class EditorComponent extends ObjectEditable {
 
     }
 
+    console.log("updateComponentProps new props", props);
 
-    return this.updateComponent(component, {
+    // return this.updateComponent(component, {
+    //   props,
+    // });
+
+    return this.updateComponent({
       props,
     });
   }
 
 
-  updateComponent(component, data) {
+  // updateComponent(component, data) {
+  updateComponent(data) {
 
-    let {
-      components,
-      updateObject,
-    } = this.context;
+    const activeItem = this.getActiveItem();
 
-    // Object.assign(component, data);
+    // let {
+    //   components,
+    //   updateObject,
+    // } = this.context;
 
-    console.log("updateComponent", component, { ...data });
-
-    if (data) {
-
-      const keys = Object.keys(data);
-
-      keys.map(name => {
-
-        const value = data[name];
-
-        if (value === undefined) {
-          delete component[name];
-        }
-        else {
-          component[name] = value;
-        }
-
-      });
-
-    }
-
-    updateObject({
-      components,
-    });
+    activeItem.updateObject(data);
 
   }
+
+  // updateComponent(component, data) {
+
+  //   let {
+  //     components,
+  //     updateObject,
+  //   } = this.context;
+
+  //   // Object.assign(component, data);
+
+  //   console.log("updateComponent", component, { ...data });
+
+  //   if (data) {
+
+  //     const keys = Object.keys(data);
+
+  //     keys.map(name => {
+
+  //       const value = data[name];
+
+  //       if (value === undefined) {
+  //         delete component[name];
+  //       }
+  //       else {
+  //         component[name] = value;
+  //       }
+
+  //     });
+
+  //   }
+
+  //   updateObject({
+  //     components,
+  //   });
+
+  // }
 
 
   removeProps(name) {
@@ -1190,6 +1227,9 @@ class EditorComponent extends ObjectEditable {
       activeItem,
     } = this.context;
 
+    // console.log("getActiveItem", activeItem);
+    // console.log("getActiveItem this", this);
+
     return activeItem;
 
   }
@@ -1214,11 +1254,31 @@ class EditorComponent extends ObjectEditable {
 
     // return this.renderChildren();
 
-    return <div
-      {...this.getRenderProps()}
+    const RootElement = this.getRootElement();
+
+    console.log("getRenderProps", this.getRenderProps());
+
+    const {
+      props,
+      ...other
+    } = this.getRenderProps();
+
+    const {
+      props: objectProps,
+    } = object;
+
+    return <RootElement
+      // {...this.getRenderProps()}
+      {...other}
+      // {...props}
+      {...objectProps}
     >
       {this.renderChildren()}
-    </div>;
+    </RootElement>;
+  }
+
+  getRootElement() {
+    return "div";
   }
 
 
@@ -1267,8 +1327,8 @@ class EditorComponent extends ObjectEditable {
           output.push(<Component
             key={index}
             mode="main"
-            component={n}
-            parent={this}
+            // component={n}
+            // parent={this}
             // props={props}
             deleteItem={() => {
 
@@ -1281,6 +1341,10 @@ class EditorComponent extends ObjectEditable {
               // });
 
             }}
+            data={{
+              object: {},
+            }}
+            _dirty={n}
             {...other}
           />);
 

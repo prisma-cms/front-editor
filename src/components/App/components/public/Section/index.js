@@ -27,31 +27,31 @@ class Section extends EditorComponent {
     </div>);
   }
 
-  renderMainView() {
+  // renderMainView() {
 
-    // const {
-    //   marginTop,
-    //   marginBottom,
-    // } = this.getComponentProps(this);
+  //   // const {
+  //   //   marginTop,
+  //   //   marginBottom,
+  //   // } = this.getComponentProps(this);
 
-    const {
-      style,
-      marginTop,
-      marginBottom,
-      ...other
-    } = this.getRenderProps();
+  //   const {
+  //     style,
+  //     marginTop,
+  //     marginBottom,
+  //     ...other
+  //   } = this.getRenderProps();
 
-    return <div
-      style={{
-        marginTop,
-        marginBottom,
-        ...style,
-      }}
-      {...other}
-    >
-      {super.renderMainView()}
-    </div>;
-  }
+  //   return <div
+  //     style={{
+  //       marginTop,
+  //       marginBottom,
+  //       ...style,
+  //     }}
+  //     {...other}
+  //   >
+  //     {super.renderMainView()}
+  //   </div>;
+  // }
 
 }
 

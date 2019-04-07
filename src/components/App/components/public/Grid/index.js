@@ -66,63 +66,63 @@ class Grid extends EditorComponent {
 
 
 
-  updateComponentProperty(component, name, value) {
+  // updateComponentProperty( name, value) {
 
-    switch (name) {
+  //   switch (name) {
 
-      case "xs":
-      case "sm":
-      case "md":
-      case "lg":
-      case "xl":
+  //     case "xs":
+  //     case "sm":
+  //     case "md":
+  //     case "lg":
+  //     case "xl":
 
-        if (value === 0) {
-          value = true;
-        }
-        else if (!value || typeof value !== "number" || value < 0 || value > 12) {
-          return false;
-        }
+  //       if (value === 0) {
+  //         value = true;
+  //       }
+  //       else if (!value || typeof value !== "number" || value < 0 || value > 12) {
+  //         return false;
+  //       }
 
-        break;
+  //       break;
 
-      // case "container":
+  //     // case "container":
 
-      //   break;
+  //     //   break;
 
-    }
-
-
-    return super.updateComponentProperty(component, name, value);
-  }
+  //   }
 
 
-  updateComponentProps(component, data) {
+  //   return super.updateComponentProperty( name, value);
+  // }
 
-    console.log("Grid updateComponentProps", { ...component }, { ...data });
 
-    if (data.container) {
+  // updateComponentProps( data) {
 
-      Object.assign(data, {
-        item: undefined,
-        xs: undefined,
-        sm: undefined,
-        md: undefined,
-        lg: undefined,
-        xl: undefined,
-        alignItems: "flex-end",
-      });
+  //   console.log("Grid updateComponentProps",   { ...data });
 
-    }
-    else if (data.item) {
-      Object.assign(data, {
-        container: undefined,
-        alignItems: undefined,
-        ...this.getItemDefaultProps(),
-      });
-    }
+  //   if (data.container) {
 
-    return super.updateComponentProps(component, data);
-  }
+  //     Object.assign(data, {
+  //       item: undefined,
+  //       xs: undefined,
+  //       sm: undefined,
+  //       md: undefined,
+  //       lg: undefined,
+  //       xl: undefined,
+  //       alignItems: "flex-end",
+  //     });
+
+  //   }
+  //   else if (data.item) {
+  //     Object.assign(data, {
+  //       container: undefined,
+  //       alignItems: undefined,
+  //       ...this.getItemDefaultProps(),
+  //     });
+  //   }
+
+  //   return super.updateComponentProps( data);
+  // }
 
 
   removeProps(name) {
@@ -251,28 +251,38 @@ class Grid extends EditorComponent {
   }
 
 
-  renderMainView() {
+  getRootElement() {
 
     const {
       Grid: MaterialUiGrid,
     } = this.context;
 
-
-    const {
-      props,
-      ...other
-    } = this.getRenderProps();
-
-
-    return <MaterialUiGrid
-      {...other}
-      {...props}
-    >
-
-      {super.renderMainView()}
-
-    </MaterialUiGrid>;
+    return MaterialUiGrid;
   }
+
+
+  // renderMainView() {
+
+  //   const {
+  //     Grid: MaterialUiGrid,
+  //   } = this.context;
+
+
+  //   const {
+  //     props,
+  //     ...other
+  //   } = this.getRenderProps();
+
+
+  //   return <MaterialUiGrid
+  //     {...other}
+  //     {...props}
+  //   >
+
+  //     {super.renderMainView()}
+
+  //   </MaterialUiGrid>;
+  // }
 
 }
 

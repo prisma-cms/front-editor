@@ -41,51 +41,51 @@ class Typography extends EditorComponent {
     </div>);
   }
 
-  renderMainView() {
+  // renderMainView() {
 
-    const {
-      text,
-      // type,
-      // style,
-      color,
-      display,
-      displayType,
-      ...otherProps
-    } = this.getComponentProps(this);
-
-
-    console.log("Typography", this);
-    console.log("Typography id", this.id);
-    // console.log("Typography renderMainView this.getRenderProps()", this.getRenderProps());
-    // console.log("Typography renderMainView this.getComponentProps()", this.getComponentProps(this));
-
-    const {
-      // text,
-      // type,
-      style,
-      // props: {
-      //   display,
-      //   displayType,
-      //   text,
-      //   ...props
-      // },
-      ...other
-    } = this.getRenderProps();
+  //   const {
+  //     text,
+  //     // type,
+  //     // style,
+  //     color,
+  //     display,
+  //     displayType,
+  //     ...otherProps
+  //   } = this.getComponentProps(this);
 
 
-    return <TypographyMU
-      {...other}
-      style={{
-        ...style,
-        display,
-      }}
-      color={color}
-      component={displayType}
-    // {...otherProps}
-    >
-      {text}{super.renderMainView()}
-    </TypographyMU>;
-  }
+  //   console.log("Typography", this);
+  //   console.log("Typography id", this.id);
+  //   // console.log("Typography renderMainView this.getRenderProps()", this.getRenderProps());
+  //   // console.log("Typography renderMainView this.getComponentProps()", this.getComponentProps(this));
+
+  //   const {
+  //     // text,
+  //     // type,
+  //     style,
+  //     // props: {
+  //     //   display,
+  //     //   displayType,
+  //     //   text,
+  //     //   ...props
+  //     // },
+  //     ...other
+  //   } = this.getRenderProps();
+
+
+  //   return <TypographyMU
+  //     {...other}
+  //     style={{
+  //       ...style,
+  //       display,
+  //     }}
+  //     color={color}
+  //     component={displayType}
+  //   // {...otherProps}
+  //   >
+  //     {text}{super.renderMainView()}
+  //   </TypographyMU>;
+  // }
 
 }
 

@@ -383,7 +383,7 @@ class FrontEditor extends Component {
 
     const Page = Components.find(n => n.Name === "Page");
 
-    console.log("front Editor", this);
+    // console.log("front Editor", this);
 
     return <Page
       mode="main"
@@ -393,7 +393,46 @@ class FrontEditor extends Component {
       _dirty={{
         name: "Page",
         props: {},
-        components: [],
+        components: [
+          {
+            "name": "Grid",
+            "props": {
+              "container": true
+            },
+            "components": [
+              {
+                "name": "Grid",
+                "props": {
+                  "item": true,
+                  xs: 12,
+                  sm: 6,
+                },
+                "components": [
+
+                ]
+              },
+              {
+                "name": "Grid",
+                "props": {
+                  "item": true,
+                  xs: 12,
+                  sm: 6,
+                },
+                "components": [
+                  {
+                    name: "Typography",
+                    props: {
+                      text: "SDfdsf gerg ergergergerger",
+                    },
+                    components: [],
+                  },
+                ]
+              },
+
+            ]
+          },
+
+        ],
       }}
     />;
 
@@ -546,6 +585,9 @@ class FrontEditor extends Component {
               });
             },
             setActiveItem: component => {
+
+              console.log("setActiveItem", component);
+
               this.setState({
                 activeItem: component,
               });
@@ -556,6 +598,7 @@ class FrontEditor extends Component {
               });
             },
             Components,
+            forceUpdate: () => this.forceUpdate(),
           })}
         >
           {inEditMode
