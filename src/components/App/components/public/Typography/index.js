@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import EditorComponent from '..';
+import EditorComponent from '../..';
 
 import Icon from "material-ui-icons/TextFormat";
 import TypographyMU from "material-ui/Typography";

@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import EditorComponent from '..';
+import EditorComponent from '../..';
 
 
 class Page extends EditorComponent {
 
   static defaultProps = {
     ...EditorComponent.defaultProps,
-    deletable: false,
+    // deletable: false,
   }
 
 
@@ -24,10 +24,10 @@ class Page extends EditorComponent {
   // }
 
 
-  renderPanelView() {
+  // renderPanelView() {
 
-    return null;
-  }
+  //   return null;
+  // }
 
 
   renderMainView() {

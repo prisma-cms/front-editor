@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, createContext } from 'react';
 import PropTypes from 'prop-types';
 
 import Context from "@prisma-cms/context";
@@ -10,8 +10,12 @@ import CloseIcon from "material-ui-icons/Close";
 import { FormControlLabel } from 'material-ui';
 import { Switch } from 'material-ui';
 
-console.log("module", module);
-console.log("Context Module", Module);
+import Template from "./Template";
+
+// console.log("module", module);
+// console.log("Context Module", Module);
+
+// ComponentContext = createContext();
 
 class EditorComponent extends Component {
 
@@ -41,7 +45,8 @@ class EditorComponent extends Component {
 
     super(props);
 
-    this.id = module.id;
+    // this.id = module.id;
+
   }
 
 
@@ -429,7 +434,7 @@ class EditorComponent extends Component {
   }
 
 
-  renderSettingsView() {
+  renderSettingsView(content) {
 
 
     const activeItem = this.getActiveItem();
@@ -438,7 +443,7 @@ class EditorComponent extends Component {
       return null;
     }
 
-    console.log("activeItem", activeItem);
+    // console.log("activeItem ComponentContext", activeItem.ComponentContext);
 
     const {
       Grid,
@@ -457,6 +462,7 @@ class EditorComponent extends Component {
         propTypes,
         // defaultProps,
       },
+      // ComponentContext,
     } = activeItem;
 
 
@@ -597,7 +603,7 @@ class EditorComponent extends Component {
 
 
 
-    return <Grid
+    let output = <Grid
       container
       spacing={8}
     >
@@ -672,23 +678,100 @@ class EditorComponent extends Component {
         null
       }
 
+      {content ?
+        <Grid
+          item
+          xs={12}
+        >
+          {content}
+        </Grid>
+        : null
+      }
+
       <Grid
         item
         xs={12}
       >
-        {structure ? JSON.stringify(structure, true, 2) : null}
+        <Template
+          activeItem={activeItem}
+          data={{
+            object: component,
+          }}
+          // mutate={async () => { }}
+          _dirty={!component.id ? {
+            ...component,
+            name: component.type,
+            type: undefined,
+          } : undefined}
+          onSave={result => {
+
+            console.log("onSave result", result);
+
+            const {
+              data,
+            } = result.data.response || {};
+
+            const {
+              id,
+            } = data || {};
+
+            if (id && !component.id) {
+              this.updateComponent(component, {
+                id,
+              });
+            }
+
+          }}
+        />
+      </Grid>
+
+
+      <Grid
+        item
+        xs={12}
+      >
+        <div
+          style={{
+            whiteSpace: "pre-wrap",
+            overflow: "auto",
+          }}
+        >
+          {structure ? JSON.stringify(structure, true, 2) : null}
+        </div>
       </Grid>
 
     </Grid>;
+
+    return output;
   }
 
 
-  getStructure(component) {
+  getStructure(item) {
 
     // console.log("getStructure component", component, JSON.stringify(component));
-    console.log("getStructure component", component);
+    console.log("getStructure component", item);
 
     // return component;
+
+    let {
+      // name: component.constructor.Name,
+      props: {
+        // type,
+        // props,
+        // components,
+        component,
+      },
+
+    } = item;
+
+    return component;
+
+    // return {
+    //   type,
+    //   props: props,
+    //   // components: components ? components.map() : [],
+    //   components,
+    // };
   }
 
 
@@ -1102,6 +1185,11 @@ class EditorComponent extends Component {
   render() {
 
     const {
+      ComponentContext,
+    } = this;
+
+    const {
+      id: objectId,
       mode,
       props,
       children,
@@ -1110,6 +1198,7 @@ class EditorComponent extends Component {
 
     let content = null;
 
+    // console.log("ComponentContext", this);
 
     switch (mode) {
 
@@ -1126,6 +1215,7 @@ class EditorComponent extends Component {
       case "main":
 
         content = this.renderMainView();
+
         break;
 
       case "settings":
@@ -1138,6 +1228,8 @@ class EditorComponent extends Component {
       return null;
     }
 
+
+    // console.log("activeItem context id", objectId);
 
     return content;
 

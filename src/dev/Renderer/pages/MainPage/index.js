@@ -44,20 +44,94 @@ class FrontEditorPage extends Component {
         "props": {},
         "components": [
           {
-            "type": "Grid",
+            "type": "Connector",
             "props": {
-              "container": true,
-              "alignItems": "flex-end"
+              "first": null,
+              "orderBy": null,
+              "skip": null,
+              "last": null,
+              "query": "usersConnection"
             },
             "components": [
               {
-                "type": "Typography",
-                "props": {},
-                "components": []
+                "type": "ListView",
+                "components": [
+                  {
+                    "type": "Grid",
+                    "props": {
+                      "container": true
+                    },
+                    "components": [
+                      {
+                        "type": "Grid",
+                        "props": {
+                          "xs": 12,
+                          "sm": 6,
+                          "md": 4,
+                          "lg": 3,
+                          "xl": 2,
+                          "item": true
+                        },
+                        "components": [
+                          {
+                            "type": "UserLink",
+                            "props": {},
+                            "components": []
+                          }
+                        ]
+                      },
+                      {
+                        "type": "Grid",
+                        "props": {
+                          "xs": 12,
+                          "sm": 6,
+                          "md": 4,
+                          "lg": 3,
+                          "xl": 2,
+                          "item": true
+                        },
+                        "components": [
+                          {
+                            "type": "NamedField",
+                            "props": {
+                              "name": "username"
+                            },
+                            "components": []
+                          }
+                        ]
+                      },
+                      {
+                        "type": "Grid",
+                        "props": {
+                          "xs": 12,
+                          "sm": 6,
+                          "md": 4,
+                          "lg": 3,
+                          "xl": 2,
+                          "item": true
+                        },
+                        "components": [
+                          {
+                            "type": "NamedField",
+                            "props": {
+                              "name": "email"
+                            },
+                            "components": []
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "Pagination"
               }
-            ]
+            ],
+            "id": "cju6kgdi504f10917mah0jruc"
           }
-        ]
+        ],
+        "id": "cju6kh8hd04fd0917i7shixfs"
       }
     ],
   }

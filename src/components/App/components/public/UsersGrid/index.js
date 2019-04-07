@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import EditorComponent from '..';
-import UsersPage from '../../../../modules/pages/UsersPage';
+import EditorComponent from '../..';
 
 import PeopleIcon from "material-ui-icons/People";
+
+import UsersPage from "@prisma-cms/front/lib/modules/pages/UsersPage";
 
 class UsersGrid extends EditorComponent {
 

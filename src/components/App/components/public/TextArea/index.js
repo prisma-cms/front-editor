@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import EditorComponent from '..';
+import EditorComponent from '../..';
 
 import TextIcon from "material-ui-icons/Title";
 

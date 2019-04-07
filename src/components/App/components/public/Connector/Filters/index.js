@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { ConnectorContext } from '..';
 
 import FiltersIcon from "material-ui-icons/FilterList";
-import EditorComponent from '../..';
+import EditorComponent from '../../..';
 
 
 import PrismaCmsFilters from "@prisma-cms/filters";

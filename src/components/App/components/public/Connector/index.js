@@ -15,7 +15,7 @@ import Context from "@prisma-cms/context";
 
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
-import EditorComponent from '..';
+import EditorComponent from '../../';
 
 export const ConnectorContext = createContext({});
 
@@ -69,10 +69,12 @@ class Connector extends EditorComponent {
           "components": [
             {
               "type": "Grid",
-              "item": true,
-              "xs": 12,
-              "md": 6,
-              "xl": 3
+              props: {
+                "item": true,
+                "xs": 12,
+                "md": 6,
+                "xl": 3
+              },
             }
           ]
         },
@@ -527,16 +529,18 @@ class Connector extends EditorComponent {
   renderMainView() {
 
     const {
-      orderBy,
-      query,
+      props: {
+        orderBy,
+        query,
+        ...otherProps
+      },
+      where: propsWhere,
       ...other
     } = this.getRenderProps();
 
 
-    const {
-      where: propsWhere,
-      ...otherProps
-    } = this.getComponentProps(this);
+    // const {
+    // } = this.getComponentProps(this);
 
     const filters = this.getFilters();
 
@@ -571,6 +575,7 @@ class Connector extends EditorComponent {
     >
       <Viewer
         key={query}
+        query={query}
         setFilters={filters => this.setFilters(filters)}
         filters={filters || []}
         where={where}
@@ -663,7 +668,6 @@ class Viewer extends Component {
     page = parseInt(page) || 0;
 
     const skip = page ? (page - 1) * first : 0;
-
 
 
     return <ConnectorContext.Provider

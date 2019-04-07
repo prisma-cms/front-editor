@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { ObjectContext } from '../ListView';
 
 import UserIcon from "material-ui-icons/Face";
-import EditorComponent from '../..';
+import EditorComponent from '../../..';
 
 class UserLink extends EditorComponent {
 

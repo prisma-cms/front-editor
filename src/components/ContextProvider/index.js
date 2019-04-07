@@ -58,6 +58,7 @@ class ContextProvider extends Component {
 
     return {
       ...this.prepareUserQuery(),
+      ...this.prepareTemplateQuery(),
     }
   }
 
@@ -237,6 +238,200 @@ class ContextProvider extends Component {
       updateUserProcessor,
       deleteUser,
       deleteManyUsers,
+    }
+
+  }
+
+
+  prepareTemplateQuery() {
+
+
+    const {
+      queryFragments,
+    } = this.context;
+
+
+    const {
+      TemplateNoNestingFragment,
+      UserNoNestingFragment,
+      BatchPayloadNoNestingFragment,
+    } = queryFragments;
+
+
+    const TemplateFragment = `
+      fragment Template on Template {
+        ...TemplateNoNesting
+        CreatedBy{
+          ...UserNoNesting
+        }
+      }
+
+      ${TemplateNoNestingFragment}
+      ${UserNoNestingFragment}
+    `;
+
+
+    const templatesConnection = `
+      query templatesConnection (
+        $where: TemplateWhereInput
+        $orderBy: TemplateOrderByInput
+        $skip: Int
+        $after: String
+        $before: String
+        $first: Int
+        $last: Int
+      ){
+        objectsConnection: templatesConnection (
+          where: $where
+          orderBy: $orderBy
+          skip: $skip
+          after: $after
+          before: $before
+          first: $first
+          last: $last
+        ){
+          aggregate{
+            count
+          }
+          edges{
+            node{
+              ...Template
+            }
+          }
+        }
+      }
+
+      ${TemplateFragment}
+    `;
+
+
+    const templates = `
+      query templates (
+        $where: TemplateWhereInput
+        $orderBy: TemplateOrderByInput
+        $skip: Int
+        $after: String
+        $before: String
+        $first: Int
+        $last: Int
+      ){
+        objects: templates (
+          where: $where
+          orderBy: $orderBy
+          skip: $skip
+          after: $after
+          before: $before
+          first: $first
+          last: $last
+        ){
+          ...Template
+        }
+      }
+
+      ${TemplateFragment}
+    `;
+
+
+    const template = `
+      query template (
+        $where: TemplateWhereUniqueInput!
+      ){
+        object: template (
+          where: $where
+        ){
+          ...Template
+        }
+      }
+
+      ${TemplateFragment}
+    `;
+
+
+    const createTemplateProcessor = `
+      mutation createTemplateProcessor(
+        $data: TemplateCreateInput!
+      ) {
+        response: createTemplateProcessor(
+          data: $data
+        ){
+          success
+          message
+          errors{
+            key
+            message
+          }
+          data{
+            ...Template
+          }
+        }
+      }
+
+      ${TemplateFragment}
+    `;
+
+
+    const updateTemplateProcessor = `
+      mutation updateTemplateProcessor(
+        $data: TemplateUpdateInput!
+        $where: TemplateWhereUniqueInput!
+      ) {
+        response: updateTemplateProcessor(
+          data: $data
+          where: $where
+        ){
+          success
+          message
+          errors{
+            key
+            message
+          }
+          data{
+            ...Template
+          }
+        }
+      }
+
+      ${TemplateFragment}
+    `;
+
+
+
+    const deleteTemplate = `
+      mutation deleteTemplate (
+        $where: TemplateWhereUniqueInput!
+      ){
+        deleteTemplate(
+          where: $where
+        ){
+          ...Template
+        }
+      }
+      ${TemplateFragment}
+    `;
+
+
+    const deleteManyTemplates = `
+      mutation deleteManyTemplates (
+        $where: TemplateWhereInput
+      ){
+        deleteManyTemplates(
+          where: $where
+        ){
+          ...BatchPayloadNoNesting
+        }
+      }
+      ${BatchPayloadNoNestingFragment}
+    `;
+
+
+    return {
+      templatesConnection,
+      templates,
+      template,
+      createTemplateProcessor,
+      updateTemplateProcessor,
+      deleteTemplate,
+      deleteManyTemplates,
     }
 
   }

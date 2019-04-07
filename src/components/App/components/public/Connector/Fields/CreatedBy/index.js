@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import UserIcon from "material-ui-icons/SupervisorAccount";
-import EditorComponent from '../../..';
+import EditorComponent from '../../../..';
 import { ObjectContext } from '../../ListView';
 
 

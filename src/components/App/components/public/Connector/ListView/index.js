@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import ViewIcon from "material-ui-icons/ViewModule";
 import { ConnectorContext } from '..';
-import EditorComponent from '../..';
+import EditorComponent from '../../..';
 
 
 export const ObjectContext = createContext({});
@@ -56,11 +56,7 @@ class ListView extends EditorComponent {
       ...other
     } = this.getRenderProps();
 
-
-
-
-
-
+    console.log("ListView", this);
 
     const {
       Grid,
@@ -72,6 +68,7 @@ class ListView extends EditorComponent {
       <ConnectorContext.Consumer>
         {context => {
 
+          console.log("ListView ConnectorContext", context);
 
           const {
             data,
@@ -80,8 +77,6 @@ class ListView extends EditorComponent {
           if (!data) {
             return null;
           }
-
-
 
 
           const {
@@ -100,7 +95,7 @@ class ListView extends EditorComponent {
             {...this.getComponentProps(this)}
           >
 
-            {items.map((n, index) => {
+            {items.length ? items.map((n, index) => {
 
               const {
                 id,
@@ -114,7 +109,7 @@ class ListView extends EditorComponent {
               >
                 {super.renderMainView()}
               </ObjectContext.Provider>
-            })}
+            }) : super.renderMainView()}
 
           </Grid>;
         }}

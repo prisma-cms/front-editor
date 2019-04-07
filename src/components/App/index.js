@@ -1,11 +1,11 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component, Fragment, createContext } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui';
 
 import Context from "@prisma-cms/context";
 
-import Page from './components/Page';
-import Grid from './components/Grid';
+// import Page from './components/Page';
+// import Grid from './components/Grid';
 // import TextArea from './components/TextArea';
 // import UsersGrid from './components/UsersGrid';
 // import Connector from './components/Connector';
@@ -17,8 +17,7 @@ import Grid from './components/Grid';
 // import NamedField from './components/Connector/Fields/NamedField';
 // import Content from './components/Connector/Fields/Content';
 // import Section from './components/Section';
-import Typography from './components/Typography';
-
+// import Typography from './components/Typography';
 
 const styles = theme => {
 
@@ -129,8 +128,8 @@ class FrontEditor extends Component {
   static defaultProps = {
     debug: false,
     Components: [
-      Grid,
-      Typography,
+      // Grid,
+      // Typography,
       // TextArea,
       // UsersGrid,
       // Connector,
@@ -179,6 +178,40 @@ class FrontEditor extends Component {
   }
 
 
+  // prepareComponents() {
+
+  //   const {
+  //     Components,
+  //     CustomComponents,
+  //   } = this.props;
+
+  //   // Components.map(n => {
+
+  //   //   console.log("Components name", n.name, n.Name);
+
+  //   // });
+
+  //   // CustomComponents.map(n => {
+
+  //   //   console.log("CustomComponents name", n.name, n.Name);
+
+  //   // });
+
+
+  //   let baseComponents = [Page].concat(Components)
+  //     .filter(n => n && !CustomComponents.find(i => i.Name === n.Name));
+
+  //   // console.log("baseComponents", baseComponents);
+
+  //   // baseComponents.map(n => {
+
+  //   //   console.log("name", n.name, n.Name, n.constructor.Name);
+
+  //   // });
+
+  //   return baseComponents.concat(CustomComponents).filter(n => n && n.Name);
+  // }
+
   prepareComponents() {
 
     const {
@@ -186,31 +219,29 @@ class FrontEditor extends Component {
       CustomComponents,
     } = this.props;
 
-    // Components.map(n => {
-
-    //   console.log("Components name", n.name, n.Name);
-
-    // });
-
-    // CustomComponents.map(n => {
-
-    //   console.log("CustomComponents name", n.name, n.Name);
-
-    // });
 
 
-    let baseComponents = [Page].concat(Components)
-      .filter(n => n && !CustomComponents.find(i => i.Name === n.Name));
+    // var cache = {};
 
-    // console.log("baseComponents", baseComponents);
+    let modules = [];
 
-    // baseComponents.map(n => {
+    function importAll(r) {
+      r.keys().forEach(key => {
 
-    //   console.log("name", n.name, n.Name, n.constructor.Name);
+        // cache[key] = r(key)
 
-    // });
+        // console.log("module", key, r(key));
 
-    return baseComponents.concat(CustomComponents).filter(n => n && n.Name);
+        modules.push(r(key).default);
+      });
+    }
+
+    importAll(require.context('./components/public/', true, /\.js$/));
+
+
+    // console.log("modules", modules);
+
+    return modules.filter(n => n.Name);
   }
 
 
@@ -241,9 +272,7 @@ class FrontEditor extends Component {
     if (activeItem) {
 
 
-
       const Element = activeItem.constructor;
-
 
 
       settingsView = <div>
@@ -497,3 +526,17 @@ class FrontEditor extends Component {
 export default withStyles(styles)(props => <FrontEditor
   {...props}
 />);
+
+
+
+// var cache = {};
+
+// function importAll (r) {
+//   r.keys().forEach(key => cache[key] = r(key));
+// }
+
+// importAll(require.context('./components/', true, /\.js$/));
+
+
+// console.log("cache", cache);
+
