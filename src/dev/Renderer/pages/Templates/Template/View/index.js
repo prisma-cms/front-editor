@@ -45,6 +45,18 @@ export const styles = theme => {
 export class TemplateView extends EditableView {
 
 
+  constructor(props) {
+
+    super(props);
+
+    this.updateObject = this.updateObject.bind(this);
+    // this.updateComponentProperty = this.updateComponentProperty.bind(this);
+    // this.onChangeProps = this.onChangeProps.bind(this);
+    // this.updateProps = this.updateProps.bind(this);
+
+  }
+
+
   canEdit() {
 
     const {

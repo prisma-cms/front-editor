@@ -395,9 +395,9 @@ class FrontEditor extends Component {
     // const Page = Components.find(n => n.Name === "Page");
     const Component = Components.find(n => n.Name === name);
 
-    console.log("FrontEditor Component", Component);
+    // console.log("FrontEditor Component", Component);
 
-    console.log("FrontEditor.props", this.props);
+    console.log("FrontEditor._dirty", _dirty);
 
     if (!Component) {
       return null;
@@ -557,7 +557,7 @@ class FrontEditor extends Component {
 
   render() {
 
-    console.log("FrontEditor", this.props);
+    // console.log("FrontEditor", this.props);
 
     const {
       classes,

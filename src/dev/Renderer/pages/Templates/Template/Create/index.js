@@ -11,7 +11,9 @@ class TemplateCreatePage extends TemplatePage {
   static defaultProps = {
     ...TemplatePage.defaultProps,
     data: {
-      object: {},
+      object: {
+        name: "Page",
+      },
     },
     _dirty: {
       name: "Page",

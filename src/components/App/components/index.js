@@ -50,6 +50,19 @@ class EditorComponent extends ObjectEditable {
   }
 
 
+  constructor(props) {
+
+    super(props);
+
+    this.updateComponentProperty = this.updateComponentProperty.bind(this);
+    this.updateObject = this.updateObject.bind(this);
+    this.onChangeProps = this.onChangeProps.bind(this);
+    this.updateProps = this.updateProps.bind(this);
+    this.getActiveParent = this.getActiveParent.bind(this);
+
+  }
+
+
   canEdit() {
 
     return true;
@@ -57,62 +70,62 @@ class EditorComponent extends ObjectEditable {
 
 
 
-  async saveObject(data) {
+  // async saveObject(data) {
 
 
-    const {
-      mutate,
-    } = this.props;
+  //   const {
+  //     mutate,
+  //   } = this.props;
 
-    // console.log("result saveObject", data, mutate);
-    // console.log("result saveObject this._dirty", { ...this.state._dirty });
-    // console.log("result saveObject this", this);
-
-
-    if (mutate && mutate !== emptyMutate) {
-      return super.saveObject(data);
-    }
-
-    const mutation = this.getMutation(data);
-
-    const result = await this.mutate(mutation).then(r => r).catch(e => {
-
-      // throw (e);
-      return e;
-    });
-
-    console.log("result 333", result);
-
-    return result;
-
-  }
+  //   // console.log("result saveObject", data, mutate);
+  //   // console.log("result saveObject this._dirty", { ...this.state._dirty });
+  //   // console.log("result saveObject this", this);
 
 
-  async mutate(props) {
+  //   if (mutate && mutate !== emptyMutate) {
+  //     return super.saveObject(data);
+  //   }
+
+  //   const mutation = this.getMutation(data);
+
+  //   const result = await this.mutate(mutation).then(r => r).catch(e => {
+
+  //     // throw (e);
+  //     return e;
+  //   });
+
+  //   console.log("result 333", result);
+
+  //   return result;
+
+  // }
 
 
-    // console.log("mutate props", props);
+  // async mutate(props) {
 
-    // return;
 
-    const {
-      query: {
-        createTemplateProcessor,
-        updateTemplateProcessor,
-      },
-    } = this.context;
+  //   // console.log("mutate props", props);
 
-    const {
-      id,
-    } = this.getObjectWithMutations();
+  //   // return;
 
-    const mutation = gql(id ? updateTemplateProcessor : createTemplateProcessor);
+  //   const {
+  //     query: {
+  //       createTemplateProcessor,
+  //       updateTemplateProcessor,
+  //     },
+  //   } = this.context;
 
-    return super.mutate({
-      mutation,
-      ...props
-    })
-  }
+  //   const {
+  //     id,
+  //   } = this.getObjectWithMutations();
+
+  //   const mutation = gql(id ? updateTemplateProcessor : createTemplateProcessor);
+
+  //   return super.mutate({
+  //     mutation,
+  //     ...props
+  //   })
+  // }
 
 
   updateObject(data) {
@@ -128,18 +141,6 @@ class EditorComponent extends ObjectEditable {
      * Обновляем рутовый компонент, чтобы применить изменения ко всем элементам
      */
     forceUpdate();
-
-  }
-
-
-  constructor(props) {
-
-    super(props);
-
-    this.updateComponentProperty = this.updateComponentProperty.bind(this);
-    this.updateObject = this.updateObject.bind(this);
-    this.onChangeProps = this.onChangeProps.bind(this);
-    this.updateProps = this.updateProps.bind(this);
 
   }
 
@@ -212,6 +213,8 @@ class EditorComponent extends ObjectEditable {
     console.log("onDrop dragItem", dragItem);
     console.log("onDrop dragTarget", dragTarget);
 
+    // return;
+
 
     if (dragItem && dragTarget && dragTarget === this) {
 
@@ -226,21 +229,41 @@ class EditorComponent extends ObjectEditable {
 
       if (newItem) {
 
-        const {
-          components: oldComponents,
-        } = this.getObjectWithMutations();
-
-        const components = (oldComponents || []).slice(0);
-
-        components.push(newItem);
-
-        console.log("onDrop components", components);
-
-        this.updateObject({
-          components,
-        });
+        this.addComponent(newItem);
 
         return;
+
+        // const {
+        //   components: oldComponents,
+        // } = this.getObjectWithMutations();
+
+        // const components = (oldComponents || []).slice(0);
+
+        // components.push(newItem);
+
+        // console.log("onDrop components", components);
+
+        // this.updateObject({
+        //   components,
+        // });
+
+        // return;
+
+        // const {
+        //   components: oldComponents,
+        // } = this.getObjectWithMutations();
+
+        // const components = (oldComponents || []).slice(0);
+
+        // components.push(newItem);
+
+        // console.log("onDrop components", components);
+
+        // this.updateObject({
+        //   components,
+        // });
+
+        // return;
 
         let {
           components: itemComponents,
@@ -258,6 +281,169 @@ class EditorComponent extends ObjectEditable {
       }
 
       return true;
+    }
+
+  }
+
+
+  /**
+   * Обновить мы должны текущий элемент или предка
+   */
+  // addComponent (newItem){
+
+
+  //   const {
+  //     id: objectId,
+  //     components: oldComponents,
+  //   } = this.getObjectWithMutations();
+
+
+  //   if(objectId) {
+
+  //     const components = (oldComponents || []).slice(0);
+
+  //     components.push(newItem);
+
+  //     console.log("onDrop components", components);
+
+  //     this.updateObject({
+  //       components,
+  //     });
+
+  //   }
+  //   else {
+
+  //     const {
+  //       parent,
+  //     } = this.props;
+
+  //     console.log("onDrop parent", parent);
+
+  //   }
+
+
+  // }
+
+  // addComponent(newItem) {
+
+
+  //   const {
+  //     id: objectId,
+  //     components: oldComponents,
+  //   } = this.getObjectWithMutations();
+
+
+  //   const {
+  //     parent,
+  //   } = this.props;
+
+  //   console.log("addComponent this", { ...this });
+  //   console.log("onDrop parent", parent);
+
+
+  //   let {
+  //     data: {
+  //       object,
+  //     },
+  //   } = this.props;
+
+  //   let {
+  //     components,
+  //   } = object;
+
+
+  //   if (components) {
+  //     components.push(newItem);
+  //   }
+
+  //   if (parent) {
+
+  //     console.log("onDrop addComponent result", parent.addComponent(newItem));
+
+  //     return parent.addComponent(newItem);
+  //   }
+
+  //   this.forceUpdate();
+
+  // }
+
+  addComponent(newItem) {
+
+
+    // const {
+    //   id: objectId,
+    //   components: oldComponents,
+    // } = this.getObjectWithMutations();
+
+
+    // const {
+    //   parent,
+    // } = this.props;
+
+    // console.log("addComponent this", { ...this });
+    // console.log("onDrop parent", parent);
+
+
+    let {
+      data: {
+        object,
+      },
+    } = this.props;
+
+
+    let components = object.components || [];
+
+    if (components) {
+      components.push(newItem);
+    }
+
+    // if (parent) {
+
+
+    //   // console.log("onDrop addComponent result");
+
+    //   // return parent.addComponent(newItem);
+    // }
+
+    const activeParent = this.getActiveParent();
+
+    console.log("onDrop activeParent", activeParent);
+
+    if (!activeParent) {
+      throw new Error("Can not get absParent");
+    }
+
+
+
+    activeParent.updateObject({
+      components: activeParent.props.data.object.components.slice(0),
+    });
+
+    // this.forceUpdate();
+
+  }
+
+
+  /**
+   * Проходимся вверх до тех пор, пока не найдем родителя с id
+   */
+  getActiveParent() {
+
+    const {
+      parent,
+      data: {
+        object,
+      },
+    } = this.props;
+
+    if (object && object.id) {
+      return this;
+    }
+    else if (parent) {
+      return parent.getActiveParent();
+    }
+    else {
+      return this;
     }
 
   }
@@ -819,7 +1005,12 @@ class EditorComponent extends ObjectEditable {
 
     // return component;
 
-    return item.getObjectWithMutations();
+    const {
+      CreatedBy,
+      ...other
+    } = item.getObjectWithMutations();
+
+    return other;
 
     // return {
     //   type,
@@ -1254,7 +1445,7 @@ class EditorComponent extends ObjectEditable {
 
     const RootElement = this.getRootElement();
 
-    console.log("getRenderProps", this.getRenderProps());
+    // console.log("getRenderProps", this.getRenderProps());
 
     const {
       props,
@@ -1326,7 +1517,7 @@ class EditorComponent extends ObjectEditable {
             key={index}
             mode="main"
             // component={n}
-            // parent={this}
+            parent={this}
             // props={props}
             deleteItem={() => {
 
@@ -1340,9 +1531,9 @@ class EditorComponent extends ObjectEditable {
 
             }}
             data={{
-              object: {},
+              object: n,
             }}
-            _dirty={n}
+            // _dirty={n}
             {...other}
           />);
 
