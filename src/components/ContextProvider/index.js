@@ -5,6 +5,7 @@ import React, {
 
 import Context from '@prisma-cms/context';
 
+import * as UI from "../ui";
 
 class ContextProvider extends Component {
 
@@ -44,6 +45,7 @@ class ContextProvider extends Component {
         ...query,
         ...this.prepareQuery(),
       },
+      ...UI,
     });
 
     return <Context.Provider

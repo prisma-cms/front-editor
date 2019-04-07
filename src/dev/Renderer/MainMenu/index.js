@@ -141,6 +141,21 @@ export class MainMenu extends Component {
             item
           >
             <Link
+              to="/templates"
+            >
+              <Typography
+                component="span"
+                className={classes.link}
+              >
+                Templates
+            </Typography>
+            </Link>
+          </Grid>
+
+          <Grid
+            item
+          >
+            <Link
               to="/users"
             >
               <Typography

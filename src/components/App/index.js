@@ -375,66 +375,93 @@ class FrontEditor extends Component {
 
 
     const {
+      // object,
       components,
+      data,
+      _dirty,
     } = this.props;
+
+    const {
+      name,
+    } = data.object || {};
+
+    if (!name) {
+      return null;
+    }
 
     const Components = this.getComponents();
 
 
-    const Page = Components.find(n => n.Name === "Page");
+    // const Page = Components.find(n => n.Name === "Page");
+    const Component = Components.find(n => n.Name === name);
 
-    // console.log("front Editor", this);
+    console.log("FrontEditor Component", Component);
 
-    return <Page
+    console.log("FrontEditor.props", this.props);
+
+    if (!Component) {
+      return null;
+    }
+
+    return <Component
       mode="main"
-      data={{
-        object: {},
-      }}
-      _dirty={{
-        name: "Page",
-        props: {},
-        components: [
-          {
-            "name": "Grid",
-            "props": {
-              "container": true
-            },
-            "components": [
-              {
-                "name": "Grid",
-                "props": {
-                  "item": true,
-                  xs: 12,
-                  sm: 6,
-                },
-                "components": [
-
-                ]
-              },
-              {
-                "name": "Grid",
-                "props": {
-                  "item": true,
-                  xs: 12,
-                  sm: 6,
-                },
-                "components": [
-                  {
-                    name: "Typography",
-                    props: {
-                      text: "SDfdsf gerg ergergergerger",
-                    },
-                    components: [],
-                  },
-                ]
-              },
-
-            ]
-          },
-
-        ],
-      }}
+      // data={{
+      //   object,
+      // }}
+      data={data}
+      _dirty={_dirty}
     />;
+
+    // return <Page
+    //   mode="main"
+    //   data={{
+    //     object: {},
+    //   }}
+    //   _dirty={{
+    //     name: "Page",
+    //     props: {},
+    //     components: [
+    //       {
+    //         "name": "Grid",
+    //         "props": {
+    //           "container": true
+    //         },
+    //         "components": [
+    //           {
+    //             "name": "Grid",
+    //             "props": {
+    //               "item": true,
+    //               xs: 12,
+    //               sm: 6,
+    //             },
+    //             "components": [
+
+    //             ]
+    //           },
+    //           {
+    //             "name": "Grid",
+    //             "props": {
+    //               "item": true,
+    //               xs: 12,
+    //               sm: 6,
+    //             },
+    //             "components": [
+    //               {
+    //                 name: "Typography",
+    //                 props: {
+    //                   text: "SDfdsf gerg ergergergerger",
+    //                 },
+    //                 components: [],
+    //               },
+    //             ]
+    //           },
+
+    //         ]
+    //       },
+
+    //     ],
+    //   }}
+    // />;
 
     let output = [];
 
@@ -530,6 +557,8 @@ class FrontEditor extends Component {
 
   render() {
 
+    console.log("FrontEditor", this.props);
+
     const {
       classes,
       children,
@@ -621,15 +650,15 @@ class FrontEditor extends Component {
                 >
                   {items}
 
-                  {children}
+                  {/* {children} */}
 
-                  {debug && components ? <div
+                  {/* {debug && components ? <div
                     style={{
                       whiteSpace: "pre-wrap",
                     }}
                   >
                     {JSON.stringify(components, true, 2)}
-                  </div> : null}
+                  </div> : null} */}
 
                 </div>
               </div>

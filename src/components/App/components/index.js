@@ -10,8 +10,6 @@ import CloseIcon from "material-ui-icons/Close";
 import { FormControlLabel } from 'material-ui';
 import { Switch } from 'material-ui';
 
-import Template from "./Template";
-
 // console.log("module", module);
 // console.log("Context Module", Module);
 
@@ -232,7 +230,7 @@ class EditorComponent extends ObjectEditable {
           components: oldComponents,
         } = this.getObjectWithMutations();
 
-        const components = oldComponents.slice(0);
+        const components = (oldComponents || []).slice(0);
 
         components.push(newItem);
 
@@ -1432,9 +1430,9 @@ class EditorComponent extends ObjectEditable {
 
   render() {
 
-    const {
-      ComponentContext,
-    } = this;
+    // const {
+    //   ComponentContext,
+    // } = this;
 
     const {
       id: objectId,
@@ -1447,6 +1445,7 @@ class EditorComponent extends ObjectEditable {
     let content = null;
 
     // console.log("ComponentContext", this);
+    // console.log("Component render", this);
 
     switch (mode) {
 
