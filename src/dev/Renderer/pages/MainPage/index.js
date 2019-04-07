@@ -40,11 +40,11 @@ class FrontEditorPage extends Component {
     inEditMode: true,
     components: [
       {
-        "type": "Page",
+        "name": "Page",
         "props": {},
         "components": [
           {
-            "type": "Connector",
+            "name": "Connector",
             "props": {
               "first": null,
               "orderBy": null,
@@ -54,16 +54,16 @@ class FrontEditorPage extends Component {
             },
             "components": [
               {
-                "type": "ListView",
+                "name": "ListView",
                 "components": [
                   {
-                    "type": "Grid",
+                    "name": "Grid",
                     "props": {
                       "container": true
                     },
                     "components": [
                       {
-                        "type": "Grid",
+                        "name": "Grid",
                         "props": {
                           "xs": 12,
                           "sm": 6,
@@ -74,14 +74,14 @@ class FrontEditorPage extends Component {
                         },
                         "components": [
                           {
-                            "type": "UserLink",
+                            "name": "UserLink",
                             "props": {},
                             "components": []
                           }
                         ]
                       },
                       {
-                        "type": "Grid",
+                        "name": "Grid",
                         "props": {
                           "xs": 12,
                           "sm": 6,
@@ -92,7 +92,7 @@ class FrontEditorPage extends Component {
                         },
                         "components": [
                           {
-                            "type": "NamedField",
+                            "name": "NamedField",
                             "props": {
                               "name": "username"
                             },
@@ -101,7 +101,7 @@ class FrontEditorPage extends Component {
                         ]
                       },
                       {
-                        "type": "Grid",
+                        "name": "Grid",
                         "props": {
                           "xs": 12,
                           "sm": 6,
@@ -112,7 +112,7 @@ class FrontEditorPage extends Component {
                         },
                         "components": [
                           {
-                            "type": "NamedField",
+                            "name": "NamedField",
                             "props": {
                               "name": "email"
                             },
@@ -125,13 +125,12 @@ class FrontEditorPage extends Component {
                 ]
               },
               {
-                "type": "Pagination"
+                "name": "Pagination"
               }
             ],
-            "id": "cju6kgdi504f10917mah0jruc"
+            "id": "cju75cmah04o70917pnut4t5y"
           }
-        ],
-        "id": "cju6kh8hd04fd0917i7shixfs"
+        ]
       }
     ],
   }

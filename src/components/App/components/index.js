@@ -70,7 +70,7 @@ class EditorComponent extends Component {
 
     return {
       component: this,
-      type: this.constructor.Name,
+      name: this.constructor.Name,
       props: this.prepareDragItemProps(),
       components: this.prepareDragItemComponents(),
     };
@@ -295,7 +295,7 @@ class EditorComponent extends Component {
       parent,
       components,
       component: {
-        type,
+        name,
         components: itemComponents,
         props: componentProps,
       },
@@ -468,7 +468,7 @@ class EditorComponent extends Component {
 
     let {
       style,
-      type,
+      name,
       components,
       // ...componentProps
     } = component;
@@ -700,8 +700,6 @@ class EditorComponent extends Component {
           // mutate={async () => { }}
           _dirty={!component.id ? {
             ...component,
-            name: component.type,
-            type: undefined,
           } : undefined}
           onSave={result => {
 
@@ -835,6 +833,7 @@ class EditorComponent extends Component {
                 />
               }
               label={name}
+              fullWidth
             />
 
           </Grid>
@@ -872,9 +871,9 @@ class EditorComponent extends Component {
               name={name}
               // label={name}
               value={value || ""}
-              fullWidth
               onChange={event => this.onChangeProps(event)}
               {...other}
+              fullWidth
             />
 
           </Grid>
@@ -1139,13 +1138,13 @@ class EditorComponent extends Component {
       itemComponents.map((n, index) => {
 
         const {
-          type,
+          name,
           // props,
           ...other
         } = n;
 
 
-        let Component = Components.find(n => n.Name === type);
+        let Component = Components.find(n => n.Name === name);
 
         if (Component) {
 

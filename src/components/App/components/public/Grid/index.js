@@ -185,14 +185,14 @@ class Grid extends EditorComponent {
 
 
     const {
-      type,
+      name,
       props: {
         ...props
       },
     } = dragItem;
 
 
-    switch (type) {
+    switch (name) {
 
       case "Grid":
 

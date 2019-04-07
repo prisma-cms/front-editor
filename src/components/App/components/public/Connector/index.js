@@ -65,10 +65,10 @@ class Connector extends EditorComponent {
       "first": 12,
       "components": [
         {
-          "type": "ListView",
+          "name": "ListView",
           "components": [
             {
-              "type": "Grid",
+              "name": "Grid",
               props: {
                 "item": true,
                 "xs": 12,
@@ -79,7 +79,7 @@ class Connector extends EditorComponent {
           ]
         },
         {
-          "type": "Pagination"
+          "name": "Pagination"
         }
       ],
     });

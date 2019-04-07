@@ -54,7 +54,7 @@ const styles = theme => {
     panel: {
 
       [desktop]: {
-        width: 250,
+        width: 270,
         height: "100%",
         overflow: "auto",
       },
@@ -328,13 +328,13 @@ class FrontEditor extends Component {
       components.map((n, index) => {
 
         const {
-          type,
+          name,
           props,
           children,
           ...other
         } = n;
 
-        let Component = Components.find(n => n.Name === type);
+        let Component = Components.find(n => n.Name === name);
 
 
         if (Component) {
