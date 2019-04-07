@@ -44,93 +44,65 @@ class FrontEditorPage extends Component {
         "props": {},
         "components": [
           {
-            "name": "Connector",
-            "props": {
-              "first": null,
-              "orderBy": null,
-              "skip": null,
-              "last": null,
-              "query": "usersConnection"
-            },
+            "name": "Section",
+            "props": {},
             "components": [
               {
-                "name": "ListView",
+                "name": "Grid",
+                "props": {
+                  "container": true
+                },
                 "components": [
                   {
                     "name": "Grid",
                     "props": {
-                      "container": true
+                      "xs": 12,
+                      "sm": 6,
+                      "md": 4,
+                      "lg": 3,
+                      "xl": 2,
+                      "item": true
+                    },
+                    "components": []
+                  },
+                  {
+                    "name": "Grid",
+                    "props": {
+                      "xs": 12,
+                      "sm": 6,
+                      "md": 4,
+                      "lg": 3,
+                      "xl": 2,
+                      "item": true
                     },
                     "components": [
                       {
-                        "name": "Grid",
+                        "name": "Typography",
                         "props": {
-                          "xs": 12,
-                          "sm": 6,
-                          "md": 4,
-                          "lg": 3,
-                          "xl": 2,
-                          "item": true
+                          "text": "fewfwefwefwef"
                         },
-                        "components": [
-                          {
-                            "name": "UserLink",
-                            "props": {},
-                            "components": []
-                          }
-                        ]
-                      },
-                      {
-                        "name": "Grid",
-                        "props": {
-                          "xs": 12,
-                          "sm": 6,
-                          "md": 4,
-                          "lg": 3,
-                          "xl": 2,
-                          "item": true
-                        },
-                        "components": [
-                          {
-                            "name": "NamedField",
-                            "props": {
-                              "name": "username"
-                            },
-                            "components": []
-                          }
-                        ]
-                      },
-                      {
-                        "name": "Grid",
-                        "props": {
-                          "xs": 12,
-                          "sm": 6,
-                          "md": 4,
-                          "lg": 3,
-                          "xl": 2,
-                          "item": true
-                        },
-                        "components": [
-                          {
-                            "name": "NamedField",
-                            "props": {
-                              "name": "email"
-                            },
-                            "components": []
-                          }
-                        ]
+                        "components": []
                       }
                     ]
+                  },
+                  {
+                    "name": "Grid",
+                    "props": {
+                      "xs": 12,
+                      "sm": 6,
+                      "md": 4,
+                      "lg": 3,
+                      "xl": 2,
+                      "item": true
+                    },
+                    "components": []
                   }
                 ]
-              },
-              {
-                "name": "Pagination"
               }
-            ],
-            "id": "cju75cmah04o70917pnut4t5y"
+            ]
           }
-        ]
+        ],
+        "id": "cju76jgqu04q20917lwoq5cx4"
       }
     ],
   }

@@ -24,10 +24,10 @@ class Page extends EditorComponent {
   // }
 
 
-  // renderPanelView() {
+  renderPanelView() {
 
-  //   return null;
-  // }
+    return null;
+  }
 
 
   renderMainView() {
