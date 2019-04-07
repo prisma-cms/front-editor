@@ -17,13 +17,21 @@ import Template from "./Template";
 
 // ComponentContext = createContext();
 
-class EditorComponent extends Component {
+import ObjectEditable from "apollo-cms/lib/DataView/Object/Editable";
+import gql from 'graphql-tag';
 
-  static id = module.id;
 
-  static contextType = Context;
+const emptyMutate = async () => { };
+
+
+class EditorComponent extends ObjectEditable {
+
+  // static id = module.id;
+
+  // static contextType = Context;
 
   static propTypes = {
+    ...ObjectEditable.propTypes,
     mode: PropTypes.oneOf(["main", "panel", "settings"]).isRequired,
 
     /**
@@ -37,17 +45,86 @@ class EditorComponent extends Component {
 
 
   static defaultProps = {
+    ...ObjectEditable.defaultProps,
     deletable: true,
+    mutate: emptyMutate,
+    data: {},
   }
 
 
-  constructor(props) {
+  canEdit() {
 
-    super(props);
+    return true;
+  }
 
-    // this.id = module.id;
+
+
+  async saveObject(data) {
+
+
+    const {
+      mutate,
+    } = this.props;
+
+    // console.log("result saveObject", data, mutate);
+    console.log("result saveObject this._dirty", { ...this.state._dirty });
+    console.log("result saveObject this", this);
+
+
+    if (mutate && mutate !== emptyMutate) {
+      return super.saveObject(data);
+    }
+
+    const mutation = this.getMutation(data);
+
+    const result = await this.mutate(mutation).then(r => r).catch(e => {
+
+      // throw (e);
+      return e;
+    });
+
+    console.log("result 333", result);
+
+    return result;
 
   }
+
+
+  async mutate(props) {
+
+
+    // console.log("mutate props", props);
+
+    // return;
+
+    const {
+      query: {
+        createTemplateProcessor,
+        updateTemplateProcessor,
+      },
+    } = this.context;
+
+    const {
+      id,
+    } = this.getObjectWithMutations();
+
+    const mutation = gql(id ? updateTemplateProcessor : createTemplateProcessor);
+
+    return super.mutate({
+      mutation,
+      ...props
+    })
+  }
+
+
+
+  // constructor(props) {
+
+  //   super(props);
+
+  //   // this.id = module.id;
+
+  // }
 
 
   onDragStart() {
@@ -128,6 +205,18 @@ class EditorComponent extends Component {
 
       if (newItem) {
 
+        const {
+          components: oldComponents,
+        } = this.getObjectWithMutations();
+
+        const components = oldComponents.slice(0);
+
+        this.updateObject({
+          components,
+        });
+
+        return;
+
         let {
           components: itemComponents,
         } = component;
@@ -136,15 +225,6 @@ class EditorComponent extends Component {
 
 
         itemComponents.push(newItem);
-
-
-        // Object.assign(component, {
-        //   components: itemComponents,
-        // });
-
-        // updateObject({
-        //   components,
-        // });
 
         this.updateComponent(component, {
           components: itemComponents,
@@ -347,6 +427,13 @@ class EditorComponent extends Component {
       deleteItem,
       deletable,
       component,
+      mutate,
+      data,
+      errorDelay,
+      SaveIcon,
+      ResetIcon,
+      EditIcon,
+      cacheKeyPrefix,
       ...other
     } = this.props;
 
@@ -443,7 +530,18 @@ class EditorComponent extends Component {
       return null;
     }
 
-    // console.log("activeItem ComponentContext", activeItem.ComponentContext);
+    console.log("activeItem ", activeItem);
+
+    const {
+      name,
+      components,
+
+    } = activeItem.getObjectWithMutations();
+
+    return activeItem.renderHeader();
+    // return activeItem.getButtons();
+
+    // return null;
 
     const {
       Grid,
@@ -453,7 +551,7 @@ class EditorComponent extends Component {
 
     let {
       props: {
-        component,
+        // component,
         deleteItem,
         deletable,
         ...other
@@ -466,14 +564,13 @@ class EditorComponent extends Component {
     } = activeItem;
 
 
-    let {
-      style,
-      name,
-      components,
-      // ...componentProps
-    } = component;
 
-    style = style || {}
+    // let {
+    //   style,
+    //   // ...componentProps
+    // } = component;
+
+    let style = {}
 
 
     const componentProps = this.getComponentProps(activeItem);
@@ -688,7 +785,7 @@ class EditorComponent extends Component {
         : null
       }
 
-      <Grid
+      {/* <Grid
         item
         xs={12}
       >
@@ -721,7 +818,7 @@ class EditorComponent extends Component {
 
           }}
         />
-      </Grid>
+      </Grid> */}
 
 
       <Grid
@@ -1109,24 +1206,43 @@ class EditorComponent extends Component {
 
   renderMainView() {
 
-    return this.renderChildren();
+    const object = this.getObjectWithMutations();
+
+    if (!object) {
+      return null;
+    }
+
+    // return this.renderChildren();
+
+    return <div
+      {...this.getRenderProps()}
+    >
+      {this.renderChildren()}
+    </div>;
   }
 
 
   renderChildren() {
 
+    const object = this.getObjectWithMutations();
 
     const {
       Components,
-      components,
+      // components,
       updateObject,
     } = this.context;
 
+    // const {
+    //   component: {
+    //     components: itemComponents,
+    //   },
+    // } = this.props;
+
+
     const {
-      component: {
-        components: itemComponents,
-      },
-    } = this.props;
+      props,
+      components: itemComponents,
+    } = object;
 
 
     let output = [];
@@ -1156,11 +1272,13 @@ class EditorComponent extends Component {
             // props={props}
             deleteItem={() => {
 
-              itemComponents.splice(index, 1);
+              console.log("deleteItem", this);
 
-              updateObject({
-                components,
-              });
+              // itemComponents.splice(index, 1);
+
+              // updateObject({
+              //   components,
+              // });
 
             }}
             {...other}
@@ -1179,6 +1297,73 @@ class EditorComponent extends Component {
 
     return output;
   }
+
+  // renderChildren() {
+
+
+  //   const {
+  //     Components,
+  //     components,
+  //     updateObject,
+  //   } = this.context;
+
+  //   const {
+  //     component: {
+  //       components: itemComponents,
+  //     },
+  //   } = this.props;
+
+
+  //   let output = [];
+
+
+
+  //   if (itemComponents && itemComponents.length) {
+
+  //     itemComponents.map((n, index) => {
+
+  //       const {
+  //         name,
+  //         // props,
+  //         ...other
+  //       } = n;
+
+
+  //       let Component = Components.find(n => n.Name === name);
+
+  //       if (Component) {
+
+  //         output.push(<Component
+  //           key={index}
+  //           mode="main"
+  //           component={n}
+  //           parent={this}
+  //           // props={props}
+  //           deleteItem={() => {
+
+  //             itemComponents.splice(index, 1);
+
+  //             updateObject({
+  //               components,
+  //             });
+
+  //           }}
+  //           {...other}
+  //         />);
+
+  //       }
+
+
+
+  //     })
+
+
+
+  //   }
+
+
+  //   return output;
+  // }
 
 
   render() {

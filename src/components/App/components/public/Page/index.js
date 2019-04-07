@@ -30,15 +30,15 @@ class Page extends EditorComponent {
   }
 
 
-  renderMainView() {
+  // renderMainView() {
 
 
-    return <div
-      {...this.getRenderProps()}
-    >
-      {super.renderMainView()}
-    </div>;
-  }
+  //   return <div
+  //     {...this.getRenderProps()}
+  //   >
+  //     {super.renderMainView()}
+  //   </div>;
+  // }
 
 
 }

@@ -311,6 +311,66 @@ class FrontEditor extends Component {
   }
 
 
+  // renderItems() {
+
+
+  //   const {
+  //     components,
+  //   } = this.props;
+
+  //   const Components = this.getComponents();
+
+  //   let output = [];
+
+
+  //   if (components && Array.isArray(components)) {
+
+  //     components.map((n, index) => {
+
+  //       const {
+  //         name,
+  //         props,
+  //         children,
+  //         ...other
+  //       } = n;
+
+  //       let Component = Components.find(n => n.Name === name);
+
+
+  //       if (Component) {
+
+  //         output.push(<Component
+  //           key={index}
+  //           mode="main"
+  //           component={n}
+  //           deleteItem={() => {
+
+  //             components.splice(index, 1);
+
+  //             this.updateObject({
+  //               components,
+  //             });
+
+  //           }}
+  //           {...other}
+  //         />);
+
+  //       }
+
+
+
+  //     })
+
+
+
+  //   }
+
+
+  //   return output;
+
+  // }
+
+
   renderItems() {
 
 
@@ -319,6 +379,23 @@ class FrontEditor extends Component {
     } = this.props;
 
     const Components = this.getComponents();
+
+
+    const Page = Components.find(n => n.Name === "Page");
+
+    console.log("front Editor", this);
+
+    return <Page
+      mode="main"
+      data={{
+        object: {},
+      }}
+      _dirty={{
+        name: "Page",
+        props: {},
+        components: [],
+      }}
+    />;
 
     let output = [];
 

@@ -50,9 +50,9 @@ export default class SubscriptionProvider extends Component {
     } = this.state;
 
 
-    const subscribeUser = gql`
-      subscription user{
-        user{
+    const subscribeTemplate = gql`
+      subscription template{
+        template{
           mutation
           node{
             id
@@ -61,9 +61,9 @@ export default class SubscriptionProvider extends Component {
       }
     `;
 
-    const userSub = await client
+    const templateSub = await client
       .subscribe({
-        query: subscribeUser,
+        query: subscribeTemplate,
         variables: {
         },
       })
@@ -79,7 +79,7 @@ export default class SubscriptionProvider extends Component {
       });
 
 
-    subscriptions.push(userSub);
+    subscriptions.push(templateSub);
 
     this.setState({
       subscriptions,
@@ -135,7 +135,7 @@ export default class SubscriptionProvider extends Component {
 
     const {
       children,
-      user,
+      template,
       client,
       loadApiData,
       ...other

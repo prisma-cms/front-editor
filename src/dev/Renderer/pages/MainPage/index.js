@@ -38,73 +38,7 @@ class FrontEditorPage extends Component {
 
   state = {
     inEditMode: true,
-    components: [
-      {
-        "name": "Page",
-        "props": {},
-        "components": [
-          {
-            "name": "Section",
-            "props": {},
-            "components": [
-              {
-                "name": "Grid",
-                "props": {
-                  "container": true
-                },
-                "components": [
-                  {
-                    "name": "Grid",
-                    "props": {
-                      "xs": 12,
-                      "sm": 6,
-                      "md": 4,
-                      "lg": 3,
-                      "xl": 2,
-                      "item": true
-                    },
-                    "components": []
-                  },
-                  {
-                    "name": "Grid",
-                    "props": {
-                      "xs": 12,
-                      "sm": 6,
-                      "md": 4,
-                      "lg": 3,
-                      "xl": 2,
-                      "item": true
-                    },
-                    "components": [
-                      {
-                        "name": "Typography",
-                        "props": {
-                          "text": "fewfwefwefwef"
-                        },
-                        "components": []
-                      }
-                    ]
-                  },
-                  {
-                    "name": "Grid",
-                    "props": {
-                      "xs": 12,
-                      "sm": 6,
-                      "md": 4,
-                      "lg": 3,
-                      "xl": 2,
-                      "item": true
-                    },
-                    "components": []
-                  }
-                ]
-              }
-            ]
-          }
-        ],
-        "id": "cju76jgqu04q20917lwoq5cx4"
-      }
-    ],
+    components: [],
   }
 
   render() {
