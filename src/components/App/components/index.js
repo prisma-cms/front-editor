@@ -790,7 +790,7 @@ class EditorComponent extends ObjectEditable {
           name,
           label: name,
           value,
-          deletable: activeItem.props.data.object.props[name] !== undefined,
+          deletable: activeItem.props.data.object.props && activeItem.props.data.object.props[name] !== undefined ? true : false,
           // deletable: true,
         });
 
@@ -1320,12 +1320,27 @@ class EditorComponent extends ObjectEditable {
       // console.log("updateComponentProps props parent components", components);
       // console.log("updateComponentProps props parent components object", object);
 
+      if (!components) {
+        // components = [];
+
+        // object.components = components;
+
+        throw new Error("Can not get components");
+        
+      }
+      
       const index = components.indexOf(object);
-
+      
       const component = components[index];
+      
+      if(!component) {
 
-      // console.log("updateComponentProps props parent components object index", index);
-      // console.log("updateComponentProps props parent components object component", component);
+        console.error("updateComponentProps activeItem", activeItem);
+        console.error("updateComponentProps activeParent", activeParent);
+        
+        throw new Error("Can not get component");
+      }
+
 
       Object.assign(component, {
         props,

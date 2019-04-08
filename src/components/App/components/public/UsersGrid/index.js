@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 
 import EditorComponent from '../..';
@@ -24,7 +24,7 @@ class UsersGrid extends EditorComponent {
       <PeopleIcon /> Users Grid
     </div>);
   }
-  
+
 
   canBeDropped(dragItem) {
 
@@ -32,16 +32,17 @@ class UsersGrid extends EditorComponent {
   }
 
 
-  renderMainView() {
+  renderChildren() {
 
+    // console.log("super.renderChildren()", super.renderChildren());
 
-    return <div
-      {...this.getRenderProps()}
+    return <Fragment
     >
       <UsersPage
         {...this.getComponentProps(this)}
       />
-    </div>
+      {/* {...super.renderChildren()} */}
+    </Fragment>
   }
 
 

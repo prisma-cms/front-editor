@@ -50,52 +50,121 @@ class ListView extends EditorComponent {
     }
   }
 
-  renderMainView() {
+  // renderMainView() {
+
+  //   const {
+  //     ...other
+  //   } = this.getRenderProps();
+
+  //   console.log("ListView", this);
+
+  //   const {
+  //     Grid,
+  //   } = this.context;
+
+  //   return <div
+  //     {...other}
+  //   >
+  //     <ConnectorContext.Consumer>
+  //       {context => {
+
+  //         console.log("ListView ConnectorContext", context);
+
+  //         const {
+  //           data,
+  //         } = context;
+
+  //         if (!data) {
+  //           return null;
+  //         }
+
+
+  //         const {
+  //           objects,
+  //           objectsConnection,
+  //         } = data;
+
+  //         let items = objects ? objects : objectsConnection ? objectsConnection.edges.map(n => n.node) : null;
+
+  //         if (!items) {
+  //           return null;
+  //         }
+
+  //         return <Grid
+  //           container
+  //           {...this.getComponentProps(this)}
+  //         >
+
+  //           {items.length ? items.map((n, index) => {
+
+  //             const {
+  //               id,
+  //             } = n;
+
+  //             return <ObjectContext.Provider
+  //               key={id || index}
+  //               value={{
+  //                 object: n,
+  //               }}
+  //             >
+  //               {super.renderMainView()}
+  //             </ObjectContext.Provider>
+  //           }) : super.renderMainView()}
+
+  //         </Grid>;
+  //       }}
+  //     </ConnectorContext.Consumer>
+  //   </div>
+
+  //     ;
+  // }
+
+  renderChildren() {
 
     const {
       ...other
     } = this.getRenderProps();
 
-    console.log("ListView", this);
+    // console.log("ListView", this);
 
     const {
       Grid,
     } = this.context;
 
-    return <div
-      {...other}
-    >
-      <ConnectorContext.Consumer>
-        {context => {
+    let children = super.renderChildren();
 
-          console.log("ListView ConnectorContext", context);
+    return <ConnectorContext.Consumer>
+      {context => {
 
-          const {
-            data,
-          } = context;
+        {/* console.log("ListView ConnectorContext", context); */}
 
-          if (!data) {
-            return null;
-          }
+        const {
+          data,
+        } = context;
+
+        if (!data) {
+          return null;
+        }
 
 
-          const {
-            objects,
-            objectsConnection,
-          } = data;
+        const {
+          objects,
+          objectsConnection,
+        } = data;
 
-          let items = objects ? objects : objectsConnection ? objectsConnection.edges.map(n => n.node) : null;
+        let items = objects ? objects : objectsConnection ? objectsConnection.edges.map(n => n.node) : null;
 
-          if (!items) {
-            return null;
-          }
+        if (!items) {
+          return null;
+        }
 
-          return <Grid
-            container
-            {...this.getComponentProps(this)}
-          >
+        return <Grid
+          container
+          {...this.getComponentProps(this)}
+        >
 
-            {items.length ? items.map((n, index) => {
+          {items.length ?
+            items.map((n, index) => {
 
               const {
                 id,
@@ -107,14 +176,16 @@ class ListView extends EditorComponent {
                   object: n,
                 }}
               >
-                {super.renderMainView()}
+                {children}
               </ObjectContext.Provider>
-            }) : super.renderMainView()}
+            })
+            :
+            children
+          }
 
-          </Grid>;
-        }}
-      </ConnectorContext.Consumer>
-    </div>
+        </Grid>;
+      }}
+    </ConnectorContext.Consumer>
 
       ;
   }

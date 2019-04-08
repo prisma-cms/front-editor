@@ -245,7 +245,7 @@ class FrontEditor extends Component {
 
     // console.log("modules", modules);
 
-    return modules.filter(n => n.Name);
+    return modules.filter(n => n).filter(n => n.Name);
   }
 
 

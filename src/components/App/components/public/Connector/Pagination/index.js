@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 
 import { ConnectorContext } from '..';
@@ -25,14 +25,13 @@ class Pagination extends EditorComponent {
   }
 
 
-  renderMainView() {
+  renderChildren() {
 
     const {
       Pagination: PrismaCmsPagination,
     } = this.context;
 
-    return <div
-      {...this.getRenderProps()}
+    return <Fragment
     >
       <ConnectorContext.Consumer>
         {context => {
@@ -102,7 +101,10 @@ class Pagination extends EditorComponent {
 
         }}
       </ConnectorContext.Consumer>
-    </div>;
+
+      {super.renderChildren()}
+
+    </Fragment>;
   }
 
 }

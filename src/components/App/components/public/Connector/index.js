@@ -16,6 +16,7 @@ import Context from "@prisma-cms/context";
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 import EditorComponent from '../../';
+import { Typography } from 'material-ui';
 
 export const ConnectorContext = createContext({});
 
@@ -29,6 +30,7 @@ class Connector extends EditorComponent {
     query: "",
     pagevariable: "page",
     filtersname: "filters",
+    first: 10,
   };
 
 
@@ -63,24 +65,70 @@ class Connector extends EditorComponent {
 
     Object.assign(newItem, {
       "first": 12,
+      // query: "usersConnection",
       "components": [
+
         {
-          "name": "ListView",
-          "components": [
+          "name": "Grid",
+          props: {
+            "container": true,
+            spacing: 8,
+          },
+          components: [
             {
               "name": "Grid",
               props: {
                 "item": true,
                 "xs": 12,
-                "md": 6,
-                "xl": 3
               },
-            }
-          ]
+              components: [
+                {
+                  "name": "Filters",
+                  "props": {},
+                  "components": []
+                },
+              ],
+            },
+            {
+              "name": "Grid",
+              props: {
+                "item": true,
+                "xs": 12,
+              },
+              components: [
+                {
+                  "name": "ListView",
+                  "components": [
+                    {
+                      "name": "Grid",
+                      props: {
+                        "item": true,
+                        "xs": 12,
+                        "md": 6,
+                        "xl": 3,
+                      },
+                      components: [],
+                    }
+                  ]
+                },
+              ],
+            },
+            {
+              "name": "Grid",
+              props: {
+                "item": true,
+                "xs": 12,
+              },
+              components: [
+                {
+                  "name": "Pagination"
+                },
+              ],
+            },
+
+          ],
         },
-        {
-          "name": "Pagination"
-        }
+
       ],
     });
 
@@ -160,13 +208,22 @@ class Connector extends EditorComponent {
     if (!field) {
 
 
+      // if (name === "skip") {
+
+      //   console.log("getEditorField activeItem", activeItem);
+
+      // }
+
       if (activeItem) {
 
         const {
+          // props: {
+          //   query: fieldName,
+          // },
           props: {
             query: fieldName,
           },
-        } = activeItem;
+        } = activeItem.getObjectWithMutations();
 
         if (fieldName) {
 
@@ -276,8 +333,13 @@ class Connector extends EditorComponent {
     });
 
 
-    if (name === "skip") {
-    }
+    // if (name === "skip") {
+
+    //   console.log("getEditorField", props);
+    //   console.log("getEditorField field", field);
+
+    // }
+
 
 
     return field !== undefined ? field : super.getEditorField(props);
@@ -285,11 +347,16 @@ class Connector extends EditorComponent {
   }
 
 
-  updateComponentProperty(component, name, value) {
+  updateComponentProperty(name, value) {
 
+    const activeItem = this.getActiveItem();
 
 
     let newProps = {};
+
+    const {
+      props,
+    } = activeItem;
 
     switch (name) {
 
@@ -334,7 +401,7 @@ class Connector extends EditorComponent {
                     case "Float":
 
                       propName = argName;
-                      propValue = defaultValue ? parseFloat(defaultValue) : defaultValue;
+                      propValue = props[argName] !== undefined ? props[argName] : defaultValue ? parseFloat(defaultValue) : defaultValue;
 
                       break;
 
@@ -373,17 +440,18 @@ class Connector extends EditorComponent {
 
         }
 
+        return activeItem.updateComponentProps({
+          ...newProps,
+          [name]: value,
+        });
+
         break;
 
     }
 
 
+    return super.updateComponentProperty(name, value)
 
-
-    return this.updateComponentProps(component, {
-      ...newProps,
-      [name]: value,
-    });
   }
 
 
@@ -526,7 +594,68 @@ class Connector extends EditorComponent {
 
 
 
-  renderMainView() {
+  // renderMainView() {
+
+  //   const {
+  //     props: {
+  //       orderBy,
+  //       query,
+  //       ...otherProps
+  //     },
+  //     where: propsWhere,
+  //     ...other
+  //   } = this.getRenderProps();
+
+
+  //   // const {
+  //   // } = this.getComponentProps(this);
+
+  //   const filters = this.getFilters();
+
+
+  //   let where;
+
+  //   let AND = [];
+
+  //   if (propsWhere) {
+  //     // AND.push({
+  //     //   ...propsWhere,
+  //     // });
+  //     AND.push(propsWhere);
+  //   }
+
+  //   if (filters) {
+  //     AND.push(filters);
+  //   }
+
+  //   if (AND.length) {
+
+
+  //     where = {
+  //       AND,
+  //     }
+  //   }
+
+
+
+  //   return <div
+  //     {...other}
+  //   >
+  //     <Viewer
+  //       key={query}
+  //       query={query}
+  //       setFilters={filters => this.setFilters(filters)}
+  //       filters={filters || []}
+  //       where={where}
+  //       {...otherProps}
+  //     >
+  //       {super.renderMainView()}
+  //     </Viewer>
+
+  //   </div>
+  // }
+
+  renderChildren() {
 
     const {
       props: {
@@ -538,6 +667,14 @@ class Connector extends EditorComponent {
       ...other
     } = this.getRenderProps();
 
+
+    if (!query) {
+      return <Typography
+        color="error"
+      >
+        Query props required
+      </Typography>
+    }
 
     // const {
     // } = this.getComponentProps(this);
@@ -570,21 +707,16 @@ class Connector extends EditorComponent {
 
 
 
-    return <div
-      {...other}
+    return <Viewer
+      key={query}
+      query={query}
+      setFilters={filters => this.setFilters(filters)}
+      filters={filters || []}
+      where={where}
+      {...otherProps}
     >
-      <Viewer
-        key={query}
-        query={query}
-        setFilters={filters => this.setFilters(filters)}
-        filters={filters || []}
-        where={where}
-        {...otherProps}
-      >
-        {super.renderMainView()}
-      </Viewer>
-
-    </div>
+      {super.renderChildren()}
+    </Viewer>
   }
 
 }
@@ -669,6 +801,9 @@ class Viewer extends Component {
 
     const skip = page ? (page - 1) * first : 0;
 
+    console.log("Viewer", this);
+
+    // return "Sdfdsf";
 
     return <ConnectorContext.Provider
       value={{
