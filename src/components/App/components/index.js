@@ -730,7 +730,7 @@ class EditorComponent extends ObjectEditable {
 
     // return null;
 
-    let header = activeItem.renderHeader();
+    let header = activeItem.renderHeader(true);
 
     const {
       Grid,
@@ -1551,8 +1551,42 @@ class EditorComponent extends ObjectEditable {
   }
 
 
+  renderHeader(show) {
 
-  render() {
+    if (!show) {
+      return null;
+    }
+
+    // const {
+    //   mode,
+    // } = this.props;
+
+    // if(mode !== "settings") {
+    //   return null;
+    // }
+
+    // if(mode === "main") {
+    //   return null;
+    // }
+
+    return super.renderHeader();
+
+  }
+
+
+  renderEditableView() {
+
+    return this.renderDefaultView();
+  }
+
+
+  renderEmpty() {
+
+    return this.renderDefaultView();
+  }
+
+
+  renderDefaultView() {
 
     // const {
     //   ComponentContext,
@@ -1568,6 +1602,8 @@ class EditorComponent extends ObjectEditable {
 
     let content = null;
 
+
+    // return "Sdfdsf";
 
 
 
@@ -1598,9 +1634,6 @@ class EditorComponent extends ObjectEditable {
     if (!content) {
       return null;
     }
-
-
-
 
     return content;
 
