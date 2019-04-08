@@ -668,6 +668,10 @@ class Connector extends EditorComponent {
     } = this.getRenderProps();
 
 
+
+
+
+
     if (!query) {
       return <Typography
         color="error"
@@ -714,6 +718,7 @@ class Connector extends EditorComponent {
       filters={filters || []}
       where={where}
       {...otherProps}
+      {...this.getComponentProps(this)}
     >
       {super.renderChildren()}
     </Viewer>

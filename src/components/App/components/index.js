@@ -569,6 +569,9 @@ class EditorComponent extends ObjectEditable {
       // },
       // props,
       // errorDelay,
+      // object: {
+      //   props,
+      // },
       ...other
     } = component.props;
 
@@ -626,9 +629,9 @@ class EditorComponent extends ObjectEditable {
     ];
 
     let componentProps = {
-      ...object,
       ...component,
       ...other,
+      ...object,
       // ...otherProps,
     };
 
@@ -1509,6 +1512,7 @@ class EditorComponent extends ObjectEditable {
       itemComponents.map((n, index) => {
 
         const {
+          id,
           name,
           // props,
           ...other
@@ -1520,7 +1524,7 @@ class EditorComponent extends ObjectEditable {
         if (Component) {
 
           output.push(<Component
-            key={index}
+            key={id || index}
             mode="main"
             // component={n}
             parent={this}

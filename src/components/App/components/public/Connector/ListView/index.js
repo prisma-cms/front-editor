@@ -123,7 +123,8 @@ class ListView extends EditorComponent {
 
     const {
       ...other
-    } = this.getRenderProps();
+      // } = this.getRenderProps();
+    } = this.getComponentProps(this);
 
 
 
@@ -160,7 +161,7 @@ class ListView extends EditorComponent {
 
         return <Grid
           container
-          {...this.getComponentProps(this)}
+          {...other}
         >
 
           {items.length ?

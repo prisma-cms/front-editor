@@ -136,16 +136,91 @@ export class TemplateView extends Component {
     } = this.props;
 
 
+    // const object = {
+    //   "name": "Connector",
+    //   "props": {
+    //     "orderBy": null,
+    //     "skip": null,
+    //     "first": 12,
+    //     "last": null,
+    //     // "query": "templatesConnection"
+    //     "query": "usersConnection",
+    //     where: {
+    //     },
+    //   },
+    //   "components": [
+    //     {
+    //       "name": "Grid",
+    //       "props": {
+    //         "container": true,
+    //         "spacing": 8
+    //       },
+    //       "components": [
+    //         {
+    //           "name": "Grid",
+    //           "props": {
+    //             "item": true,
+    //             "xs": 12
+    //           },
+    //           "components": [
+    //             {
+    //               "name": "Filters",
+    //               "props": {},
+    //               "components": []
+    //             }
+    //           ]
+    //         },
+    //         {
+    //           "name": "Grid",
+    //           "props": {
+    //             "item": true,
+    //             "xs": 12
+    //           },
+    //           "components": [
+    //             {
+    //               "name": "ListView",
+    //               "components": [
+    //                 {
+    //                   "name": "Grid",
+    //                   "props": {
+    //                     "item": true,
+    //                     "xs": 12,
+    //                     "md": 6,
+    //                     "xl": 3
+    //                   },
+    //                   "components": [
+    //                     {
+    //                       name: "UserLink",
+    //                     }
+    //                   ]
+    //                 }
+    //               ]
+    //             }
+    //           ]
+    //         },
+    //         {
+    //           "name": "Grid",
+    //           "props": {
+    //             "item": true,
+    //             "xs": 12
+    //           },
+    //           "components": [
+    //             {
+    //               "name": "Pagination"
+    //             }
+    //           ]
+    //         }
+    //       ]
+    //     }
+    //   ],
+    //   // "first": 12
+    // }
+
     // return <FrontEditor
     //   // {...other}
     //   inEditMode={true}
     //   data={{
-    //     object: {
-    //       name: "Typography",
-    //       props: {
-    //         text: "FDgdfgd",
-    //       },
-    //     },
+    //     object,
     //   }}
     // />
 
