@@ -4,20 +4,20 @@ import { withStyles } from 'material-ui';
 
 import Context from "@prisma-cms/context";
 
-// import Page from './components/Page';
-// import Grid from './components/Grid';
-// import TextArea from './components/TextArea';
-// import UsersGrid from './components/UsersGrid';
-// import Connector from './components/Connector';
-// import ListView from './components/Connector/ListView';
-// import Pagination from './components/Connector/Pagination';
-// import UserLink from './components/Connector/UserLink';
-// import Filters from './components/Connector/Filters';
-// import CreatedBy from './components/Connector/Fields/CreatedBy';
-// import NamedField from './components/Connector/Fields/NamedField';
-// import Content from './components/Connector/Fields/Content';
-// import Section from './components/Section';
-// import Typography from './components/Typography';
+import Page from './components/public/Page';
+import Grid from './components/public/Grid';
+// import TextArea from './components/public/TextArea';
+import UsersGrid from './components/public/UsersGrid';
+import Connector from './components/public/Connector';
+import ListView from './components/public/Connector/ListView';
+import Pagination from './components/public/Connector/Pagination';
+import UserLink from './components/public/Connector/UserLink';
+import Filters from './components/public/Connector/Filters';
+import CreatedBy from './components/public/Connector/Fields/CreatedBy';
+import NamedField from './components/public/Connector/Fields/NamedField';
+import Content from './components/public/Connector/Fields/Content';
+import Section from './components/public/Section';
+import Typography from './components/public/Typography';
 
 const styles = theme => {
 
@@ -132,19 +132,19 @@ class FrontEditor extends Component {
   static defaultProps = {
     debug: false,
     Components: [
-      // Grid,
-      // Typography,
+      Grid,
+      Typography,
       // TextArea,
-      // UsersGrid,
-      // Connector,
-      // ListView,
-      // Pagination,
-      // NamedField,
-      // UserLink,
-      // Filters,
-      // CreatedBy,
-      // Content,
-      // Section,
+      UsersGrid,
+      Connector,
+      ListView,
+      Pagination,
+      NamedField,
+      UserLink,
+      Filters,
+      CreatedBy,
+      Content,
+      Section,
     ],
     CustomComponents: [],
   }
@@ -182,40 +182,6 @@ class FrontEditor extends Component {
   }
 
 
-  // prepareComponents() {
-
-  //   const {
-  //     Components,
-  //     CustomComponents,
-  //   } = this.props;
-
-  //   // Components.map(n => {
-
-
-
-  //   // });
-
-  //   // CustomComponents.map(n => {
-
-
-
-  //   // });
-
-
-  //   let baseComponents = [Page].concat(Components)
-  //     .filter(n => n && !CustomComponents.find(i => i.Name === n.Name));
-
-
-
-  //   // baseComponents.map(n => {
-
-
-
-  //   // });
-
-  //   return baseComponents.concat(CustomComponents).filter(n => n && n.Name);
-  // }
-
   prepareComponents() {
 
     const {
@@ -224,29 +190,44 @@ class FrontEditor extends Component {
     } = this.props;
 
 
-
-    // var cache = {};
-
-    let modules = [];
-
-    function importAll(r) {
-      r.keys().forEach(key => {
-
-        // cache[key] = r(key)
+    let baseComponents = [Page].concat(Components)
+      .filter(n => n && !CustomComponents.find(i => i.Name === n.Name));
 
 
-
-        modules.push(r(key).default);
-      });
-    }
-
-    importAll(require.context('./components/public/', true, /\.js$/));
-
-
-
-
-    return modules.filter(n => n).filter(n => n.Name);
+    return baseComponents.concat(CustomComponents).filter(n => n && n.Name);
   }
+
+  // prepareComponents() {
+
+  //   const {
+  //     Components,
+  //     CustomComponents,
+  //   } = this.props;
+
+
+
+  //   // var cache = {};
+
+  //   let modules = [];
+
+  //   function importAll(r) {
+  //     r.keys().forEach(key => {
+
+  //       // cache[key] = r(key)
+
+
+
+  //       modules.push(r(key).default);
+  //     });
+  //   }
+
+  //   importAll(require.context('./components/public/', true, /\.js$/));
+
+
+
+
+  //   return modules.filter(n => n).filter(n => n.Name);
+  // }
 
 
   renderPanels() {

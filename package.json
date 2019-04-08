@@ -1,6 +1,6 @@
 {
   "name": "@prisma-cms/front-editor",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "private": false,
   "main": "lib/App.js",
   "scripts": {
