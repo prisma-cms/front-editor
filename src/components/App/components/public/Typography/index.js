@@ -51,6 +51,7 @@ class Typography extends EditorComponent {
   getRenderProps() {
 
     const {
+      classes,
       style,
       display,
       displayType,

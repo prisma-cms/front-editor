@@ -608,7 +608,9 @@ class EditorComponent extends ObjectEditable {
       deletable,
       component,
       mutate,
-      data,
+      data: {
+        object,
+      },
       errorDelay,
       SaveIcon,
       ResetIcon,
@@ -624,6 +626,7 @@ class EditorComponent extends ObjectEditable {
     ];
 
     let componentProps = {
+      ...object,
       ...component,
       ...other,
       // ...otherProps,
@@ -1326,18 +1329,18 @@ class EditorComponent extends ObjectEditable {
         // object.components = components;
 
         throw new Error("Can not get components");
-        
+
       }
-      
+
       const index = components.indexOf(object);
-      
+
       const component = components[index];
-      
-      if(!component) {
+
+      if (!component) {
 
         console.error("updateComponentProps activeItem", activeItem);
         console.error("updateComponentProps activeParent", activeParent);
-        
+
         throw new Error("Can not get component");
       }
 

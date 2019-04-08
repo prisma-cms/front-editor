@@ -135,6 +135,20 @@ export class TemplateView extends Component {
       ...other
     } = this.props;
 
+
+    // return <FrontEditor
+    //   // {...other}
+    //   inEditMode={true}
+    //   data={{
+    //     object: {
+    //       name: "Typography",
+    //       props: {
+    //         text: "FDgdfgd",
+    //       },
+    //     },
+    //   }}
+    // />
+
     return <FrontEditor
       {...other}
       inEditMode={true}
