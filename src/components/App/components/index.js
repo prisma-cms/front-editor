@@ -46,7 +46,6 @@ class EditorComponent extends ObjectEditable {
      * Нужен для того, чтобы получить доступ к родительским элементам
      */
     parent: PropTypes.object,
-    deleteItem: PropTypes.func,
     deletable: PropTypes.bool.isRequired,
   };
 
@@ -303,6 +302,87 @@ class EditorComponent extends ObjectEditable {
 
 
   /**
+   * Удаление элемента.
+   * Если это корневой элемент, удаляем его.
+   * Если нет, то удаляем из родительского
+   */
+  deleteItem() {
+
+    const {
+      setActiveItem,
+    } = this.context;
+
+    const activeItem = this.getActiveItem();
+
+    const activeParent = activeItem.getActiveParent();
+
+    console.log("deleteItem activeItem", activeItem);
+    console.log("deleteItem activeParent", activeParent);
+    console.log("deleteItem activeItem === activeParent", activeItem === activeParent);
+
+    if (activeItem === activeParent) {
+
+      this.addError("Sdfdsfds");
+      return;
+    }
+    else {
+
+
+      let {
+        data: {
+          object,
+        },
+        parent: {
+          props: {
+            data: {
+              object: {
+                components,
+              },
+            },
+          },
+        },
+      } = activeItem.props;
+
+
+      const index = components.indexOf(object);
+
+      components.splice(index, 1);
+
+      // console.log("deleteItem index", index);
+
+
+      // if (components) {
+      //   components.push(newItem);
+      // }
+
+      activeItem.updateParentComponents();
+
+
+    }
+
+    // return;
+
+    setActiveItem(null);
+
+  }
+
+
+  isDeletable() {
+
+    const {
+      deletable,
+    } = this.props;
+
+
+    const activeItem = this.getActiveItem();
+
+    const activeParent = activeItem.getActiveParent();
+
+    return deletable && activeItem !== activeParent ? true : false;
+  }
+
+
+  /**
    * Надо обновить components, чтобы в объекте было актуальное свойство
    */
   updateParentComponents() {
@@ -480,7 +560,6 @@ class EditorComponent extends ObjectEditable {
     const {
       mode,
       deletable,
-      deleteItem,
       parent,
       // components,
       // component: {
@@ -499,21 +578,6 @@ class EditorComponent extends ObjectEditable {
       props: componentProps,
 
     } = component.getObjectWithMutations();
-
-    // const {
-    //   // mode,
-    //   // deletable,
-    //   // deleteItem,
-    //   // parent,
-    //   // components,
-    //   // component: {
-    //   //   type,
-    //   //   components: itemComponents,
-    //   //   ...props
-    //   // },
-    //   // ...other
-    //   props,
-    // } = component.props;
 
 
     return {
@@ -541,7 +605,6 @@ class EditorComponent extends ObjectEditable {
     const {
       className,
       mode,
-      deleteItem,
       deletable,
       component,
       mutate,
@@ -672,8 +735,7 @@ class EditorComponent extends ObjectEditable {
     let {
       props: {
         // component,
-        deleteItem,
-        deletable,
+        // deletable,
         props,
         ...other
       },
@@ -684,6 +746,8 @@ class EditorComponent extends ObjectEditable {
       // ComponentContext,
     } = activeItem;
 
+
+    const deletable = activeItem.isDeletable();
 
 
     // let {
@@ -773,7 +837,7 @@ class EditorComponent extends ObjectEditable {
             </IconButton>
           </Grid>
 
-          {deleteItem && deletable ?
+          {deletable ?
             <Grid
               item
             >
@@ -781,8 +845,7 @@ class EditorComponent extends ObjectEditable {
                 title="Удалить элемент"
                 onClick={event => {
 
-                  deleteItem();
-                  setActiveItem(null);
+                  this.deleteItem();
 
                 }}
               >
@@ -1435,17 +1498,6 @@ class EditorComponent extends ObjectEditable {
             // component={n}
             parent={this}
             // props={props}
-            deleteItem={() => {
-
-              console.log("deleteItem", this);
-
-              // itemComponents.splice(index, 1);
-
-              // updateObject({
-              //   components,
-              // });
-
-            }}
             data={{
               object: n,
             }}
@@ -1467,72 +1519,6 @@ class EditorComponent extends ObjectEditable {
     return output;
   }
 
-  // renderChildren() {
-
-
-  //   const {
-  //     Components,
-  //     components,
-  //     updateObject,
-  //   } = this.context;
-
-  //   const {
-  //     component: {
-  //       components: itemComponents,
-  //     },
-  //   } = this.props;
-
-
-  //   let output = [];
-
-
-
-  //   if (itemComponents && itemComponents.length) {
-
-  //     itemComponents.map((n, index) => {
-
-  //       const {
-  //         name,
-  //         // props,
-  //         ...other
-  //       } = n;
-
-
-  //       let Component = Components.find(n => n.Name === name);
-
-  //       if (Component) {
-
-  //         output.push(<Component
-  //           key={index}
-  //           mode="main"
-  //           component={n}
-  //           parent={this}
-  //           // props={props}
-  //           deleteItem={() => {
-
-  //             itemComponents.splice(index, 1);
-
-  //             updateObject({
-  //               components,
-  //             });
-
-  //           }}
-  //           {...other}
-  //         />);
-
-  //       }
-
-
-
-  //     })
-
-
-
-  //   }
-
-
-  //   return output;
-  // }
 
 
   render() {
