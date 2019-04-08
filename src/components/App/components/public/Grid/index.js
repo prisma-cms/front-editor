@@ -48,9 +48,10 @@ class Grid extends EditorComponent {
           variant="raised"
           onClick={event => {
 
-            const component = this.getActiveComponent();
+            // const component = this.getActiveComponent();
+            // this.updateComponentProperty(component, name === "container" ? "item" : "container", true);
 
-            this.updateComponentProperty(component, name === "container" ? "item" : "container", true);
+            this.updateComponentProperty(name === "container" ? "item" : "container", true);
 
           }}
         >
@@ -66,63 +67,63 @@ class Grid extends EditorComponent {
 
 
 
-  // updateComponentProperty( name, value) {
+  updateComponentProperty( name, value) {
 
-  //   switch (name) {
+    switch (name) {
 
-  //     case "xs":
-  //     case "sm":
-  //     case "md":
-  //     case "lg":
-  //     case "xl":
+      case "xs":
+      case "sm":
+      case "md":
+      case "lg":
+      case "xl":
 
-  //       if (value === 0) {
-  //         value = true;
-  //       }
-  //       else if (!value || typeof value !== "number" || value < 0 || value > 12) {
-  //         return false;
-  //       }
+        if (value === 0) {
+          value = true;
+        }
+        else if (!value || typeof value !== "number" || value < 0 || value > 12) {
+          return false;
+        }
 
-  //       break;
+        break;
 
-  //     // case "container":
+      // case "container":
 
-  //     //   break;
+      //   break;
 
-  //   }
-
-
-  //   return super.updateComponentProperty( name, value);
-  // }
+    }
 
 
-  // updateComponentProps( data) {
+    return super.updateComponentProperty( name, value);
+  }
 
-  //   console.log("Grid updateComponentProps",   { ...data });
 
-  //   if (data.container) {
+  updateComponentProps( data) {
 
-  //     Object.assign(data, {
-  //       item: undefined,
-  //       xs: undefined,
-  //       sm: undefined,
-  //       md: undefined,
-  //       lg: undefined,
-  //       xl: undefined,
-  //       alignItems: "flex-end",
-  //     });
+    // console.log("Grid updateComponentProps",   { ...data });
 
-  //   }
-  //   else if (data.item) {
-  //     Object.assign(data, {
-  //       container: undefined,
-  //       alignItems: undefined,
-  //       ...this.getItemDefaultProps(),
-  //     });
-  //   }
+    if (data.container) {
 
-  //   return super.updateComponentProps( data);
-  // }
+      Object.assign(data, {
+        item: undefined,
+        xs: undefined,
+        sm: undefined,
+        md: undefined,
+        lg: undefined,
+        xl: undefined,
+        alignItems: "flex-end",
+      });
+
+    }
+    else if (data.item) {
+      Object.assign(data, {
+        container: undefined,
+        alignItems: undefined,
+        ...this.getItemDefaultProps(),
+      });
+    }
+
+    return super.updateComponentProps( data);
+  }
 
 
   removeProps(name) {
@@ -174,7 +175,7 @@ class Grid extends EditorComponent {
     } = this.context;
 
 
-    console.log("prepareNewItem this.props", { ...this.props });
+    // console.log("prepareNewItem this.props", { ...this.props });
 
     let {
       props: {

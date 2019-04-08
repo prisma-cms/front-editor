@@ -327,6 +327,9 @@ class FrontEditor extends Component {
       data,
       // _dirty,
       // onSave,
+      setPageMeta,
+      Components,
+      CustomComponents,
       ...other
     } = this.props;
 
@@ -338,12 +341,12 @@ class FrontEditor extends Component {
       return null;
     }
 
-    const Components = this.getComponents();
+    const RenderComponents = this.getComponents();
 
     // console.log("FrontEditor.props", this.props);
 
     // const Page = Components.find(n => n.Name === "Page");
-    const Component = Components.find(n => n.Name === name);
+    const Component = RenderComponents.find(n => n.Name === name);
 
     // console.log("FrontEditor Component", Component);
 

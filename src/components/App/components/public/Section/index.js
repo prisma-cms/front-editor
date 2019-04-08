@@ -27,6 +27,43 @@ class Section extends EditorComponent {
     </div>);
   }
 
+
+
+  getRenderProps() {
+
+    const {
+      style,
+      marginTop,
+      marginBottom,
+      // props: {
+      //   ...otherProps
+      // },
+      ...other
+    } = super.getRenderProps();
+
+    // const {
+    //   text,
+    //   // type,
+    //   // style,
+    //   color,
+    //   display,
+    //   displayType,
+    //   ...otherProps
+    // } = this.getComponentProps(this);
+
+    // console.log("getRenderProps", { ...other });
+
+    return {
+      style: {
+        ...style,
+        marginTop,
+        marginBottom,
+      },
+      ...other,
+      // ...otherProps
+    }
+  }
+
   // renderMainView() {
 
   //   // const {

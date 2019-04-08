@@ -1251,17 +1251,17 @@ class EditorComponent extends ObjectEditable {
 
     const activeParent = activeItem.getActiveParent();
 
-    console.log("updateComponentProps activeParent", activeParent);
+    // console.log("updateComponentProps activeParent", activeParent);
 
-    console.log("updateComponentProps activeParent compare", activeParent === activeItem);
+    // console.log("updateComponentProps activeParent compare", activeParent === activeItem);
 
-    console.log("updateComponentProps activeItem", activeItem);
-    console.log("updateComponentProps data", data);
-    console.log("updateComponentProps this", this);
+    // console.log("updateComponentProps activeItem", activeItem);
+    // console.log("updateComponentProps data", data);
+    // console.log("updateComponentProps this", this);
 
     let props = activeItem.props.props || {};
 
-    console.log("updateComponentProps props", props);
+    // console.log("updateComponentProps props", props);
 
     // return;
 
@@ -1294,7 +1294,7 @@ class EditorComponent extends ObjectEditable {
 
     }
 
-    console.log("updateComponentProps new props", props);
+    // console.log("updateComponentProps new props", props);
 
     if (activeParent === activeItem) {
       activeParent.updateObject({
@@ -1303,20 +1303,29 @@ class EditorComponent extends ObjectEditable {
     }
     else {
 
+      // let {
+      //   components,
+      // } = activeItem.props.parent.props;
+
       let {
-        components,
+        // components,
+        data: {
+          object: {
+            components,
+          },
+        },
       } = activeItem.props.parent.props;
 
-      console.log("updateComponentProps props parent", activeItem.props.parent);
-      console.log("updateComponentProps props parent components", components);
-      console.log("updateComponentProps props parent components object", object);
+      // console.log("updateComponentProps props parent", activeItem.props.parent);
+      // console.log("updateComponentProps props parent components", components);
+      // console.log("updateComponentProps props parent components object", object);
 
       const index = components.indexOf(object);
 
       const component = components[index];
 
-      console.log("updateComponentProps props parent components object index", index);
-      console.log("updateComponentProps props parent components object component", component);
+      // console.log("updateComponentProps props parent components object index", index);
+      // console.log("updateComponentProps props parent components object component", component);
 
       Object.assign(component, {
         props,
