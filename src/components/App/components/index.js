@@ -68,6 +68,8 @@ class EditorComponent extends ObjectEditable {
     this.onChangeProps = this.onChangeProps.bind(this);
     this.updateProps = this.updateProps.bind(this);
     this.getActiveParent = this.getActiveParent.bind(this);
+    this.renderHeader = this.renderHeader.bind(this);
+    this.save = this.save.bind(this);
 
   }
 
@@ -157,6 +159,8 @@ class EditorComponent extends ObjectEditable {
     const result = await super.saveObject(data)
       .catch(r => r);
 
+    // console.log("saveObject result", result);
+
     setTimeout(() => {
 
       const {
@@ -164,7 +168,7 @@ class EditorComponent extends ObjectEditable {
       } = this.context;
 
       forceUpdate()
-    }, 2000);
+    }, 1000);
 
     return result;
 
@@ -718,6 +722,7 @@ class EditorComponent extends ObjectEditable {
       const isActive = activeItem === this ? true : false;
       const isHovered = hoveredItem === this ? true : false;
 
+      const isDirty = this.isDirty();
 
       classNames = classNames.concat([
         classes.item,
@@ -725,7 +730,7 @@ class EditorComponent extends ObjectEditable {
         isDragOvered ? "dragOvered" : "",
         isActive ? "active" : "",
         isHovered ? "hovered" : "",
-
+        isDirty ? "dirty" : "",
       ]);
 
       Object.assign(componentProps, {
@@ -792,7 +797,7 @@ class EditorComponent extends ObjectEditable {
       return null;
     }
 
-    console.log("renderSettingsView activeItem ", activeItem);
+    // console.log("renderSettingsView activeItem ", activeItem);
 
     const {
       name,
@@ -839,7 +844,7 @@ class EditorComponent extends ObjectEditable {
 
     const componentProps = this.getComponentProps(activeItem);
 
-    console.log("renderSettingsView componentProps ", componentProps);
+    // console.log("renderSettingsView componentProps ", componentProps);
 
     const structure = this.getStructure(activeItem);
 
@@ -956,7 +961,13 @@ class EditorComponent extends ObjectEditable {
               borderTop: "1px solid #ddd",
             }}
           >
-            {settings}
+            {settings.map((n, index) => <Grid
+              key={index}
+              item
+              xs={12}
+            >
+              {n}
+            </Grid>)}
           </Grid>
         </Grid> :
         null

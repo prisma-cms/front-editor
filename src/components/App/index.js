@@ -32,6 +32,7 @@ const styles = theme => {
   const dragOveredBorderColor = "red";
   const hoveredBorderColor = "#7509da";
   const activeBorderColor = "#b806bb";
+  const dirtyBorderColor = "red";
 
   return {
 
@@ -97,6 +98,9 @@ const styles = theme => {
       },
       "&.hovered": {
         border: `1px solid ${hoveredBorderColor}`,
+      },
+      "&.dirty": {
+        border: `1px solid ${dirtyBorderColor}`,
       },
     },
     panelButton: {
@@ -375,10 +379,15 @@ class FrontEditor extends Component {
 
 
     const {
+      staticContext,
+      inEditMode,
+      debug,
       // object,
       components,
       data,
-      _dirty,
+      // _dirty,
+      // onSave,
+      ...other
     } = this.props;
 
     const {
@@ -391,7 +400,7 @@ class FrontEditor extends Component {
 
     const Components = this.getComponents();
 
-    console.log("FrontEditor.props", this.props);
+    // console.log("FrontEditor.props", this.props);
 
     // const Page = Components.find(n => n.Name === "Page");
     const Component = Components.find(n => n.Name === name);
@@ -410,7 +419,9 @@ class FrontEditor extends Component {
       //   object,
       // }}
       data={data}
-      _dirty={_dirty}
+      // _dirty={_dirty}
+      // onSave={onSave}
+      {...other}
     />;
 
     // return <Page

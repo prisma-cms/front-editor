@@ -13,16 +13,22 @@ class TemplateCreatePage extends TemplatePage {
     data: {
       object: {
         name: "Page",
+        props: {},
+        components: [],
       },
     },
     _dirty: {
       name: "Page",
+      props: {},
+      components: [],
     },
   }
 
 
   onSave = (result) => {
-    // console.log("this result", result);
+    console.log("this result", result);
+
+    return "Sdfdsf";
 
     const {
       response,
