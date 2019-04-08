@@ -243,24 +243,14 @@ class EditorComponent extends ObjectEditable {
 
   onDrop(event) {
 
-
     const {
       dragItem,
       dragTarget,
-      components,
-      updateObject,
     } = this.context;
 
 
-    let {
-      component,
-      // container,
-    } = this.props;
-
     console.log("onDrop dragItem", dragItem);
     console.log("onDrop dragTarget", dragTarget);
-
-    // return;
 
 
     if (dragItem && dragTarget && dragTarget === this) {
@@ -271,7 +261,6 @@ class EditorComponent extends ObjectEditable {
 
       const newItem = this.prepareNewItem();
 
-
       console.log("onDrop newItem", newItem);
 
       if (newItem) {
@@ -279,51 +268,6 @@ class EditorComponent extends ObjectEditable {
         this.addComponent(newItem);
 
         return;
-
-        // const {
-        //   components: oldComponents,
-        // } = this.getObjectWithMutations();
-
-        // const components = (oldComponents || []).slice(0);
-
-        // components.push(newItem);
-
-        // console.log("onDrop components", components);
-
-        // this.updateObject({
-        //   components,
-        // });
-
-        // return;
-
-        // const {
-        //   components: oldComponents,
-        // } = this.getObjectWithMutations();
-
-        // const components = (oldComponents || []).slice(0);
-
-        // components.push(newItem);
-
-        // console.log("onDrop components", components);
-
-        // this.updateObject({
-        //   components,
-        // });
-
-        // return;
-
-        let {
-          components: itemComponents,
-        } = component;
-
-        itemComponents = itemComponents || [];
-
-
-        itemComponents.push(newItem);
-
-        this.updateComponent(component, {
-          components: itemComponents,
-        });
 
       }
 
@@ -336,99 +280,8 @@ class EditorComponent extends ObjectEditable {
   /**
    * Обновить мы должны текущий элемент или предка
    */
-  // addComponent (newItem){
-
-
-  //   const {
-  //     id: objectId,
-  //     components: oldComponents,
-  //   } = this.getObjectWithMutations();
-
-
-  //   if(objectId) {
-
-  //     const components = (oldComponents || []).slice(0);
-
-  //     components.push(newItem);
-
-  //     console.log("onDrop components", components);
-
-  //     this.updateObject({
-  //       components,
-  //     });
-
-  //   }
-  //   else {
-
-  //     const {
-  //       parent,
-  //     } = this.props;
-
-  //     console.log("onDrop parent", parent);
-
-  //   }
-
-
-  // }
-
-  // addComponent(newItem) {
-
-
-  //   const {
-  //     id: objectId,
-  //     components: oldComponents,
-  //   } = this.getObjectWithMutations();
-
-
-  //   const {
-  //     parent,
-  //   } = this.props;
-
-  //   console.log("addComponent this", { ...this });
-  //   console.log("onDrop parent", parent);
-
-
-  //   let {
-  //     data: {
-  //       object,
-  //     },
-  //   } = this.props;
-
-  //   let {
-  //     components,
-  //   } = object;
-
-
-  //   if (components) {
-  //     components.push(newItem);
-  //   }
-
-  //   if (parent) {
-
-  //     console.log("onDrop addComponent result", parent.addComponent(newItem));
-
-  //     return parent.addComponent(newItem);
-  //   }
-
-  //   this.forceUpdate();
-
-  // }
 
   addComponent(newItem) {
-
-
-    // const {
-    //   id: objectId,
-    //   components: oldComponents,
-    // } = this.getObjectWithMutations();
-
-
-    // const {
-    //   parent,
-    // } = this.props;
-
-    // console.log("addComponent this", { ...this });
-    // console.log("onDrop parent", parent);
 
 
     let {
@@ -444,13 +297,15 @@ class EditorComponent extends ObjectEditable {
       components.push(newItem);
     }
 
-    // if (parent) {
+    this.updateParentComponents();
+
+  }
 
 
-    //   // console.log("onDrop addComponent result");
-
-    //   // return parent.addComponent(newItem);
-    // }
+  /**
+   * Надо обновить components, чтобы в объекте было актуальное свойство
+   */
+  updateParentComponents() {
 
     const activeParent = this.getActiveParent();
 
@@ -460,13 +315,9 @@ class EditorComponent extends ObjectEditable {
       throw new Error("Can not get absParent");
     }
 
-
-
     activeParent.updateObject({
       components: activeParent.props.data.object.components.slice(0),
     });
-
-    // this.forceUpdate();
 
   }
 
@@ -823,6 +674,7 @@ class EditorComponent extends ObjectEditable {
         // component,
         deleteItem,
         deletable,
+        props,
         ...other
       },
       constructor: {
@@ -874,6 +726,8 @@ class EditorComponent extends ObjectEditable {
           name,
           label: name,
           value,
+          deletable: activeItem.props.data.object.props[name] !== undefined,
+          // deletable: true,
         });
 
         if (field) {
@@ -1082,6 +936,7 @@ class EditorComponent extends ObjectEditable {
       type,
       name,
       value,
+      deletable,
       ...other
     } = props;
 
@@ -1113,16 +968,6 @@ class EditorComponent extends ObjectEditable {
             item
             xs
           >
-            {/* <TextField
-              // key={name}
-              // type="number"
-              // name={name}
-              // label={name}
-              // value={component[name] || ""}
-              // fullWidth
-              onChange={event => this.onChangeProps(event)}
-              {...props}
-            /> */}
 
             <FormControlLabel
               control={
@@ -1139,17 +984,20 @@ class EditorComponent extends ObjectEditable {
             />
 
           </Grid>
-          <Grid
-            item
-          >
-            <IconButton
-              onClick={event => {
-                this.removeProps(name);
-              }}
+          {deletable ?
+            <Grid
+              item
             >
-              <DeleteIcon />
-            </IconButton>
-          </Grid>
+              <IconButton
+                onClick={event => {
+                  this.removeProps(name);
+                }}
+              >
+                <DeleteIcon />
+              </IconButton>
+            </Grid>
+            : null
+          }
         </Grid>
           ;
 
@@ -1179,17 +1027,20 @@ class EditorComponent extends ObjectEditable {
             />
 
           </Grid>
-          <Grid
-            item
-          >
-            <IconButton
-              onClick={event => {
-                this.removeProps(name);
-              }}
+          {deletable ?
+            <Grid
+              item
             >
-              <DeleteIcon />
-            </IconButton>
-          </Grid>
+              <IconButton
+                onClick={event => {
+                  this.removeProps(name);
+                }}
+              >
+                <DeleteIcon />
+              </IconButton>
+            </Grid>
+            : null
+          }
         </Grid>
           ;
 
@@ -1222,25 +1073,6 @@ class EditorComponent extends ObjectEditable {
     } = node;
 
 
-
-    // const activeItem = this.getActiveItem();
-
-    // const {
-    //   components,
-    //   updateObject,
-    // } = this.context;
-
-    // let {
-    //   props: {
-    //     component,
-    //   },
-    // } = activeItem;
-
-    // const component = this.getActiveComponent();
-
-    // console.log("updateProps getActiveComponent", component);
-    // return;
-
     switch (type) {
 
       case "boolean":
@@ -1251,8 +1083,6 @@ class EditorComponent extends ObjectEditable {
 
       case "number":
 
-
-
         // value = parseFloat(value);
         value = Number(value);
 
@@ -1260,7 +1090,6 @@ class EditorComponent extends ObjectEditable {
         break;
 
     }
-
 
 
     // this.updateComponentProperty(component, name, value);
@@ -1291,30 +1120,27 @@ class EditorComponent extends ObjectEditable {
     console.log("updateComponentProperty name", name);
     console.log("updateComponentProperty value", value);
 
-    // return;
-
-    // let props = component.props || {};
-
-    // Object.assign(props, {
-    //   [name]: value,
-    // });
-
-    // return this.updateComponentProps(component, {
-    //   [name]: value,
-    // });
-
     return this.updateComponentProps({
       [name]: value,
     });
   }
 
 
-  // updateComponentProps(component, data) {
+  // updateComponentProps(data) {
 
-  //   console.log("updateComponentProps component", component);
+  //   const activeItem = this.getActiveItem();
+
+  //   console.log("updateComponentProps activeItem", activeItem);
   //   console.log("updateComponentProps data", data);
+  //   console.log("updateComponentProps this", this);
 
-  //   let props = component.props || {};
+  //   const {
+  //     props: oldProps,
+  //   } = activeItem.getObjectWithMutations();
+
+  //   let props = {
+  //     ...oldProps,
+  //   };
 
   //   if (data) {
 
@@ -1335,28 +1161,56 @@ class EditorComponent extends ObjectEditable {
 
   //   }
 
+  //   console.log("updateComponentProps new props", props);
 
-  //   return this.updateComponent(component, {
+  //   // return this.updateComponent(component, {
+  //   //   props,
+  //   // });
+
+  //   return this.updateComponent({
   //     props,
   //   });
   // }
 
-  // updateComponentProps(component, data) {
+
+  /**
+   * Обновления свойств объекта.
+   * Здесь важно понимать когда свойства текущего объекта надо изменить (если корневой или с id),
+   * а когда родительский (с плавающей вложенностью)
+   */
   updateComponentProps(data) {
 
+    /**
+     * this - Дополнительный объект в панели управления
+     * getActiveItem - Элемент из основной части редактора.
+     */
     const activeItem = this.getActiveItem();
+
+    const activeParent = activeItem.getActiveParent();
+
+    console.log("updateComponentProps activeParent", activeParent);
+
+    console.log("updateComponentProps activeParent compare", activeParent === activeItem);
 
     console.log("updateComponentProps activeItem", activeItem);
     console.log("updateComponentProps data", data);
     console.log("updateComponentProps this", this);
 
-    const {
-      props: oldProps,
-    } = activeItem.getObjectWithMutations();
+    let props = activeItem.props.props || {};
 
-    let props = {
-      ...oldProps,
-    };
+    console.log("updateComponentProps props", props);
+
+    // return;
+
+    // let props = {
+    //   ...oldProps,
+    // };
+
+    const {
+      data: {
+        object,
+      },
+    } = activeItem.props;
 
     if (data) {
 
@@ -1379,9 +1233,44 @@ class EditorComponent extends ObjectEditable {
 
     console.log("updateComponentProps new props", props);
 
+    if (activeParent === activeItem) {
+      activeParent.updateObject({
+        props,
+      });
+    }
+    else {
+
+      let {
+        components,
+      } = activeItem.props.parent.props;
+
+      console.log("updateComponentProps props parent", activeItem.props.parent);
+      console.log("updateComponentProps props parent components", components);
+      console.log("updateComponentProps props parent components object", object);
+
+      const index = components.indexOf(object);
+
+      const component = components[index];
+
+      console.log("updateComponentProps props parent components object index", index);
+      console.log("updateComponentProps props parent components object component", component);
+
+      Object.assign(component, {
+        props,
+      });
+
+      // activeItem.props.props = props;
+
+      activeParent.updateParentComponents();
+    }
+
+
+
     // return this.updateComponent(component, {
     //   props,
     // });
+
+    return;
 
     return this.updateComponent({
       props,
@@ -1403,62 +1292,35 @@ class EditorComponent extends ObjectEditable {
 
   }
 
-  // updateComponent(component, data) {
 
-  //   let {
+  // removeProps(name) {
+
+  //   const activeItem = this.getActiveItem();
+
+  //   const {
   //     components,
   //     updateObject,
   //   } = this.context;
 
-  //   // Object.assign(component, data);
+  //   let {
+  //     props: {
+  //       component,
+  //     },
+  //   } = activeItem;
 
-  //   console.log("updateComponent", component, { ...data });
-
-  //   if (data) {
-
-  //     const keys = Object.keys(data);
-
-  //     keys.map(name => {
-
-  //       const value = data[name];
-
-  //       if (value === undefined) {
-  //         delete component[name];
-  //       }
-  //       else {
-  //         component[name] = value;
-  //       }
-
-  //     });
-
-  //   }
+  //   delete component.props[name];
 
   //   updateObject({
   //     components,
-  //   });
+  //   })
 
   // }
 
-
   removeProps(name) {
 
-    const activeItem = this.getActiveItem();
 
-    const {
-      components,
-      updateObject,
-    } = this.context;
-
-    let {
-      props: {
-        component,
-      },
-    } = activeItem;
-
-    delete component.props[name];
-
-    updateObject({
-      components,
+    this.updateComponentProps({
+      [name]: undefined,
     })
 
   }

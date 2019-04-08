@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import EditorComponent from '../..';
 
 import Icon from "material-ui-icons/TextFormat";
-import TypographyMU from "material-ui/Typography";
+import MuiTypography from "material-ui/Typography";
 
 
 class Typography extends EditorComponent {
@@ -41,6 +41,102 @@ class Typography extends EditorComponent {
     </div>);
   }
 
+
+
+  getRootElement() {
+    return MuiTypography;
+  }
+
+
+  getRenderProps() {
+
+    const {
+      style,
+      display,
+      displayType,
+      props: {
+        text,
+        // type,
+        // style,
+        color,
+        display: displayProps,
+        displayType: displayTypeProps,
+        ...otherProps
+      },
+      ...other
+    } = super.getRenderProps();
+
+    // const {
+    //   text,
+    //   // type,
+    //   // style,
+    //   color,
+    //   display,
+    //   displayType,
+    //   ...otherProps
+    // } = this.getComponentProps(this);
+
+    // console.log("getRenderProps", { ...other });
+
+    return {
+      ...other,
+      style: {
+        ...style,
+        display: displayProps || display,
+      },
+      color,
+      component: displayTypeProps || displayType,
+      ...otherProps,
+    }
+  }
+
+
+  renderChildren() {
+
+    const {
+      text,
+      // type,
+      // style,
+      color,
+      display,
+      displayType,
+      ...otherProps
+    } = this.getComponentProps(this);
+
+
+    // console.log("Typography", this);
+    // console.log("Typography id", this.id);
+    // console.log("Typography renderMainView this.getRenderProps()", this.getRenderProps());
+    // console.log("Typography renderMainView this.getComponentProps()", this.getComponentProps(this));
+
+    const {
+      // text,
+      // type,
+      style,
+      // props: {
+      //   display,
+      //   displayType,
+      //   text,
+      //   ...props
+      // },
+      ...other
+    } = this.getRenderProps();
+
+
+    return <Fragment
+    // {...other}
+    // style={{
+    //   ...style,
+    //   display,
+    // }}
+    // color={color}
+    // component={displayType}
+    // {...otherProps}
+    >
+      {text}{super.renderChildren()}
+    </Fragment>;
+  }
+
   // renderMainView() {
 
   //   const {
@@ -73,7 +169,7 @@ class Typography extends EditorComponent {
   //   } = this.getRenderProps();
 
 
-  //   return <TypographyMU
+  //   return <MuiTypography
   //     {...other}
   //     style={{
   //       ...style,
@@ -84,7 +180,7 @@ class Typography extends EditorComponent {
   //   // {...otherProps}
   //   >
   //     {text}{super.renderMainView()}
-  //   </TypographyMU>;
+  //   </MuiTypography>;
   // }
 
 }
