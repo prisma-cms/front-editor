@@ -391,13 +391,14 @@ class FrontEditor extends Component {
 
     const Components = this.getComponents();
 
+    console.log("FrontEditor.props", this.props);
 
     // const Page = Components.find(n => n.Name === "Page");
     const Component = Components.find(n => n.Name === name);
 
     // console.log("FrontEditor Component", Component);
 
-    console.log("FrontEditor._dirty", _dirty);
+    // console.log("FrontEditor._dirty", _dirty);
 
     if (!Component) {
       return null;
@@ -627,7 +628,13 @@ class FrontEditor extends Component {
               });
             },
             Components,
-            forceUpdate: () => this.forceUpdate(),
+            forceUpdate: () => {
+
+              // console.log("FrontEditor forceUpdate", this);
+
+              this.forceUpdate()
+
+            },
           })}
         >
           {inEditMode

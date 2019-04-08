@@ -1,3 +1,12 @@
+
+/**
+ * ToDo
+ * 1. Сейчас не оптимально структура компонентов выстроена, из-за чего нарушается 
+ * отзывчивость компонентов на изменения. В частности renderHeader() выполняется
+ * из активного элемента, а не текущего, и после сохранения объекта не 
+ * прекращается индикатор загрузки. Пришлось хакнуть принудительным обновлением через 2 сек.
+ */
+
 import React, { Component, createContext } from 'react';
 import PropTypes from 'prop-types';
 
@@ -126,6 +135,40 @@ class EditorComponent extends ObjectEditable {
   //     ...props
   //   })
   // }
+
+
+  // async mutate(props) {
+
+  //   const result = await super.mutate(props)
+  //     .catch(r => r);
+
+  //   const {
+  //     forceUpdate,
+  //   } = this.context;
+
+  //   forceUpdate();
+
+  //   return result;
+  // }
+
+
+  async saveObject(data) {
+
+    const result = await super.saveObject(data)
+      .catch(r => r);
+
+    setTimeout(() => {
+
+      const {
+        forceUpdate,
+      } = this.context;
+
+      forceUpdate()
+    }, 2000);
+
+    return result;
+
+  }
 
 
   updateObject(data) {

@@ -42,7 +42,7 @@ export const styles = theme => {
 
 
 
-export class TemplateView extends EditableView {
+export class TemplateView__ extends EditableView {
 
 
   constructor(props) {
@@ -124,6 +124,23 @@ export class TemplateView extends EditableView {
 
 }
 
+
+export class TemplateView extends Component {
+
+
+  render() {
+
+    const {
+      classes,
+      ...other
+    } = this.props;
+
+    return <FrontEditor
+      {...other}
+      inEditMode={true}
+    />
+  }
+}
 
 export default withStyles(styles)(props => <TemplateView
   {...props}
