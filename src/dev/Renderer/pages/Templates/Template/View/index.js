@@ -225,8 +225,8 @@ export class TemplateView extends Component {
     // />
 
     return <FrontEditor
-      {...other}
       inEditMode={true}
+      {...other}
     />
   }
 }
