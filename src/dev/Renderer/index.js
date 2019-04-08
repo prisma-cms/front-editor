@@ -61,6 +61,11 @@ class DevRenderer extends PrismaCmsRenderer {
       // },
       {
         exact: true,
+        path: "/",
+        component: TemplatesPage,
+      },
+      {
+        exact: true,
         path: "/templates",
         component: TemplatesPage,
       },

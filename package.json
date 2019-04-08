@@ -1,6 +1,6 @@
 {
-  "name": "@prisma-cms/component-boilerplate",
-  "version": "1.3.8",
+  "name": "@prisma-cms/front-editor",
+  "version": "1.4.0",
   "private": false,
   "main": "lib/App.js",
   "scripts": {
@@ -39,13 +39,9 @@
     "not ie <= 11",
     "not op_mini all"
   ],
-  "description": "Tests module for @prisma-cms",
+  "description": "Front editor for @prisma-cms",
   "directories": {
     "lib": "lib"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/prisma-cms/component-boilerplate.git"
   },
   "keywords": [
     "prisma-cms",
@@ -54,8 +50,12 @@
   ],
   "author": "Fi1osof",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/prisma-cms/component-boilerplate/issues"
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/prisma-cms/front-editor.git"
   },
-  "homepage": "https://github.com/prisma-cms/component-boilerplate#readme"
+  "bugs": {
+    "url": "https://github.com/prisma-cms/front-editor/issues"
+  },
+  "homepage": "https://github.com/prisma-cms/front-editor#readme"
 }
