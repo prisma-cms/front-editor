@@ -40,7 +40,7 @@ class Grid extends EditorComponent {
       case "container":
       case "item":
 
-        console.log("getEditorField", props);
+
 
         return <Button
           key={key}
@@ -99,7 +99,7 @@ class Grid extends EditorComponent {
 
   updateComponentProps( data) {
 
-    // console.log("Grid updateComponentProps",   { ...data });
+
 
     if (data.container) {
 
@@ -175,7 +175,7 @@ class Grid extends EditorComponent {
     } = this.context;
 
 
-    // console.log("prepareNewItem this.props", { ...this.props });
+
 
     let {
       props: {

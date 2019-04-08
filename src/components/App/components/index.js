@@ -19,8 +19,8 @@ import CloseIcon from "material-ui-icons/Close";
 import { FormControlLabel } from 'material-ui';
 import { Switch } from 'material-ui';
 
-// console.log("module", module);
-// console.log("Context Module", Module);
+
+
 
 // ComponentContext = createContext();
 
@@ -87,9 +87,9 @@ class EditorComponent extends ObjectEditable {
   //     mutate,
   //   } = this.props;
 
-  //   // console.log("result saveObject", data, mutate);
-  //   // console.log("result saveObject this._dirty", { ...this.state._dirty });
-  //   // console.log("result saveObject this", this);
+
+
+
 
 
   //   if (mutate && mutate !== emptyMutate) {
@@ -104,7 +104,7 @@ class EditorComponent extends ObjectEditable {
   //     return e;
   //   });
 
-  //   console.log("result 333", result);
+
 
   //   return result;
 
@@ -114,7 +114,7 @@ class EditorComponent extends ObjectEditable {
   // async mutate(props) {
 
 
-  //   // console.log("mutate props", props);
+
 
   //   // return;
 
@@ -158,7 +158,7 @@ class EditorComponent extends ObjectEditable {
     const result = await super.saveObject(data)
       .catch(r => r);
 
-    // console.log("saveObject result", result);
+
 
     setTimeout(() => {
 
@@ -248,8 +248,8 @@ class EditorComponent extends ObjectEditable {
     } = this.context;
 
 
-    console.log("onDrop dragItem", dragItem);
-    console.log("onDrop dragTarget", dragTarget);
+
+
 
 
     if (dragItem && dragTarget && dragTarget === this) {
@@ -260,7 +260,7 @@ class EditorComponent extends ObjectEditable {
 
       const newItem = this.prepareNewItem();
 
-      console.log("onDrop newItem", newItem);
+
 
       if (newItem) {
 
@@ -316,9 +316,9 @@ class EditorComponent extends ObjectEditable {
 
     const activeParent = activeItem.getActiveParent();
 
-    console.log("deleteItem activeItem", activeItem);
-    console.log("deleteItem activeParent", activeParent);
-    console.log("deleteItem activeItem === activeParent", activeItem === activeParent);
+
+
+
 
     if (activeItem === activeParent) {
 
@@ -348,7 +348,7 @@ class EditorComponent extends ObjectEditable {
 
       components.splice(index, 1);
 
-      // console.log("deleteItem index", index);
+
 
 
       // if (components) {
@@ -389,7 +389,7 @@ class EditorComponent extends ObjectEditable {
 
     const activeParent = this.getActiveParent();
 
-    console.log("onDrop activeParent", activeParent);
+
 
     if (!activeParent) {
       throw new Error("Can not get absParent");
@@ -591,7 +591,7 @@ class EditorComponent extends ObjectEditable {
 
   getRenderProps() {
 
-    // console.log("getRenderProps", { ...this.props });
+
 
     const {
       dragTarget,
@@ -711,7 +711,7 @@ class EditorComponent extends ObjectEditable {
       return null;
     }
 
-    // console.log("renderSettingsView activeItem ", activeItem);
+
 
     const {
       name,
@@ -760,7 +760,7 @@ class EditorComponent extends ObjectEditable {
 
     const componentProps = this.getComponentProps(activeItem);
 
-    // console.log("renderSettingsView componentProps ", componentProps);
+
 
     const structure = this.getStructure(activeItem);
 
@@ -915,7 +915,7 @@ class EditorComponent extends ObjectEditable {
           } : undefined}
           onSave={result => {
 
-            console.log("onSave result", result);
+
 
             const {
               data,
@@ -958,8 +958,8 @@ class EditorComponent extends ObjectEditable {
 
   getStructure(item) {
 
-    // console.log("getStructure component", component, JSON.stringify(component));
-    // console.log("getStructure component", item);
+
+
 
     // // return component;
 
@@ -1118,8 +1118,8 @@ class EditorComponent extends ObjectEditable {
 
   onChangeProps(event) {
 
-    // console.log("onChangeProps this", this);
-    console.log("onChangeProps this.getActiveItem", this.getActiveItem());
+
+
 
     // return;
 
@@ -1179,9 +1179,9 @@ class EditorComponent extends ObjectEditable {
 
     const activeItem = this.getActiveItem();
 
-    console.log("updateComponentProperty activeItem", activeItem);
-    console.log("updateComponentProperty name", name);
-    console.log("updateComponentProperty value", value);
+
+
+
 
     return this.updateComponentProps({
       [name]: value,
@@ -1193,9 +1193,9 @@ class EditorComponent extends ObjectEditable {
 
   //   const activeItem = this.getActiveItem();
 
-  //   console.log("updateComponentProps activeItem", activeItem);
-  //   console.log("updateComponentProps data", data);
-  //   console.log("updateComponentProps this", this);
+
+
+
 
   //   const {
   //     props: oldProps,
@@ -1224,7 +1224,7 @@ class EditorComponent extends ObjectEditable {
 
   //   }
 
-  //   console.log("updateComponentProps new props", props);
+
 
   //   // return this.updateComponent(component, {
   //   //   props,
@@ -1251,17 +1251,17 @@ class EditorComponent extends ObjectEditable {
 
     const activeParent = activeItem.getActiveParent();
 
-    // console.log("updateComponentProps activeParent", activeParent);
 
-    // console.log("updateComponentProps activeParent compare", activeParent === activeItem);
 
-    // console.log("updateComponentProps activeItem", activeItem);
-    // console.log("updateComponentProps data", data);
-    // console.log("updateComponentProps this", this);
+
+
+
+
+
 
     let props = activeItem.props.props || {};
 
-    // console.log("updateComponentProps props", props);
+
 
     // return;
 
@@ -1294,7 +1294,7 @@ class EditorComponent extends ObjectEditable {
 
     }
 
-    // console.log("updateComponentProps new props", props);
+
 
     if (activeParent === activeItem) {
       activeParent.updateObject({
@@ -1316,9 +1316,9 @@ class EditorComponent extends ObjectEditable {
         },
       } = activeItem.props.parent.props;
 
-      // console.log("updateComponentProps props parent", activeItem.props.parent);
-      // console.log("updateComponentProps props parent components", components);
-      // console.log("updateComponentProps props parent components object", object);
+
+
+
 
       if (!components) {
         // components = [];
@@ -1419,8 +1419,8 @@ class EditorComponent extends ObjectEditable {
       activeItem,
     } = this.context;
 
-    // console.log("getActiveItem", activeItem);
-    // console.log("getActiveItem this", this);
+
+
 
     return activeItem;
 
@@ -1448,7 +1448,7 @@ class EditorComponent extends ObjectEditable {
 
     const RootElement = this.getRootElement();
 
-    // console.log("getRenderProps", this.getRenderProps());
+
 
     const {
       props,
@@ -1561,8 +1561,8 @@ class EditorComponent extends ObjectEditable {
 
     let content = null;
 
-    // console.log("ComponentContext", this);
-    // console.log("Component render", this);
+
+
 
     switch (mode) {
 
@@ -1593,7 +1593,7 @@ class EditorComponent extends ObjectEditable {
     }
 
 
-    // console.log("activeItem context id", objectId);
+
 
     return content;
 

@@ -51,7 +51,7 @@ class Section extends EditorComponent {
     //   ...otherProps
     // } = this.getComponentProps(this);
 
-    // console.log("getRenderProps", { ...other });
+
 
     return {
       style: {

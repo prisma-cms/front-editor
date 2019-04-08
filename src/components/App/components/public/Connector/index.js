@@ -210,7 +210,7 @@ class Connector extends EditorComponent {
 
       // if (name === "skip") {
 
-      //   console.log("getEditorField activeItem", activeItem);
+
 
       // }
 
@@ -335,8 +335,8 @@ class Connector extends EditorComponent {
 
     // if (name === "skip") {
 
-    //   console.log("getEditorField", props);
-    //   console.log("getEditorField field", field);
+
+
 
     // }
 
@@ -801,7 +801,7 @@ class Viewer extends Component {
 
     const skip = page ? (page - 1) * first : 0;
 
-    console.log("Viewer", this);
+
 
     // return "Sdfdsf";
 

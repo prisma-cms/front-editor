@@ -76,7 +76,7 @@ class Typography extends EditorComponent {
     //   ...otherProps
     // } = this.getComponentProps(this);
 
-    // console.log("getRenderProps", { ...other });
+
 
     return {
       ...other,
@@ -104,10 +104,10 @@ class Typography extends EditorComponent {
     } = this.getComponentProps(this);
 
 
-    // console.log("Typography", this);
-    // console.log("Typography id", this.id);
-    // console.log("Typography renderMainView this.getRenderProps()", this.getRenderProps());
-    // console.log("Typography renderMainView this.getComponentProps()", this.getComponentProps(this));
+
+
+
+
 
     const {
       // text,
@@ -150,10 +150,10 @@ class Typography extends EditorComponent {
   //   } = this.getComponentProps(this);
 
 
-  //   console.log("Typography", this);
-  //   console.log("Typography id", this.id);
-  //   // console.log("Typography renderMainView this.getRenderProps()", this.getRenderProps());
-  //   // console.log("Typography renderMainView this.getComponentProps()", this.getComponentProps(this));
+
+
+
+
 
   //   const {
   //     // text,

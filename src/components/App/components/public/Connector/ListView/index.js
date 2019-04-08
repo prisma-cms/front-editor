@@ -56,7 +56,7 @@ class ListView extends EditorComponent {
   //     ...other
   //   } = this.getRenderProps();
 
-  //   console.log("ListView", this);
+
 
   //   const {
   //     Grid,
@@ -68,7 +68,7 @@ class ListView extends EditorComponent {
   //     <ConnectorContext.Consumer>
   //       {context => {
 
-  //         console.log("ListView ConnectorContext", context);
+
 
   //         const {
   //           data,
@@ -125,7 +125,7 @@ class ListView extends EditorComponent {
       ...other
     } = this.getRenderProps();
 
-    // console.log("ListView", this);
+
 
     const {
       Grid,
@@ -136,7 +136,7 @@ class ListView extends EditorComponent {
     return <ConnectorContext.Consumer>
       {context => {
 
-        {/* console.log("ListView ConnectorContext", context); */}
+
 
         const {
           data,

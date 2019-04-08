@@ -34,7 +34,7 @@ class UsersGrid extends EditorComponent {
 
   renderChildren() {
 
-    // console.log("super.renderChildren()", super.renderChildren());
+
 
     return <Fragment
     >

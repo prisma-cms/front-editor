@@ -21,7 +21,7 @@ import Context from "@prisma-cms/context";
 
 const styles = theme => {
 
-  // console.log("theme", theme);
+
 
   const {
     breakpoints,
@@ -191,13 +191,13 @@ class FrontEditor extends Component {
 
   //   // Components.map(n => {
 
-  //   //   console.log("Components name", n.name, n.Name);
+
 
   //   // });
 
   //   // CustomComponents.map(n => {
 
-  //   //   console.log("CustomComponents name", n.name, n.Name);
+
 
   //   // });
 
@@ -205,11 +205,11 @@ class FrontEditor extends Component {
   //   let baseComponents = [Page].concat(Components)
   //     .filter(n => n && !CustomComponents.find(i => i.Name === n.Name));
 
-  //   // console.log("baseComponents", baseComponents);
+
 
   //   // baseComponents.map(n => {
 
-  //   //   console.log("name", n.name, n.Name, n.constructor.Name);
+
 
   //   // });
 
@@ -234,7 +234,7 @@ class FrontEditor extends Component {
 
         // cache[key] = r(key)
 
-        // console.log("module", key, r(key));
+
 
         modules.push(r(key).default);
       });
@@ -243,7 +243,7 @@ class FrontEditor extends Component {
     importAll(require.context('./components/public/', true, /\.js$/));
 
 
-    // console.log("modules", modules);
+
 
     return modules.filter(n => n).filter(n => n.Name);
   }
@@ -343,14 +343,14 @@ class FrontEditor extends Component {
 
     const RenderComponents = this.getComponents();
 
-    // console.log("FrontEditor.props", this.props);
+
 
     // const Page = Components.find(n => n.Name === "Page");
     const Component = RenderComponents.find(n => n.Name === name);
 
-    // console.log("FrontEditor Component", Component);
 
-    // console.log("FrontEditor._dirty", _dirty);
+
+
 
     if (!Component) {
       return null;
@@ -502,7 +502,7 @@ class FrontEditor extends Component {
 
   render() {
 
-    // console.log("FrontEditor", this.props);
+
 
     const {
       classes,
@@ -560,7 +560,7 @@ class FrontEditor extends Component {
             },
             setActiveItem: component => {
 
-              console.log("setActiveItem", component);
+
 
               this.setState({
                 activeItem: component,
@@ -574,7 +574,7 @@ class FrontEditor extends Component {
             Components,
             forceUpdate: () => {
 
-              // console.log("FrontEditor forceUpdate", this);
+
 
               this.forceUpdate()
 
@@ -638,5 +638,5 @@ export default withStyles(styles)(props => <FrontEditor
 // importAll(require.context('./components/', true, /\.js$/));
 
 
-// console.log("cache", cache);
+
 
