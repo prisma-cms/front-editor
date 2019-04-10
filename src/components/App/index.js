@@ -37,6 +37,8 @@ const styles = theme => {
   const activeBorderColor = "#b806bb";
   const dirtyBorderColor = "red";
 
+  const itemsPanelWidth = 270;
+
   return {
 
     root: {
@@ -58,8 +60,18 @@ const styles = theme => {
     panel: {
 
       [desktop]: {
-        width: 270,
+        width: itemsPanelWidth,
         height: "100%",
+        // overflow: "auto",
+        position: "relative",
+      },
+    },
+    panelItems: {
+
+      [desktop]: {
+        height: "100vh",
+        width: itemsPanelWidth,
+        position: "fixed",
         overflow: "auto",
       },
     },
@@ -274,30 +286,34 @@ class FrontEditor extends Component {
 
     }
 
-    return <Grid
-      container
-      spacing={8}
+    return <div
+      className={classes.panelItems}
     >
-
-      {Components.map(Component => {
-
-        const name = Component.Name;
-
-        return <Component
-          key={name}
-          mode="panel"
-          className={classes.panelItem}
-        />
-      })}
-
       <Grid
-        item
-        xs={12}
+        container
+        spacing={8}
       >
-        {settingsView}
-      </Grid>
 
-    </Grid>
+        {Components.map(Component => {
+
+          const name = Component.Name;
+
+          return <Component
+            key={name}
+            mode="panel"
+            className={classes.panelItem}
+          />
+        })}
+
+        <Grid
+          item
+          xs={12}
+        >
+          {settingsView}
+        </Grid>
+
+      </Grid>
+    </div>
 
   }
 

@@ -139,23 +139,29 @@ class DevRenderer extends PrismaCmsRenderer {
       ...other
     } = this.props;
 
+    // return pure ? <App
+    //   {...other}
+    // /> :
+    //   <div
+    //     className={classes.root}
+    //   >
+    //     <style
+    //       dangerouslySetInnerHTML={{
+    //         __html: `
+    //         body, html, #root{
+    //           height: 100%;
+    //         }
+    //       `,
+    //       }}
+    //     />
+    //     {super.render()}
+    //   </div>;
+
     return pure ? <App
       {...other}
-    /> :
-      <div
-        className={classes.root}
-      >
-        <style
-          dangerouslySetInnerHTML={{
-            __html: `
-            body, html, #root{
-              height: 100%;
-            }
-          `,
-          }}
-        />
-        {super.render()}
-      </div>;
+    />
+      :
+      super.render();
 
   }
 
