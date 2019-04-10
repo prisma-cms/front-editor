@@ -41,6 +41,61 @@ class EditorRoute extends EditorComponent {
   }
 
 
+
+  // onDrop(event) {
+
+  //   const {
+  //     dragItem,
+  //     dragTarget,
+  //   } = this.context;
+
+
+  //   console.log("onDrop dragItem", dragItem)
+
+
+  //   console.log("onDrop dragTarget", dragTarget)
+
+
+
+  //   if (dragItem && dragTarget && dragItem === this) {
+
+  //     console.log("dragTarget.constructor.Name", dragTarget.constructor.Name)
+
+  //     if (dragTarget.constructor.Name !== "EditorSwitch") {
+
+  //       event.preventDefault();
+  //       event.stopPropagation();
+  //       return false;
+  //     }
+
+  //   }
+
+  //   return super.onDrop(event);
+
+  // }
+
+  /**
+   * Учитывается при наведении. 
+   * Определяет может ли быть брошен сюда перетаскиваемый элемент
+   */
+  canBeDropped(dragItem) {
+
+    // console.log("canBeDropped dragItem", dragItem)
+    // console.log("canBeDropped this", this)
+
+    /**
+     * Нельзя роутеры сюда же кидать
+     */
+    if (dragItem && dragItem.constructor === this.constructor) {
+      return false;
+    }
+
+    // else
+    return super.canBeDropped(dragItem);
+
+  }
+
+
   // renderMainView() {
 
   //   const {

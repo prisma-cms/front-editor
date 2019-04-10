@@ -247,10 +247,12 @@ class EditorComponent extends ObjectEditable {
       dragTarget,
     } = this.context;
 
-
-
-
-
+    // console.log("onDrop this", this);
+    // console.log("onDrop", dragItem);
+    // console.log("onDrop dragTarget", dragTarget);
+    // console.log("onDrop dragTarget === dragItem", dragItem === dragTarget);
+    // console.log("onDrop dragItem === this", dragItem === this);
+    // console.log("onDrop dragTarget === this", dragTarget === this);
 
     if (dragItem && dragTarget && dragTarget === this) {
 
@@ -501,6 +503,10 @@ class EditorComponent extends ObjectEditable {
   }
 
 
+  /**
+   * Учитывается при наведении. 
+   * Определяет может ли быть брошен сюда перетаскиваемый элемент
+   */
   canBeDropped(dragItem) {
 
     return true;
@@ -515,7 +521,7 @@ class EditorComponent extends ObjectEditable {
       dragItem,
     } = this.context;
 
-    if (dragItem && this.canBeDropped(dragItem.component)) {
+    if (dragItem && this.canBeDropped(dragItem)) {
 
       event.preventDefault();
       event.stopPropagation();

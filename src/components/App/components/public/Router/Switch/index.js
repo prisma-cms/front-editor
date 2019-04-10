@@ -28,6 +28,22 @@ class EditorSwitch extends EditorComponent {
   }
 
 
+
+  prepareDragItemComponents() {
+
+    return super.prepareDragItemComponents().concat([
+      {
+        name: "EditorRoute",
+        props: {
+          path: "/",
+          exact: true,
+        },
+        components: [],
+      }
+    ]);
+  }
+
+
   onDrop(event) {
 
     const {
@@ -331,6 +347,15 @@ class EditorSwitch extends EditorComponent {
           />;
 
 
+          let route = <Route
+            key={id || index}
+            exact={exact === undefined ? true : exact}
+            path={path}
+            render={() => {
+              return element;
+            }}
+          />
+
           /**
            * Если в режиме редактирования и показывать роутеры, то выводим данные
            */
@@ -352,21 +377,23 @@ class EditorSwitch extends EditorComponent {
                 </Typography>
               </Typography>
 
-              {element}
+              {route}
 
             </Fragment>
 
           }
           else {
 
-            component = <Route
-              key={id || index}
-              exact={exact === undefined ? true : exact}
-              path={path}
-              render={() => {
-                return element;
-              }}
-            />
+            // component = <Route
+            //   key={id || index}
+            //   exact={exact === undefined ? true : exact}
+            //   path={path}
+            //   render={() => {
+            //     return element;
+            //   }}
+            // />
+
+            component = route;
 
           }
 

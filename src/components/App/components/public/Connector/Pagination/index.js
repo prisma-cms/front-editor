@@ -36,6 +36,8 @@ class Pagination extends EditorComponent {
       <ConnectorContext.Consumer>
         {context => {
 
+          {/* console.log("ConnectorContext.Consumer pagination", { ...context }); */}
+
           const {
             data,
             pageVariable = "page",

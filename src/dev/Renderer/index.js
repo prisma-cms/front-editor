@@ -15,6 +15,7 @@ import TemplatesPage from './pages/Templates';
 import TemplatePage from './pages/Templates/Template';
 import TemplateCreatePage from './pages/Templates/Template/Create';
 
+import RootPage from "./pages/Root";
 
 export const styles = {
 
@@ -60,47 +61,53 @@ class DevRenderer extends PrismaCmsRenderer {
       //   component: DevMainPage,
       // },
       {
-        exact: true,
+        exact: false,
         path: "/",
-        component: TemplatesPage,
+        component: RootPage,
       },
-      {
-        exact: true,
-        path: "/templates",
-        component: TemplatesPage,
-      },
-      {
-        exact: true,
-        path: "/templates/create",
-        component: TemplateCreatePage,
-      },
-      {
-        exact: true,
-        path: "/templates/:id",
-        render: props => {
+      // {
+      //   exact: true,
+      //   path: "/",
+      //   component: TemplatesPage,
+      // },
+      // {
+      //   exact: true,
+      //   path: "/templates",
+      //   component: TemplatesPage,
+      // },
+      // {
+      //   exact: true,
+      //   path: "/templates/create",
+      //   component: TemplateCreatePage,
+      // },
+      // {
+      //   exact: true,
+      //   path: "/templates/:id",
+      //   render: props => {
 
-          const {
-            match: {
-              params: {
-                id,
-              },
-            },
-          } = props;
+      //     const {
+      //       match: {
+      //         params: {
+      //           id,
+      //         },
+      //       },
+      //     } = props;
 
-          return <TemplatePage
-            key={id}
-            where={{
-              id,
-            }}
-            {...props}
-          />
-        },
-      },
+      //     return <TemplatePage
+      //       key={id}
+      //       where={{
+      //         id,
+      //       }}
+      //       {...props}
+      //     />
+      //   },
+      // },
       // {
       //   path: "*",
       //   render: props => this.renderOtherPages(props),
       // },
-    ].concat(routes);
+    ]
+    // .concat(routes);
 
   }
 
@@ -108,7 +115,8 @@ class DevRenderer extends PrismaCmsRenderer {
 
   renderMenu() {
 
-    return <MainMenu />
+    // return <MainMenu />
+    return null;
   }
 
 

@@ -20,6 +20,7 @@ import Section from './components/public/Section';
 import Typography from './components/public/Typography';
 import Switch from './components/public/Router/Switch';
 import Route from './components/public/Router/Route';
+import PageHeader from './components/public/PageHeader';
 
 const styles = theme => {
 
@@ -149,6 +150,7 @@ class FrontEditor extends Component {
       Section,
       Switch,
       Route,
+      PageHeader,
     ],
     CustomComponents: [],
   }
