@@ -18,6 +18,8 @@ import NamedField from './components/public/Connector/Fields/NamedField';
 import Content from './components/public/Connector/Fields/Content';
 import Section from './components/public/Section';
 import Typography from './components/public/Typography';
+import Switch from './components/public/Router/Switch';
+import Route from './components/public/Router/Route';
 
 const styles = theme => {
 
@@ -145,6 +147,8 @@ class FrontEditor extends Component {
       CreatedBy,
       Content,
       Section,
+      Switch,
+      Route,
     ],
     CustomComponents: [],
   }
