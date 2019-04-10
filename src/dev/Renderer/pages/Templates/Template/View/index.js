@@ -224,8 +224,11 @@ export class TemplateView extends Component {
     //   }}
     // />
 
+    
+    const inEditMode = true;
+
     return <FrontEditor
-      inEditMode={true}
+      inEditMode={inEditMode}
       {...other}
     />
   }

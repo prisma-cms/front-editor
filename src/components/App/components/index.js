@@ -569,34 +569,22 @@ class EditorComponent extends ObjectEditable {
       // },
       // props,
       // errorDelay,
-      data: {
-        object: {
-          props,
-        },
-      },
-      EditIcon,
-      ResetIcon,
-      SaveIcon,
-      mutate,
-      // onSave,
+      // object: {
+      //   props,
+      // },
       ...other
     } = component.props;
 
     const {
-      // name,
-      // components,
+      name,
+      components,
       props: componentProps,
+
     } = component.getObjectWithMutations();
 
-    // if(name === "routename") {
-
-    // }
-    console.log("componentProps component.props", { ...component.props });
-    console.log("componentProps getObjectWithMutations", { ...component.getObjectWithMutations() });
 
     return {
       ...other,
-      ...props,
       ...componentProps,
     };
 
@@ -624,17 +612,13 @@ class EditorComponent extends ObjectEditable {
       component,
       mutate,
       data: {
-        object: {
-          CreatedBy,
-          ...object
-        },
+        object,
       },
       errorDelay,
       SaveIcon,
       ResetIcon,
       EditIcon,
       cacheKeyPrefix,
-      CreatedBy: CreatedByNull,
       ...other
     } = this.props;
 
@@ -789,8 +773,6 @@ class EditorComponent extends ObjectEditable {
 
     let settings = [];
 
-
-    console.log("componentProps", componentProps);
 
 
     if (componentProps) {
@@ -1281,10 +1263,9 @@ class EditorComponent extends ObjectEditable {
 
 
 
-    console.log("updateComponentProps updateComponentProps", { ...data });
-    console.log("updateComponentProps activeItem", { ...activeItem });
-    console.log("updateComponentProps activeParent", { ...activeParent });
 
+
+    let props = activeItem.props.props || {};
 
 
 
@@ -1299,16 +1280,6 @@ class EditorComponent extends ObjectEditable {
         object,
       },
     } = activeItem.props;
-
-    // let props = activeItem.props.props || {};
-
-    return;
-
-    let props = object;
-
-    if (!props) {
-      object.props = props = {}
-    }
 
     if (data) {
 
@@ -1543,7 +1514,7 @@ class EditorComponent extends ObjectEditable {
         const {
           id,
           name,
-          props,
+          // props,
           ...other
         } = n;
 
@@ -1562,7 +1533,6 @@ class EditorComponent extends ObjectEditable {
               object: n,
             }}
             // _dirty={n}
-            {...props}
             {...other}
           />);
 

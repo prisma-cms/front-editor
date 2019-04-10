@@ -83,7 +83,7 @@ class Template extends Page {
         name = name || id;
 
         return this.setPageMeta({
-          title: name && `Чат-комната ${name}` || undefined,
+          title: name && `Шаблон ${name}` || undefined,
           status: id ? 200 : 404,
         })
       }}
