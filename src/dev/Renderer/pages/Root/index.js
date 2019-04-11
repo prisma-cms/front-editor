@@ -161,6 +161,7 @@ class Root extends PrismaCmsComponent {
             right: 0,
             width: "auto",
             background: "rgba(255,255,255,0.5)",
+            zIndex: 200,
           }}
         >
           <Grid
