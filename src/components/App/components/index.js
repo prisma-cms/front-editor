@@ -1255,23 +1255,34 @@ class EditorComponent extends ObjectEditable {
    */
   updateComponentProps(data) {
 
+    const activeItem = this.getActiveItem();
+
+    return this.updateActiveComponentProps(activeItem, data);
+
+  }
+
+
+  /**
+   * Временный хак. 
+   * Я не предусмотрел обновление произвольного компонента (а это надо),
+   * поэтому перенес функционал в этот отдельный метод.
+   * В дальнейшем надо будет все переосмыслить
+   */
+  updateActiveComponentProps(activeItem, data) {
+
     /**
      * this - Дополнительный объект в панели управления
      * getActiveItem - Элемент из основной части редактора.
      */
-    const activeItem = this.getActiveItem();
+    // const activeItem = this.getActiveItem();
 
     const activeParent = activeItem.getActiveParent();
 
-
-
-
-
-
-
-
-
     let props = activeItem.props.props || {};
+
+
+    console.log("updateActiveComponentProps activeItem", activeItem);
+    console.log("updateActiveComponentProps activeParent", activeParent);
 
 
 

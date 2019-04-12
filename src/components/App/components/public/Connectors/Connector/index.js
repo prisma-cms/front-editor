@@ -505,7 +505,7 @@ class Connector extends EditorComponent {
 
 
 
-  getFilters() {
+  getUrlFilters() {
 
 
     const {
@@ -524,17 +524,79 @@ class Connector extends EditorComponent {
     } = uri.query(true);
 
     try {
+
+      console.log("getFilters getUrlFilters JSON", { ...filters });
+
       filters = filters && JSON.parse(filters) || null;
+
+      if (filters === "{}") {
+        filters = undefined;
+      }
     }
     catch (error) {
       console.error(console.error(error));
     }
 
+    console.log("getFilters getUrlFilters", { ...filters });
+
     return filters;
   }
 
 
-  setFilters(filters) {
+  getFilters() {
+
+
+    // console.log("getFilters", { ...filters });
+    // console.log("getFilters this.props", { ...this.props });
+    // console.log("getFilters this.getComponentProps", { ...this.getComponentProps(this) });
+
+    const {
+      inEditMode,
+    } = this.context;
+
+
+    if (inEditMode) {
+      const {
+        where: filters,
+        // } = this.props;
+      } = this.getComponentProps(this);
+
+      return filters;
+    }
+    else {
+      return this.getUrlFilters();
+    }
+
+    // let AND = [];
+
+    // if (filters) {
+    //   AND.push(filters);
+    // }
+
+    // const urlFilters = this.getUrlFilters();
+
+    // if (urlFilters) {
+    //   AND.push(urlFilters);
+    // }
+
+
+    // console.log("getFilters AND", [...AND]);
+
+    // if (!AND.length) {
+    //   return;
+    // }
+    // else if (AND.length === 1) {
+    //   return AND[0];
+    // }
+    // else {
+    //   return {
+    //     AND,
+    //   }
+    // }
+  }
+
+
+  setUrlFilters(filters) {
 
     const {
       uri,
@@ -549,6 +611,10 @@ class Connector extends EditorComponent {
 
     let newUri = uri.clone();
 
+
+    console.log("setFilters setUrlFilters", filters);
+
+
     try {
 
       filters = filters ? JSON.stringify(filters) : undefined;
@@ -560,6 +626,8 @@ class Connector extends EditorComponent {
     if (filters === "{}") {
       filters = null;
     }
+
+    console.log("setFilters setUrlFilters filters", filters);
 
     if (filters) {
 
@@ -577,17 +645,47 @@ class Connector extends EditorComponent {
     }
     else {
 
-      newUri.removeQuery("filters");
+      newUri.removeQuery(filtersname);
 
     }
 
     newUri.removeQuery("page");
 
+    console.log("setFilters setUrlFilters newUri", newUri);
+
 
     const url = newUri.resource();
 
+    console.log("setFilters setUrlFilters url", url);
+
 
     history.push(url);
+
+  }
+
+  setFilters(filters) {
+
+    console.log("setFilters", filters);
+
+    console.log("setFilters this", this);
+
+    // activeItem.updateComponentProperty("where", filters)
+    // this.updateComponentProperty("test", "filters")
+
+
+    const {
+      inEditMode,
+    } = this.context;
+
+
+    if (!inEditMode) {
+      return this.setUrlFilters(filters);
+    }
+    else {
+      return this.updateActiveComponentProps(this, {
+        where: filters,
+      });
+    }
 
   }
 
@@ -665,10 +763,12 @@ class Connector extends EditorComponent {
       },
       where: propsWhere,
       ...other
-    } = this.getRenderProps();
+    } = this.getComponentProps(this);
 
 
+    console.log("Connector renderChildren props", { ...this.props });
 
+    console.log("Connector renderChildren getComponentProps", { ...this.getComponentProps(this) });
 
 
 
@@ -684,6 +784,9 @@ class Connector extends EditorComponent {
     // } = this.getComponentProps(this);
 
     const filters = this.getFilters();
+
+    console.log("Connector renderChildren propsWhere", { ...propsWhere });
+    console.log("Connector renderChildren filters", { ...filters });
 
 
     let where;
@@ -701,14 +804,22 @@ class Connector extends EditorComponent {
       AND.push(filters);
     }
 
-    if (AND.length) {
 
+    if (!AND.length) {
+
+    }
+    else if (AND.length === 1) {
+
+      where = AND[0];
+    }
+    else {
 
       where = {
         AND,
       }
     }
 
+    console.log("Connector renderChildren where", { ...where });
 
 
     return <Viewer
@@ -716,9 +827,9 @@ class Connector extends EditorComponent {
       query={query}
       setFilters={filters => this.setFilters(filters)}
       filters={filters || []}
-      where={where}
       {...otherProps}
       {...this.getComponentProps(this)}
+      where={where}
     >
       {super.renderChildren()}
     </Viewer>

@@ -1,5 +1,6 @@
 =================================
 - Added ObjectConnector
+- Upgrade Connector Filters
 
 1.5.1
 =================================
