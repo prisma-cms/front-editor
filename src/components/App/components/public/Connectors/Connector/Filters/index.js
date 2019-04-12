@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import PropTypes, { bool } from 'prop-types';
 
 import { ConnectorContext } from '..';
 
@@ -13,6 +13,15 @@ class Filters extends EditorComponent {
 
   static Name = "Filters"
 
+  static propsTypes = {
+    ...EditorComponent.propsTypes,
+    visible: PropTypes.bool.isRequired,
+  }
+
+  static defaultProps = {
+    ...EditorComponent.defaultProps,
+    visible: true,
+  }
 
   renderPanelView() {
 
@@ -31,13 +40,25 @@ class Filters extends EditorComponent {
   renderChildren() {
 
     const {
+      inEditMode,
     } = this.context;
 
+    const {
+      visible,
+    } = this.getComponentProps(this);
+
+    // console.log("Filters props", { ...this.props });
+    // console.log("Filters props getComponentProps", { ...this.getComponentProps(this) });
+
+    if (!visible && !inEditMode) {
+
+      return null
+    }
 
     return <ConnectorContext.Consumer>
       {context => {
 
-        console.log("Filters context", context);
+        // console.log("Filters context", context);
 
         const {
           query,

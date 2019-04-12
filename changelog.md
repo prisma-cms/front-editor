@@ -1,6 +1,7 @@
 =================================
 - Added ObjectConnector
 - Upgrade Connector Filters
+- Make filters hiddable
 
 1.5.1
 =================================
