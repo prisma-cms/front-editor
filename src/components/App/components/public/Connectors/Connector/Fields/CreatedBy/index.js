@@ -1,21 +1,16 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import EditorComponent from '../../../..';
+import UserIcon from "material-ui-icons/SupervisorAccount";
+import EditorComponent from '../../../../..';
 import { ObjectContext } from '../../ListView';
 
-import Icon from "material-ui-icons/Subject";
-
-class Content extends EditorComponent {
 
 
-  static defaultProps = {
-    ...EditorComponent.defaultProps,
-    readOnly: true,
-  }
+class CreatedBy extends EditorComponent {
 
-  static Name = "Content"
 
+  static Name = "CreatedBy"
 
   renderPanelView() {
 
@@ -26,7 +21,7 @@ class Content extends EditorComponent {
     return super.renderPanelView(<div
       className={classes.panelButton}
     >
-      <Icon /> Content
+      <UserIcon /> CreatedBy
     </div>);
   }
 
@@ -34,13 +29,8 @@ class Content extends EditorComponent {
   renderMainView() {
 
     const {
-      Editor,
+      UserLink,
     } = this.context;
-
-
-    const {
-      readOnly,
-    } = this.props;
 
     return <span
       {...this.getRenderProps()}
@@ -58,13 +48,13 @@ class Content extends EditorComponent {
           }
 
           const {
-            content,
+            CreatedBy: user,
           } = object;
 
-          return content ? <Editor
-            value={content}
-            readOnly={readOnly}
-          /> : null;
+          return <UserLink
+            user={user}
+            {...other}
+          />
 
         }}
       </ObjectContext.Consumer>
@@ -73,4 +63,4 @@ class Content extends EditorComponent {
 
 }
 
-export default Content;
+export default CreatedBy;

@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { ConnectorContext } from '..';
 
 import FiltersIcon from "material-ui-icons/FilterList";
-import EditorComponent from '../../..';
+import EditorComponent from '../../../..';
 
 
 import PrismaCmsFilters from "@prisma-cms/filters";
@@ -28,39 +28,37 @@ class Filters extends EditorComponent {
   }
 
 
-  renderMainView() {
+  renderChildren() {
 
     const {
     } = this.context;
 
 
-    return <div
-      {...this.getRenderProps()}
-    >
-      <ConnectorContext.Consumer>
-        {context => {
+    return <ConnectorContext.Consumer>
+      {context => {
 
-          const {
-            query,
-            filters,
-            setFilters,
-            ...other
-          } = context;
+        console.log("Filters context", context);
 
-          if (!query) {
-            return null;
-          }
+        const {
+          query,
+          filters,
+          setFilters,
+          ...other
+        } = context;
+
+        if (!query) {
+          return null;
+        }
 
 
-          return <PrismaCmsFilters
-            queryName={query}
-            filters={filters}
-            setFilters={setFilters}
-          />;
+        return <PrismaCmsFilters
+          queryName={query}
+          filters={filters}
+          setFilters={setFilters}
+        />;
 
-        }}
-      </ConnectorContext.Consumer>
-    </div>;
+      }}
+    </ConnectorContext.Consumer>;
   }
 
 }

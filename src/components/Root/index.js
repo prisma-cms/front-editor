@@ -81,6 +81,8 @@ class FrontEditorRoot extends PrismaCmsComponent {
     } = this.props;
 
 
+    // console.log("FrontEditorRoot this.props", { ...this.props });
+
     const {
       inEditMode,
     } = this.state;

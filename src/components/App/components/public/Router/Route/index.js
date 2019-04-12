@@ -21,7 +21,7 @@ class EditorRoute extends EditorComponent {
 
   static defaultProps = {
     ...EditorComponent.defaultProps,
-    exact: true,
+    exact: false,
     path: "",
     routername: "",
   }
@@ -40,6 +40,14 @@ class EditorRoute extends EditorComponent {
     </div>);
   }
 
+
+  prepareDragItemProps() {
+
+    return {
+      ...super.prepareDragItemProps(),
+      exact: false,
+    }
+  }
 
 
   // onDrop(event) {

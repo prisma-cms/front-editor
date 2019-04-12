@@ -1,16 +1,15 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import UserIcon from "material-ui-icons/SupervisorAccount";
+import { ObjectContext } from '../ListView';
+
+import UserIcon from "material-ui-icons/Face";
 import EditorComponent from '../../../..';
-import { ObjectContext } from '../../ListView';
+
+class UserLink extends EditorComponent {
 
 
-
-class CreatedBy extends EditorComponent {
-
-
-  static Name = "CreatedBy"
+  static Name = "UserLink"
 
   renderPanelView() {
 
@@ -21,7 +20,7 @@ class CreatedBy extends EditorComponent {
     return super.renderPanelView(<div
       className={classes.panelButton}
     >
-      <UserIcon /> CreatedBy
+      <UserIcon /> User link
     </div>);
   }
 
@@ -29,7 +28,7 @@ class CreatedBy extends EditorComponent {
   renderMainView() {
 
     const {
-      UserLink,
+      UserLink: PrismaCmsUserLink,
     } = this.context;
 
     return <span
@@ -47,12 +46,8 @@ class CreatedBy extends EditorComponent {
             return null;
           }
 
-          const {
-            CreatedBy: user,
-          } = object;
-
-          return <UserLink
-            user={user}
+          return <PrismaCmsUserLink
+            user={object}
             {...other}
           />
 
@@ -63,4 +58,4 @@ class CreatedBy extends EditorComponent {
 
 }
 
-export default CreatedBy;
+export default UserLink;

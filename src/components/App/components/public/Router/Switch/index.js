@@ -283,7 +283,7 @@ class EditorSwitch extends EditorComponent {
       showRoutes,
     } = this.getComponentProps(this);
 
-    console.log("renderChildren", this.getComponentProps(this));
+    console.log("RouterSwitch renderChildren", this.getComponentProps(this));
 
     const {
 
@@ -355,7 +355,7 @@ class EditorSwitch extends EditorComponent {
 
           let route = <Route
             key={id || index}
-            exact={exact === undefined ? true : exact}
+            exact={exact === undefined ? false : exact}
             path={path}
             render={() => {
               return element;

@@ -15,7 +15,7 @@ import Context from "@prisma-cms/context";
 
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
-import EditorComponent from '../../';
+import EditorComponent from '../../..';
 import { Typography } from 'material-ui';
 
 export const ConnectorContext = createContext({});
@@ -58,81 +58,81 @@ class Connector extends EditorComponent {
   }
 
 
+  prepareDragItemProps() {
 
-  prepareDragItem() {
-
-    let newItem = super.prepareDragItem();
-
-    Object.assign(newItem, {
+    return {
+      ...super.prepareDragItemProps(),
       "first": 12,
-      // query: "usersConnection",
-      "components": [
+      filtersname: "filters",
+    };
+  }
 
-        {
-          "name": "Grid",
-          props: {
-            "container": true,
-            spacing: 8,
-          },
-          components: [
-            {
-              "name": "Grid",
-              props: {
-                "item": true,
-                "xs": 12,
-              },
-              components: [
-                {
-                  "name": "Filters",
-                  "props": {},
-                  "components": []
-                },
-              ],
-            },
-            {
-              "name": "Grid",
-              props: {
-                "item": true,
-                "xs": 12,
-              },
-              components: [
-                {
-                  "name": "ListView",
-                  "components": [
-                    {
-                      "name": "Grid",
-                      props: {
-                        "item": true,
-                        "xs": 12,
-                        "md": 6,
-                        "xl": 3,
-                      },
-                      components: [],
-                    }
-                  ]
-                },
-              ],
-            },
-            {
-              "name": "Grid",
-              props: {
-                "item": true,
-                "xs": 12,
-              },
-              components: [
-                {
-                  "name": "Pagination"
-                },
-              ],
-            },
 
-          ],
+  prepareDragItemComponents() {
+
+    return super.prepareDragItemComponents().concat([
+
+      {
+        "name": "Grid",
+        props: {
+          "container": true,
+          spacing: 8,
         },
+        components: [
+          {
+            "name": "Grid",
+            props: {
+              "item": true,
+              "xs": 12,
+            },
+            components: [
+              {
+                "name": "Filters",
+                "components": []
+              },
+            ],
+          },
+          {
+            "name": "Grid",
+            props: {
+              "item": true,
+              "xs": 12,
+            },
+            components: [
+              {
+                "name": "ListView",
+                "components": [
+                  {
+                    "name": "Grid",
+                    props: {
+                      "item": true,
+                      "xs": 12,
+                      "md": 6,
+                      "xl": 3,
+                    },
+                    components: [],
+                  }
+                ]
+              },
+            ],
+          },
+          {
+            "name": "Grid",
+            props: {
+              "item": true,
+              "xs": 12,
+            },
+            components: [
+              {
+                "name": "Pagination"
+              },
+            ],
+          },
 
-      ],
-    });
+        ],
+      },
 
-    return newItem;
+    ]);
   }
 
 
@@ -511,7 +511,7 @@ class Connector extends EditorComponent {
     const {
       filtersname,
       // pagevariable,
-    } = this.props;
+    } = this.getComponentProps(this);
 
     const {
       uri,
@@ -545,7 +545,7 @@ class Connector extends EditorComponent {
 
     const {
       filtersname,
-    } = this.props;
+    } = this.getComponentProps(this);
 
     let newUri = uri.clone();
 

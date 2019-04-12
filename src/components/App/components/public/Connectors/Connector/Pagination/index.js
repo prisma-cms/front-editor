@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { ConnectorContext } from '..';
 
 import PaginationIcon from "material-ui-icons/LastPage";
-import EditorComponent from '../../..';
+import EditorComponent from '../../../..';
 
 class Pagination extends EditorComponent {
 

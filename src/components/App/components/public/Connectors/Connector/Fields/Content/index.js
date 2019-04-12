@@ -1,20 +1,20 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import EditorComponent from '../../../..';
+
+import EditorComponent from '../../../../..';
 import { ObjectContext } from '../../ListView';
 
-import Icon from "material-ui-icons/ShortText";
+import Icon from "material-ui-icons/Subject";
 
-class NamedField extends EditorComponent {
+class Content extends EditorComponent {
 
 
   static defaultProps = {
     ...EditorComponent.defaultProps,
-    name: "",
+    readOnly: true,
   }
 
-
-  static Name = "NamedField"
+  static Name = "Content"
 
 
   renderPanelView() {
@@ -26,51 +26,45 @@ class NamedField extends EditorComponent {
     return super.renderPanelView(<div
       className={classes.panelButton}
     >
-      <Icon /> Object field
+      <Icon /> Content
     </div>);
   }
 
 
   renderMainView() {
 
-    // const {
-    //   UserLink,
-    // } = this.context;
+    const {
+      Editor,
+    } = this.context;
+
 
     const {
-      props: {
-        name,
-        ...otherProps
-      },
-      ...other
-    } = this.getRenderProps();
+      readOnly,
+    } = this.props;
 
     return <span
-      {...other}
+      {...this.getRenderProps()}
     >
       <ObjectContext.Consumer>
         {context => {
-
-          if (!name) {
-            return null;
-          }
 
           const {
             object,
             ...other
           } = context;
 
-
           if (!object) {
             return null;
           }
 
-
           const {
-            [name]: value,
+            content,
           } = object;
 
-          return value && (typeof value !== "object") ? value : null;
+          return content ? <Editor
+            value={content}
+            readOnly={readOnly}
+          /> : null;
 
         }}
       </ObjectContext.Consumer>
@@ -79,4 +73,4 @@ class NamedField extends EditorComponent {
 
 }
 
-export default NamedField;
+export default Content;

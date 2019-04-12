@@ -8,20 +8,23 @@ import Page from './components/public/Page';
 import Grid from './components/public/Grid';
 // import TextArea from './components/public/TextArea';
 import UsersGrid from './components/public/UsersGrid';
-import Connector from './components/public/Connector';
-import ListView from './components/public/Connector/ListView';
-import Pagination from './components/public/Connector/Pagination';
-import UserLink from './components/public/Connector/UserLink';
-import Filters from './components/public/Connector/Filters';
-import CreatedBy from './components/public/Connector/Fields/CreatedBy';
-import NamedField from './components/public/Connector/Fields/NamedField';
-import Content from './components/public/Connector/Fields/Content';
+import Connector from './components/public/Connectors/Connector';
+import ObjectConnector from './components/public/Connectors/ObjectConnector';
+import ListView from './components/public/Connectors/Connector/ListView';
+import ObjectView from './components/public/Connectors/ObjectConnector/ObjectView';
+import Pagination from './components/public/Connectors/Connector/Pagination';
+import UserLink from './components/public/Connectors/Connector/UserLink';
+import Filters from './components/public/Connectors/Connector/Filters';
+import CreatedBy from './components/public/Connectors/Connector/Fields/CreatedBy';
+import NamedField from './components/public/Connectors/Connector/Fields/NamedField';
+import Content from './components/public/Connectors/Connector/Fields/Content';
 import Section from './components/public/Section';
 import Typography from './components/public/Typography';
 import Switch from './components/public/Router/Switch';
 import Route from './components/public/Router/Route';
 import PageHeader from './components/public/PageHeader';
 import ParralaxTest from './components/public/Parallax/Test';
+import RoutedObject from './components/public/Router/RoutedObject';
 
 const styles = theme => {
 
@@ -160,7 +163,9 @@ class FrontEditor extends Component {
       // TextArea,
       UsersGrid,
       Connector,
+      ObjectConnector,
       ListView,
+      ObjectView,
       Pagination,
       NamedField,
       UserLink,
@@ -168,9 +173,10 @@ class FrontEditor extends Component {
       CreatedBy,
       Content,
       Section,
+      PageHeader,
       Switch,
       Route,
-      PageHeader,
+      RoutedObject,
       // ParralaxTest,
     ],
     CustomComponents: [],
