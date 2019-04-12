@@ -15,7 +15,8 @@
   },
   "dependencies": {
     "@prisma-cms/context": "latest",
-    "graphql": "14.0.2"
+    "graphql": "14.0.2",
+    "react-spring": "^8.0.19"
   },
   "devDependencies": {
     "@prisma-cms/front": "latest",

@@ -21,6 +21,7 @@ import Typography from './components/public/Typography';
 import Switch from './components/public/Router/Switch';
 import Route from './components/public/Router/Route';
 import PageHeader from './components/public/PageHeader';
+import ParralaxTest from './components/public/Parallax/Test';
 
 const styles = theme => {
 
@@ -47,8 +48,14 @@ const styles = theme => {
         display: "flex",
         flexDirection: "row-reverse",
       },
+
+      "&.fullheight": {
+        height: "100vh",
+      },
     },
     editor: {
+
+      position: "relative",
 
       [desktop]: {
         flex: 1,
@@ -142,6 +149,7 @@ class FrontEditor extends Component {
     Components: PropTypes.arrayOf(PropTypes.func).isRequired,
     CustomComponents: PropTypes.arrayOf(PropTypes.func).isRequired,
     toolbar: PropTypes.oneOf([PropTypes.string, PropTypes.func]),
+    className: PropTypes.string,
   };
 
   static defaultProps = {
@@ -163,8 +171,10 @@ class FrontEditor extends Component {
       Switch,
       Route,
       PageHeader,
+      // ParralaxTest,
     ],
     CustomComponents: [],
+    className: "fullheight",
   }
 
 
@@ -515,6 +525,7 @@ class FrontEditor extends Component {
       // Components,
       inEditMode,
       debug,
+      className,
     } = this.props;
 
     const {
@@ -592,7 +603,7 @@ class FrontEditor extends Component {
                 {this.renderToolbar()}
               </div>
               <div
-                className={classes.root}
+                className={[classes.root, className].join(" ")}
               >
                 <div
                   className={[classes.panel, classes.bordered].join(" ")}

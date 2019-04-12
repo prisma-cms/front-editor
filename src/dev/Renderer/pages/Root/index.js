@@ -8,6 +8,7 @@ import FrontEditor from "../../../../App";
 import { compose, graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 import { Button } from 'material-ui';
+import PageHeader from './components/PageHeader';
 
 
 // import {
@@ -70,6 +71,8 @@ class Root extends PrismaCmsComponent {
       },
       createTemplate,
       updateTemplate,
+      CustomComponents,
+      ...other
     } = this.props;
 
 
@@ -91,6 +94,11 @@ class Root extends PrismaCmsComponent {
      */
 
     const templates = objects || [];
+
+    let editorProps = {
+      CustomComponents: [].concat((CustomComponents || [])),
+      ...other
+    }
 
     if (!templates.length) {
 
@@ -131,6 +139,7 @@ class Root extends PrismaCmsComponent {
             }}
             _dirty={object}
             mutate={createTemplate}
+            {...editorProps}
           />
         }
 
@@ -161,7 +170,7 @@ class Root extends PrismaCmsComponent {
             right: 0,
             width: "auto",
             background: "rgba(255,255,255,0.5)",
-            zIndex: 200,
+            zIndex: 1000,
           }}
         >
           <Grid
@@ -189,6 +198,7 @@ class Root extends PrismaCmsComponent {
             object: template,
           }}
           mutate={updateTemplate}
+          {...editorProps}
         />
       </Fragment>;
     }

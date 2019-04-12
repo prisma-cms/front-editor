@@ -275,9 +275,15 @@ class EditorSwitch extends EditorComponent {
       inEditMode,
     } = this.context;
 
+    // const {
+    //   showRoutes,
+    // } = this.props;
+
     const {
       showRoutes,
-    } = this.props;
+    } = this.getComponentProps(this);
+
+    console.log("renderChildren", this.getComponentProps(this));
 
     const {
 
