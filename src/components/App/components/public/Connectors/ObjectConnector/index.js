@@ -630,7 +630,7 @@ class ObjectConnector extends EditorComponent {
     } = this.getRenderProps();
 
 
-    console.log("ObjectConnector props", { ...this.props });
+    console.log("ObjectConnector this.getRenderProps()", { ...this.getRenderProps() });
 
     // return super.renderChildren();
 
@@ -653,7 +653,11 @@ class ObjectConnector extends EditorComponent {
     let where = filters;
 
 
-    if (!where) {
+    console.log("ObjectConnector where", { ...where }, where && Object.keys(where));
+
+    if (!where || !Object.keys(where).length) {
+
+      console.log("ObjectConnector where 2", { ...where }, where && Object.keys(where));
 
       /**
        * Если элемент находится в роутере, пытаемся получить параметры из УРЛ
@@ -669,6 +673,10 @@ class ObjectConnector extends EditorComponent {
         const {
           params,
         } = match || {};
+
+
+        console.log("ObjectConnector parent", { ...parent });
+        console.log("ObjectConnector params", { ...params });
 
         if (params) {
           where = params;
@@ -706,13 +714,13 @@ class ObjectConnector extends EditorComponent {
 
 
     return <Viewer
+      {...otherProps}
+      {...this.getComponentProps(this)}
       key={query}
       query={query}
       setFilters={filters => this.setFilters(filters)}
       filters={filters || []}
       where={where}
-      {...otherProps}
-      {...this.getComponentProps(this)}
     >
       {super.renderChildren()}
     </Viewer>

@@ -1463,7 +1463,7 @@ class EditorComponent extends ObjectEditable {
   }
 
 
-  renderMainView() {
+  renderMainView(renderProps) {
 
     const object = this.getObjectWithMutations();
 
@@ -1488,9 +1488,10 @@ class EditorComponent extends ObjectEditable {
 
     return <RootElement
       // {...this.getRenderProps()}
+      {...objectProps}
       {...other}
       // {...props}
-      {...objectProps}
+      {...renderProps}
     >
       {this.renderChildren()}
     </RootElement>;

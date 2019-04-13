@@ -5,13 +5,14 @@ import EditorComponent from '../..';
 import Icon from "material-ui-icons/Link";
 
 import { Link as MuiLink } from "react-router-dom";
+import { ObjectContext } from '../Connectors/Connector/ListView';
 
 class Link extends EditorComponent {
 
   static defaultProps = {
     ...EditorComponent.defaultProps,
     native: false,
-    to: "javascript:alert('dsfsdf')",
+    to: "",
   }
 
   static Name = "Link"
@@ -49,6 +50,96 @@ class Link extends EditorComponent {
     ]);
   }
 
+
+  // getRenderProps() {
+
+  //   let renderProps = super.getRenderProps();
+
+  //   console.log("ObjectContext.Consumer renderProps", { ...renderProps });
+  //   console.log("ObjectContext.Consumer ObjectContext", ObjectContext);
+
+  //   // let test = <ObjectContext.Consumer>
+  //   //   {context => {
+
+  //   //     console.log("ObjectContext.Consumer context 2", context);
+
+  //   //     {/* return content; */}
+  //   //   }}
+  //   // </ObjectContext.Consumer>
+
+  //   return renderProps;
+
+  // }
+
+
+  renderMainView() {
+
+    const object = this.getObjectWithMutations();
+
+
+    console.log("Link props", { ...this.props });
+
+    // const {
+    // } = this.props;
+
+    let {
+      to,
+      ...props
+    } = this.getComponentProps(this);
+
+
+    // let content = super.renderMainView();;
+
+    console.log("ObjectContext.Consumer to", to, { ...props });
+
+    if (to) {
+      /**
+       * Проверяем есть ли параметры в УРЛ
+       */
+
+      let segments = to.split("/");
+
+      console.log("ObjectContext.Consumer segments", segments);
+
+      /**
+       * Если есть, то нам надо обернуть вывод в контекст объекта
+       */
+      if (segments.find(n => n && n.startsWith(":"))) {
+
+        return <ObjectContext.Consumer>
+          {context => {
+
+            console.log("ObjectContext.Consumer context", context);
+
+            const {
+              object,
+            } = context;
+
+            if (object) {
+
+              to = segments.map(n => {
+
+                if (n && n.startsWith(":")) {
+                  n = object[n.replace(/^\:/, '')];
+                }
+
+                return n;
+              }).join("/");
+
+            }
+
+            return super.renderMainView({
+              to,
+            });
+          }}
+        </ObjectContext.Consumer>
+      }
+
+    }
+
+
+    return super.renderMainView();
+  }
 
   // getRenderProps() {
 
