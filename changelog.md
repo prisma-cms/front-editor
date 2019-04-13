@@ -1,3 +1,4 @@
+1.6.0
 =================================
 - Added ObjectConnector
 - Upgrade Connector Filters

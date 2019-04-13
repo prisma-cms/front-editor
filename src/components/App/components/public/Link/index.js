@@ -11,8 +11,9 @@ class Link extends EditorComponent {
 
   static defaultProps = {
     ...EditorComponent.defaultProps,
-    native: false,
+    // native: false,
     to: "",
+    target: "",
   }
 
   static Name = "Link"
