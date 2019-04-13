@@ -334,31 +334,50 @@ class EditorSwitch extends EditorComponent {
           let component;
 
 
-          let element = <Component
-            // key={id || index}
-            mode="main"
-            // component={n}
-            parent={this}
-            props={props}
-            data={{
-              object: n,
-            }}
-            exact={exact}
-            path={path}
-            routername={routername}
-            // _dirty={n}
-            showRoutes={showRoutes}
-            {...other}
-            {...props}
-          />;
+          // let element = <Component
+          //   // key={id || index}
+          //   mode="main"
+          //   // component={n}
+          //   parent={this}
+          //   props={props}
+          //   data={{
+          //     object: n,
+          //   }}
+          //   exact={exact}
+          //   path={path}
+          //   routername={routername}
+          //   // _dirty={n}
+          //   showRoutes={showRoutes}
+          //   {...other}
+          //   {...props}
+          // />;
 
 
           let route = <Route
             key={id || index}
             exact={exact === undefined ? false : exact}
             path={path}
-            render={() => {
-              return element;
+            render={(routerProps) => {
+              // return element;
+
+              return <Component
+                // key={id || index}
+                mode="main"
+                // component={n}
+                parent={this}
+                props={props}
+                data={{
+                  object: n,
+                }}
+                exact={exact}
+                path={path}
+                routername={routername}
+                // _dirty={n}
+                showRoutes={showRoutes}
+                {...other}
+                {...props}
+                {...routerProps}
+              />
             }}
           />
 

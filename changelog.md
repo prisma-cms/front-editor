@@ -3,6 +3,7 @@
 - Upgrade Connector Filters
 - Make filters hiddable
 - Fix Section props
+- Added ObjectConnection where condition from Route
 
 1.5.1
 =================================

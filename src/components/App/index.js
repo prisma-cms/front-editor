@@ -25,6 +25,7 @@ import Route from './components/public/Router/Route';
 import PageHeader from './components/public/PageHeader';
 import ParralaxTest from './components/public/Parallax/Test';
 import RoutedObject from './components/public/Router/RoutedObject';
+import Link from './components/public/Link';
 
 const styles = theme => {
 
@@ -172,6 +173,7 @@ class FrontEditor extends Component {
       Filters,
       CreatedBy,
       Content,
+      Link,
       Section,
       PageHeader,
       Switch,

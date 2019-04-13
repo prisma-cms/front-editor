@@ -625,11 +625,12 @@ class ObjectConnector extends EditorComponent {
         ...otherProps
       },
       where: propsWhere,
+      parent,
       ...other
     } = this.getRenderProps();
 
 
-    console.log("Object connector props", { ...this.props });
+    console.log("ObjectConnector props", { ...this.props });
 
     // return super.renderChildren();
 
@@ -651,7 +652,35 @@ class ObjectConnector extends EditorComponent {
 
     let where = filters;
 
-    console.log("filters", filters);
+
+    if (!where) {
+
+      /**
+       * Если элемент находится в роутере, пытаемся получить параметры из УРЛ
+       */
+      // let matchParams;
+
+      if (parent) {
+
+        const {
+          match,
+        } = parent.props;
+
+        const {
+          params,
+        } = match || {};
+
+        if (params) {
+          where = params;
+        }
+      }
+
+      // console.log("ObjectConnector matchParams", matchParams);
+
+    }
+
+
+    console.log("ObjectConnector filters", filters);
 
     // let AND = [];
 
