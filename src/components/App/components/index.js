@@ -628,6 +628,9 @@ class EditorComponent extends ObjectEditable {
       ...other
     } = this.props;
 
+    const {
+      props: objectProps,
+    } = object;
 
     let classNames = [
       className,
@@ -638,6 +641,7 @@ class EditorComponent extends ObjectEditable {
       ...component,
       ...other,
       ...object,
+      ...objectProps,
       // ...otherProps,
     };
 

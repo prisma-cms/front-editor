@@ -54,7 +54,7 @@ class DevRenderer extends PrismaCmsRenderer {
 
     let routes = super.getRoutes();
 
-    return [
+    return routes.concat([
       // {
       //   exact: true,
       //   path: "/",
@@ -106,7 +106,7 @@ class DevRenderer extends PrismaCmsRenderer {
       //   path: "*",
       //   render: props => this.renderOtherPages(props),
       // },
-    ]
+    ])
     // .concat(routes);
 
   }

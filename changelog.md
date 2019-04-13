@@ -2,6 +2,7 @@
 - Added ObjectConnector
 - Upgrade Connector Filters
 - Make filters hiddable
+- Fix Section props
 
 1.5.1
 =================================

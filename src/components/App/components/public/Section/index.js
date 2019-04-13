@@ -52,8 +52,10 @@ class Section extends EditorComponent {
     // } = this.getComponentProps(this);
 
 
+    console.log("Section renderProps getRenderProps", { ...super.getRenderProps() });
 
-    return {
+
+    const renderProps = {
       style: {
         ...style,
         marginTop,
@@ -62,6 +64,11 @@ class Section extends EditorComponent {
       ...other,
       // ...otherProps
     }
+
+
+    console.log("Section renderProps", renderProps);
+
+    return renderProps;
   }
 
   // renderMainView() {

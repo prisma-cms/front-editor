@@ -67,7 +67,7 @@ class Grid extends EditorComponent {
 
 
 
-  updateComponentProperty( name, value) {
+  updateComponentProperty(name, value) {
 
     switch (name) {
 
@@ -93,11 +93,11 @@ class Grid extends EditorComponent {
     }
 
 
-    return super.updateComponentProperty( name, value);
+    return super.updateComponentProperty(name, value);
   }
 
 
-  updateComponentProps( data) {
+  updateComponentProps(data) {
 
 
 
@@ -111,6 +111,7 @@ class Grid extends EditorComponent {
         lg: undefined,
         xl: undefined,
         alignItems: "flex-end",
+        spacing: 0,
       });
 
     }
@@ -118,11 +119,12 @@ class Grid extends EditorComponent {
       Object.assign(data, {
         container: undefined,
         alignItems: undefined,
+        spacing: undefined,
         ...this.getItemDefaultProps(),
       });
     }
 
-    return super.updateComponentProps( data);
+    return super.updateComponentProps(data);
   }
 
 
@@ -246,6 +248,7 @@ class Grid extends EditorComponent {
 
     Object.assign(props, {
       container: true,
+      spacing: 0,
     });
 
     return props;
