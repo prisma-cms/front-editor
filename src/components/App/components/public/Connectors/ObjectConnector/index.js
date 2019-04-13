@@ -431,90 +431,90 @@ class ObjectConnector extends EditorComponent {
 
 
 
-  getFilters() {
+  // getFilters() {
 
-    const {
-      filtersname,
-      // pagevariable,
-    } = this.getComponentProps(this);
+  //   const {
+  //     filtersname,
+  //     // pagevariable,
+  //   } = this.getComponentProps(this);
 
-    const {
-      uri,
-    } = this.context;
-
-
-    let {
-      // [pagevariable]: page,
-      [filtersname]: filters,
-    } = uri.query(true);
-
-    try {
-      filters = filters && JSON.parse(filters) || null;
-    }
-    catch (error) {
-      console.error(console.error(error));
-    }
-
-    return filters || {};
-  }
+  //   const {
+  //     uri,
+  //   } = this.context;
 
 
-  setFilters(filters) {
+  //   let {
+  //     // [pagevariable]: page,
+  //     [filtersname]: filters,
+  //   } = uri.query(true);
 
-    const {
-      uri,
-      router: {
-        history,
-      },
-    } = this.context;
+  //   try {
+  //     filters = filters && JSON.parse(filters) || null;
+  //   }
+  //   catch (error) {
+  //     console.error(console.error(error));
+  //   }
 
-    const {
-      filtersname,
-    } = this.getComponentProps(this);
-
-    let newUri = uri.clone();
-
-    try {
-
-      filters = filters ? JSON.stringify(filters) : undefined;
-    }
-    catch (error) {
-      console.error(error);
-    }
-
-    if (filters === "{}") {
-      filters = null;
-    }
-
-    if (filters) {
-
-      if (newUri.hasQuery) {
-        newUri = newUri.setQuery({
-          [filtersname]: filters,
-        });
-      }
-      else {
-        newUri = newUri.addQuery({
-          [filtersname]: filters,
-        });
-      }
-
-    }
-    else {
-
-      newUri.removeQuery("filters");
-
-    }
-
-    newUri.removeQuery("page");
+  //   return filters || {};
+  // }
 
 
-    const url = newUri.resource();
+  // setFilters(filters) {
+
+  //   const {
+  //     uri,
+  //     router: {
+  //       history,
+  //     },
+  //   } = this.context;
+
+  //   const {
+  //     filtersname,
+  //   } = this.getComponentProps(this);
+
+  //   let newUri = uri.clone();
+
+  //   try {
+
+  //     filters = filters ? JSON.stringify(filters) : undefined;
+  //   }
+  //   catch (error) {
+  //     console.error(error);
+  //   }
+
+  //   if (filters === "{}") {
+  //     filters = null;
+  //   }
+
+  //   if (filters) {
+
+  //     if (newUri.hasQuery) {
+  //       newUri = newUri.setQuery({
+  //         [filtersname]: filters,
+  //       });
+  //     }
+  //     else {
+  //       newUri = newUri.addQuery({
+  //         [filtersname]: filters,
+  //       });
+  //     }
+
+  //   }
+  //   else {
+
+  //     newUri.removeQuery("filters");
+
+  //   }
+
+  //   newUri.removeQuery("page");
 
 
-    history.push(url);
+  //   const url = newUri.resource();
 
-  }
+
+  //   history.push(url);
+
+  // }
 
 
 
@@ -579,6 +579,42 @@ class ObjectConnector extends EditorComponent {
 
   //   </div>
   // }
+
+
+
+  getFilters() {
+
+
+    // console.log("getFilters", { ...filters });
+    // console.log("getFilters this.props", { ...this.props });
+    // console.log("getFilters this.getComponentProps", { ...this.getComponentProps(this) });
+
+    const {
+      where: filters,
+      // } = this.props;
+    } = this.getComponentProps(this);
+
+    return filters;
+
+  }
+
+
+  setFilters(filters) {
+
+    // console.log("setFilters", filters);
+
+    // console.log("setFilters this", this);
+
+    // activeItem.updateComponentProperty("where", filters)
+    // this.updateComponentProperty("test", "filters")
+
+    return this.updateActiveComponentProps(this, {
+      where: filters,
+    });
+
+  }
+
+
 
   renderChildren() {
 

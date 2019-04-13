@@ -567,32 +567,6 @@ class Connector extends EditorComponent {
       return this.getUrlFilters();
     }
 
-    // let AND = [];
-
-    // if (filters) {
-    //   AND.push(filters);
-    // }
-
-    // const urlFilters = this.getUrlFilters();
-
-    // if (urlFilters) {
-    //   AND.push(urlFilters);
-    // }
-
-
-    // console.log("getFilters AND", [...AND]);
-
-    // if (!AND.length) {
-    //   return;
-    // }
-    // else if (AND.length === 1) {
-    //   return AND[0];
-    // }
-    // else {
-    //   return {
-    //     AND,
-    //   }
-    // }
   }
 
 
