@@ -8,7 +8,7 @@ describe('@prisma-cms/tests proxy', () => {
 
     let fakeServer = {
       use: rule => {
-        // console.log("rule", rule);
+
       },
     }
 

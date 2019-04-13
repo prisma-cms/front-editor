@@ -55,13 +55,13 @@ class Link extends EditorComponent {
 
   //   let renderProps = super.getRenderProps();
 
-  //   console.log("ObjectContext.Consumer renderProps", { ...renderProps });
-  //   console.log("ObjectContext.Consumer ObjectContext", ObjectContext);
+
+
 
   //   // let test = <ObjectContext.Consumer>
   //   //   {context => {
 
-  //   //     console.log("ObjectContext.Consumer context 2", context);
+
 
   //   //     {/* return content; */}
   //   //   }}
@@ -77,7 +77,7 @@ class Link extends EditorComponent {
     const object = this.getObjectWithMutations();
 
 
-    console.log("Link props", { ...this.props });
+
 
     // const {
     // } = this.props;
@@ -90,7 +90,7 @@ class Link extends EditorComponent {
 
     // let content = super.renderMainView();;
 
-    console.log("ObjectContext.Consumer to", to, { ...props });
+
 
     if (to) {
       /**
@@ -99,7 +99,7 @@ class Link extends EditorComponent {
 
       let segments = to.split("/");
 
-      console.log("ObjectContext.Consumer segments", segments);
+
 
       /**
        * Если есть, то нам надо обернуть вывод в контекст объекта
@@ -109,7 +109,7 @@ class Link extends EditorComponent {
         return <ObjectContext.Consumer>
           {context => {
 
-            console.log("ObjectContext.Consumer context", context);
+
 
             const {
               object,
@@ -164,7 +164,7 @@ class Link extends EditorComponent {
   //   // } = this.getComponentProps(this);
 
 
-  //   console.log("Link renderProps getRenderProps", { ...super.getRenderProps() });
+
 
 
   //   const renderProps = {
@@ -178,7 +178,7 @@ class Link extends EditorComponent {
   //   }
 
 
-  //   console.log("Link renderProps", renderProps);
+
 
   //   return renderProps;
   // }

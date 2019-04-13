@@ -283,7 +283,7 @@ class EditorSwitch extends EditorComponent {
       showRoutes,
     } = this.getComponentProps(this);
 
-    console.log("RouterSwitch renderChildren", this.getComponentProps(this));
+
 
     const {
 

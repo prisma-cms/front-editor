@@ -525,7 +525,7 @@ class Connector extends EditorComponent {
 
     try {
 
-      console.log("getFilters getUrlFilters JSON", { ...filters });
+
 
       filters = filters && JSON.parse(filters) || null;
 
@@ -537,7 +537,7 @@ class Connector extends EditorComponent {
       console.error(console.error(error));
     }
 
-    console.log("getFilters getUrlFilters", { ...filters });
+
 
     return filters;
   }
@@ -546,9 +546,9 @@ class Connector extends EditorComponent {
   getFilters() {
 
 
-    // console.log("getFilters", { ...filters });
-    // console.log("getFilters this.props", { ...this.props });
-    // console.log("getFilters this.getComponentProps", { ...this.getComponentProps(this) });
+
+
+
 
     const {
       inEditMode,
@@ -586,7 +586,7 @@ class Connector extends EditorComponent {
     let newUri = uri.clone();
 
 
-    console.log("setFilters setUrlFilters", filters);
+
 
 
     try {
@@ -601,7 +601,7 @@ class Connector extends EditorComponent {
       filters = null;
     }
 
-    console.log("setFilters setUrlFilters filters", filters);
+
 
     if (filters) {
 
@@ -625,12 +625,12 @@ class Connector extends EditorComponent {
 
     newUri.removeQuery("page");
 
-    console.log("setFilters setUrlFilters newUri", newUri);
+
 
 
     const url = newUri.resource();
 
-    console.log("setFilters setUrlFilters url", url);
+
 
 
     history.push(url);
@@ -639,9 +639,9 @@ class Connector extends EditorComponent {
 
   setFilters(filters) {
 
-    console.log("setFilters", filters);
 
-    console.log("setFilters this", this);
+
+
 
     // activeItem.updateComponentProperty("where", filters)
     // this.updateComponentProperty("test", "filters")
@@ -740,9 +740,9 @@ class Connector extends EditorComponent {
     } = this.getComponentProps(this);
 
 
-    console.log("Connector renderChildren props", { ...this.props });
 
-    console.log("Connector renderChildren getComponentProps", { ...this.getComponentProps(this) });
+
+
 
 
 
@@ -759,8 +759,8 @@ class Connector extends EditorComponent {
 
     const filters = this.getFilters();
 
-    console.log("Connector renderChildren propsWhere", { ...propsWhere });
-    console.log("Connector renderChildren filters", { ...filters });
+
+
 
 
     let where;
@@ -793,7 +793,7 @@ class Connector extends EditorComponent {
       }
     }
 
-    console.log("Connector renderChildren where", { ...where });
+
 
 
     return <Viewer

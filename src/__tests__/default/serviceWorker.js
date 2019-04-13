@@ -47,7 +47,7 @@ describe('@prisma-cms/tests index', () => {
             const instance = {
 
               unregister: async () => {
-                console.log("unregister");
+
 
                 testSuccess();
               }
@@ -55,7 +55,7 @@ describe('@prisma-cms/tests index', () => {
             }
 
             this.ready = new Promise(resolve => {
-              console.log(chalk.green("serviceWorker ready"));
+
 
 
               resolve(instance);
@@ -68,8 +68,8 @@ describe('@prisma-cms/tests index', () => {
 
           async register() {
 
-            console.log("serviceWorker register");
-            console.log("serviceWorker register 2");
+
+
 
             class registration {
 
@@ -122,7 +122,7 @@ describe('@prisma-cms/tests index', () => {
 
         serviceWorkerRegister({
           onUpdate: (registration) => {
-            console.log("serviceWorkerRegister.onUpdate.registration", registration);
+
 
             // unregister
             serviceWorkerUnregister();
@@ -135,7 +135,7 @@ describe('@prisma-cms/tests index', () => {
 
       }
       else {
-        console.log("Test rowrkers skipped");
+
         return testSuccess();
       }
 

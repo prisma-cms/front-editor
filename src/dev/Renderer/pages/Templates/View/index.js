@@ -28,8 +28,8 @@ export class TemplatesListView extends TableView {
       Grid,
     } = this.context;
 
-    // console.log("TemplateLink", TemplateLink);
-    // console.log("UserLink", UserLink);
+
+
 
     // return [];
 

@@ -28,7 +28,7 @@ class Template extends Page {
 
   // constructor(props) {
 
-  //   console.log("Templates constructor");
+
 
   //   super(props)
 

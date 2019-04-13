@@ -38,7 +38,7 @@ class RoutedObject extends EditorComponent {
   renderChildren() {
 
 
-    console.log("RoutedObject props", this.props);
+
 
     return super.renderChildren();
   }

@@ -47,8 +47,8 @@ class Filters extends EditorComponent {
       visible,
     } = this.getComponentProps(this);
 
-    // console.log("Filters props", { ...this.props });
-    // console.log("Filters props getComponentProps", { ...this.getComponentProps(this) });
+
+
 
     if (!visible && !inEditMode) {
 
@@ -58,7 +58,7 @@ class Filters extends EditorComponent {
     return <ConnectorContext.Consumer>
       {context => {
 
-        // console.log("Filters context", context);
+
 
         const {
           query,

@@ -26,7 +26,7 @@ class TemplateCreatePage extends TemplatePage {
 
 
   onSave = (result) => {
-    // console.log("this result", result);
+
 
     // return "Sdfdsf";
 

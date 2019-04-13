@@ -52,7 +52,7 @@ class Section extends EditorComponent {
     // } = this.getComponentProps(this);
 
 
-    console.log("Section renderProps getRenderProps", { ...super.getRenderProps() });
+
 
 
     const renderProps = {
@@ -66,7 +66,7 @@ class Section extends EditorComponent {
     }
 
 
-    console.log("Section renderProps", renderProps);
+
 
     return renderProps;
   }

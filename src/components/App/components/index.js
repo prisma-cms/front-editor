@@ -247,12 +247,12 @@ class EditorComponent extends ObjectEditable {
       dragTarget,
     } = this.context;
 
-    // console.log("onDrop this", this);
-    // console.log("onDrop", dragItem);
-    // console.log("onDrop dragTarget", dragTarget);
-    // console.log("onDrop dragTarget === dragItem", dragItem === dragTarget);
-    // console.log("onDrop dragItem === this", dragItem === this);
-    // console.log("onDrop dragTarget === this", dragTarget === this);
+
+
+
+
+
+
 
     if (dragItem && dragTarget && dragTarget === this) {
 
@@ -1285,8 +1285,8 @@ class EditorComponent extends ObjectEditable {
     let props = activeItem.props.props || {};
 
 
-    console.log("updateActiveComponentProps activeItem", activeItem);
-    console.log("updateActiveComponentProps activeParent", activeParent);
+
+
 
 
 

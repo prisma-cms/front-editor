@@ -60,7 +60,7 @@ class ObjectView extends EditorComponent {
     } = this.getComponentProps(this);
 
 
-    console.log("ObjectView renderChildren props", this.props);
+
 
     let children = super.renderChildren();
 
@@ -71,7 +71,7 @@ class ObjectView extends EditorComponent {
           data,
         } = context;
 
-        console.log("ObjectView renderChildren context", { ...context });
+
 
         if (!data) {
           return null;

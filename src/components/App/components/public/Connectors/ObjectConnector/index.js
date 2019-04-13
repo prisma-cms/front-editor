@@ -585,9 +585,9 @@ class ObjectConnector extends EditorComponent {
   getFilters() {
 
 
-    // console.log("getFilters", { ...filters });
-    // console.log("getFilters this.props", { ...this.props });
-    // console.log("getFilters this.getComponentProps", { ...this.getComponentProps(this) });
+
+
+
 
     const {
       where: filters,
@@ -601,9 +601,9 @@ class ObjectConnector extends EditorComponent {
 
   setFilters(filters) {
 
-    // console.log("setFilters", filters);
 
-    // console.log("setFilters this", this);
+
+
 
     // activeItem.updateComponentProperty("where", filters)
     // this.updateComponentProperty("test", "filters")
@@ -630,7 +630,7 @@ class ObjectConnector extends EditorComponent {
     } = this.getRenderProps();
 
 
-    console.log("ObjectConnector this.getRenderProps()", { ...this.getRenderProps() });
+
 
     // return super.renderChildren();
 
@@ -653,11 +653,11 @@ class ObjectConnector extends EditorComponent {
     let where = filters;
 
 
-    console.log("ObjectConnector where", { ...where }, where && Object.keys(where));
+
 
     if (!where || !Object.keys(where).length) {
 
-      console.log("ObjectConnector where 2", { ...where }, where && Object.keys(where));
+
 
       /**
        * Если элемент находится в роутере, пытаемся получить параметры из УРЛ
@@ -675,20 +675,20 @@ class ObjectConnector extends EditorComponent {
         } = match || {};
 
 
-        console.log("ObjectConnector parent", { ...parent });
-        console.log("ObjectConnector params", { ...params });
+
+
 
         if (params) {
           where = params;
         }
       }
 
-      // console.log("ObjectConnector matchParams", matchParams);
+
 
     }
 
 
-    console.log("ObjectConnector filters", filters);
+
 
     // let AND = [];
 
@@ -742,7 +742,7 @@ class Viewer extends Component {
       query,
     } = this.props;
 
-    console.log("ObjectConnector Viewer componentWillMount props", this.props);
+
 
     if (query) {
 
@@ -759,7 +759,7 @@ class Viewer extends Component {
           ...other
         } = props;
 
-        console.log("ObjectConnector Viewer Renderer props", { ...props }, { ...this.props });
+
 
         return <ConnectorContext.Consumer>
           {context => <ConnectorContext.Provider
@@ -795,7 +795,7 @@ class Viewer extends Component {
     } = this;
 
 
-    console.log("ObjectConnector Viewer props", this.props);
+
 
     // const {
     //   uri,
@@ -815,7 +815,7 @@ class Viewer extends Component {
 
     // return "Sdfdsf";
 
-    console.log("ObjectConnector Viewer other", { ...other });
+
 
     return <ConnectorContext.Provider
       value={{

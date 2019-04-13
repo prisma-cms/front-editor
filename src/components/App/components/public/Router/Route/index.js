@@ -58,16 +58,16 @@ class EditorRoute extends EditorComponent {
   //   } = this.context;
 
 
-  //   console.log("onDrop dragItem", dragItem)
 
 
-  //   console.log("onDrop dragTarget", dragTarget)
+
+
 
 
 
   //   if (dragItem && dragTarget && dragItem === this) {
 
-  //     console.log("dragTarget.constructor.Name", dragTarget.constructor.Name)
+
 
   //     if (dragTarget.constructor.Name !== "EditorSwitch") {
 
@@ -88,8 +88,8 @@ class EditorRoute extends EditorComponent {
    */
   canBeDropped(dragItem) {
 
-    // console.log("canBeDropped dragItem", dragItem)
-    // console.log("canBeDropped this", this)
+
+
 
     /**
      * Нельзя роутеры сюда же кидать
@@ -118,7 +118,7 @@ class EditorRoute extends EditorComponent {
   //     showRoutes,
   //   } = parent.getComponentProps(parent);
 
-  //   console.log("Route renderMainView this.props", this.props);
+
 
   //   if (inEditMode && showRoutes) {
   //     return super.renderMainView();
@@ -149,7 +149,7 @@ class EditorRoute extends EditorComponent {
   //     showRoutes,
   //   } = parent.getComponentProps(parent);
 
-  //   console.log("Route renderMainView this.props", this.props);
+
 
   //   if (inEditMode && showRoutes) {
   //     return super.renderMainView();
@@ -197,10 +197,10 @@ class EditorRoute extends EditorComponent {
   //     showRoutes,
   //   } = parent.getComponentProps(parent);
 
-  //   console.log("Route other", other);
 
-  //   // console.log("Route showRoutes", showRoutes);
-  //   console.log("Route this.getComponentProps(this)", this.getComponentProps(this));
+
+
+
 
 
   //   if (inEditMode && showRoutes) {
@@ -274,10 +274,10 @@ class EditorRoute extends EditorComponent {
   //     showRoutes,
   //   } = parent.getComponentProps(parent);
 
-  //   console.log("Route other", other);
 
-  //   // console.log("Route showRoutes", showRoutes);
-  //   console.log("Route this.getComponentProps(this)", this.getComponentProps(this));
+
+
+
 
 
   //   if (inEditMode && showRoutes) {
@@ -353,10 +353,10 @@ class EditorRoute extends EditorComponent {
   //     showRoutes,
   //   } = parent.getComponentProps(parent);
 
-  //   console.log("Route other", other);
 
-  //   // console.log("Route showRoutes", showRoutes);
-  //   console.log("Route this.getComponentProps(this)", this.getComponentProps(this));
+
+
+
 
 
   //   if (inEditMode && showRoutes) {

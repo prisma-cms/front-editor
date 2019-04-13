@@ -81,13 +81,13 @@ class FrontEditorRoot extends PrismaCmsComponent {
     } = this.props;
 
 
-    // console.log("FrontEditorRoot this.props", { ...this.props });
+
 
     const {
       inEditMode,
     } = this.state;
 
-    // console.log("this.context", this.context);
+
 
     let content = null;
 
@@ -210,7 +210,7 @@ class FrontEditorRoot extends PrismaCmsComponent {
       </Fragment>;
     }
 
-    // console.log("result");
+
 
     return super.render(
       content
@@ -249,7 +249,7 @@ export class RootConnector extends Component {
       View,
     } = this.props;
 
-    // console.log("context", this.context, templates);
+
 
     this.Renderer = compose(
       graphql(gql(templates)),
