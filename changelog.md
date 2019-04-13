@@ -4,6 +4,7 @@
 - Make filters hiddable
 - Fix Section props
 - Added ObjectConnection where condition from Route
+- Added Link
 
 1.5.1
 =================================
