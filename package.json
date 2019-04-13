@@ -1,6 +1,6 @@
 {
   "name": "@prisma-cms/front-editor",
-  "version": "1.6.0",
+  "version": "1.6.1",
   "private": false,
   "main": "lib/App.js",
   "scripts": {
@@ -15,8 +15,7 @@
   },
   "dependencies": {
     "@prisma-cms/context": "latest",
-    "graphql": "14.0.2",
-    "react-spring": "^8.0.19"
+    "graphql": "14.0.2"
   },
   "devDependencies": {
     "@prisma-cms/front": "latest",
