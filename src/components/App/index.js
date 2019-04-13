@@ -23,7 +23,7 @@ import Typography from './components/public/Typography';
 import Switch from './components/public/Router/Switch';
 import Route from './components/public/Router/Route';
 import PageHeader from './components/public/PageHeader';
-import ParralaxTest from './components/public/Parallax/Test';
+// import ParralaxTest from './components/public/Parallax/Test';
 import RoutedObject from './components/public/Router/RoutedObject';
 import Link from './components/public/Link';
 

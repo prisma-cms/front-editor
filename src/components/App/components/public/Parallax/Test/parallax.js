@@ -1,5 +1,6 @@
 import React from 'react'
 
+// https://github.com/react-spring/react-spring/issues/575#issuecomment-469037674
 import { Parallax, ParallaxLayer } from 'react-spring/renderprops-addons'
 
 class App extends React.Component {
