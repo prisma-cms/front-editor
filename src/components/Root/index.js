@@ -314,8 +314,8 @@ export class RootConnector extends Component {
     // return null;
 
     const {
-      orderBy,
-      first,
+      // orderBy,
+      // first,
       View,
       ...other
     } = this.props;
@@ -371,8 +371,8 @@ export class RootConnector extends Component {
 
     return <Renderer
       key={currentUserId}
-      {...other}
       {...conditions}
+      {...other}
     />;
   }
 

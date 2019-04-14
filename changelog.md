@@ -1,3 +1,7 @@
+1.6.4
+=================================
+- Fix templates condition
+
 1.6.3
 =================================
 - Make templates clonable
