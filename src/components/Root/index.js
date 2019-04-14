@@ -19,11 +19,13 @@ class FrontEditorRoot extends PrismaCmsComponent {
     createTemplate: PropTypes.func.isRequired,
     updateTemplate: PropTypes.func.isRequired,
     inEditMode: PropTypes.bool.isRequired,
+    clonable: PropTypes.bool.isRequired,
   }
 
 
   static defaultProps = {
     inEditMode: false,
+    clonable: true,
   };
 
 
@@ -48,7 +50,7 @@ class FrontEditorRoot extends PrismaCmsComponent {
       ru: {
         values: {
           Cancel: "Отмена",
-          Edit: "Редактировать",
+          "Edit template": "Редактировать шаблон",
         },
       },
     }
@@ -59,6 +61,8 @@ class FrontEditorRoot extends PrismaCmsComponent {
   }
 
   render() {
+
+    // console.log("Root Template this", { ...this });
 
     const {
       Grid,
@@ -77,6 +81,7 @@ class FrontEditorRoot extends PrismaCmsComponent {
       inEditMode: inEditModeNull,
       first,
       orderBy,
+      clonable,
       ...other
     } = this.props;
 
@@ -140,6 +145,7 @@ class FrontEditorRoot extends PrismaCmsComponent {
           }
 
           content = <FrontEditor
+            key="new"
             inEditMode={true}
             data={{
               object,
@@ -166,9 +172,12 @@ class FrontEditorRoot extends PrismaCmsComponent {
       } = template;
 
 
-      if (currentUserId && currentUserId === createdById) {
-
+      /**
+       * Если разрешено клонировать шаблоны или владелец - текущий пользователь, то выводим кнопки
+       */
+      if (clonable || (currentUserId && currentUserId === createdById)) {
         toolbar = <Grid
+          rel="noindex, nofollow"
           container
           style={{
             // flexDirection: "row-reverse",
@@ -190,21 +199,57 @@ class FrontEditorRoot extends PrismaCmsComponent {
               })}
               variant="raised"
             >
-              {inEditMode ? this.lexicon("Cancel") : this.lexicon("Edit")}
+              {inEditMode ? this.lexicon("Cancel") : this.lexicon("Edit template")}
             </Button>
           </Grid>
         </Grid>
       }
 
 
-      content = <Fragment>
+
+      if (currentUserId && currentUserId === createdById) {
+        Object.assign(editorProps, {
+          mutate: updateTemplate,
+        });
+      }
+      else {
+
+        let {
+          id: templateId,
+          name,
+          props,
+          components,
+        } = template;
+
+        Object.assign(editorProps, {
+          mutate: createTemplate,
+          _dirty: {
+            name,
+            props,
+            components,
+            Parent: {
+              connect: {
+                id: templateId,
+              },
+            },
+          },
+        });
+      }
+
+
+      // console.log("Root Template template", { ...template });
+
+      // console.log("Root Template key", template && `${template.id}-${template.updatedAt}`);
+
+      content = <Fragment
+        key={template ? `${template.id}-${template.updatedAt}` : "null"}
+      >
         {toolbar}
         <FrontEditor
           inEditMode={inEditMode}
           data={{
             object: template,
           }}
-          mutate={updateTemplate}
           {...editorProps}
         />
       </Fragment>;
@@ -226,12 +271,12 @@ export class RootConnector extends Component {
 
   static propTypes = {
     View: PropTypes.func.isRequired,
-    first: PropTypes.number,
+    // first: PropTypes.number,
   }
 
   static defaultProps = {
     View: FrontEditorRoot,
-    first: 1,
+    // first: 1,
   }
 
 
@@ -269,6 +314,8 @@ export class RootConnector extends Component {
     // return null;
 
     const {
+      orderBy,
+      first,
       View,
       ...other
     } = this.props;
@@ -277,9 +324,55 @@ export class RootConnector extends Component {
       Renderer,
     } = this;
 
+    const {
+      user: currentUser,
+    } = this.context;
+
+
+    const {
+      id: currentUserId,
+    } = currentUser || {};
+
+
+    let OR = [
+      {
+        Parent: null,
+      },
+    ];
+
+    let conditions = {
+    };
+
+    if (currentUserId) {
+      OR.push({
+        CreatedBy: {
+          id: currentUserId,
+        },
+      });
+
+      Object.assign(conditions, {
+        orderBy: "createdAt_DESC",
+        first: 2,
+      });
+
+    }
+    else {
+      Object.assign(conditions, {
+        orderBy: "rank_DESC",
+        first: 1,
+      });
+    }
+
+    Object.assign(conditions, {
+      where: {
+        OR,
+      },
+    });
+
     return <Renderer
+      key={currentUserId}
       {...other}
-      orderBy="rank_DESC"
+      {...conditions}
     />;
   }
 

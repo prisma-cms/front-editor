@@ -188,6 +188,8 @@ class FrontEditor extends Component {
 
   constructor(props) {
 
+    // console.log("Front editor constructor");
+
     super(props);
 
     this.state = {
