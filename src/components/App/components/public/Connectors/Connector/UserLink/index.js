@@ -25,35 +25,37 @@ class UserLink extends EditorComponent {
   }
 
 
-  renderMainView() {
+  getRootElement() {
+
+    return "span";
+  }
+
+
+  renderChildren() {
 
     const {
       UserLink: PrismaCmsUserLink,
     } = this.context;
 
-    return <span
-      {...this.getRenderProps()}
-    >
-      <ObjectContext.Consumer>
-        {context => {
+    return <ObjectContext.Consumer>
+      {context => {
 
-          const {
-            object,
-            ...other
-          } = context;
+        const {
+          object,
+          ...other
+        } = context;
 
-          if (!object) {
-            return null;
-          }
+        if (!object) {
+          return null;
+        }
 
-          return <PrismaCmsUserLink
-            user={object}
-            {...other}
-          />
+        return <PrismaCmsUserLink
+          user={object}
+          {...other}
+        />
 
-        }}
-      </ObjectContext.Consumer>
-    </span>;
+      }}
+    </ObjectContext.Consumer>
   }
 
 }

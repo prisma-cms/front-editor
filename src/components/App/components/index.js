@@ -7,7 +7,8 @@
  * прекращается индикатор загрузки. Пришлось хакнуть принудительным обновлением через 2 сек.
  */
 
-import React, { Component, createContext } from 'react';
+import React, { Component, createContext, Fragment } from 'react';
+import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 
 import Context from "@prisma-cms/context";
@@ -71,6 +72,21 @@ class EditorComponent extends ObjectEditable {
     this.renderHeader = this.renderHeader.bind(this);
     this.save = this.save.bind(this);
 
+  }
+
+
+  componentWillUnmount() {
+
+    const {
+      activeItem,
+      setActiveItem,
+    } = this.getEditorContext();
+
+    if (activeItem && activeItem === this) {
+      setActiveItem(null);
+    }
+
+    super.componentWillUnmount && super.componentWillUnmount();
   }
 
 
@@ -154,25 +170,25 @@ class EditorComponent extends ObjectEditable {
   // }
 
 
-  async saveObject(data) {
+  // async saveObject(data) {
 
-    const result = await super.saveObject(data)
-      .catch(r => r);
+  //   const result = await super.saveObject(data)
+  //     .catch(r => r);
 
 
 
-    setTimeout(() => {
+  //   setTimeout(() => {
 
-      const {
-        forceUpdate,
-      } = this.getEditorContext();
+  //     const {
+  //       forceUpdate,
+  //     } = this.getEditorContext();
 
-      forceUpdate()
-    }, 1000);
+  //     forceUpdate()
+  //   }, 1000);
 
-    return result;
+  //   return result;
 
-  }
+  // }
 
 
   updateObject(data) {
@@ -379,10 +395,33 @@ class EditorComponent extends ObjectEditable {
 
     const activeItem = this.getActiveItem();
 
+    if (!activeItem) {
+      return false;
+    }
+
     const activeParent = activeItem.getActiveParent();
 
     return deletable && activeItem !== activeParent ? true : false;
   }
+
+
+  // isDeletable = () => {
+
+  //   const {
+  //     deletable,
+  //   } = this.props;
+
+
+  //   // const activeItem = this.getActiveItem();
+
+  //   // if(!activeItem) {
+  //   //   return false;
+  //   // }
+
+  //   // const activeParent = this.getActiveParent();
+
+  //   return deletable ? true : false;
+  // }
 
 
   /**
@@ -701,10 +740,6 @@ class EditorComponent extends ObjectEditable {
 
     const isDragOvered = dragTarget && dragTarget instanceof this.constructor ? true : false;
 
-    // console.log("getEditorContext", this.getEditorContext());
-
-    // return "renderPanelView";
-
     return <Grid
       item
     >
@@ -725,10 +760,266 @@ class EditorComponent extends ObjectEditable {
   }
 
 
+  // renderSettingsView(content) {
+
+
+  //   const activeItem = this.getActiveItem();
+
+  //   if (!activeItem) {
+  //     return null;
+  //   }
+
+
+
+  //   const {
+  //     name,
+  //     components,
+
+  //   } = activeItem.getObjectWithMutations();
+
+  //   // return activeItem.renderHeader();
+  //   // return activeItem.getButtons();
+
+  //   // return null;
+
+  //   let header = activeItem.renderHeader(true);
+
+  //   const {
+  //     Grid,
+  //   } = this.context;
+
+  //   const {
+  //     setActiveItem,
+  //   } = this.getEditorContext();
+
+
+  //   let {
+  //     props: {
+  //       // component,
+  //       // deletable,
+  //       props,
+  //       ...other
+  //     },
+  //     constructor: {
+  //       propTypes,
+  //       // defaultProps,
+  //     },
+  //     // ComponentContext,
+  //   } = activeItem;
+
+
+  //   const deletable = activeItem.isDeletable();
+
+
+  //   // let {
+  //   //   style,
+  //   //   // ...componentProps
+  //   // } = component;
+
+  //   let style = {}
+
+
+  //   const componentProps = this.getComponentProps(activeItem);
+
+
+
+  //   const structure = this.getStructure(activeItem);
+
+
+  //   let settings = [];
+
+
+
+  //   if (componentProps) {
+
+  //     const names = Object.keys(componentProps);
+
+
+  //     names.map(name => {
+
+
+  //       // const propType = propTypes[name];
+
+  //       let value = componentProps[name];
+
+  //       const type = typeof value;
+
+
+  //       const field = this.getEditorField({
+  //         key: name,
+  //         type,
+  //         name,
+  //         label: name,
+  //         value,
+  //         deletable: activeItem.props.data.object.props && activeItem.props.data.object.props[name] !== undefined ? true : false,
+  //         // deletable: true,
+  //       });
+
+  //       if (field) {
+  //         settings.push(field);
+  //       }
+
+  //     })
+
+  //   }
+
+
+
+  //   let output = <Grid
+  //     container
+  //     spacing={8}
+  //   >
+
+  //     <Grid
+  //       item
+  //       xs={12}
+  //     >
+
+  //       <Grid
+  //         container
+  //         spacing={8}
+  //         style={{
+  //           flexDirection: "row-reverse",
+  //         }}
+  //       >
+
+  //         <Grid
+  //           item
+  //         >
+  //           <IconButton
+  //             title="Завершить редактирование элемента"
+  //             onClick={event => {
+
+  //               setActiveItem(null);
+
+  //             }}
+  //           >
+  //             <CloseIcon />
+  //           </IconButton>
+  //         </Grid>
+
+  //         {deletable ?
+  //           <Grid
+  //             item
+  //           >
+  //             <IconButton
+  //               title="Удалить элемент"
+  //               onClick={event => {
+
+  //                 this.deleteItem();
+
+  //               }}
+  //             >
+  //               <DeleteIcon />
+  //             </IconButton>
+  //           </Grid>
+  //           : null
+  //         }
+
+  //       </Grid>
+
+  //     </Grid>
+
+  //     <Grid
+  //       item
+  //       xs={12}
+  //     >
+  //       {header}
+  //     </Grid>
+
+  //     {settings && settings.length ?
+  //       <Grid
+  //         item
+  //         xs={12}
+  //       >
+  //         <Grid
+  //           container
+  //           spacing={8}
+  //           style={{
+  //             borderTop: "1px solid #ddd",
+  //           }}
+  //         >
+  //           {settings.map((n, index) => <Grid
+  //             key={index}
+  //             item
+  //             xs={12}
+  //           >
+  //             {n}
+  //           </Grid>)}
+  //         </Grid>
+  //       </Grid> :
+  //       null
+  //     }
+
+  //     {content ?
+  //       <Grid
+  //         item
+  //         xs={12}
+  //       >
+  //         {content}
+  //       </Grid>
+  //       : null
+  //     }
+
+  //     {/* <Grid
+  //       item
+  //       xs={12}
+  //     >
+  //       <Template
+  //         activeItem={activeItem}
+  //         data={{
+  //           object: component,
+  //         }}
+  //         // mutate={async () => { }}
+  //         _dirty={!component.id ? {
+  //           ...component,
+  //         } : undefined}
+  //         onSave={result => {
+
+
+
+  //           const {
+  //             data,
+  //           } = result.data.response || {};
+
+  //           const {
+  //             id,
+  //           } = data || {};
+
+  //           if (id && !component.id) {
+  //             this.updateComponent(component, {
+  //               id,
+  //             });
+  //           }
+
+  //         }}
+  //       />
+  //     </Grid> */}
+
+
+  //     <Grid
+  //       item
+  //       xs={12}
+  //     >
+  //       <div
+  //         style={{
+  //           whiteSpace: "pre-wrap",
+  //           overflow: "auto",
+  //         }}
+  //       >
+  //         {structure ? JSON.stringify(structure, true, 2) : null}
+  //       </div>
+  //     </Grid>
+
+  //   </Grid>;
+
+  //   return output;
+  // }
+
   renderSettingsView(content) {
 
 
-    const activeItem = this.getActiveItem();
+    const activeItem = this;
 
     if (!activeItem) {
       return null;
@@ -736,11 +1027,11 @@ class EditorComponent extends ObjectEditable {
 
 
 
-    const {
-      name,
-      components,
+    // const {
+    //   name,
+    //   components,
 
-    } = activeItem.getObjectWithMutations();
+    // } = activeItem.getObjectWithMutations();
 
     // return activeItem.renderHeader();
     // return activeItem.getButtons();
@@ -781,7 +1072,7 @@ class EditorComponent extends ObjectEditable {
     //   // ...componentProps
     // } = component;
 
-    let style = {}
+    // let style = {}
 
 
     const componentProps = this.getComponentProps(activeItem);
@@ -833,6 +1124,12 @@ class EditorComponent extends ObjectEditable {
     let output = <Grid
       container
       spacing={8}
+      onClick={event => {
+
+        event.preventDefault();
+        event.stopPropagation();
+
+      }}
     >
 
       <Grid
@@ -854,6 +1151,9 @@ class EditorComponent extends ObjectEditable {
             <IconButton
               title="Завершить редактирование элемента"
               onClick={event => {
+
+                event.preventDefault();
+                event.stopPropagation();
 
                 setActiveItem(null);
 
@@ -1203,7 +1503,7 @@ class EditorComponent extends ObjectEditable {
 
   updateComponentProperty(name, value) {
 
-    const activeItem = this.getActiveItem();
+    // const activeItem = this.getActiveItem();
 
 
 
@@ -1290,9 +1590,12 @@ class EditorComponent extends ObjectEditable {
      */
     // const activeItem = this.getActiveItem();
 
+    // activeItem = this;
+
     const activeParent = activeItem.getActiveParent();
 
-    let props = activeItem.props.props || {};
+    // let props = activeItem.props.props || {};
+    let props = { ...activeItem.props.props } || {};
 
 
 
@@ -1458,7 +1761,6 @@ class EditorComponent extends ObjectEditable {
 
 
 
-
     return activeItem;
 
   }
@@ -1481,11 +1783,14 @@ class EditorComponent extends ObjectEditable {
       return null;
     }
 
+    const {
+      activeItem,
+      settingsViewContainer,
+    } = this.getEditorContext();
+
     // return this.renderChildren();
 
     const RootElement = this.getRootElement();
-
-
 
     const {
       props,
@@ -1496,15 +1801,31 @@ class EditorComponent extends ObjectEditable {
       props: objectProps,
     } = object;
 
-    return <RootElement
-      // {...this.getRenderProps()}
-      {...objectProps}
-      {...other}
-      // {...props}
-      {...renderProps}
-    >
-      {this.renderChildren()}
-    </RootElement>;
+
+    let settingsView;
+
+
+    if (activeItem && activeItem === this && settingsViewContainer) {
+
+      settingsView = ReactDOM.createPortal(this.renderSettingsView(), settingsViewContainer);
+
+    }
+
+
+    return <Fragment>
+
+      <RootElement
+        // {...this.getRenderProps()}
+        {...objectProps}
+        {...other}
+        // {...props}
+        {...renderProps}
+      >
+        {this.renderChildren()}
+      </RootElement>
+
+      {settingsView}
+    </Fragment>
   }
 
   getRootElement() {
@@ -1530,14 +1851,6 @@ class EditorComponent extends ObjectEditable {
       Components,
     } = this.getEditorContext();
 
-    // console.log("Components", Components);
-
-    // return "dsfdsf";
-    // const {
-    //   component: {
-    //     components: itemComponents,
-    //   },
-    // } = this.props;
 
 
     const {
@@ -1687,10 +2000,10 @@ class EditorComponent extends ObjectEditable {
 
             break;
 
-          case "settings":
+            {/* case "settings":
 
-            {/* content = this.renderSettingsView(); */ }
-            break;
+            content = this.renderSettingsView();
+            break; */}
         }
 
         if (!content) {

@@ -38,7 +38,7 @@ const styles = theme => {
 
   const desktop = breakpoints.up("sm");
 
-  const dragOveredBorderColor = "red";
+  const dragOveredBorderColor = "#15e408";
   const hoveredBorderColor = "#7509da";
   const activeBorderColor = "#b806bb";
   const dirtyBorderColor = "red";
@@ -117,6 +117,9 @@ const styles = theme => {
       border: "1px dotted #ddd",
       padding: 7,
 
+      "&.dirty": {
+        border: `1px solid ${dirtyBorderColor}`,
+      },
       "&.active": {
         border: `1px solid ${activeBorderColor}`,
       },
@@ -125,9 +128,6 @@ const styles = theme => {
       },
       "&.hovered": {
         border: `1px solid ${hoveredBorderColor}`,
-      },
-      "&.dirty": {
-        border: `1px solid ${dirtyBorderColor}`,
       },
     },
     panelButton: {
@@ -188,8 +188,6 @@ class FrontEditor extends Component {
 
 
   constructor(props) {
-
-    console.log("FrontEditor constructor");
 
     super(props);
 
@@ -282,30 +280,30 @@ class FrontEditor extends Component {
 
     const Components = this.getComponents();
 
-    const {
-      activeItem,
-    } = this.state;
+    // const {
+    //   activeItem,
+    // } = this.state;
 
 
     /**
      * Если выбран активный элемент, выводим настройки для него
      */
 
-    let settingsView;
+    // let settingsView;
 
-    if (activeItem) {
-
-
-      const Element = activeItem.constructor;
+    // if (activeItem) {
 
 
-      settingsView = <div>
-        <Element
-          mode="settings"
-        />
-      </div>
+    //   const Element = activeItem.constructor;
 
-    }
+
+    //   settingsView = <div>
+    //     <Element
+    //       mode="settings"
+    //     />
+    //   </div>
+
+    // }
 
     return <div
       className={classes.panelItems}
@@ -330,7 +328,17 @@ class FrontEditor extends Component {
           item
           xs={12}
         >
-          {settingsView}
+          {/* 
+            Сюда будут выводиться настройки активного компонента
+           */}
+          <div
+            ref={el => {
+              this.settingsViewContainer = el;
+            }}
+          >
+          </div>
+
+          {/* {settingsView} */}
         </Grid>
 
       </Grid>
@@ -526,8 +534,6 @@ class FrontEditor extends Component {
 
   render() {
 
-
-
     const {
       classes,
       children,
@@ -546,9 +552,16 @@ class FrontEditor extends Component {
       hoveredItem,
     } = this.state;
 
+    const {
+      settingsViewContainer,
+    } = this;
+
     const Components = this.getComponents();
 
     let items = this.renderItems();
+
+
+    // console.log("FrontEditor props", { ...this.props });
 
     return (
       <EditorContext.Provider
@@ -561,6 +574,7 @@ class FrontEditor extends Component {
           dragTarget,
           activeItem,
           hoveredItem,
+          settingsViewContainer,
           onDragStart: item => {
 
             this.setState({
@@ -583,8 +597,6 @@ class FrontEditor extends Component {
             });
           },
           setActiveItem: component => {
-
-
 
             this.setState({
               activeItem: component,

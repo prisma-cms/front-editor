@@ -62,7 +62,6 @@ class FrontEditorRoot extends PrismaCmsComponent {
 
   render() {
 
-    // console.log("Root Template this", { ...this });
 
     const {
       Grid,
@@ -237,12 +236,8 @@ class FrontEditorRoot extends PrismaCmsComponent {
       }
 
 
-      // console.log("Root Template template", { ...template });
-
-      // console.log("Root Template key", template && `${template.id}-${template.updatedAt}`);
-
       content = <Fragment
-        key={template ? `${template.id}-${template.updatedAt}` : "null"}
+        // key={template ? `${template.id}-${template.updatedAt}` : "null"}
       >
         {toolbar}
         <FrontEditor

@@ -31,50 +31,59 @@ class NamedField extends EditorComponent {
   }
 
 
-  renderMainView() {
+  getRootElement() {
+
+    return "span";
+  }
+
+
+  renderChildren() {
 
     // const {
     //   UserLink,
     // } = this.context;
 
     const {
-      props: {
-        name,
-        ...otherProps
-      },
+      // props: {
+      //   name,
+      //   ...otherProps
+      // },
+      name,
       ...other
-    } = this.getRenderProps();
-
-    return <span
-      {...other}
-    >
-      <ObjectContext.Consumer>
-        {context => {
-
-          if (!name) {
-            return null;
-          }
-
-          const {
-            object,
-            ...other
-          } = context;
+    } = this.getComponentProps(this);
 
 
-          if (!object) {
-            return null;
-          }
+    // console.log("NamedField props", this.props);
+    // console.log("NamedField this.getComponentProps(this)", this.getComponentProps(this));
 
 
-          const {
-            [name]: value,
-          } = object;
+    return <ObjectContext.Consumer>
+      {context => {
 
-          return value && (typeof value !== "object") ? value : null;
+        {/* console.log("NamedField context", context); */}
 
-        }}
-      </ObjectContext.Consumer>
-    </span>;
+        if (!name) {
+          return null;
+        }
+
+        const {
+          object,
+          ...other
+        } = context;
+
+        if (!object) {
+          return null;
+        }
+
+
+        const {
+          [name]: value,
+        } = object;
+
+        return value && (typeof value !== "object") ? value : null;
+
+      }}
+    </ObjectContext.Consumer>;
   }
 
 }
