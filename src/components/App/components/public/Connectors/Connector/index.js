@@ -46,7 +46,7 @@ class Connector extends EditorComponent {
 
     const {
       classes,
-    } = this.context;
+    } = this.getEditorContext();
 
 
     return super.renderPanelView(<div
@@ -552,7 +552,7 @@ class Connector extends EditorComponent {
 
     const {
       inEditMode,
-    } = this.context;
+    } = this.getEditorContext();
 
 
     if (inEditMode) {
@@ -649,7 +649,7 @@ class Connector extends EditorComponent {
 
     const {
       inEditMode,
-    } = this.context;
+    } = this.getEditorContext();
 
 
     if (!inEditMode) {

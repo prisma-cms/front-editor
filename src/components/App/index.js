@@ -26,6 +26,7 @@ import PageHeader from './components/public/PageHeader';
 // import ParralaxTest from './components/public/Parallax/Test';
 import RoutedObject from './components/public/Router/RoutedObject';
 import Link from './components/public/Link';
+import { EditorContext } from './context';
 
 const styles = theme => {
 
@@ -188,7 +189,7 @@ class FrontEditor extends Component {
 
   constructor(props) {
 
-    // console.log("Front editor constructor");
+    console.log("FrontEditor constructor");
 
     super(props);
 
@@ -550,84 +551,83 @@ class FrontEditor extends Component {
     let items = this.renderItems();
 
     return (
-      <Context.Consumer>
-        {context => <Context.Provider
-          value={Object.assign(context, {
-            inEditMode,
-            classes,
-            components,
-            updateObject: data => this.updateObject(data),
-            dragItem,
-            dragTarget,
-            activeItem,
-            hoveredItem,
-            onDragStart: item => {
+      <EditorContext.Provider
+        value={{
+          inEditMode,
+          classes,
+          components,
+          updateObject: data => this.updateObject(data),
+          dragItem,
+          dragTarget,
+          activeItem,
+          hoveredItem,
+          onDragStart: item => {
 
-              this.setState({
-                dragItem: item,
-              });
+            this.setState({
+              dragItem: item,
+            });
 
-            },
-            onDragEnd: item => {
+          },
+          onDragEnd: item => {
 
-              this.setState({
-                dragItem: null,
-                dragTarget: null,
-                activeItem: null,
-                hoveredItem: null,
-              });
-            },
-            setDragTarget: component => {
-              this.setState({
-                dragTarget: component,
-              });
-            },
-            setActiveItem: component => {
-
-
-
-              this.setState({
-                activeItem: component,
-              });
-            },
-            setHoveredItem: component => {
-              this.setState({
-                hoveredItem: component,
-              });
-            },
-            Components,
-            forceUpdate: () => {
+            this.setState({
+              dragItem: null,
+              dragTarget: null,
+              activeItem: null,
+              hoveredItem: null,
+            });
+          },
+          setDragTarget: component => {
+            this.setState({
+              dragTarget: component,
+            });
+          },
+          setActiveItem: component => {
 
 
 
-              this.forceUpdate()
+            this.setState({
+              activeItem: component,
+            });
+          },
+          setHoveredItem: component => {
+            this.setState({
+              hoveredItem: component,
+            });
+          },
+          Components,
+          forceUpdate: () => {
 
-            },
-          })}
-        >
-          {inEditMode
-            ? <Fragment>
+
+
+            this.forceUpdate()
+
+          },
+        }}
+      >
+        {inEditMode
+          ? <Fragment>
+            <div
+              className={[classes.toolbar, classes.bordered].join(" ")}
+            >
+              {this.renderToolbar()}
+            </div>
+            <div
+              className={[classes.root, className].join(" ")}
+            >
               <div
-                className={[classes.toolbar, classes.bordered].join(" ")}
+                className={[classes.panel, classes.bordered].join(" ")}
               >
-                {this.renderToolbar()}
+                {this.renderPanels()}
               </div>
               <div
-                className={[classes.root, className].join(" ")}
+                className={[classes.editor, classes.bordered].join(" ")}
               >
-                <div
-                  className={[classes.panel, classes.bordered].join(" ")}
-                >
-                  {this.renderPanels()}
-                </div>
-                <div
-                  className={[classes.editor, classes.bordered].join(" ")}
-                >
-                  {items}
+                {items}
 
-                  {/* {children} */}
+                {/* {children} */}
 
-                  {/* {debug && components ? <div
+                {/* {debug && components ? <div
                     style={{
                       whiteSpace: "pre-wrap",
                     }}
@@ -635,14 +635,108 @@ class FrontEditor extends Component {
                     {JSON.stringify(components, true, 2)}
                   </div> : null} */}
 
-                </div>
               </div>
-            </Fragment>
-            : items
-          }
-        </Context.Provider>}
-      </Context.Consumer>
+            </div>
+          </Fragment>
+          : items
+        }
+      </EditorContext.Provider>
     );
+
+    // return (
+    //   <Context.Consumer>
+    //     {context => <Context.Provider
+    //       value={Object.assign(context, {
+    //         inEditMode,
+    //         classes,
+    //         components,
+    //         updateObject: data => this.updateObject(data),
+    //         dragItem,
+    //         dragTarget,
+    //         activeItem,
+    //         hoveredItem,
+    //         onDragStart: item => {
+
+    //           this.setState({
+    //             dragItem: item,
+    //           });
+
+    //         },
+    //         onDragEnd: item => {
+
+    //           this.setState({
+    //             dragItem: null,
+    //             dragTarget: null,
+    //             activeItem: null,
+    //             hoveredItem: null,
+    //           });
+    //         },
+    //         setDragTarget: component => {
+    //           this.setState({
+    //             dragTarget: component,
+    //           });
+    //         },
+    //         setActiveItem: component => {
+
+
+
+    //           this.setState({
+    //             activeItem: component,
+    //           });
+    //         },
+    //         setHoveredItem: component => {
+    //           this.setState({
+    //             hoveredItem: component,
+    //           });
+    //         },
+    //         Components,
+    //         forceUpdate: () => {
+
+
+
+    //           this.forceUpdate()
+
+    //         },
+    //       })}
+    //     >
+    //       {inEditMode
+    //         ? <Fragment>
+    //           <div
+    //             className={[classes.toolbar, classes.bordered].join(" ")}
+    //           >
+    //             {this.renderToolbar()}
+    //           </div>
+    //           <div
+    //             className={[classes.root, className].join(" ")}
+    //           >
+    //             <div
+    //               className={[classes.panel, classes.bordered].join(" ")}
+    //             >
+    //               {this.renderPanels()}
+    //             </div>
+    //             <div
+    //               className={[classes.editor, classes.bordered].join(" ")}
+    //             >
+    //               {items}
+
+    //               {/* {children} */}
+
+    //               {/* {debug && components ? <div
+    //                 style={{
+    //                   whiteSpace: "pre-wrap",
+    //                 }}
+    //               >
+    //                 {JSON.stringify(components, true, 2)}
+    //               </div> : null} */}
+
+    //             </div>
+    //           </div>
+    //         </Fragment>
+    //         : items
+    //       }
+    //     </Context.Provider>}
+    //   </Context.Consumer>
+    // );
   }
 }
 

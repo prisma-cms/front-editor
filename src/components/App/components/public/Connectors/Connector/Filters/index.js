@@ -27,7 +27,7 @@ class Filters extends EditorComponent {
 
     const {
       classes,
-    } = this.context;
+    } = this.getEditorContext();
 
     return super.renderPanelView(<div
       className={classes.panelButton}
@@ -41,7 +41,7 @@ class Filters extends EditorComponent {
 
     const {
       inEditMode,
-    } = this.context;
+    } = this.getEditorContext();
 
     const {
       visible,

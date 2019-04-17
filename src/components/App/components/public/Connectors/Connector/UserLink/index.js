@@ -15,7 +15,7 @@ class UserLink extends EditorComponent {
 
     const {
       classes,
-    } = this.context;
+    } = this.getEditorContext();
 
     return super.renderPanelView(<div
       className={classes.panelButton}

@@ -26,6 +26,7 @@ import { Switch } from 'material-ui';
 
 import ObjectEditable from "apollo-cms/lib/DataView/Object/Editable";
 import gql from 'graphql-tag';
+import { EditorContext } from '../context';
 
 
 const emptyMutate = async () => { };
@@ -164,7 +165,7 @@ class EditorComponent extends ObjectEditable {
 
       const {
         forceUpdate,
-      } = this.context;
+      } = this.getEditorContext();
 
       forceUpdate()
     }, 1000);
@@ -180,7 +181,7 @@ class EditorComponent extends ObjectEditable {
 
     const {
       forceUpdate,
-    } = this.context;
+    } = this.getEditorContext();
 
 
     /**
@@ -195,7 +196,7 @@ class EditorComponent extends ObjectEditable {
 
     const {
       onDragStart,
-    } = this.context;
+    } = this.getEditorContext();
 
 
 
@@ -233,7 +234,7 @@ class EditorComponent extends ObjectEditable {
 
     const {
       onDragEnd
-    } = this.context;
+    } = this.getEditorContext();
 
     onDragEnd(event);
 
@@ -245,7 +246,7 @@ class EditorComponent extends ObjectEditable {
     const {
       dragItem,
       dragTarget,
-    } = this.context;
+    } = this.getEditorContext();
 
 
 
@@ -312,7 +313,7 @@ class EditorComponent extends ObjectEditable {
 
     const {
       setActiveItem,
-    } = this.context;
+    } = this.getEditorContext();
 
     const activeItem = this.getActiveItem();
 
@@ -433,7 +434,7 @@ class EditorComponent extends ObjectEditable {
 
     const {
       dragItem,
-    } = this.context;
+    } = this.getEditorContext();
 
 
     let {
@@ -459,7 +460,7 @@ class EditorComponent extends ObjectEditable {
 
     const {
       setActiveItem,
-    } = this.context;
+    } = this.getEditorContext();
 
     setActiveItem(this);
 
@@ -475,7 +476,7 @@ class EditorComponent extends ObjectEditable {
 
     const {
       setHoveredItem,
-    } = this.context;
+    } = this.getEditorContext();
 
     setHoveredItem(this);
 
@@ -492,7 +493,7 @@ class EditorComponent extends ObjectEditable {
     const {
       setHoveredItem,
       hoveredItem,
-    } = this.context;
+    } = this.getEditorContext();
 
     if (hoveredItem && hoveredItem === this) {
 
@@ -519,7 +520,7 @@ class EditorComponent extends ObjectEditable {
     const {
       setDragTarget,
       dragItem,
-    } = this.context;
+    } = this.getEditorContext();
 
     if (dragItem && this.canBeDropped(dragItem)) {
 
@@ -539,7 +540,7 @@ class EditorComponent extends ObjectEditable {
 
     const {
       dragTarget,
-    } = this.context;
+    } = this.getEditorContext();
 
     if (dragTarget === this) {
 
@@ -608,7 +609,7 @@ class EditorComponent extends ObjectEditable {
       hoveredItem,
       inEditMode,
       classes,
-    } = this.context;
+    } = this.getEditorContext();
 
 
     const {
@@ -685,11 +686,14 @@ class EditorComponent extends ObjectEditable {
   renderPanelView(content) {
 
     const {
-      classes,
       Grid,
+    } = this.context;
+
+    const {
+      classes,
       hoveredItem,
       dragTarget,
-    } = this.context;
+    } = this.getEditorContext();
 
     const isActive = this.isActive();
 
@@ -697,6 +701,9 @@ class EditorComponent extends ObjectEditable {
 
     const isDragOvered = dragTarget && dragTarget instanceof this.constructor ? true : false;
 
+    // console.log("getEditorContext", this.getEditorContext());
+
+    // return "renderPanelView";
 
     return <Grid
       item
@@ -744,8 +751,11 @@ class EditorComponent extends ObjectEditable {
 
     const {
       Grid,
-      setActiveItem,
     } = this.context;
+
+    const {
+      setActiveItem,
+    } = this.getEditorContext();
 
 
     let {
@@ -1444,7 +1454,7 @@ class EditorComponent extends ObjectEditable {
 
     const {
       activeItem,
-    } = this.context;
+    } = this.getEditorContext();
 
 
 
@@ -1504,14 +1514,25 @@ class EditorComponent extends ObjectEditable {
 
   renderChildren() {
 
+
+
+
     const object = this.getObjectWithMutations();
+
+    // const {
+    //   // components,
+    //   updateObject,
+    // } = this.getEditorContext();
+
+    // const Components = this.getComponents();
 
     const {
       Components,
-      // components,
-      updateObject,
-    } = this.context;
+    } = this.getEditorContext();
 
+    // console.log("Components", Components);
+
+    // return "dsfdsf";
     // const {
     //   component: {
     //     components: itemComponents,
@@ -1608,58 +1629,134 @@ class EditorComponent extends ObjectEditable {
   }
 
 
+  // getComponents = () => {
+
+  //   const {
+  //     Components,
+  //   } = this;
+
+  //   return Components;
+  // }
+
   renderDefaultView() {
 
-    // const {
-    //   ComponentContext,
-    // } = this;
 
-    const {
-      id: objectId,
-      mode,
-      props,
-      children,
-      ...other
-    } = this.props;
-
-    let content = null;
+    return <EditorContext.Consumer>
+      {context => {
 
 
-    // return "Sdfdsf";
+        const {
+          Components,
+        } = context;
+
+        Object.assign(this, {
+          Components,
+          getEditorContext: () => context,
+        });
+
+        const {
+          id: objectId,
+          mode,
+          props,
+          children,
+          ...other
+        } = this.props;
+
+        let content = null;
+
+
+        // return "Sdfdsf";
 
 
 
-    switch (mode) {
+        switch (mode) {
 
-      case "panel":
+          case "panel":
 
-        const activeItem = this.getActiveItem();
+            const activeItem = this.getActiveItem();
 
-        if (!activeItem || this.isActive()) {
-          content = this.renderPanelView();
+            if (!activeItem || this.isActive()) {
+              content = this.renderPanelView();
+            }
+
+            break;
+
+          case "main":
+
+            content = this.renderMainView();
+
+            break;
+
+          case "settings":
+
+            {/* content = this.renderSettingsView(); */ }
+            break;
         }
 
-        break;
+        if (!content) {
+          return null;
+        }
 
-      case "main":
+        return content;
 
-        content = this.renderMainView();
+      }}
+    </EditorContext.Consumer>
 
-        break;
-
-      case "settings":
-
-        content = this.renderSettingsView();
-        break;
-    }
-
-    if (!content) {
-      return null;
-    }
-
-    return content;
 
   }
+
+  // renderDefaultView() {
+
+  //   // const {
+  //   //   ComponentContext,
+  //   // } = this;
+
+  //   const {
+  //     id: objectId,
+  //     mode,
+  //     props,
+  //     children,
+  //     ...other
+  //   } = this.props;
+
+  //   let content = null;
+
+
+  //   // return "Sdfdsf";
+
+
+
+  //   switch (mode) {
+
+  //     case "panel":
+
+  //       const activeItem = this.getActiveItem();
+
+  //       if (!activeItem || this.isActive()) {
+  //         content = this.renderPanelView();
+  //       }
+
+  //       break;
+
+  //     case "main":
+
+  //       content = this.renderMainView();
+
+  //       break;
+
+  //     case "settings":
+
+  //       content = this.renderSettingsView();
+  //       break;
+  //   }
+
+  //   if (!content) {
+  //     return null;
+  //   }
+
+  //   return content;
+
+  // }
 }
 
 

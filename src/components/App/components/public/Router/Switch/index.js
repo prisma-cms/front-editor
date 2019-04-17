@@ -49,7 +49,7 @@ class EditorSwitch extends EditorComponent {
     const {
       dragItem,
       dragTarget,
-    } = this.context;
+    } = this.getEditorContext();
 
     if (dragItem && dragTarget && dragTarget === this) {
 
@@ -78,7 +78,7 @@ class EditorSwitch extends EditorComponent {
 
     const {
       classes,
-    } = this.context;
+    } = this.getEditorContext();
 
     return super.renderPanelView(<div
       className={classes.panelButton}
@@ -273,7 +273,7 @@ class EditorSwitch extends EditorComponent {
 
     const {
       inEditMode,
-    } = this.context;
+    } = this.getEditorContext();
 
     // const {
     //   showRoutes,
@@ -291,11 +291,17 @@ class EditorSwitch extends EditorComponent {
 
     const object = this.getObjectWithMutations();
 
+    // const {
+    //   // Components,
+    //   // components,
+    //   updateObject,
+    // } = this.context;
+
+
+    // const Components = this.getComponents();
     const {
       Components,
-      // components,
-      updateObject,
-    } = this.context;
+    } = this.getEditorContext();
 
 
     const {

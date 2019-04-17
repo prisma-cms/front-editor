@@ -151,7 +151,7 @@ class Grid extends EditorComponent {
 
     const {
       classes,
-    } = this.context;
+    } = this.getEditorContext();
 
     return super.renderPanelView(<div
       className={classes.panelButton}
@@ -174,7 +174,7 @@ class Grid extends EditorComponent {
 
     const {
       dragItem,
-    } = this.context;
+    } = this.getEditorContext();
 
 
 
