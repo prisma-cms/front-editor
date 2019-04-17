@@ -27,6 +27,7 @@ import PageHeader from './components/public/PageHeader';
 import RoutedObject from './components/public/Router/RoutedObject';
 import Link from './components/public/Link';
 import { EditorContext } from './context';
+import DraftEditor from './components/public/DraftEditor';
 
 const styles = theme => {
 
@@ -43,7 +44,7 @@ const styles = theme => {
   const activeBorderColor = "#b806bb";
   const dirtyBorderColor = "red";
 
-  const itemsPanelWidth = 270;
+  const itemsPanelWidth = 290;
 
   return {
 
@@ -181,6 +182,7 @@ class FrontEditor extends Component {
       Route,
       RoutedObject,
       // ParralaxTest,
+      DraftEditor,
     ],
     CustomComponents: [],
     className: "fullheight",
@@ -609,8 +611,6 @@ class FrontEditor extends Component {
           },
           Components,
           forceUpdate: () => {
-
-
 
             this.forceUpdate()
 

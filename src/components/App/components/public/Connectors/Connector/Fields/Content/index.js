@@ -31,7 +31,14 @@ class Content extends EditorComponent {
   }
 
 
-  renderMainView() {
+  getRootElement() {
+
+    return "span";
+  }
+
+
+
+  renderChildren() {
 
     const {
       Editor,
@@ -42,33 +49,29 @@ class Content extends EditorComponent {
       readOnly,
     } = this.props;
 
-    return <span
-      {...this.getRenderProps()}
-    >
-      <ObjectContext.Consumer>
-        {context => {
+    return <ObjectContext.Consumer>
+      {context => {
 
-          const {
-            object,
-            ...other
-          } = context;
+        const {
+          object,
+          ...other
+        } = context;
 
-          if (!object) {
-            return null;
-          }
+        if (!object) {
+          return null;
+        }
 
-          const {
-            content,
-          } = object;
+        const {
+          content,
+        } = object;
 
-          return content ? <Editor
-            value={content}
-            readOnly={readOnly}
-          /> : null;
+        return content ? <Editor
+          value={content}
+          readOnly={readOnly}
+        /> : null;
 
-        }}
-      </ObjectContext.Consumer>
-    </span>;
+      }}
+    </ObjectContext.Consumer>;
   }
 
 }

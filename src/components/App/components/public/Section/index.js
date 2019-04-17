@@ -8,8 +8,10 @@ class Section extends EditorComponent {
 
   static defaultProps = {
     ...EditorComponent.defaultProps,
-    marginTop: 10,
-    marginBottom: 10,
+    // marginTop: 10,
+    // marginBottom: 10,
+    // fontFamily: "Roboto",
+    // fontSize: 20,
   }
 
   static Name = "Section"
@@ -29,47 +31,47 @@ class Section extends EditorComponent {
 
 
 
-  getRenderProps() {
+  // getRenderProps() {
 
-    const {
-      style,
-      marginTop,
-      marginBottom,
-      // props: {
-      //   ...otherProps
-      // },
-      ...other
-    } = super.getRenderProps();
+  //   const {
+  //     style,
+  //     marginTop,
+  //     marginBottom,
+  //     // props: {
+  //     //   ...otherProps
+  //     // },
+  //     ...other
+  //   } = super.getRenderProps();
 
-    // const {
-    //   text,
-    //   // type,
-    //   // style,
-    //   color,
-    //   display,
-    //   displayType,
-    //   ...otherProps
-    // } = this.getComponentProps(this);
-
-
-
-
-
-    const renderProps = {
-      style: {
-        ...style,
-        marginTop,
-        marginBottom,
-      },
-      ...other,
-      // ...otherProps
-    }
+  //   // const {
+  //   //   text,
+  //   //   // type,
+  //   //   // style,
+  //   //   color,
+  //   //   display,
+  //   //   displayType,
+  //   //   ...otherProps
+  //   // } = this.getComponentProps(this);
 
 
 
 
-    return renderProps;
-  }
+
+  //   const renderProps = {
+  //     style: {
+  //       ...style,
+  //       marginTop,
+  //       marginBottom,
+  //     },
+  //     ...other,
+  //     // ...otherProps
+  //   }
+
+
+
+
+  //   return renderProps;
+  // }
 
   // renderMainView() {
 
