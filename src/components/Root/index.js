@@ -114,7 +114,7 @@ class FrontEditorRoot extends PrismaCmsComponent {
     if (!templates.length) {
 
       if (loading) {
-        content = "Loading...";
+        // content = "Loading...";
       }
       else {
         // content = <Grid
@@ -144,7 +144,7 @@ class FrontEditorRoot extends PrismaCmsComponent {
           }
 
           content = <FrontEditor
-            key="new"
+            // key="new"
             inEditMode={true}
             data={{
               object,
@@ -237,7 +237,7 @@ class FrontEditorRoot extends PrismaCmsComponent {
 
 
       content = <Fragment
-        // key={template ? `${template.id}-${template.updatedAt}` : "null"}
+        key={template ? `${template.id}-${template.updatedAt}` : "null"}
       >
         {toolbar}
         <FrontEditor
@@ -365,7 +365,7 @@ export class RootConnector extends Component {
     });
 
     return <Renderer
-      key={currentUserId}
+      // key={currentUserId}
       {...conditions}
       {...other}
     />;
