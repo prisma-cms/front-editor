@@ -18,6 +18,7 @@ class DevRoot extends PrismaCmsComponent {
   render() {
 
     return <RootConnector
+      inEditMode={true}
       {...this.props}
     />
   }
