@@ -536,6 +536,10 @@ class FrontEditor extends Component {
       templates: this.getDataTemplates(),
     });
 
+    templates.push({
+      label: "Медиа",
+      templates: this.getMediaTemplates(),
+    });
 
     return templates.concat(customTemplates || []);
   }
@@ -884,6 +888,51 @@ class FrontEditor extends Component {
               ]
             }
           ],
+        },
+      ],
+    });
+
+
+    return buttons;
+
+  }
+
+
+  getMediaTemplates() {
+
+    let buttons = [];
+
+
+    buttons.push({
+      label: "YouTube",
+      name: "Section",
+      props: {
+        style: {
+          height: 0,
+          position: "relative",
+          paddingTop: "56.25%",
+          overflow: "hidden",
+        },
+      },
+      components: [
+        {
+          name: "Tag",
+          props: {
+            tag: "iframe",
+            src: "https://www.youtube.com/embed/4j9ePxDhHGU",
+            frameborder: 0,
+            allow: "accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture",
+            allowfullscreen: true,
+            style: {
+              position: "absolute",
+              top: 0,
+              left: 0,
+              border: 0,
+              width: "100%",
+              height: "100%",
+            },
+          },
+          components: [],
         },
       ],
     });

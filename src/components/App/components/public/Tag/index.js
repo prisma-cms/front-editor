@@ -72,7 +72,7 @@ class Tag extends EditorComponent {
     return super.renderPanelView(<div
       className={classes.panelButton}
     >
-      <Icon /> Text
+      <Icon /> HTML Tag
     </div>);
   }
 
@@ -455,12 +455,12 @@ class Tag extends EditorComponent {
 
         switch (name) {
 
-          case "id":
-          case "src":
-          case "href":
-            // case "editable":
+          // case "id":
+          // case "src":
+          // case "href":
+          //   // case "editable":
 
-            break;
+          //   break;
 
           case "class":
 
@@ -482,7 +482,7 @@ class Tag extends EditorComponent {
 
             break;
 
-          default: return;
+          default:;
         }
 
         Object.assign(content.props, {

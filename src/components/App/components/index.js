@@ -68,8 +68,14 @@ class EditorComponent extends ObjectEditable {
       minHeight: undefined,
       width: undefined,
       border: undefined,
+      borderRadius: undefined,
+      background: undefined,
+      backgroundImage: undefined,
+      backgroundColor: undefined,
     },
+    src: undefined,
     contentEditable: false,
+    className: undefined,
   }
 
 
@@ -628,7 +634,7 @@ class EditorComponent extends ObjectEditable {
 
 
     const {
-      className,
+      className: defaultClassName,
       mode,
       deletable,
       component,
@@ -646,10 +652,14 @@ class EditorComponent extends ObjectEditable {
     } = this.props;
 
     const {
-      props: objectProps,
+      props: {
+        className,
+        ...objectProps
+      },
     } = object;
 
     let classNames = [
+      defaultClassName,
       className,
       // propsClassName,
     ];
@@ -1546,6 +1556,9 @@ class EditorComponent extends ObjectEditable {
 
     }
 
+
+    // console.log("renderProps", { ...renderProps });
+    // console.log("renderProps other", { ...other });
 
     return <Fragment>
 
