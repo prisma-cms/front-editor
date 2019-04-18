@@ -11,8 +11,10 @@ const styles = {
 
   },
   editable: {
-    border: "1px solid red",
-    minHeight: "50px",
+    // border: "1px solid red",
+    // minHeight: "50px",
+    height: "100%",
+    border: "0px solid transparent",
   },
 }
 
@@ -28,6 +30,7 @@ class EditableText extends Component {
   static defaultProps = {
     allowedTags: [
     ],
+    inEditMode: false,
   }
 
   // shouldComponentUpdate() {
@@ -57,10 +60,10 @@ class EditableText extends Component {
       // ],
       content: components || {
         children: [
-          {
-            text: "abc",
-            tag: "b",
-          },
+          // {
+          //   text: "abc",
+          //   tag: "b",
+          // },
           // {
           //   text: " fdsf ",
           //   // tag: "span",
@@ -344,6 +347,8 @@ class EditableText extends Component {
     // const renderContent = this.renderContent(content);
 
 
+    console.log("TextArea props", { ...this.props });
+
 
     return (
       <div>
@@ -456,62 +461,62 @@ class EditableText extends Component {
             // }, 1000);
 
           }}
-          // onPaste={event => {
+        // onPaste={event => {
 
 
 
-          //   event.preventDefault();
+        //   event.preventDefault();
 
-          //   const currentTarget = event.currentTarget;
+        //   const currentTarget = event.currentTarget;
 
-          //   const node = event.target;
+        //   const node = event.target;
 
-          //   node.insertAdjacentHTML('afterend', '<b>wfewf</b>')
+        //   node.insertAdjacentHTML('afterend', '<b>wfewf</b>')
 
-          //   const content = this.makeNewContent(currentTarget);
-
-
-
-          //   setTimeout(() => {
-          //     this.setState({
-          //       content,
-          //     });
-          //   }, 1000);
-
-
-          //   return false;
-          // }}
-          // onCut={event => {
+        //   const content = this.makeNewContent(currentTarget);
 
 
 
-          //   return false;
-          // }}
-          // onDelete={event => {
+        //   setTimeout(() => {
+        //     this.setState({
+        //       content,
+        //     });
+        //   }, 1000);
+
+
+        //   return false;
+        // }}
+        // onCut={event => {
 
 
 
-          //   // event.preventDefault();
-
-          //   // const currentTarget = event.currentTarget;
-
-          //   // const node = event.target;
-
-          //   // node.insertAdjacentHTML('afterend', '<b>wfewf</b>')
-
-          //   // const content = this.makeNewContent(currentTarget);
+        //   return false;
+        // }}
+        // onDelete={event => {
 
 
 
-          //   // setTimeout(() => {
-          //   //   this.setState({
-          //   //     content,
-          //   //   });
-          //   // }, 1000);
+        //   // event.preventDefault();
+
+        //   // const currentTarget = event.currentTarget;
+
+        //   // const node = event.target;
+
+        //   // node.insertAdjacentHTML('afterend', '<b>wfewf</b>')
+
+        //   // const content = this.makeNewContent(currentTarget);
 
 
-          //   return false;
-          // }}
+
+        //   // setTimeout(() => {
+        //   //   this.setState({
+        //   //     content,
+        //   //   });
+        //   // }, 1000);
+
+
+        //   return false;
+        // }}
         // style={{
         //   border: inEditMode ? "1px solid #ddd" : undefined,
         //   // whiteSpace: "pre-wrap",

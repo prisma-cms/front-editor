@@ -547,12 +547,15 @@ class EditorComponent extends ObjectEditable {
     const {
       name,
       components,
-      props: {
-        style,
-        ...componentProps
-      },
+      props: objectProps,
 
     } = component.getObjectWithMutations();
+
+
+    const {
+      style,
+      ...componentProps
+    } = objectProps || {}
 
 
     return {

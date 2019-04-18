@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import EditorComponent from '../..';
 
 import TextIcon from "material-ui-icons/Title";
+import EditableText from './EditableText';
 
 class TextArea extends EditorComponent {
 
@@ -33,6 +34,32 @@ class TextArea extends EditorComponent {
     </div>);
   }
 
+
+  renderChildren() {
+
+    const {
+      content,
+    } = this.getComponentProps(this);
+
+    // console.log("getComponentProps components", components);
+
+    const {
+      inEditMode,
+    } = this.getEditorContext();
+
+    return <EditableText
+      inEditMode={inEditMode}
+      components={content}
+      onChange={content => {
+
+        // console.log("onChange data", components);
+        this.updateComponentProps({
+          content,
+        });
+
+      }}
+    />
+  }
 
   // getRenderProps() {
 

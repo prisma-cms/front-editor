@@ -15,6 +15,7 @@
   },
   "dependencies": {
     "@prisma-cms/context": "latest",
+    "css": "^2.2.4",
     "graphql": "14.0.2"
   },
   "devDependencies": {

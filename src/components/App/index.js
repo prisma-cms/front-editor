@@ -28,6 +28,7 @@ import RoutedObject from './components/public/Router/RoutedObject';
 import Link from './components/public/Link';
 import { EditorContext } from './context';
 import DraftEditor from './components/public/DraftEditor';
+import TextArea from './components/public/TextArea';
 
 const styles = theme => {
 
@@ -163,7 +164,7 @@ class FrontEditor extends Component {
     Components: [
       Grid,
       Typography,
-      // TextArea,
+      TextArea,
       UsersGrid,
       Connector,
       ObjectConnector,
