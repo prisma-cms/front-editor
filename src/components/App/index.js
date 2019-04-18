@@ -33,8 +33,6 @@ import Tag from './components/public/Tag';
 
 const styles = theme => {
 
-
-
   const {
     breakpoints,
   } = theme;
@@ -239,38 +237,6 @@ class FrontEditor extends Component {
     return baseComponents.concat(CustomComponents).filter(n => n && n.Name);
   }
 
-  // prepareComponents() {
-
-  //   const {
-  //     Components,
-  //     CustomComponents,
-  //   } = this.props;
-
-
-
-  //   // var cache = {};
-
-  //   let modules = [];
-
-  //   function importAll(r) {
-  //     r.keys().forEach(key => {
-
-  //       // cache[key] = r(key)
-
-
-
-  //       modules.push(r(key).default);
-  //     });
-  //   }
-
-  //   importAll(require.context('./components/public/', true, /\.js$/));
-
-
-
-
-  //   return modules.filter(n => n).filter(n => n.Name);
-  // }
-
 
   renderPanels() {
 
@@ -285,30 +251,6 @@ class FrontEditor extends Component {
 
     const Components = this.getComponents();
 
-    // const {
-    //   activeItem,
-    // } = this.state;
-
-
-    /**
-     * Если выбран активный элемент, выводим настройки для него
-     */
-
-    // let settingsView;
-
-    // if (activeItem) {
-
-
-    //   const Element = activeItem.constructor;
-
-
-    //   settingsView = <div>
-    //     <Element
-    //       mode="settings"
-    //     />
-    //   </div>
-
-    // }
 
     return <div
       className={classes.panelItems}
@@ -381,12 +323,8 @@ class FrontEditor extends Component {
     const RenderComponents = this.getComponents();
 
 
-
     // const Page = Components.find(n => n.Name === "Page");
     const Component = RenderComponents.find(n => n.Name === name);
-
-
-
 
 
     if (!Component) {
@@ -403,95 +341,6 @@ class FrontEditor extends Component {
       // onSave={onSave}
       {...other}
     />;
-
-    // return <Page
-    //   mode="main"
-    //   data={{
-    //     object: {},
-    //   }}
-    //   _dirty={{
-    //     name: "Page",
-    //     props: {},
-    //     components: [
-    //       {
-    //         "name": "Grid",
-    //         "props": {
-    //           "container": true
-    //         },
-    //         "components": [
-    //           {
-    //             "name": "Grid",
-    //             "props": {
-    //               "item": true,
-    //               xs: 12,
-    //               sm: 6,
-    //             },
-    //             "components": [
-
-    //             ]
-    //           },
-    //           {
-    //             "name": "Grid",
-    //             "props": {
-    //               "item": true,
-    //               xs: 12,
-    //               sm: 6,
-    //             },
-    //             "components": [
-    //               {
-    //                 name: "Typography",
-    //                 props: {
-    //                   text: "SDfdsf gerg ergergergerger",
-    //                 },
-    //                 components: [],
-    //               },
-    //             ]
-    //           },
-
-    //         ]
-    //       },
-
-    //     ],
-    //   }}
-    // />;
-
-    let output = [];
-
-
-    if (components && Array.isArray(components)) {
-
-      components.map((n, index) => {
-
-        const {
-          name,
-          props,
-          children,
-          ...other
-        } = n;
-
-        let Component = Components.find(n => n.Name === name);
-
-
-        if (Component) {
-
-          output.push(<Component
-            key={index}
-            mode="main"
-            {...other}
-          />);
-
-        }
-
-
-
-      })
-
-
-
-    }
-
-
-    return output;
 
   }
 
@@ -658,100 +507,6 @@ class FrontEditor extends Component {
       </EditorContext.Provider>
     );
 
-    // return (
-    //   <Context.Consumer>
-    //     {context => <Context.Provider
-    //       value={Object.assign(context, {
-    //         inEditMode,
-    //         classes,
-    //         components,
-    //         updateObject: data => this.updateObject(data),
-    //         dragItem,
-    //         dragTarget,
-    //         activeItem,
-    //         hoveredItem,
-    //         onDragStart: item => {
-
-    //           this.setState({
-    //             dragItem: item,
-    //           });
-
-    //         },
-    //         onDragEnd: item => {
-
-    //           this.setState({
-    //             dragItem: null,
-    //             dragTarget: null,
-    //             activeItem: null,
-    //             hoveredItem: null,
-    //           });
-    //         },
-    //         setDragTarget: component => {
-    //           this.setState({
-    //             dragTarget: component,
-    //           });
-    //         },
-    //         setActiveItem: component => {
-
-
-
-    //           this.setState({
-    //             activeItem: component,
-    //           });
-    //         },
-    //         setHoveredItem: component => {
-    //           this.setState({
-    //             hoveredItem: component,
-    //           });
-    //         },
-    //         Components,
-    //         forceUpdate: () => {
-
-
-
-    //           this.forceUpdate()
-
-    //         },
-    //       })}
-    //     >
-    //       {inEditMode
-    //         ? <Fragment>
-    //           <div
-    //             className={[classes.toolbar, classes.bordered].join(" ")}
-    //           >
-    //             {this.renderToolbar()}
-    //           </div>
-    //           <div
-    //             className={[classes.root, className].join(" ")}
-    //           >
-    //             <div
-    //               className={[classes.panel, classes.bordered].join(" ")}
-    //             >
-    //               {this.renderPanels()}
-    //             </div>
-    //             <div
-    //               className={[classes.editor, classes.bordered].join(" ")}
-    //             >
-    //               {items}
-
-    //               {/* {children} */}
-
-    //               {/* {debug && components ? <div
-    //                 style={{
-    //                   whiteSpace: "pre-wrap",
-    //                 }}
-    //               >
-    //                 {JSON.stringify(components, true, 2)}
-    //               </div> : null} */}
-
-    //             </div>
-    //           </div>
-    //         </Fragment>
-    //         : items
-    //       }
-    //     </Context.Provider>}
-    //   </Context.Consumer>
-    // );
   }
 }
 
@@ -759,17 +514,4 @@ class FrontEditor extends Component {
 export default withStyles(styles)(props => <FrontEditor
   {...props}
 />);
-
-
-
-// var cache = {};
-
-// function importAll (r) {
-//   r.keys().forEach(key => cache[key] = r(key));
-// }
-
-// importAll(require.context('./components/', true, /\.js$/));
-
-
-
 
