@@ -17,6 +17,7 @@ class Tag extends EditorComponent {
     // color: "default",
     // displayType: "span",
     // display: "inline-block",
+    // contentEditable: true,
   }
 
 
@@ -112,6 +113,7 @@ class Tag extends EditorComponent {
 
     const {
       inEditMode,
+      activeItem,
     } = this.getEditorContext();
 
     const object = this.getObjectWithMutations();
@@ -146,11 +148,11 @@ class Tag extends EditorComponent {
         } = this.getRenderProps();
 
         let style = {
-          ...baseStyle,
           outline: "none",
           height: "auto",
           width: "auto",
           // padding: 3,
+          ...baseStyle,
         }
 
 
@@ -191,7 +193,8 @@ class Tag extends EditorComponent {
         // }
 
         options = {
-          contentEditable: true,
+          // contentEditable: true,
+          contentEditable: activeItem === this,
           suppressContentEditableWarning: true,
           style,
           onInput: event => {
@@ -276,36 +279,73 @@ class Tag extends EditorComponent {
               focused: true,
             });
           },
+          // onBlur: event => {
+
+          //   // console.log("onBlur", { ...this });
+          //   // console.log("onBlur event", { ...event });
+
+          //   const {
+          //     newContent,
+          //   } = this.state;
+
+          //   if (newContent) {
+
+          //     const {
+          //       components,
+          //     } = newContent;
+
+          //     this.setComponents(components);
+
+          //     this.setState({
+          //       newContent: null,
+          //     })
+
+          //   }
+
+          //   this.setState({
+          //     focused: false,
+          //   });
+
+          // },
           onBlur: event => {
 
-            // console.log("onBlur", { ...this });
+            const {
+              activeItem,
+            } = this.getEditorContext();
+
+            console.log("onBlur", { ...this });
+            console.log("onBlur", activeItem === this, { ...activeItem });
             // console.log("onBlur event", { ...event });
 
-            const {
-              newContent,
-            } = this.state;
-
-            if (newContent) {
+            if (activeItem === this) {
 
               const {
-                components,
-              } = newContent;
+                newContent,
+              } = this.state;
 
-              this.setComponents(components);
+              if (newContent) {
 
-              this.setState({
-                newContent: null,
-              })
+                const {
+                  components,
+                } = newContent;
+
+                this.setComponents(components);
+
+                this.setState({
+                  newContent: null,
+                })
+
+              }
 
             }
+
 
             this.setState({
               focused: false,
             });
 
-          }
+          },
         }
-
       }
 
       return super.renderMainView(options);
@@ -340,9 +380,9 @@ class Tag extends EditorComponent {
   }
 
 
-  shouldComponentUpdate() {
-    return false;
-  }
+  // shouldComponentUpdate() {
+  //   return false;
+  // }
 
 
   makeNewContent(node) {

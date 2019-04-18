@@ -90,7 +90,17 @@ class Page extends EditorComponent {
                   event.preventDefault();
                   event.stopPropagation();
 
-                  this.addComponent(component);
+                  const {
+                    activeItem,
+                  } = this.getEditorContext();
+
+                  if (activeItem) {
+                    activeItem.addComponent(component);
+                  }
+                  else {
+                    this.addComponent(component);
+                  }
+
                 }}
               >
                 {label}
@@ -119,12 +129,134 @@ class Page extends EditorComponent {
 
     buttons.push({
       name: "Section",
+      label: "Блок",
+      components: [
+        {
+          name: "Section",
+          components: [
+          ],
+          props: {
+            style: {
+              margin: "0 auto",
+              maxWidth: "1260px",
+            },
+          },
+        },
+      ],
+      props: {
+      },
+    });
+
+    buttons.push({
+      name: "Tag",
+      label: "Таблица",
+      props: {
+        tag: "div",
+      },
+      components: [{
+        name: "Tag",
+        props: {
+          tag: "table",
+          style: {
+            width: "100%",
+          },
+        },
+        components: [
+          {
+            name: "Tag",
+            props: {
+              tag: "tbody",
+            },
+            components: [
+              {
+                name: "Tag",
+                props: {
+                  tag: "tr",
+                },
+                components: [
+                  {
+                    name: "Tag",
+                    props: {
+                      tag: "th",
+                    },
+                    components: [
+                    ],
+                  },
+                  {
+                    name: "Tag",
+                    props: {
+                      tag: "td",
+                    },
+                    components: [
+                    ],
+                  },
+                ],
+              },
+              {
+                name: "Tag",
+                props: {
+                  tag: "tr",
+                },
+                components: [
+                  {
+                    name: "Tag",
+                    props: {
+                      tag: "th",
+                    },
+                    components: [
+                    ],
+                  },
+                  {
+                    name: "Tag",
+                    props: {
+                      tag: "td",
+                    },
+                    components: [
+                    ],
+                  },
+                ],
+              },
+              {
+                name: "Tag",
+                props: {
+                  tag: "tr",
+                },
+                components: [
+                  {
+                    name: "Tag",
+                    props: {
+                      tag: "th",
+                    },
+                    components: [
+                    ],
+                  },
+                  {
+                    name: "Tag",
+                    props: {
+                      tag: "td",
+                    },
+                    components: [
+                    ],
+                  },
+                ],
+              },
+            ],
+          },
+        ],
+      }
+      ],
+    });
+
+
+    buttons.push({
+      name: "Section",
       label: "Средний текст",
       components: [
         {
-          name: "TextArea",
+          name: "Tag",
           components: [],
           props: {
+            tag: "div",
             // text: "Some text",
           },
         },

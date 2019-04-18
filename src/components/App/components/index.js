@@ -66,6 +66,7 @@ class EditorComponent extends ObjectEditable {
       fontSize: undefined,
       textAlign: undefined,
       minHeight: undefined,
+      width: undefined,
     },
     contentEditable: false,
   }
