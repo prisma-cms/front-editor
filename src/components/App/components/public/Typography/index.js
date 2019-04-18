@@ -20,14 +20,6 @@ class Typography extends EditorComponent {
   }
 
 
-  constructor(props) {
-
-    super(props);
-
-    this.id = module.id;
-  }
-
-
   renderPanelView() {
 
     const {

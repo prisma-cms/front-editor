@@ -44,8 +44,10 @@ class Link extends EditorComponent {
 
     return super.prepareDragItemComponents().concat([
       {
-        name: "Typography",
-        props: {},
+        name: "Tag",
+        props: {
+          tag: "span",
+        },
         components: [],
       }
     ]);
@@ -78,13 +80,12 @@ class Link extends EditorComponent {
     const object = this.getObjectWithMutations();
 
 
-
-
     // const {
     // } = this.props;
 
     let {
       to,
+      native,
       ...props
     } = this.getComponentProps(this);
 
@@ -109,8 +110,6 @@ class Link extends EditorComponent {
 
         return <ObjectContext.Consumer>
           {context => {
-
-
 
             const {
               object,

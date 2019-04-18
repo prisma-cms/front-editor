@@ -63,8 +63,11 @@ class EditorComponent extends ObjectEditable {
       marginTop: 0,
       marginBottom: 0,
       fontFamily: "Roboto",
-      fontSize: 14,
+      fontSize: undefined,
+      textAlign: undefined,
+      minHeight: undefined,
     },
+    contentEditable: false,
   }
 
 
@@ -80,6 +83,16 @@ class EditorComponent extends ObjectEditable {
     this.renderHeader = this.renderHeader.bind(this);
     this.save = this.save.bind(this);
 
+  }
+
+
+  /**
+   * Пока что имеются коллизии с обновляемыми объектами, взятыми из кеша,
+   * так что пока кеш отключаем
+   */
+  getCacheKey() {
+
+    return null;
   }
 
 
@@ -228,6 +241,27 @@ class EditorComponent extends ObjectEditable {
     if (components) {
       components.push(newItem);
     }
+
+    this.updateParentComponents();
+
+  }
+
+
+  /**
+   * Перетираем компоненты текущего объекта
+   */
+  setComponents(components) {
+
+
+    let {
+      data: {
+        object,
+      },
+    } = this.props;
+
+    Object.assign(object, {
+      components,
+    });
 
     this.updateParentComponents();
 
@@ -1206,7 +1240,7 @@ class EditorComponent extends ObjectEditable {
 
   updateComponentProperty(name, value, style) {
 
-    console.log("updateComponentProperty", name, value, { ...style });
+    // console.log("updateComponentProperty", name, value, { ...style });
 
     if (style) {
       return this.updateComponentProps({
@@ -1298,26 +1332,11 @@ class EditorComponent extends ObjectEditable {
      * this - Дополнительный объект в панели управления
      * getActiveItem - Элемент из основной части редактора.
      */
-    // const activeItem = this.getActiveItem();
-
-    // activeItem = this;
 
     const activeParent = activeItem.getActiveParent();
 
     // let props = activeItem.props.props || {};
     let props = { ...activeItem.props.props } || {};
-
-
-
-
-
-
-
-    // return;
-
-    // let props = {
-    //   ...oldProps,
-    // };
 
     const {
       data: {
@@ -1343,7 +1362,6 @@ class EditorComponent extends ObjectEditable {
       });
 
     }
-
 
 
     if (activeParent === activeItem) {
@@ -1548,24 +1566,14 @@ class EditorComponent extends ObjectEditable {
   }
 
 
-  renderChildren() {
-
-
-
-
-    const object = this.getObjectWithMutations();
-
-    // const {
-    //   // components,
-    //   updateObject,
-    // } = this.getEditorContext();
-
-    // const Components = this.getComponents();
+  renderChildren(components) {
 
     const {
       Components,
     } = this.getEditorContext();
 
+
+    const object = this.getObjectWithMutations();
 
 
     const {
@@ -1573,9 +1581,10 @@ class EditorComponent extends ObjectEditable {
       components: itemComponents,
     } = object;
 
+    components = components || itemComponents;
+
 
     let output = [];
-
 
 
     if (itemComponents && itemComponents.length) {
@@ -1609,14 +1618,9 @@ class EditorComponent extends ObjectEditable {
 
         }
 
-
-
       })
 
-
-
     }
-
 
     return output;
   }

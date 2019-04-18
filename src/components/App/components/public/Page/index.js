@@ -122,17 +122,17 @@ class Page extends EditorComponent {
       label: "Средний текст",
       components: [
         {
-          name: "Typography",
+          name: "TextArea",
           components: [],
           props: {
-            text: "Some text",
-            style: {
-              fontSize: 20,
-            },
+            // text: "Some text",
           },
         },
       ],
       props: {
+        style: {
+          fontSize: 20,
+        },
       },
     });
 
@@ -142,17 +142,17 @@ class Page extends EditorComponent {
       label: "Крупный текст",
       components: [
         {
-          name: "Typography",
+          name: "TextArea",
           components: [],
           props: {
-            text: "Some text",
-            style: {
-              fontSize: 34,
-            },
+            // text: "Some text",
           },
         },
       ],
       props: {
+        style: {
+          fontSize: 30,
+        },
       },
     });
 
