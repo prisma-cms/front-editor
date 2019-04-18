@@ -275,9 +275,17 @@ class Tag extends EditorComponent {
 
           },
           onFocus: event => {
-            this.setState({
-              focused: true,
-            });
+
+            const {
+              activeItem,
+            } = this.getEditorContext();
+
+            if (activeItem && activeItem === this) {
+              this.setState({
+                focused: true,
+              });
+            }
+
           },
           // onBlur: event => {
 
@@ -313,8 +321,8 @@ class Tag extends EditorComponent {
               activeItem,
             } = this.getEditorContext();
 
-            console.log("onBlur", { ...this });
-            console.log("onBlur", activeItem === this, { ...activeItem });
+            // console.log("onBlur", { ...this });
+            // console.log("onBlur", activeItem === this, { ...activeItem });
             // console.log("onBlur event", { ...event });
 
             if (activeItem === this) {
@@ -337,12 +345,11 @@ class Tag extends EditorComponent {
 
               }
 
+              this.setState({
+                focused: false,
+              });
+
             }
-
-
-            this.setState({
-              focused: false,
-            });
 
           },
         }

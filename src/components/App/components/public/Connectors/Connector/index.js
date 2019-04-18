@@ -730,20 +730,17 @@ class Connector extends EditorComponent {
   renderChildren() {
 
     const {
-      props: {
-        orderBy,
-        query,
-        ...otherProps
-      },
+      props: componentProps,
       where: propsWhere,
       ...other
     } = this.getComponentProps(this);
 
 
-
-
-
-
+    const {
+      orderBy,
+      query,
+      ...otherProps
+    } = componentProps || {};
 
 
     if (!query) {

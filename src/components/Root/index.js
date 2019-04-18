@@ -50,6 +50,7 @@ class FrontEditorRoot extends PrismaCmsComponent {
       ru: {
         values: {
           Cancel: "Отмена",
+          Close: "Закрыть",
           "Edit template": "Редактировать шаблон",
         },
       },
@@ -198,7 +199,7 @@ class FrontEditorRoot extends PrismaCmsComponent {
               })}
               variant="raised"
             >
-              {inEditMode ? this.lexicon("Cancel") : this.lexicon("Edit template")}
+              {inEditMode ? this.lexicon("Close") : this.lexicon("Edit template")}
             </Button>
           </Grid>
         </Grid>
