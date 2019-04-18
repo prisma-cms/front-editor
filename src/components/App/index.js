@@ -160,7 +160,7 @@ class FrontEditor extends Component {
     CustomComponents: PropTypes.arrayOf(PropTypes.func).isRequired,
     toolbar: PropTypes.oneOf([PropTypes.string, PropTypes.func]),
     className: PropTypes.string,
-    presets: PropTypes.array,
+    templates: PropTypes.array,
   };
 
   static defaultProps = {
@@ -192,7 +192,7 @@ class FrontEditor extends Component {
     ],
     CustomComponents: [],
     className: "fullheight",
-    presets: [],
+    templates: [],
   }
 
 
@@ -300,7 +300,7 @@ class FrontEditor extends Component {
   }
 
 
-  renderPresets() {
+  renderTemplates() {
 
 
     const {
@@ -309,7 +309,7 @@ class FrontEditor extends Component {
 
     const {
       activeItem,
-      presetsGroup,
+      templatesGroup,
     } = this.state;
 
 
@@ -323,17 +323,17 @@ class FrontEditor extends Component {
       ...other
     } = this.props;
 
-    const presets = this.getPresets();
+    const templates = this.getTemplates();
 
-    // console.log("presets", presets);
+    // console.log("templates", templates);
 
     // let components;
 
-    let list = presets.map((n, index) => {
+    let list = templates.map((n, index) => {
 
       const {
         label,
-        presets,
+        templates,
       } = n;
 
       return <div
@@ -348,8 +348,8 @@ class FrontEditor extends Component {
         onClick={event => {
 
           this.setState({
-            presetsGroup: presets,
-            // presetsGroup: presetsGroup && presetsGroup === presets ? null : presets,
+            templatesGroup: templates,
+            // templatesGroup: templatesGroup && templatesGroup === templates ? null : templates,
           });
 
         }}
@@ -369,7 +369,7 @@ class FrontEditor extends Component {
 
       {list}
 
-      {presetsGroup && presetsGroup.length ?
+      {templatesGroup && templatesGroup.length ?
         <div
           style={{
             position: "absolute",
@@ -399,7 +399,7 @@ class FrontEditor extends Component {
             >
               <IconButton
                 onClick={event => {
-                  this.closePresets();
+                  this.closeTemplates();
                 }}
               >
                 <CloseIcon
@@ -409,7 +409,7 @@ class FrontEditor extends Component {
             </Grid>
           </Grid>
 
-          {presetsGroup.map((n, index) => {
+          {templatesGroup.map((n, index) => {
 
             const {
               label,
@@ -420,7 +420,7 @@ class FrontEditor extends Component {
               key={index}
               style={{
                 position: "relative",
-                borderBottom: index - 1 === presetsGroup.length ? undefined : "1px solid #ddd",
+                borderBottom: index - 1 === templatesGroup.length ? undefined : "1px solid #ddd",
                 margin: "30px 0",
                 cursor: "pointer",
               }}
@@ -433,7 +433,7 @@ class FrontEditor extends Component {
                   activeItem.addComponent(component);
                 }
 
-                this.closePresets();
+                this.closeTemplates();
 
               }}
             >
@@ -467,7 +467,7 @@ class FrontEditor extends Component {
         justifyContent: "center",
       }}
     >
-      {this.getPresets().map((n, index) => {
+      {this.getTemplates().map((n, index) => {
 
         const {
           label,
@@ -499,49 +499,49 @@ class FrontEditor extends Component {
   }
 
 
-  closePresets() {
+  closeTemplates() {
 
     this.setState({
-      presetsGroup: null,
+      templatesGroup: null,
     })
 
   }
 
 
-  getPresets() {
+  getTemplates() {
 
     const {
-      presets: customPresets,
+      templates: customTemplates,
     } = this.props;
 
-    let presets = [];
+    let templates = [];
 
-    presets.push({
+    templates.push({
       label: "Разметка",
-      presets: this.getGridPresets(),
+      templates: this.getGridTemplates(),
     });
 
-    presets.push({
+    templates.push({
       label: "Текстовый блок",
-      presets: this.getTextPresets(),
+      templates: this.getTextTemplates(),
     });
 
-    presets.push({
+    templates.push({
       label: "Меню",
-      presets: this.getMenuPresets(),
+      templates: this.getMenuTemplates(),
     });
 
-    presets.push({
+    templates.push({
       label: "Данные сайта",
-      presets: this.getDataPresets(),
+      templates: this.getDataTemplates(),
     });
 
 
-    return presets.concat(customPresets || []);
+    return templates.concat(customTemplates || []);
   }
 
 
-  getGridPresets() {
+  getGridTemplates() {
 
     let buttons = [];
 
@@ -706,7 +706,7 @@ class FrontEditor extends Component {
   }
 
 
-  getTextPresets() {
+  getTextTemplates() {
 
     let buttons = [];
 
@@ -775,7 +775,7 @@ class FrontEditor extends Component {
   }
 
 
-  getMenuPresets() {
+  getMenuTemplates() {
 
     let buttons = [];
 
@@ -794,7 +794,7 @@ class FrontEditor extends Component {
   }
 
 
-  getDataPresets() {
+  getDataTemplates() {
 
     let buttons = [];
 
@@ -1082,7 +1082,7 @@ class FrontEditor extends Component {
               <div
                 className={[classes.panel, classes.bordered].join(" ")}
               >
-                {this.renderPresets()}
+                {this.renderTemplates()}
               </div>
               <div
                 className={[classes.editor, classes.bordered].join(" ")}
