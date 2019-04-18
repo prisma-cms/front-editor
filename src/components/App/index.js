@@ -922,7 +922,7 @@ class FrontEditor extends Component {
             src: "https://www.youtube.com/embed/4j9ePxDhHGU",
             frameborder: 0,
             allow: "accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture",
-            allowfullscreen: true,
+            allowFullScreen: true,
             style: {
               position: "absolute",
               top: 0,

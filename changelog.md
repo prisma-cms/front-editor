@@ -1,3 +1,7 @@
+1.9.2
+=================================
+- Fix allowFullScreen
+
 1.9.1
 =================================
 - Deny render script and link tags
