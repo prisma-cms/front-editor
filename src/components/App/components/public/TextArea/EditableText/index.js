@@ -4,27 +4,13 @@ import PropTypes from 'prop-types';
 import CSSTransform from "./transform";
 import { withStyles } from 'material-ui';
 
-
-
-const styles = {
-  root: {
-
-  },
-  editable: {
-    // border: "1px solid red",
-    // minHeight: "50px",
-    height: "100%",
-    border: "0px solid transparent",
-  },
-}
-
 class EditableText extends Component {
 
   static propTypes = {
     onChange: PropTypes.func,
     components: PropTypes.object,
     inEditMode: PropTypes.bool.isRequired,
-    classes: PropTypes.object.isRequired,
+    // classes: PropTypes.object.isRequired,
   };
 
   static defaultProps = {
@@ -48,42 +34,8 @@ class EditableText extends Component {
 
     this.state = {
       ...this.state,
-      // content: "Some Editable Text",
-
-      // content: [
-      //   {
-      //     text: "Some",
-      //   },
-      //   {
-      //     text: "text",
-      //   },
-      // ],
       content: components || {
         children: [
-          // {
-          //   text: "abc",
-          //   tag: "b",
-          // },
-          // {
-          //   text: " fdsf ",
-          //   // tag: "span",
-          // },
-          // {
-          //   tag: "span",
-          //   text: "Some awesome text",
-          //   // onClick: event => alert("sdfs"),
-          // },
-          // {
-          //   tag: "b",
-          //   text: "bold",
-          // },
-          // {
-          //   text: "text",
-          // },
-          // {
-          //   tag: "span",
-          //   text: "text with \n line \r break",
-          // },
         ],
       },
     }
@@ -97,12 +49,6 @@ class EditableText extends Component {
     };
 
     const nodes = node.childNodes;
-
-
-
-
-
-
 
 
     let NodeName = node.nodeName.toLowerCase();
@@ -166,15 +112,6 @@ class EditableText extends Component {
 
       nodes.forEach(node => {
 
-
-
-        // let NodeName = (node.nodeName || "SPAN").toLowerCase();
-
-
-        // if (NodeName === "#text") {
-        //   NodeName = undefined;
-        // }
-
         children.push(this.updateContent(node, {}));
 
       });
@@ -189,59 +126,6 @@ class EditableText extends Component {
 
     return content;
 
-    // return;
-
-    // let inner = [];
-
-    // let NodeName = (node.nodeName || "SPAN").toLowerCase();
-
-
-    // if (NodeName === "#text") {
-    //   NodeName = "span";
-    // }
-
-    // nodes.forEach(node => {
-
-
-
-    //   let NodeName = (node.nodeName || "SPAN").toLowerCase();
-
-
-    //   if (NodeName === "#text") {
-    //     NodeName = "span";
-    //   }
-
-    //   switch (node.nodeType) {
-
-    //     case Node.TEXT_NODE:
-
-
-
-    //       // inner.push(<NodeName>
-    //       //   {node.textContent}
-    //       // </NodeName>);
-    //       inner.push(node.textContent);
-
-    //       break;
-
-
-    //     default:
-    //       inner = inner.concat(this.updateContent(node, []));
-    //       ;
-
-    //   }
-
-    // });
-
-    // // content.push(<NodeName>
-    // //   {inner}
-    // // </NodeName>);
-
-    // Object.assign(content, {
-    //   children: inner,
-    // });
-
-    // return content;
   }
 
 
@@ -250,8 +134,6 @@ class EditableText extends Component {
     if (!node) {
       return null;
     }
-
-
 
     const {
       text,
@@ -263,9 +145,6 @@ class EditableText extends Component {
 
     let content = text;
 
-    // if (text) {
-    //   return text;
-    // }
 
     if (children && children.length) {
       content = children.map((n, index) => this.renderContent(n, index));
@@ -283,18 +162,6 @@ class EditableText extends Component {
 
     return content;
 
-    // let output = [content];
-
-    // // if (children && children.length) {
-    // //   // output = output.concat(children.map((n, index) => this.renderContent(n, index))).reduce((curr, next) => [curr, " ", next]);
-    // //   output = output.concat(children.map((n, index) => this.renderContent(n, index)));
-    // // }
-
-    // return output;
-
-    // return <Fragment>
-    //   {content}{children ? children.map((n, index) => this.renderContent(n, index)) : null}
-    // </Fragment>;
 
   }
 
@@ -321,8 +188,6 @@ class EditableText extends Component {
   }
 
   componentDidCatch(error, info) {
-    // Display fallback UI
-    // this.setState({ hasError: true }); 
 
     console.error(error, info);
   }
@@ -332,229 +197,73 @@ class EditableText extends Component {
 
     const {
       content,
-      newContent,
+      // newContent,
     } = this.state;
 
     const {
       onChange,
       inEditMode,
-      classes,
+      // classes,
     } = this.props;
 
 
+    // console.log("TextArea props", { ...this.props });
 
 
-    // const renderContent = this.renderContent(content);
+    return (<div
+      key="content"
+      // className={[classes.root, inEditMode ? classes.editable : ""].join(" ")}
+      style={inEditMode ? {
+        height: "100%",
+        minHeight: "1rem",
+      } : undefined}
+      contentEditable={inEditMode ? true : false}
+      suppressContentEditableWarning
+      onInput={event => {
 
+        // const {
+        //   nativeEvent: {
+        //     inputType,
+        //   },
+        // } = event;
 
-    console.log("TextArea props", { ...this.props });
 
+        const node = event.target;
 
-    return (
-      <div>
-        <Renderer
-          key="content"
-          className={[classes.root, inEditMode ? classes.editable : ""].join(" ")}
-          contentEditable={inEditMode ? true : false}
-          suppressContentEditableWarning
-          onInput={event => {
 
-            const {
-              nativeEvent: {
-                inputType,
-              },
-            } = event;
+        const content = this.makeNewContent(node);
 
 
 
+        let newState = {
+          newContent: content,
+        };
 
 
-            // event.preventDefault();
+        // Object.assign(newState, {
+        //   // content,
+        // });
 
-            const node = event.target;
+        Object.assign(this.state, newState);
 
 
-            const content = this.makeNewContent(node);
+        onChange(content);
 
-            // let content = this.updateContent(node, {
-            //   children: [],
-            // });
 
+        // setTimeout(() => {
+        //   this.forceUpdate();
+        // }, 1000);
 
 
+      }}
+    >
 
+      {this.renderContent(content) || <div></div>}
 
-            let newState = {
-              newContent: content,
-            };
+    </div>
 
-            // switch (inputType) {
-
-            //   case "insertFromPaste":
-
-
-            //     break;
-
-            //   case "deleteContentBackward":
-
-
-
-            //     break;
-            // }
-
-            Object.assign(newState, {
-              // content,
-            });
-
-            Object.assign(this.state, newState);
-
-            // this.setState(newState, () => {
-
-            // });
-
-
-            onChange(content);
-
-            // this.forceUpdate();
-
-            // setTimeout(() => {
-            //   this.setState({
-            //     content: { ...content },
-            //   });
-            // }, 1000);
-
-            setTimeout(() => {
-              this.forceUpdate();
-            }, 1000);
-
-            // setTimeout(() => {
-            //   this.setState({
-            //     content: {
-            //       children: [
-            //         {
-            //           text: "abc",
-            //           tag: "span",
-            //         },
-            //         {
-            //           text: " fdsf ",
-            //           // tag: "span",
-            //         },
-            //         {
-            //           tag: "span",
-            //           text: "Some awesome text",
-            //           // onClick: event => alert("sdfs"),
-            //         },
-            //         // {
-            //         //   tag: "b",
-            //         //   text: "bold",
-            //         // },
-            //         {
-            //           text: "text",
-            //         },
-            //         {
-            //           tag: "span",
-            //           text: "text with \n line \r break",
-            //         },
-            //       ],
-            //     },
-            //   });
-            // }, 1000);
-
-          }}
-        // onPaste={event => {
-
-
-
-        //   event.preventDefault();
-
-        //   const currentTarget = event.currentTarget;
-
-        //   const node = event.target;
-
-        //   node.insertAdjacentHTML('afterend', '<b>wfewf</b>')
-
-        //   const content = this.makeNewContent(currentTarget);
-
-
-
-        //   setTimeout(() => {
-        //     this.setState({
-        //       content,
-        //     });
-        //   }, 1000);
-
-
-        //   return false;
-        // }}
-        // onCut={event => {
-
-
-
-        //   return false;
-        // }}
-        // onDelete={event => {
-
-
-
-        //   // event.preventDefault();
-
-        //   // const currentTarget = event.currentTarget;
-
-        //   // const node = event.target;
-
-        //   // node.insertAdjacentHTML('afterend', '<b>wfewf</b>')
-
-        //   // const content = this.makeNewContent(currentTarget);
-
-
-
-        //   // setTimeout(() => {
-        //   //   this.setState({
-        //   //     content,
-        //   //   });
-        //   // }, 1000);
-
-
-        //   return false;
-        // }}
-        // style={{
-        //   border: inEditMode ? "1px solid #ddd" : undefined,
-        //   // whiteSpace: "pre-wrap",
-        // }}
-        >
-          {/* {newContent || content} */}
-
-          {/* {renderContent} */}
-
-          {this.renderContent(content) || <div>d</div>}
-
-        </Renderer>
-
-        {/* {newContent ?
-          <div
-            style={{
-              marginTop: 10,
-            }}
-          >
-            {this.renderContent(newContent)}
-          </div>
-          : null
-        } */}
-      </div>
     );
   }
 }
 
-const Renderer = function (props) {
-
-  return <div
-    {...props}
-  >
-
-  </div>
-}
-
-
-export default withStyles(styles)(props => <EditableText
-  {...props}
-/>);
+export default EditableText;
