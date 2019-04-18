@@ -1,3 +1,8 @@
+1.9.1
+=================================
+- Deny render script and link tags
+- Added maxStructureLengthView
+
 1.9.0
 =================================
 - Fix Tag

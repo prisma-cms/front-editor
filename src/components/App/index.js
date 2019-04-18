@@ -325,7 +325,7 @@ class FrontEditor extends Component {
 
     const templates = this.getTemplates();
 
-    // console.log("templates", templates);
+
 
     // let components;
 
@@ -1064,7 +1064,7 @@ class FrontEditor extends Component {
     let items = this.renderItems();
 
 
-    // console.log("FrontEditor props", {...this.props});
+
 
     return (
       <EditorContext.Provider

@@ -53,14 +53,14 @@ class NamedField extends EditorComponent {
     } = this.getComponentProps(this);
 
 
-    // console.log("NamedField props", this.props);
-    // console.log("NamedField this.getComponentProps(this)", this.getComponentProps(this));
+
+
 
 
     return <ObjectContext.Consumer>
       {context => {
 
-        {/* console.log("NamedField context", context); */}
+
 
         if (!name) {
           return null;

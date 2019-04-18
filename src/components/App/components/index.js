@@ -83,6 +83,10 @@ class EditorComponent extends ObjectEditable {
 
     super(props);
 
+    const {
+      maxStructureLengthView = 3000,
+    } = props;
+
     this.updateComponentProperty = this.updateComponentProperty.bind(this);
     this.updateObject = this.updateObject.bind(this);
     this.onChangeProps = this.onChangeProps.bind(this);
@@ -90,6 +94,11 @@ class EditorComponent extends ObjectEditable {
     this.getActiveParent = this.getActiveParent.bind(this);
     this.renderHeader = this.renderHeader.bind(this);
     this.save = this.save.bind(this);
+
+    this.state = {
+      ...this.state,
+      maxStructureLengthView,
+    }
 
   }
 
@@ -751,6 +760,9 @@ class EditorComponent extends ObjectEditable {
 
   renderSettingsView(content) {
 
+    const {
+      maxStructureLengthView,
+    } = this.state;
 
 
     let header = this.renderHeader(true);
@@ -782,6 +794,45 @@ class EditorComponent extends ObjectEditable {
 
 
     const structure = this.getStructure(this);
+
+
+    let structureView;
+
+    if (structure) {
+
+      try {
+        structureView = JSON.stringify(structure, true, 2)
+
+        if (structureView) {
+
+          const structureViewLength = structureView.length;
+
+
+
+
+          if (maxStructureLengthView && structureViewLength > maxStructureLengthView) {
+
+            structureView = <Button
+              onClick={event => {
+                this.setState({
+                  maxStructureLengthView: structureViewLength,
+                })
+              }}
+            >
+              Show {structureViewLength} chars
+            </Button>
+
+          }
+
+        }
+
+      }
+      catch (error) {
+        console.error(error);
+      }
+    }
+
+
 
 
     const {
@@ -1008,7 +1059,7 @@ class EditorComponent extends ObjectEditable {
             overflow: "auto",
           }}
         >
-          {structure ? JSON.stringify(structure, true, 2) : null}
+          {structureView}
         </div>
       </Grid>
 
@@ -1252,7 +1303,7 @@ class EditorComponent extends ObjectEditable {
 
   updateComponentProperty(name, value, style) {
 
-    // console.log("updateComponentProperty", name, value, { ...style });
+
 
     if (style) {
       return this.updateComponentProps({
@@ -1557,8 +1608,8 @@ class EditorComponent extends ObjectEditable {
     }
 
 
-    // console.log("renderProps", { ...renderProps });
-    // console.log("renderProps other", { ...other });
+
+
 
     return <Fragment>
 

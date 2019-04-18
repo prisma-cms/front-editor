@@ -43,8 +43,8 @@ class Tag extends EditorComponent {
     // const {
     // } = objectProps || {};
 
-    // console.log("Tag constructor props", { ...props });
-    // console.log("Tag constructor props components", components);
+
+
 
     this.state = {
       ...this.state,
@@ -56,7 +56,7 @@ class Tag extends EditorComponent {
 
   canBeDropped(dragItem) {
 
-    // console.log("Tag canBeDropped", dragItem);
+
 
     // return dragItem.name === "Tag";
 
@@ -133,6 +133,19 @@ class Tag extends EditorComponent {
 
       let options;
 
+      switch (tag.toLowerCase) {
+
+        case "script":
+        case "link":
+
+          console.error(`Tag "${tag}" not allowed`);
+
+          return null;
+
+          break;
+
+      }
+
       if (inEditMode) {
 
 
@@ -177,10 +190,10 @@ class Tag extends EditorComponent {
         }
 
 
-        // console.log("!text && !components.length && !newContent", !text && !components.length && !newContent);
-        // console.log("!text && !components.length && !newContent text", text);
-        // console.log("!text && !components.length && !newContent components.length", components.length);
-        // console.log("!text && !components.length && !newContent newContent");
+
+
+
+
 
         // if (!text && !components.length && !newContent) {
 
@@ -202,7 +215,7 @@ class Tag extends EditorComponent {
             const node = event.target;
 
 
-            // console.log("onInput this", this);
+
 
             // return;
 
@@ -210,9 +223,9 @@ class Tag extends EditorComponent {
             const content = this.makeNewContent(node);
 
 
-            // console.log("onInput new content", { ...content });
 
-            // console.log("onInput new content this", this);
+
+
 
             // let newState = {
             //   newContent: content,
@@ -289,8 +302,8 @@ class Tag extends EditorComponent {
           },
           // onBlur: event => {
 
-          //   // console.log("onBlur", { ...this });
-          //   // console.log("onBlur event", { ...event });
+
+
 
           //   const {
           //     newContent,
@@ -321,9 +334,9 @@ class Tag extends EditorComponent {
               activeItem,
             } = this.getEditorContext();
 
-            // console.log("onBlur", { ...this });
-            // console.log("onBlur", activeItem === this, { ...activeItem });
-            // console.log("onBlur event", { ...event });
+
+
+
 
             if (activeItem === this) {
 
@@ -482,7 +495,7 @@ class Tag extends EditorComponent {
 
             break;
 
-          default:;
+          default: ;
         }
 
         Object.assign(content.props, {

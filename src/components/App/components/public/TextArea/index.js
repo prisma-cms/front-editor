@@ -57,7 +57,7 @@ class TextArea extends EditorComponent {
       inEditMode,
     } = this.getEditorContext();
 
-    // console.log("TextArea props", { ...this.props });
+
 
 
     let options ;
@@ -209,7 +209,7 @@ class TextArea extends EditorComponent {
       content,
     } = objectProps || {};
 
-    // console.log("TextArea constructor props", { ...props },);
+
 
     this.state = {
       ...this.state,
@@ -393,7 +393,7 @@ class TextArea extends EditorComponent {
       inEditMode,
     } = this.getEditorContext();
 
-    // console.log("TextArea props", { ...this.props });
+
 
 
     return (<div

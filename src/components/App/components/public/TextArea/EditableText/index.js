@@ -207,7 +207,7 @@ class EditableText extends Component {
     } = this.props;
 
 
-    // console.log("TextArea props", { ...this.props });
+
 
 
     return (<div
