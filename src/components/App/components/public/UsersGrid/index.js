@@ -46,15 +46,13 @@ class UsersGrid extends EditorComponent {
   }
 
 
-  prepareDragItem() {
+  prepareDragItemProps() {
 
-    let newItem = super.prepareDragItem();
-
-    Object.assign(newItem, {
+    return {
+      ...super.prepareDragItemProps(),
       first: 10,
-    });
+    };
 
-    return newItem;
   }
 
 

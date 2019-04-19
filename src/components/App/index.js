@@ -460,42 +460,6 @@ class FrontEditor extends Component {
       }
     </div>
 
-    return <Grid
-      container
-      spacing={8}
-      style={{
-        justifyContent: "center",
-      }}
-    >
-      {this.getTemplates().map((n, index) => {
-
-        const {
-          label,
-          ...component
-        } = n;
-
-        return <Grid
-          key={index}
-          item
-        >
-          <Button
-            variant="raised"
-            size="small"
-            onClick={event => {
-
-              event.preventDefault();
-              event.stopPropagation();
-
-              activeItem.addComponent(component);
-
-            }}
-          >
-            {label}
-          </Button>
-        </Grid>
-
-      })}
-    </Grid>
   }
 
 
@@ -569,8 +533,8 @@ class FrontEditor extends Component {
               name: "Section",
               props: {
                 style: {
-                  paddingTop: "180px",
-                  paddingBottom: "180px",
+                  paddingTop: "100px",
+                  paddingBottom: "100px",
                 },
               },
               components: [
@@ -832,6 +796,8 @@ class FrontEditor extends Component {
                   "components": [
                     {
                       "name": "Filters",
+                      props: {
+                      },
                       "components": []
                     }
                   ]
@@ -845,6 +811,8 @@ class FrontEditor extends Component {
                   "components": [
                     {
                       "name": "ListView",
+                      props: {
+                      },
                       "components": [
                         {
                           "name": "Grid",
@@ -881,7 +849,10 @@ class FrontEditor extends Component {
                   },
                   "components": [
                     {
-                      "name": "Pagination"
+                      "name": "Pagination",
+                      props: {
+                      },
+                      components: [],
                     }
                   ]
                 }

@@ -88,7 +88,9 @@ class Connector extends EditorComponent {
             components: [
               {
                 "name": "Filters",
-                "components": []
+                props: {
+                },
+                "components": [],
               },
             ],
           },
@@ -101,6 +103,8 @@ class Connector extends EditorComponent {
             components: [
               {
                 "name": "ListView",
+                props: {
+                },
                 "components": [
                   {
                     "name": "Grid",
@@ -124,7 +128,10 @@ class Connector extends EditorComponent {
             },
             components: [
               {
-                "name": "Pagination"
+                "name": "Pagination",
+                props: {
+                },
+                components: [],
               },
             ],
           },

@@ -66,6 +66,8 @@ class ObjectConnector extends EditorComponent {
     return {
       ...super.prepareDragItemProps(),
       filtersname: "filters",
+      where: {
+      },
     };
   }
 
@@ -75,7 +77,8 @@ class ObjectConnector extends EditorComponent {
     return super.prepareDragItemComponents().concat([
       {
         "name": "Filters",
-        "components": []
+        props: {},
+        "components": [],
       },
       {
         "name": "ObjectView",
