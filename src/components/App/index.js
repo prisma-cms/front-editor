@@ -34,6 +34,7 @@ import TextArea from './components/public/TextArea';
 import Tag from './components/public/Tag';
 import { Button } from 'material-ui';
 import { IconButton } from 'material-ui';
+import ObjectImage from './components/public/Connectors/Connector/Fields/ObjectImage';
 
 const styles = theme => {
 
@@ -177,6 +178,7 @@ class FrontEditor extends Component {
       ObjectView,
       Pagination,
       NamedField,
+      ObjectImage,
       UserLink,
       Filters,
       CreatedBy,
