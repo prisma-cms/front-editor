@@ -223,16 +223,16 @@ class FrontEditorRoot extends PrismaCmsComponent {
 
         Object.assign(editorProps, {
           mutate: createTemplate,
-          _dirty: {
-            name,
-            props,
-            components,
-            Parent: {
-              connect: {
-                id: templateId,
-              },
-            },
-          },
+          // _dirty: {
+          //   name,
+          //   props,
+          //   components,
+          //   Parent: {
+          //     connect: {
+          //       id: templateId,
+          //     },
+          //   },
+          // },
         });
       }
 
@@ -333,31 +333,38 @@ export class RootConnector extends Component {
     let OR = [
       {
         Parent: null,
+        name: "Page",
       },
     ];
 
     let conditions = {
     };
 
-    if (currentUserId) {
-      OR.push({
-        CreatedBy: {
-          id: currentUserId,
-        },
-      });
+    // if (currentUserId) {
+    //   OR.push({
+    //     CreatedBy: {
+    //       id: currentUserId,
+    //     },
+    //   });
 
-      Object.assign(conditions, {
-        orderBy: "createdAt_DESC",
-        first: 2,
-      });
+    //   Object.assign(conditions, {
+    //     orderBy: "createdAt_DESC",
+    //     first: 2,
+    //   });
 
-    }
-    else {
-      Object.assign(conditions, {
-        orderBy: "rank_DESC",
-        first: 1,
-      });
-    }
+    // }
+    // else {
+    //   Object.assign(conditions, {
+    //     orderBy: "rank_DESC",
+    //     first: 1,
+    //   });
+    // }
+
+
+    Object.assign(conditions, {
+      orderBy: "rank_DESC",
+      first: 1,
+    });
 
     Object.assign(conditions, {
       where: {

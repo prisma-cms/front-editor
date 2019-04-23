@@ -17,6 +17,8 @@ import { Button, IconButton, TextField } from 'material-ui';
 
 import DeleteIcon from "material-ui-icons/Delete";
 import CloseIcon from "material-ui-icons/Close";
+import CloneIcon from "material-ui-icons/ContentCopy";
+
 import { FormControlLabel } from 'material-ui';
 import { Switch } from 'material-ui';
 
@@ -760,6 +762,13 @@ class EditorComponent extends ObjectEditable {
 
   renderSettingsView(content) {
 
+
+    const object = this.getObjectWithMutations();
+
+    const {
+      id: objectId,
+    } = object;
+
     const {
       maxStructureLengthView,
     } = this.state;
@@ -784,6 +793,14 @@ class EditorComponent extends ObjectEditable {
     } = this;
 
 
+    const activeParent = this.getActiveParent();
+
+    const {
+      id: parentId,
+    } = activeParent.getObjectWithMutations();
+
+    // console.log("activeParent", activeParent);
+
     const deletable = this.isDeletable();
 
 
@@ -792,6 +809,8 @@ class EditorComponent extends ObjectEditable {
       ...componentProps
     } = this.getComponentProps(this);
 
+
+    const isRoot = activeParent === this;
 
     const structure = this.getStructure(this);
 
@@ -831,8 +850,6 @@ class EditorComponent extends ObjectEditable {
         console.error(error);
       }
     }
-
-
 
 
     const {
@@ -927,28 +944,84 @@ class EditorComponent extends ObjectEditable {
         <Grid
           container
           spacing={8}
-          style={{
-            flexDirection: "row-reverse",
-          }}
+        // style={{
+        //   flexDirection: "row-reverse",
+        // }}
         >
-
           <Grid
             item
+            xs
           >
-            <IconButton
-              title="Завершить редактирование элемента"
-              onClick={event => {
-
-                event.preventDefault();
-                event.stopPropagation();
-
-                setActiveItem(null);
-
-              }}
-            >
-              <CloseIcon />
-            </IconButton>
           </Grid>
+
+          {!isRoot && !objectId && activeParent && parentId ?
+            <Grid
+              item
+            >
+              <IconButton
+                title="Сохранить в отдельный компонент"
+                onClick={async event => {
+
+                  /**
+                  При сохранении, мы должны текущий элемент заменить новым
+                   */
+
+                  event.preventDefault();
+                  event.stopPropagation();
+
+
+                  console.log("Сохранить в отдельный компонент", { ...this.context });
+                  console.log("Сохранить в отдельный компонент this", { ...this });
+
+                  const {
+                    query: {
+                      createTemplateProcessor,
+                    },
+                  } = this.context;
+
+
+                  // const {
+                  //   props: {
+                  //     name,
+                  //     description,
+                  //     props,
+                  //     components,
+                  //   },
+                  // } = this;
+
+
+                  const {
+                    ...template
+                  } = this.getObjectWithMutations();
+
+                  await this.mutate({
+                    mutation: gql(createTemplateProcessor),
+                    variables: {
+                      data: {
+                        ...template,
+                        Parent: {
+                          connect: {
+                            id: parentId,
+                          },
+                        },
+                      },
+                    },
+                  })
+                    .then(r => {
+
+                      console.log("save result", r);
+
+                    })
+                    ;
+
+
+                }}
+              >
+                <CloneIcon />
+              </IconButton>
+            </Grid>
+            : null
+          }
 
           {deletable ?
             <Grid
@@ -967,6 +1040,24 @@ class EditorComponent extends ObjectEditable {
             </Grid>
             : null
           }
+
+          <Grid
+            item
+          >
+            <IconButton
+              title="Завершить редактирование элемента"
+              onClick={event => {
+
+                event.preventDefault();
+                event.stopPropagation();
+
+                setActiveItem(null);
+
+              }}
+            >
+              <CloseIcon />
+            </IconButton>
+          </Grid>
 
         </Grid>
 
@@ -1713,6 +1804,24 @@ class EditorComponent extends ObjectEditable {
     return super.renderHeader();
 
   }
+
+
+  // getButtons (){
+
+  //   let buttons = super.getButtons();
+
+  //   const canEdit = this.canEdit();
+
+  //   if(canEdit) {
+  //     buttons.push(<IconButton>
+  //       <CloneIcon>
+
+  //       </CloneIcon>
+  //     </IconButton>);
+  //   }
+
+  //   return buttons;
+  // }
 
 
   renderEditableView() {
