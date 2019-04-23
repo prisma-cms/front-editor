@@ -1,3 +1,6 @@
+=================================
+- Added Component::getComponentInParent()
+
 1.9.4
 =================================
 - Added ObjectImage

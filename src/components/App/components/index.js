@@ -1492,11 +1492,6 @@ class EditorComponent extends ObjectEditable {
     // let props = activeItem.props.props || {};
     let props = { ...activeItem.props.props } || {};
 
-    const {
-      data: {
-        object,
-      },
-    } = activeItem.props;
 
     if (data) {
 
@@ -1525,57 +1520,22 @@ class EditorComponent extends ObjectEditable {
     }
     else {
 
-      // let {
-      //   components,
-      // } = activeItem.props.parent.props;
 
-      let {
-        // components,
-        data: {
-          object: {
-            components,
-          },
-        },
-      } = activeItem.props.parent.props;
+      const component = activeItem.getComponentInParent();
 
 
+      if (component) {
 
+        Object.assign(component, {
+          props,
+        });
 
+        // activeItem.props.props = props;
 
-      if (!components) {
-        // components = [];
-
-        // object.components = components;
-
-        // throw new Error("Can not get components");
-        console.error("Can not get components");
-
-        return;
+        activeParent.updateParentComponents();
 
       }
 
-      const index = components.indexOf(object);
-
-      const component = components[index];
-
-      if (!component) {
-
-        console.error("Can not get component. updateComponentProps activeItem", activeItem);
-        console.error("Can not get component. updateComponentProps activeParent", activeParent);
-
-        // throw new Error("Can not get component");
-
-        return;
-      }
-
-
-      Object.assign(component, {
-        props,
-      });
-
-      // activeItem.props.props = props;
-
-      activeParent.updateParentComponents();
     }
 
 
@@ -1586,11 +1546,64 @@ class EditorComponent extends ObjectEditable {
 
     return;
 
-    return this.updateComponent({
-      props,
-    });
+    // return this.updateComponent({
+    //   props,
+    // });
   }
 
+
+  getComponentInParent() {
+
+    // const activeItem = this;
+
+    const {
+      data: {
+        object,
+      },
+    } = this.props;
+
+    // let {
+    //   components,
+    // } = activeItem.props.parent.props;
+
+    let {
+      // components,
+      data: {
+        object: {
+          components,
+        },
+      },
+    } = this.props.parent.props;
+
+
+    if (!components) {
+      // components = [];
+
+      // object.components = components;
+
+      // throw new Error("Can not get components");
+      console.error("Can not get components");
+
+      return;
+
+    }
+
+    const index = components.indexOf(object);
+
+    const component = components[index];
+
+    if (!component) {
+
+      console.error("Can not get component. updateComponentProps activeItem", this);
+      // console.error("Can not get component. updateComponentProps activeParent", activeParent);
+
+      // throw new Error("Can not get component");
+
+      return;
+    }
+
+    return component;
+  }
 
   // updateComponent(component, data) {
   updateComponent(data) {
