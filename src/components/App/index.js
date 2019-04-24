@@ -242,7 +242,7 @@ class FrontEditor extends Component {
 
     // console.log("template", template);
 
-    this.TemplateRenderer = graphql(gql(template))(props => {
+    this.TemplateRenderer = graphql(gql(template))(options => {
 
       // console.log("TemplateRenderer props", { ...props });
 
@@ -250,7 +250,16 @@ class FrontEditor extends Component {
         Component,
         where,
         ...other
-      } = props;
+      } = options;
+
+      const {
+        data,
+      } = other;
+
+      const {
+        props,
+        components,
+      } = data && data.object || {};
 
       return <Component
         // key={templateId || index}
@@ -262,6 +271,8 @@ class FrontEditor extends Component {
         //   object: n,
         // }}
         // // _dirty={n}
+        props={props}
+        components={components}
         {...other}
       />;
     });
@@ -404,7 +415,7 @@ class FrontEditor extends Component {
     return <div
       style={{
         position: "relative",
-        border: "1px solid red",
+        // border: "1px solid red",
         height: "100%",
       }}
     >
@@ -976,9 +987,10 @@ class FrontEditor extends Component {
 
     const {
       name,
+      component,
     } = data.object || {};
 
-    if (!name) {
+    if (!component) {
       return null;
     }
 
@@ -986,7 +998,7 @@ class FrontEditor extends Component {
 
 
     // const Page = Components.find(n => n.Name === "Page");
-    const Component = RenderComponents.find(n => n.Name === name);
+    const Component = RenderComponents.find(n => n.Name === component);
 
 
     if (!Component) {

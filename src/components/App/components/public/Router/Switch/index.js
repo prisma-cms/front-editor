@@ -34,6 +34,7 @@ class EditorSwitch extends EditorComponent {
     return super.prepareDragItemComponents().concat([
       {
         name: "EditorRoute",
+        component: "EditorRoute",
         props: {
           path: "/",
           exact: true,

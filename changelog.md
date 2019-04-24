@@ -1,6 +1,7 @@
 =================================
 - Added Component::getComponentInParent()
 - Added Saving parts of templates
+- Migrate on Component::component
 
 1.9.4
 =================================

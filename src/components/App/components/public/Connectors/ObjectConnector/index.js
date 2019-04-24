@@ -77,11 +77,13 @@ class ObjectConnector extends EditorComponent {
     return super.prepareDragItemComponents().concat([
       {
         "name": "Filters",
+        "component": "Filters",
         props: {},
         "components": [],
       },
       {
         "name": "ObjectView",
+        "component": "ObjectView",
         props: {},
         "components": [],
       },

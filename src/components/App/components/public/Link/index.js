@@ -45,6 +45,7 @@ class Link extends EditorComponent {
     return super.prepareDragItemComponents().concat([
       {
         name: "Tag",
+        component: "Tag",
         props: {
           tag: "span",
         },

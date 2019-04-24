@@ -74,6 +74,7 @@ class Connector extends EditorComponent {
 
       {
         "name": "Grid",
+        "component": "Grid",
         props: {
           "container": true,
           spacing: 8,
@@ -81,6 +82,7 @@ class Connector extends EditorComponent {
         components: [
           {
             "name": "Grid",
+            "component": "Grid",
             props: {
               "item": true,
               "xs": 12,
@@ -88,6 +90,7 @@ class Connector extends EditorComponent {
             components: [
               {
                 "name": "Filters",
+                "component": "Filters",
                 props: {
                 },
                 "components": [],
@@ -96,6 +99,7 @@ class Connector extends EditorComponent {
           },
           {
             "name": "Grid",
+            "component": "Grid",
             props: {
               "item": true,
               "xs": 12,
@@ -103,11 +107,13 @@ class Connector extends EditorComponent {
             components: [
               {
                 "name": "ListView",
+                "component": "ListView",
                 props: {
                 },
                 "components": [
                   {
                     "name": "Grid",
+                    "component": "Grid",
                     props: {
                       "item": true,
                       "xs": 12,
@@ -122,6 +128,7 @@ class Connector extends EditorComponent {
           },
           {
             "name": "Grid",
+            "component": "Grid",
             props: {
               "item": true,
               "xs": 12,
@@ -129,6 +136,7 @@ class Connector extends EditorComponent {
             components: [
               {
                 "name": "Pagination",
+                "component": "Pagination",
                 props: {
                 },
                 components: [],

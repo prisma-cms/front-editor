@@ -139,6 +139,7 @@ class FrontEditorRoot extends PrismaCmsComponent {
 
           let object = {
             name: "Page",
+            component: "Page",
             rank: 1000,
             props: {},
             components: [],
@@ -333,7 +334,7 @@ export class RootConnector extends Component {
     let OR = [
       {
         Parent: null,
-        name: "Page",
+        component: "Page",
       },
     ];
 

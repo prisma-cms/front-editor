@@ -257,6 +257,17 @@ class EditorComponent extends ObjectEditable {
 
     let components = object.components || [];
 
+    const {
+      name,
+      component,
+    } = newItem;
+
+    if (!component) {
+      Object.assign(newItem, {
+        component: name,
+      });
+    }
+
     if (components) {
       components.push(newItem);
     }
@@ -1776,7 +1787,7 @@ class EditorComponent extends ObjectEditable {
 
 
     const {
-      props,
+      // props,
       components: itemComponents,
     } = object;
 
@@ -1793,6 +1804,7 @@ class EditorComponent extends ObjectEditable {
         const {
           id: templateId,
           name,
+          component,
           props,
           components,
           ...other
@@ -1805,7 +1817,7 @@ class EditorComponent extends ObjectEditable {
         // }
 
 
-        let Component = Components.find(n => n.Name === name);
+        let Component = Components.find(n => n.Name === component);
 
         if (Component) {
 
