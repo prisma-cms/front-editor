@@ -91,19 +91,12 @@ class ObjectImage extends EditorComponent {
           return null;
         }
 
-        {/* console.log("object", object);
-        console.log("Image", Image); */}
 
         return <Image
           {...this.getComponentProps(this)}
           src={image}
         >
         </Image>;
-
-        {/* return <UserLink
-            user={user}
-            {...other}
-          /> */}
 
       }}
     </ObjectContext.Consumer>

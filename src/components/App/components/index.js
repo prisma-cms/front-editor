@@ -306,9 +306,9 @@ class EditorComponent extends ObjectEditable {
 
 
 
-    if (activeItem === activeParent) {
+    if (activeItem === activeParent && !activeItem.props.parent) {
 
-      this.addError("Sdfdsfds");
+      this.addError("Can not delete root item");
       return;
     }
     else {
@@ -335,14 +335,11 @@ class EditorComponent extends ObjectEditable {
       components.splice(index, 1);
 
 
-
-
       // if (components) {
       //   components.push(newItem);
       // }
 
-      activeItem.updateParentComponents();
-
+      activeItem.props.parent.updateParentComponents();
 
     }
 
@@ -366,9 +363,11 @@ class EditorComponent extends ObjectEditable {
       return false;
     }
 
-    const activeParent = activeItem.getActiveParent();
+    // const activeParent = activeItem.getActiveParent();
 
-    return deletable && activeItem !== activeParent ? true : false;
+    // return deletable && activeItem !== activeParent ? true : false;
+
+    return deletable && activeItem.props.parent ? true : false;
   }
 
 
@@ -970,8 +969,8 @@ class EditorComponent extends ObjectEditable {
                   event.stopPropagation();
 
 
-                  console.log("Сохранить в отдельный компонент", { ...this.context });
-                  console.log("Сохранить в отдельный компонент this", { ...this });
+                  // console.log("Сохранить в отдельный компонент", { ...this.context });
+                  // console.log("Сохранить в отдельный компонент this", { ...this });
 
                   const {
                     query: {
@@ -1009,7 +1008,31 @@ class EditorComponent extends ObjectEditable {
                   })
                     .then(r => {
 
-                      console.log("save result", r);
+                      // console.log("save result", r);
+
+                      const {
+                        success,
+                        data,
+                      } = r.data.response || {};
+
+                      if (success && data) {
+
+                        const {
+                          id: newTemplateId,
+                        } = data;
+
+                        let component = this.getComponentInParent();
+
+                        Object.assign(component, {
+                          id: newTemplateId,
+                          props: {},
+                          components: [],
+                        });
+
+
+                        activeParent.updateParentComponents();
+
+                      }
 
                     })
                     ;
@@ -1740,7 +1763,13 @@ class EditorComponent extends ObjectEditable {
 
     const {
       Components,
+      TemplateRenderer,
     } = this.getEditorContext();
+
+
+    const {
+      mutate,
+    } = this.props;
 
 
     const object = this.getObjectWithMutations();
@@ -1762,29 +1791,69 @@ class EditorComponent extends ObjectEditable {
       itemComponents.map((n, index) => {
 
         const {
-          id,
+          id: templateId,
           name,
-          // props,
+          props,
+          components,
           ...other
         } = n;
+
+
+        // if (templateId) {
+        //   console.log("id renderChildren", { ...n });
+        //   console.log("id renderChildren this", { ...this });
+        // }
 
 
         let Component = Components.find(n => n.Name === name);
 
         if (Component) {
 
-          output.push(<Component
-            key={id || index}
-            mode="main"
-            // component={n}
-            parent={this}
-            // props={props}
-            data={{
-              object: n,
-            }}
-            // _dirty={n}
-            {...other}
-          />);
+          if (templateId) {
+
+            output.push(<TemplateRenderer
+              key={templateId || index}
+              Component={Component}
+              mode="main"
+              parent={this}
+              // props={props}
+              // data={{
+              //   object: n,
+              // }}
+              // _dirty={n}
+              {...other}
+              where={{
+                id: templateId,
+              }}
+              mutate={mutate}
+            // mutate={async (options) => {
+
+            //   console.log("mutate options", { ...options }, mutate);
+
+            //   return mutate(options);
+            // }}
+            />);
+
+          }
+          else {
+
+            output.push(<Component
+              key={templateId || index}
+              mode="main"
+              // component={n}
+              parent={this}
+              props={props}
+              components={components}
+              data={{
+                object: n,
+              }}
+              // _dirty={n}
+              mutate={mutate}
+              {...other}
+            />);
+
+          }
+
 
         }
 

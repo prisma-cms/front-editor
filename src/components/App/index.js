@@ -35,6 +35,8 @@ import Tag from './components/public/Tag';
 import { Button } from 'material-ui';
 import { IconButton } from 'material-ui';
 import ObjectImage from './components/public/Connectors/Connector/Fields/ObjectImage';
+import { graphql } from 'react-apollo';
+import gql from 'graphql-tag';
 
 const styles = theme => {
 
@@ -227,6 +229,44 @@ class FrontEditor extends Component {
       Components: this.prepareComponents(),
     }
 
+  }
+
+
+  componentWillMount() {
+
+    const {
+      query: {
+        template,
+      },
+    } = this.context;
+
+    // console.log("template", template);
+
+    this.TemplateRenderer = graphql(gql(template))(props => {
+
+      // console.log("TemplateRenderer props", { ...props });
+
+      const {
+        Component,
+        where,
+        ...other
+      } = props;
+
+      return <Component
+        // key={templateId || index}
+        // mode="main"
+        // // component={n}
+        // parent={this}
+        // // props={props}
+        // data={{
+        //   object: n,
+        // }}
+        // // _dirty={n}
+        {...other}
+      />;
+    });
+
+    super.componentWillMount && super.componentWillMount();
   }
 
 
@@ -1089,6 +1129,7 @@ class FrontEditor extends Component {
             this.forceUpdate()
 
           },
+          TemplateRenderer: this.TemplateRenderer,
         }}
       >
         {inEditMode
