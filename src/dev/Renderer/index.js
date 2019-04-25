@@ -61,6 +61,38 @@ class DevRenderer extends PrismaCmsRenderer {
       //   component: DevMainPage,
       // },
       {
+        exact: true,
+        path: "/templates",
+        component: TemplatesPage,
+      },
+      {
+        exact: true,
+        path: "/templates/create",
+        component: TemplateCreatePage,
+      },
+      {
+        exact: true,
+        path: "/templates/:id",
+        render: props => {
+
+          const {
+            match: {
+              params: {
+                id,
+              },
+            },
+          } = props;
+
+          return <TemplatePage
+            key={id}
+            where={{
+              id,
+            }}
+            {...props}
+          />
+        },
+      },
+      {
         exact: false,
         path: "/",
         component: RootPage,
@@ -69,38 +101,6 @@ class DevRenderer extends PrismaCmsRenderer {
       //   exact: true,
       //   path: "/",
       //   component: TemplatesPage,
-      // },
-      // {
-      //   exact: true,
-      //   path: "/templates",
-      //   component: TemplatesPage,
-      // },
-      // {
-      //   exact: true,
-      //   path: "/templates/create",
-      //   component: TemplateCreatePage,
-      // },
-      // {
-      //   exact: true,
-      //   path: "/templates/:id",
-      //   render: props => {
-
-      //     const {
-      //       match: {
-      //         params: {
-      //           id,
-      //         },
-      //       },
-      //     } = props;
-
-      //     return <TemplatePage
-      //       key={id}
-      //       where={{
-      //         id,
-      //       }}
-      //       {...props}
-      //     />
-      //   },
       // },
       // {
       //   path: "*",
@@ -115,8 +115,8 @@ class DevRenderer extends PrismaCmsRenderer {
 
   renderMenu() {
 
-    // return <MainMenu />
-    return null;
+    return <MainMenu />
+    // return null;
   }
 
 

@@ -26,39 +26,40 @@ class CreatedBy extends EditorComponent {
   }
 
 
-  renderMainView() {
+  getRootElement() {
+    return "span";
+  }
+
+
+  renderChildren() {
 
     const {
       UserLink,
     } = this.context;
 
-    return <span
-      {...this.getRenderProps()}
-    >
-      <ObjectContext.Consumer>
-        {context => {
+    return <ObjectContext.Consumer>
+      {context => {
 
-          const {
-            object,
-            ...other
-          } = context;
+        const {
+          object,
+          ...other
+        } = context;
 
-          if (!object) {
-            return null;
-          }
+        if (!object) {
+          return null;
+        }
 
-          const {
-            CreatedBy: user,
-          } = object;
+        const {
+          CreatedBy: user,
+        } = object;
 
-          return <UserLink
-            user={user}
-            {...other}
-          />
+        return <UserLink
+          user={user}
+          {...other}
+        />
 
-        }}
-      </ObjectContext.Consumer>
-    </span>;
+      }}
+    </ObjectContext.Consumer>
   }
 
 }

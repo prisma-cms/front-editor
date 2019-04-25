@@ -130,13 +130,48 @@ class EditorComponent extends ObjectEditable {
   }
 
 
+  /**
+   * Редактировать можно в следующих случаях:
+   * 1. Если нет родителя и нет id
+   * 2. Если есть ID и пользователь является владельцем
+   */
   canEdit() {
 
     const {
       id: objectId,
+      CreatedBy,
     } = this.getObjectWithMutations();
 
-    return objectId ? true : false;
+    const {
+      parent,
+    } = this.props;
+
+    const {
+      id: currentUserId,
+    } = this.getCurrentUser();
+
+    const {
+      id: createdById,
+    } = CreatedBy || {};
+
+
+    if (objectId) {
+      // return true;
+
+      if (createdById && createdById === currentUserId) {
+        return true;
+      }
+
+    }
+    else {
+
+      if (!parent) {
+        return true;
+      }
+
+    }
+
+    return false;
   }
 
 
@@ -690,7 +725,7 @@ class EditorComponent extends ObjectEditable {
     ];
 
     let componentProps = {
-      ...component,
+      // ...component,
       ...other,
       ...object,
       ...objectProps,
@@ -1774,6 +1809,12 @@ class EditorComponent extends ObjectEditable {
 
     const {
       props,
+
+      /**
+       * component исключаем, так как некоторые компоненты (типа Grid)
+       * принимают его как параметр
+       */
+      component,
       ...other
     } = this.getRenderProps();
 
@@ -1792,23 +1833,30 @@ class EditorComponent extends ObjectEditable {
     }
 
 
-
-
-
     return <Fragment>
 
       <RootElement
         // {...this.getRenderProps()}
-        {...objectProps}
-        {...other}
+        // {...objectProps}
+        // {...other}
         // {...props}
-        {...renderProps}
+        // {...renderProps}
+        {...this.prepareRootElementProps({
+          ...objectProps,
+          ...other,
+          ...renderProps,
+        })}
       >
         {this.renderChildren()}
       </RootElement>
 
       {settingsView}
     </Fragment>
+  }
+
+
+  prepareRootElementProps(props) {
+    return props;
   }
 
   getRootElement() {
@@ -1866,6 +1914,8 @@ class EditorComponent extends ObjectEditable {
         let Component = Components.find(n => n.Name === component);
 
         if (Component) {
+
+          // console.log("Component", Component);
 
           if (templateId) {
 

@@ -89,9 +89,9 @@ const styles = theme => {
     panelItems: {
 
       [desktop]: {
-        height: "100vh",
+        height: "100%",
         width: itemsPanelWidth,
-        position: "fixed",
+        position: "absolute",
         overflow: "auto",
       },
     },
