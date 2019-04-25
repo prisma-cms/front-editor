@@ -991,7 +991,8 @@ class EditorComponent extends ObjectEditable {
       >
       </Grid>
 
-      {!isRoot && !objectId && activeParent && parentId ?
+      {/* {!isRoot && !objectId && activeParent && parentId ? */}
+      {!isRoot && !objectId && activeParent ?
         <Grid
           item
         >
@@ -1031,16 +1032,24 @@ class EditorComponent extends ObjectEditable {
                 ...template
               } = this.getObjectWithMutations();
 
+              let Parent;
+
+              if (parentId) {
+
+                Parent = {
+                  connect: {
+                    id: parentId,
+                  },
+                };
+
+              }
+
               await this.mutate({
                 mutation: gql(createTemplateProcessor),
                 variables: {
                   data: {
                     ...template,
-                    Parent: {
-                      connect: {
-                        id: parentId,
-                      },
-                    },
+                    Parent,
                   },
                 },
               })
@@ -1874,6 +1883,8 @@ class EditorComponent extends ObjectEditable {
 
     const {
       mutate,
+      createTemplate,
+      updateTemplate,
     } = this.props;
 
 
@@ -1917,7 +1928,10 @@ class EditorComponent extends ObjectEditable {
 
           // console.log("Component", Component);
 
+          // console.log("Component props", { ...this.props });
+
           if (templateId) {
+
 
             output.push(<TemplateRenderer
               key={templateId || index}
@@ -1933,7 +1947,7 @@ class EditorComponent extends ObjectEditable {
               where={{
                 id: templateId,
               }}
-              mutate={mutate}
+              mutate={updateTemplate}
             // mutate={async (options) => {
 
             //   console.log("mutate options", { ...options }, mutate);
@@ -1956,7 +1970,7 @@ class EditorComponent extends ObjectEditable {
                 object: n,
               }}
               // _dirty={n}
-              mutate={mutate}
+              mutate={createTemplate}
               {...other}
             />);
 

@@ -37,6 +37,7 @@ import { IconButton } from 'material-ui';
 import ObjectImage from './components/public/Connectors/Connector/Fields/ObjectImage';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
+import MarketPlace from './marketplace';
 
 const styles = theme => {
 
@@ -362,6 +363,86 @@ class FrontEditor extends Component {
 
 
   renderTemplates() {
+
+
+    const {
+      Grid,
+    } = this.context;
+
+    const {
+      activeItem,
+      templatesGroup,
+    } = this.state;
+
+
+    if (!activeItem) {
+      return null;
+    }
+
+    const {
+      data,
+      _dirty,
+      classes,
+      ...other
+    } = this.props;
+
+    // const templates = this.getTemplates();
+
+
+
+    // // let components;
+
+    // let list;
+
+    // let list__ = templates.map((n, index) => {
+
+    //   const {
+    //     label,
+    //     templates,
+    //   } = n;
+
+    //   return <div
+    //     key={index}
+    //     style={{
+    //       padding: 10,
+    //       margin: "5px 0",
+    //       cursor: "pointer",
+    //       borderTop: "1px solid #ddd",
+    //       borderBottom: "1px solid #ddd",
+    //     }}
+    //     onClick={event => {
+
+    //       this.setState({
+    //         templatesGroup: templates,
+    //         // templatesGroup: templatesGroup && templatesGroup === templates ? null : templates,
+    //       });
+
+    //     }}
+    //   >
+    //     {label}
+    //   </div>
+
+    // })
+
+    return <div
+      style={{
+        position: "relative",
+        // border: "1px solid red",
+        height: "100%",
+      }}
+    >
+
+      <MarketPlace
+        classes={classes}
+        activeItem={activeItem}
+        FrontEditor={FrontEditorRenderer}
+      />
+
+    </div>
+
+  }
+
+  renderTemplates__() {
 
 
     const {
@@ -1002,6 +1083,8 @@ class FrontEditor extends Component {
       return null;
     }
 
+    // console.log("Editor props", { ...this.props });
+
     const RenderComponents = this.getComponents();
 
 
@@ -1189,7 +1272,8 @@ class FrontEditor extends Component {
 }
 
 
-export default withStyles(styles)(props => <FrontEditor
+const FrontEditorRenderer = withStyles(styles)(props => <FrontEditor
   {...props}
 />);
 
+export default FrontEditorRenderer;

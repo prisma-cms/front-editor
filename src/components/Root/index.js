@@ -109,8 +109,13 @@ class FrontEditorRoot extends PrismaCmsComponent {
 
     let editorProps = {
       CustomComponents: [].concat((CustomComponents || [])),
+      createTemplate,
+      updateTemplate,
       ...other
     }
+
+    // console.log("editorProps props", { ...editorProps });
+    // console.log("editorProps this.props", { ...this.props });
 
     if (!templates.length) {
 

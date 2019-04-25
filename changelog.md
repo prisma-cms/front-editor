@@ -4,6 +4,7 @@
 - Migrate on Component::component
 - Added name and description editing
 - Fix Tag constructor
+- Added local repository
 
 1.9.4
 =================================
