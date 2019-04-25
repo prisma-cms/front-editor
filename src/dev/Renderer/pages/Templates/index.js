@@ -10,7 +10,7 @@ import View from "./View";
 
 import Page from "../layout";
 
-import FrontEditor from "../../../../App";
+// import FrontEditor from "../../../../App";
 
 class TemplatesPage extends Page {
 
@@ -21,7 +21,7 @@ class TemplatesPage extends Page {
 
   static defaultProps = {
     View,
-    first: 2,
+    first: 10,
   }
 
 
