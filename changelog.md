@@ -2,6 +2,7 @@
 - Added Component::getComponentInParent()
 - Added Saving parts of templates
 - Migrate on Component::component
+- Added name and description editing
 
 1.9.4
 =================================

@@ -132,7 +132,11 @@ class EditorComponent extends ObjectEditable {
 
   canEdit() {
 
-    return true;
+    const {
+      id: objectId,
+    } = this.getObjectWithMutations();
+
+    return objectId ? true : false;
   }
 
 
@@ -773,10 +777,14 @@ class EditorComponent extends ObjectEditable {
   renderSettingsView(content) {
 
 
+    const canEdit = this.canEdit();
+
     const object = this.getObjectWithMutations();
 
     const {
       id: objectId,
+      name,
+      description,
     } = object;
 
     const {
@@ -935,6 +943,151 @@ class EditorComponent extends ObjectEditable {
     }
 
 
+    let buttons = <Grid
+      container
+      spacing={8}
+    // style={{
+    //   flexDirection: "row-reverse",
+    // }}
+    >
+      <Grid
+        item
+        xs
+      >
+      </Grid>
+
+      {!isRoot && !objectId && activeParent && parentId ?
+        <Grid
+          item
+        >
+          <IconButton
+            title="Сохранить в отдельный компонент"
+            onClick={async event => {
+
+              /**
+              При сохранении, мы должны текущий элемент заменить новым
+               */
+
+              event.preventDefault();
+              event.stopPropagation();
+
+
+              // console.log("Сохранить в отдельный компонент", { ...this.context });
+              // console.log("Сохранить в отдельный компонент this", { ...this });
+
+              const {
+                query: {
+                  createTemplateProcessor,
+                },
+              } = this.context;
+
+
+              // const {
+              //   props: {
+              //     name,
+              //     description,
+              //     props,
+              //     components,
+              //   },
+              // } = this;
+
+
+              const {
+                ...template
+              } = this.getObjectWithMutations();
+
+              await this.mutate({
+                mutation: gql(createTemplateProcessor),
+                variables: {
+                  data: {
+                    ...template,
+                    Parent: {
+                      connect: {
+                        id: parentId,
+                      },
+                    },
+                  },
+                },
+              })
+                .then(r => {
+
+                  // console.log("save result", r);
+
+                  const {
+                    success,
+                    data,
+                  } = r.data.response || {};
+
+                  if (success && data) {
+
+                    const {
+                      id: newTemplateId,
+                    } = data;
+
+                    let component = this.getComponentInParent();
+
+                    Object.assign(component, {
+                      id: newTemplateId,
+                      props: {},
+                      components: [],
+                    });
+
+
+                    activeParent.updateParentComponents();
+
+                  }
+
+                })
+                ;
+
+
+            }}
+          >
+            <CloneIcon />
+          </IconButton>
+        </Grid>
+        : null
+      }
+
+      {deletable ?
+        <Grid
+          item
+        >
+          <IconButton
+            title="Удалить элемент"
+            onClick={event => {
+
+              this.deleteItem();
+
+            }}
+          >
+            <DeleteIcon />
+          </IconButton>
+        </Grid>
+        : null
+      }
+
+      <Grid
+        item
+      >
+        <IconButton
+          title="Завершить редактирование элемента"
+          onClick={event => {
+
+            event.preventDefault();
+            event.stopPropagation();
+
+            setActiveItem(null);
+
+          }}
+        >
+          <CloseIcon />
+        </IconButton>
+      </Grid>
+
+    </Grid>
+
+
     let output = <Grid
       container
       spacing={8}
@@ -951,149 +1104,7 @@ class EditorComponent extends ObjectEditable {
         xs={12}
       >
 
-        <Grid
-          container
-          spacing={8}
-        // style={{
-        //   flexDirection: "row-reverse",
-        // }}
-        >
-          <Grid
-            item
-            xs
-          >
-          </Grid>
-
-          {!isRoot && !objectId && activeParent && parentId ?
-            <Grid
-              item
-            >
-              <IconButton
-                title="Сохранить в отдельный компонент"
-                onClick={async event => {
-
-                  /**
-                  При сохранении, мы должны текущий элемент заменить новым
-                   */
-
-                  event.preventDefault();
-                  event.stopPropagation();
-
-
-                  // console.log("Сохранить в отдельный компонент", { ...this.context });
-                  // console.log("Сохранить в отдельный компонент this", { ...this });
-
-                  const {
-                    query: {
-                      createTemplateProcessor,
-                    },
-                  } = this.context;
-
-
-                  // const {
-                  //   props: {
-                  //     name,
-                  //     description,
-                  //     props,
-                  //     components,
-                  //   },
-                  // } = this;
-
-
-                  const {
-                    ...template
-                  } = this.getObjectWithMutations();
-
-                  await this.mutate({
-                    mutation: gql(createTemplateProcessor),
-                    variables: {
-                      data: {
-                        ...template,
-                        Parent: {
-                          connect: {
-                            id: parentId,
-                          },
-                        },
-                      },
-                    },
-                  })
-                    .then(r => {
-
-                      // console.log("save result", r);
-
-                      const {
-                        success,
-                        data,
-                      } = r.data.response || {};
-
-                      if (success && data) {
-
-                        const {
-                          id: newTemplateId,
-                        } = data;
-
-                        let component = this.getComponentInParent();
-
-                        Object.assign(component, {
-                          id: newTemplateId,
-                          props: {},
-                          components: [],
-                        });
-
-
-                        activeParent.updateParentComponents();
-
-                      }
-
-                    })
-                    ;
-
-
-                }}
-              >
-                <CloneIcon />
-              </IconButton>
-            </Grid>
-            : null
-          }
-
-          {deletable ?
-            <Grid
-              item
-            >
-              <IconButton
-                title="Удалить элемент"
-                onClick={event => {
-
-                  this.deleteItem();
-
-                }}
-              >
-                <DeleteIcon />
-              </IconButton>
-            </Grid>
-            : null
-          }
-
-          <Grid
-            item
-          >
-            <IconButton
-              title="Завершить редактирование элемента"
-              onClick={event => {
-
-                event.preventDefault();
-                event.stopPropagation();
-
-                setActiveItem(null);
-
-              }}
-            >
-              <CloseIcon />
-            </IconButton>
-          </Grid>
-
-        </Grid>
+        {buttons}
 
       </Grid>
 
@@ -1103,6 +1114,41 @@ class EditorComponent extends ObjectEditable {
       >
         {header}
       </Grid>
+
+
+      {canEdit ?
+
+        <Fragment>
+
+          <Grid
+            item
+            xs={12}
+          >
+            <TextField
+              name="name"
+              label="Name"
+              value={name || ""}
+              onChange={event => this.onChange(event)}
+              fullWidth
+            />
+          </Grid>
+
+          <Grid
+            item
+            xs={12}
+          >
+            <TextField
+              name="description"
+              label="Description"
+              value={description || ""}
+              onChange={event => this.onChange(event)}
+              fullWidth
+            />
+          </Grid>
+
+        </Fragment>
+        : null
+      }
 
       {settings && settings.length ?
         <Grid
@@ -1897,6 +1943,16 @@ class EditorComponent extends ObjectEditable {
 
     return super.renderHeader();
 
+  }
+
+  getTitle() {
+
+    const {
+      name,
+      component,
+    } = this.getObjectWithMutations();
+
+    return !name && !component ? "" : name === component ? name : `${name} (${component})`;
   }
 
 
