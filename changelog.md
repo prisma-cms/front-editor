@@ -3,6 +3,7 @@
 - Added Saving parts of templates
 - Migrate on Component::component
 - Added name and description editing
+- Fix Tag constructor
 
 1.9.4
 =================================

@@ -191,20 +191,6 @@ class Tag extends EditorComponent {
 
 
 
-
-
-
-
-        // if (!text && !components.length && !newContent) {
-
-        //   Object.assign(style, {
-        //     display: "inline-block",
-        //     minWidth: "30px",
-        //     border: "1px solid blue",
-        //   });
-
-        // }
-
         options = {
           // contentEditable: true,
           contentEditable: activeItem === this,
@@ -300,34 +286,6 @@ class Tag extends EditorComponent {
             }
 
           },
-          // onBlur: event => {
-
-
-
-
-          //   const {
-          //     newContent,
-          //   } = this.state;
-
-          //   if (newContent) {
-
-          //     const {
-          //       components,
-          //     } = newContent;
-
-          //     this.setComponents(components);
-
-          //     this.setState({
-          //       newContent: null,
-          //     })
-
-          //   }
-
-          //   this.setState({
-          //     focused: false,
-          //   });
-
-          // },
           onBlur: event => {
 
             const {
@@ -440,6 +398,7 @@ class Tag extends EditorComponent {
 
     let content = {
       name: "Tag",
+      component: "Tag",
       props: {},
       components: [],
     };
@@ -474,6 +433,12 @@ class Tag extends EditorComponent {
           //   // case "editable":
 
           //   break;
+
+          case "contenteditable":
+
+            name = "contentEditable";
+
+            break;
 
           case "class":
 

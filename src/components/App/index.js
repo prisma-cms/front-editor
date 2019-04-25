@@ -253,16 +253,24 @@ class FrontEditor extends Component {
       } = options;
 
       const {
-        data,
+        data: {
+          object,
+        },
       } = other;
 
+      if (!object) {
+        return null;
+      }
+
       const {
+        id: templateId,
         props,
         components,
-      } = data && data.object || {};
+      } = object;
+
 
       return <Component
-        // key={templateId || index}
+        key={templateId}
         // mode="main"
         // // component={n}
         // parent={this}
