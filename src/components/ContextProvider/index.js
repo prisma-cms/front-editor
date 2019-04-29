@@ -405,10 +405,10 @@ class ContextProvider extends Component {
         deleteTemplate(
           where: $where
         ){
-          ...Template
+          ...TemplateNoNesting
         }
       }
-      ${TemplateFragment}
+      ${TemplateNoNestingFragment}
     `;
 
 

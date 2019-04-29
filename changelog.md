@@ -1,6 +1,8 @@
+1.11.0
 =================================
 - Added block moving
 - Added insert block with/without ID
+- Added deleting templates
 
 1.10.1
 =================================

@@ -6,6 +6,8 @@ import { ObjectContext } from '../../../components/public/Connectors/Connector/L
 import { IconButton } from 'material-ui';
 
 import CloneIcon from 'material-ui-icons/ContentCopy';
+import DeleteIcon from 'material-ui-icons/Delete';
+import gql from 'graphql-tag';
 
 
 class TemplateWrapper extends EditorComponent {
@@ -92,7 +94,7 @@ class TemplateWrapper extends EditorComponent {
 
           <Grid
             container
-            spacing={8}
+            spacing={0}
           >
 
             <Grid
@@ -133,6 +135,26 @@ class TemplateWrapper extends EditorComponent {
                 }}
               >
                 <CloneIcon
+                />
+              </IconButton>
+            </Grid>
+
+            <Grid
+              item
+            >
+              <IconButton
+                className={classes.badgeButton}
+                title="Delete template"
+                onClick={event => {
+
+                  event.preventDefault();
+                  event.stopPropagation();
+
+                  this.deleteTemplate(object);
+
+                }}
+              >
+                <DeleteIcon
                 />
               </IconButton>
             </Grid>
@@ -199,6 +221,37 @@ class TemplateWrapper extends EditorComponent {
 
     if (activeItem) {
       activeItem.addComponent(newObject);
+    }
+
+  }
+
+
+  async deleteTemplate(object) {
+
+    const {
+      id: templateId,
+    } = object;
+
+
+    if (window.confirm("Delete this template?")) {
+
+      const {
+        query: {
+          deleteTemplate,
+        },
+      } = this.context;
+
+      // console.log("deleteTemplate", deleteTemplate);
+
+      this.mutate({
+        mutation: gql(deleteTemplate),
+        variables: {
+          where: {
+            id: templateId,
+          },
+        },
+      });
+
     }
 
   }
