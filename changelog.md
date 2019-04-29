@@ -1,3 +1,6 @@
+=================================
+- Added block movement
+
 1.10.1
 =================================
 - Fix create component from template

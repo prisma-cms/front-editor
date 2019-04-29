@@ -18,6 +18,9 @@ import { Button, IconButton, TextField } from 'material-ui';
 import DeleteIcon from "material-ui-icons/Delete";
 import CloseIcon from "material-ui-icons/Close";
 import CloneIcon from "material-ui-icons/ContentCopy";
+import DragIcon from "material-ui-icons/DragHandle";
+import ArrowUpIcon from "material-ui-icons/ArrowUpward";
+import ArrowDownIcon from "material-ui-icons/ArrowDownward";
 
 import { FormControlLabel } from 'material-ui';
 import { Switch } from 'material-ui';
@@ -199,7 +202,7 @@ class EditorComponent extends ObjectEditable {
   }
 
 
-  onDragStart() {
+  onDragStart(event, item) {
 
     const {
       onDragStart,
@@ -207,7 +210,7 @@ class EditorComponent extends ObjectEditable {
 
 
 
-    onDragStart(this.prepareDragItem());
+    onDragStart(event, item ? item : this.prepareDragItem());
 
   }
 
@@ -253,13 +256,15 @@ class EditorComponent extends ObjectEditable {
     const {
       dragItem,
       dragTarget,
+      // setActiveItem,
+      onDragEnd,
     } = this.getEditorContext();
 
+    console.log("onDrop", { ...event });
 
-
-
-
-
+    console.log("onDrop dragItem", { ...dragItem });
+    // console.log("onDrop dragItem getActiveItem", { ...dragItem.getActiveItem() });
+    // console.log("onDrop dragItem parent", { ...dragItem.getActiveParent() });
 
 
     if (dragItem && dragTarget && dragTarget === this) {
@@ -268,17 +273,93 @@ class EditorComponent extends ObjectEditable {
       event.stopPropagation();
 
 
-      const newItem = this.prepareNewItem();
+      /**
+       * Здесь надо учитывать добавление или перетаскивание элемента.
+       * Если вбрасываемый объект - готовый инстанс, то перемещаем его.
+       * Иначе создаем новый.
+       */
 
+      if (dragItem instanceof EditorComponent) {
 
+        const {
+          parent: dragItemParent,
+        } = dragItem.props;
 
-      if (newItem) {
+        console.log("onDrop dragItem this", { ...this });
 
-        this.addComponent(newItem);
+        /**
+         * Нельзя переносить элементы, у которых нет родителя
+         */
+        if (!dragItemParent) {
+          // return false;
+        }
 
-        return;
+        /**
+         * Нет смысла закидывать в себя же
+         */
+        else if (dragItemParent === this) {
+          // return false;
+        }
+
+        /**
+         * Если все ОК, переносим элемент в другой блок.
+         * Для этого надо найти переносимый элемент в родительском массиве элементов и перенести в новый.
+         */
+        else {
+
+          const component = dragItem.getComponentInParent();
+
+          console.log("dragItem component", component);
+
+          if (component) {
+
+            let {
+              // components,
+              data: {
+                object: {
+                  components,
+                },
+              },
+            } = dragItem.props.parent.props;
+
+            const index = components.indexOf(component);
+
+            console.log("dragItem component index", index);
+
+            /**
+             * Если компонент найден, то исключаем его из массива
+             */
+            if (index !== -1) {
+
+              const movingComponent = components.splice(index, 1)[0];
+
+              this.addComponent(movingComponent);
+
+            }
+
+          }
+
+        }
 
       }
+      else {
+
+        const newItem = this.prepareNewItem();
+
+
+        if (newItem) {
+
+          this.addComponent(newItem);
+
+          // return;
+
+        }
+
+      }
+
+
+      // setActiveItem(null);
+      onDragEnd();
 
       return true;
     }
@@ -451,9 +532,11 @@ class EditorComponent extends ObjectEditable {
    */
   updateParentComponents() {
 
+    const {
+      forceUpdate,
+    } = this.getEditorContext();
+
     const activeParent = this.getActiveParent();
-
-
 
     if (!activeParent) {
       // throw new Error("Can not get absParent");
@@ -466,6 +549,11 @@ class EditorComponent extends ObjectEditable {
     activeParent.updateObject({
       components: activeParent.props.data.object.components.slice(0),
     });
+
+
+    forceUpdate();
+
+    return;
 
   }
 
@@ -574,6 +662,46 @@ class EditorComponent extends ObjectEditable {
    * Определяет может ли быть брошен сюда перетаскиваемый элемент
    */
   canBeDropped(dragItem) {
+
+    if (!dragItem || dragItem === this) {
+      return false;
+    }
+
+    /**
+     * Если это готовый инстанс, проверяем, чтобы это не был родитель
+     */
+    if (dragItem instanceof EditorComponent) {
+
+      const {
+        parent: dragItemParent,
+      } = dragItem.props;
+
+      /**
+       * Если у перетаскиваемого элемента нет родителя, то нельзя вкидывать
+       */
+      if (!dragItemParent) {
+        return false;
+      }
+
+      // console.log("canBeDropped this", this);
+      // console.log("canBeDropped dragItem", dragItem);
+
+      let Parent = this.props.parent;
+
+      while (Parent && (Parent = Parent.props.parent)) {
+
+        if (Parent === dragItemParent) {
+          return false;
+        }
+
+        // Parent = Parent.props.parent;
+
+        console.log("canBeDropped Parent", Parent);
+
+      }
+
+      // return false;
+    }
 
     return true;
   }
@@ -1746,11 +1874,17 @@ class EditorComponent extends ObjectEditable {
       data: {
         object,
       },
+      parent,
     } = this.props;
 
     // let {
     //   components,
     // } = activeItem.props.parent.props;
+
+    if (!parent) {
+      console.error("Can not get parent");
+      return;
+    }
 
     let {
       // components,
@@ -1863,15 +1997,35 @@ class EditorComponent extends ObjectEditable {
 
   renderMainView(renderProps) {
 
+    const {
+      Grid,
+    } = this.context;
+
     const object = this.getObjectWithMutations();
 
     if (!object) {
       return null;
     }
 
+
+    const {
+      props: objectProps,
+      name,
+    } = object;
+
+
+    const {
+    } = this.props;
+
+
     const {
       activeItem,
+      dragTarget,
+      hoveredItem,
       settingsViewContainer,
+      inEditMode,
+      classes,
+      onDragStart,
     } = this.getEditorContext();
 
     // return this.renderChildren();
@@ -1889,17 +2043,106 @@ class EditorComponent extends ObjectEditable {
       ...other
     } = this.getRenderProps();
 
-    const {
-      props: objectProps,
-    } = object;
-
-
     let settingsView;
 
+    /**
+     * Заголовок блока, чтобы можно было перетаскивать и т.п.
+     */
+    let badge;
 
-    if (activeItem && activeItem === this && settingsViewContainer) {
+    if (inEditMode) {
 
-      settingsView = ReactDOM.createPortal(this.renderSettingsView(), settingsViewContainer);
+      const isActive = activeItem === this ? true : false;
+      const isDragOvered = dragTarget === this ? true : false;
+      const isHovered = hoveredItem === this ? true : false;
+
+
+      if (isActive && settingsViewContainer) {
+
+        settingsView = ReactDOM.createPortal(this.renderSettingsView(), settingsViewContainer);
+
+      }
+
+      if (isActive || isDragOvered || isHovered) {
+
+        badge = <div
+          className={classes.blockBadge}
+          contentEditable={false}
+        >
+          <Grid
+            container
+            alignItems="center"
+          >
+
+            <Grid
+              item
+              style={{
+                cursor: "pointer",
+              }}
+              draggable={true}
+              onDragStart={event => {
+
+                // console.log("onDragStart", { ...event });
+
+                // event.dataTransfer.setData("text/plain", "ev.target.id");
+
+                this.onDragStart(event, this);
+              }}
+              onDragEnd={event => this.onDragEnd(event)}
+              onClick={event => {
+                event.preventDefault();
+                event.stopPropagation();
+                // console.log("Tag badge onClick", event);
+              }}
+            >
+              <DragIcon
+              />
+            </Grid>
+
+            <Grid
+              item
+            >
+              <IconButton
+                onClick={event => {
+                  event.preventDefault();
+                  event.stopPropagation();
+                  // console.log("Tag badge onClick", event);
+                }}
+                className={classes.badgeButton}
+              >
+                <ArrowUpIcon
+
+                />
+              </IconButton>
+            </Grid>
+
+            <Grid
+              item
+            >
+              <IconButton
+                onClick={event => {
+                  event.preventDefault();
+                  event.stopPropagation();
+                  // console.log("Tag badge onClick", event);
+                }}
+                className={classes.badgeButton}
+              >
+                <ArrowDownIcon
+
+                />
+              </IconButton>
+            </Grid>
+
+            <Grid
+              item
+            >
+              {name}
+            </Grid>
+
+          </Grid>
+        </div>
+
+      }
 
     }
 
@@ -1918,11 +2161,25 @@ class EditorComponent extends ObjectEditable {
           ...renderProps,
         })}
       >
+
+        {/* 
+          Для блоков с contentEditable (например Tag), если текст отсутствует,
+          то фокус уходит в бадж и текст не доступен для редактирования.
+          Пока как временный хак скрываем бадж в режиме фокуса.
+        */}
+        {this.renderBadge(badge)}
+
         {this.renderChildren()}
       </RootElement>
 
       {settingsView}
     </Fragment>
+  }
+
+
+  renderBadge(badge) {
+
+    return badge;
   }
 
 

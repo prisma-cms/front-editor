@@ -41,8 +41,19 @@ import MarketPlace from './marketplace';
 
 const styles = theme => {
 
+  // console.log("theme", { ...theme });
+
   const {
     breakpoints,
+    palette: {
+      background: {
+        default: bgDefault,
+        paper: bgPaper,
+      },
+      text: {
+        primary: textPrimary,
+      },
+    },
   } = theme;
 
   const desktop = breakpoints.up("sm");
@@ -118,10 +129,10 @@ const styles = theme => {
     },
     item: {
 
-
     },
     // inEditMode
     itemEditable: {
+      position: "relative",
       minHeight: "30px",
       border: "1px dotted #ddd",
       padding: 7,
@@ -138,6 +149,20 @@ const styles = theme => {
       "&.hovered": {
         border: `1px solid ${hoveredBorderColor}`,
       },
+    },
+    blockBadge: {
+      border: "1px solid #ddd",
+      position: "absolute",
+      bottom: "100%",
+      right: 0,
+      zIndex: "2000",
+      background: bgDefault,
+      color: textPrimary,
+      padding: 3,
+    },
+    badgeButton: {
+      height: 34,
+      width: 34,
     },
     panelButton: {
       display: "flex",
@@ -1194,7 +1219,7 @@ class FrontEditor extends Component {
           activeItem,
           hoveredItem,
           settingsViewContainer,
-          onDragStart: item => {
+          onDragStart: (event, item) => {
 
             this.setState({
               dragItem: item,

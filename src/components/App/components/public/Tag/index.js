@@ -275,6 +275,8 @@ class Tag extends EditorComponent {
           },
           onFocus: event => {
 
+            // console.log("Tag onFocus", event);
+
             const {
               activeItem,
             } = this.getEditorContext();
@@ -288,12 +290,11 @@ class Tag extends EditorComponent {
           },
           onBlur: event => {
 
+            // console.log("Tag onBlur", event);
+
             const {
               activeItem,
             } = this.getEditorContext();
-
-
-
 
 
             if (activeItem === this) {
@@ -316,11 +317,11 @@ class Tag extends EditorComponent {
 
               }
 
-              this.setState({
-                focused: false,
-              });
-
             }
+
+            this.setState({
+              focused: false,
+            });
 
           },
         }
@@ -357,6 +358,14 @@ class Tag extends EditorComponent {
     else return text;
   }
 
+  renderBadge(badge) {
+
+    const {
+      focused,
+    } = this.state;
+
+    return focused ? null : super.renderBadge(badge);
+  }
 
   // shouldComponentUpdate() {
   //   return false;
