@@ -109,7 +109,10 @@ class MarketPlace extends PrismaCmsComponent {
                 "orderBy": null,
                 "skip": null,
                 "last": null,
-                "query": "templatesConnection"
+                "query": "templatesConnection",
+                where: {
+                  component_not: "Page",
+                },
               },
               "components": [
                 {

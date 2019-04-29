@@ -45,6 +45,16 @@ class TemplateWrapper extends EditorComponent {
           return null;
         }
 
+
+        let {
+          id,
+          externalKey,
+          createdAt,
+          updatedAt,
+          rank,
+          ...newObject
+        } = object;
+
         return <Paper
           style={{
             cursor: "pointer",
@@ -63,7 +73,7 @@ class TemplateWrapper extends EditorComponent {
 
 
             if (activeItem) {
-              activeItem.addComponent(object);
+              activeItem.addComponent(newObject);
             }
 
           }}

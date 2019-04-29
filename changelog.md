@@ -1,3 +1,7 @@
+1.10.1
+=================================
+- Fix create component from template
+
 1.10.0
 =================================
 - Added Component::getComponentInParent()
