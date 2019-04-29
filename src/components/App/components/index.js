@@ -260,9 +260,9 @@ class EditorComponent extends ObjectEditable {
       onDragEnd,
     } = this.getEditorContext();
 
-    console.log("onDrop", { ...event });
+    // console.log("onDrop", { ...event });
 
-    console.log("onDrop dragItem", { ...dragItem });
+    // console.log("onDrop dragItem", { ...dragItem });
     // console.log("onDrop dragItem getActiveItem", { ...dragItem.getActiveItem() });
     // console.log("onDrop dragItem parent", { ...dragItem.getActiveParent() });
 
@@ -285,7 +285,7 @@ class EditorComponent extends ObjectEditable {
           parent: dragItemParent,
         } = dragItem.props;
 
-        console.log("onDrop dragItem this", { ...this });
+        // console.log("onDrop dragItem this", { ...this });
 
         /**
          * Нельзя переносить элементы, у которых нет родителя
@@ -309,7 +309,7 @@ class EditorComponent extends ObjectEditable {
 
           const component = dragItem.getComponentInParent();
 
-          console.log("dragItem component", component);
+          // console.log("dragItem component", component);
 
           if (component) {
 
@@ -324,7 +324,7 @@ class EditorComponent extends ObjectEditable {
 
             const index = components.indexOf(component);
 
-            console.log("dragItem component index", index);
+            // console.log("dragItem component index", index);
 
             /**
              * Если компонент найден, то исключаем его из массива
@@ -424,7 +424,7 @@ class EditorComponent extends ObjectEditable {
 
       const index = components.indexOf(component);
 
-      console.log("dragItem component index", index);
+      // console.log("dragItem component index", index);
 
       /**
        * Если элемент не на первом месте, двигаем его
@@ -613,7 +613,7 @@ class EditorComponent extends ObjectEditable {
 
     const activeParent = this.getActiveParent();
 
-    console.log("updateParentComponents activeParent", activeParent, activeParent === this);
+    // console.log("updateParentComponents activeParent", activeParent, activeParent === this);
 
     if (!activeParent) {
       // throw new Error("Can not get absParent");
@@ -640,7 +640,7 @@ class EditorComponent extends ObjectEditable {
    */
   getActiveParent() {
 
-    console.log("getActiveParent", { ...this });
+    // console.log("getActiveParent", { ...this });
 
     const {
       parent,
@@ -775,7 +775,7 @@ class EditorComponent extends ObjectEditable {
 
         // Parent = Parent.props.parent;
 
-        console.log("canBeDropped Parent", Parent);
+        // console.log("canBeDropped Parent", Parent);
 
       }
 
@@ -1945,6 +1945,11 @@ class EditorComponent extends ObjectEditable {
   }
 
 
+  /**
+   * ToDo. Сейчас при перетаскивании элементов с id возникают проблемы,
+   * потому что у одного родителя может быть сразу несколько потомков с одним и тем же id.
+   * По этой причине мы не можем сейчас четко определить какой же элемент двигался.
+   */
   getComponentInParent() {
 
     // const activeItem = this;
@@ -1955,6 +1960,9 @@ class EditorComponent extends ObjectEditable {
       },
       parent,
     } = this.props;
+
+    // console.log("getComponentInParent object", { ...object });
+    // console.log("getComponentInParent parent", { ...parent });
 
     // let {
     //   components,
@@ -1986,6 +1994,8 @@ class EditorComponent extends ObjectEditable {
       return;
 
     }
+
+    // console.log("getComponentInParent components", components);
 
     const index = components.indexOf(object);
 
@@ -2336,7 +2346,7 @@ class EditorComponent extends ObjectEditable {
 
 
             output.push(<TemplateRenderer
-              key={templateId || index}
+              key={`${templateId}--${index}`}
               Component={Component}
               mode="main"
               parent={this}
@@ -2362,7 +2372,7 @@ class EditorComponent extends ObjectEditable {
           else {
 
             output.push(<Component
-              key={templateId || index}
+              key={index}
               mode="main"
               // component={n}
               parent={this}

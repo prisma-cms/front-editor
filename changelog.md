@@ -1,5 +1,6 @@
 =================================
 - Added block moving
+- Added insert block with/without ID
 
 1.10.1
 =================================

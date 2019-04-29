@@ -30,14 +30,14 @@ import RoutedObject from './components/public/Router/RoutedObject';
 import Link from './components/public/Link';
 import { EditorContext } from './context';
 // import DraftEditor from './components/public/DraftEditor';
-import TextArea from './components/public/TextArea';
+// import TextArea from './components/public/TextArea';
 import Tag from './components/public/Tag';
-import { Button } from 'material-ui';
 import { IconButton } from 'material-ui';
 import ObjectImage from './components/public/Connectors/Connector/Fields/ObjectImage';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 import MarketPlace from './marketplace';
+import Button from './components/public/Button';
 
 const styles = theme => {
 
@@ -212,6 +212,7 @@ class FrontEditor extends Component {
       CreatedBy,
       Content,
       Link,
+      Button,
       Section,
       PageHeader,
       Switch,

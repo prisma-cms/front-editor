@@ -3,7 +3,9 @@ import PropTypes from 'prop-types';
 import EditorComponent from '../../../components';
 import { Paper } from 'material-ui';
 import { ObjectContext } from '../../../components/public/Connectors/Connector/ListView';
+import { IconButton } from 'material-ui';
 
+import CloneIcon from 'material-ui-icons/ContentCopy';
 
 
 class TemplateWrapper extends EditorComponent {
@@ -28,9 +30,17 @@ class TemplateWrapper extends EditorComponent {
   renderMainView() {
 
     const {
-      activeItem,
+      Grid,
+    } = this.context;
+
+    const {
+      // activeItem,
       FrontEditor,
     } = this.props;
+
+    const {
+      classes,
+    } = this.getEditorContext();
 
     return <ObjectContext.Consumer>
       {context => {
@@ -56,6 +66,12 @@ class TemplateWrapper extends EditorComponent {
         } = object; */}
 
 
+        const {
+          id: objectId,
+          name,
+          component,
+        } = object;
+
 
         return <Paper
           style={{
@@ -69,37 +85,59 @@ class TemplateWrapper extends EditorComponent {
             event.preventDefault();
             event.stopPropagation();
 
-
-            let {
-              name,
-              description,
-              props,
-              component,
-              components,
-              Parent,
-            } = object;
-
-            const newObject = JSON.parse(JSON.stringify({
-              name,
-              description,
-              props,
-              component,
-              components,
-              Parent,
-            }));
-
-            // alert("Sdfsdfs");
-
-            // console.log("TemplateWrapper props", { ...this.props });
-
-            // console.log("newObject", newObject);
-
-            if (activeItem) {
-              activeItem.addComponent(newObject);
-            }
+            this.insertComponent(object);
 
           }}
         >
+
+          <Grid
+            container
+            spacing={8}
+          >
+
+            <Grid
+              item
+            >
+              {name}
+            </Grid>
+
+            {component !== name ?
+              <Grid
+                item
+              >
+                / {component}
+              </Grid>
+              : null
+            }
+
+            <Grid
+              item
+              xs
+            >
+
+            </Grid>
+
+            <Grid
+              item
+            >
+              <IconButton
+                className={classes.badgeButton}
+                title="Insert with ID"
+                onClick={event => {
+
+                  event.preventDefault();
+                  event.stopPropagation();
+
+                  this.insertComponent(object, true);
+
+                }}
+              >
+                <CloneIcon
+                />
+              </IconButton>
+            </Grid>
+
+          </Grid>
 
           {this.renderChildren()}
 
@@ -114,6 +152,55 @@ class TemplateWrapper extends EditorComponent {
         </Paper>
       }}
     </ObjectContext.Consumer>
+  }
+
+
+  insertComponent(object, withID = false) {
+
+
+    const {
+      activeItem,
+    } = this.props;
+
+
+    let {
+      id,
+      name,
+      description,
+      props,
+      component,
+      components,
+      Parent,
+    } = object;
+
+
+    let newObject = {
+      name,
+      description,
+      props,
+      component,
+      components,
+      Parent,
+    }
+
+    if (withID) {
+      Object.assign(newObject, {
+        id,
+      });
+    }
+
+    newObject = JSON.parse(JSON.stringify(newObject));
+
+    // alert("Sdfsdfs");
+
+    // console.log("TemplateWrapper props", { ...this.props });
+
+    // console.log("newObject", newObject);
+
+    if (activeItem) {
+      activeItem.addComponent(newObject);
+    }
+
   }
 
 }

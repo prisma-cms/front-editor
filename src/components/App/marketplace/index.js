@@ -181,105 +181,124 @@ class MarketPlace extends PrismaCmsComponent {
                                         "xs": 12
                                       },
                                       "components": [
-                                        {
-                                          "name": "Grid",
-                                          "props": {
-                                            "container": true,
-                                            "spacing": 0,
-                                            "alignItems": "center"
-                                          },
-                                          "components": [
-                                            {
-                                              "name": "Grid",
-                                              "props": {
-                                                "spacing": 0,
-                                                "xs": true,
-                                                "item": true
-                                              },
-                                              "components": [
-                                                {
-                                                  "name": "NamedField",
-                                                  "props": {
-                                                    "name": "name"
-                                                  },
-                                                  "components": [],
-                                                  "component": "NamedField"
-                                                },
-                                                {
-                                                  "name": "Tag",
-                                                  "props": {
-                                                    "tag": "span"
-                                                  },
-                                                  "components": [
-                                                    {
-                                                      "name": "Tag",
-                                                      "component": "Tag",
-                                                      "props": {
-                                                        "text": "/"
-                                                      },
-                                                      "components": []
-                                                    }
-                                                  ],
-                                                  "component": "Tag"
-                                                },
-                                                {
-                                                  "name": "NamedField",
-                                                  "props": {
-                                                    "name": "component"
-                                                  },
-                                                  "components": [],
-                                                  "component": "NamedField"
-                                                }
-                                              ],
-                                              "component": "Grid"
-                                            },
-                                            {
-                                              "name": "Grid",
-                                              "props": {
-                                                "spacing": 0,
-                                                "item": true
-                                              },
-                                              "components": [
-                                                {
-                                                  "name": "CreatedBy",
-                                                  "props": {},
-                                                  "components": [],
-                                                  "component": "CreatedBy"
-                                                }
-                                              ],
-                                              "component": "Grid"
-                                            },
-                                            {
-                                              "name": "Grid",
-                                              "props": {
-                                                "spacing": 0,
-                                                "xs": 12,
-                                                "item": true
-                                              },
-                                              "components": [
-                                                {
-                                                  "name": "Typography",
-                                                  "component": "Typography",
-                                                  "props": {
-                                                    "variant": "caption"
-                                                  },
-                                                  "components": [
-                                                    {
-                                                      "name": "NamedField",
-                                                      "props": {
-                                                        "name": "description"
-                                                      },
-                                                      "components": [],
-                                                      "component": "NamedField"
-                                                    },
-                                                  ],
-                                                },
-                                              ],
-                                              "component": "Grid"
-                                            }
-                                          ],
-                                          "component": "Grid"
-                                        }
+                                        // {
+                                        //   "name": "Grid",
+                                        //   "props": {
+                                        //     "container": true,
+                                        //     "spacing": 0,
+                                        //     "alignItems": "center"
+                                        //   },
+                                        //   "components": [
+                                        //     {
+                                        //       "name": "Grid",
+                                        //       "props": {
+                                        //         "spacing": 0,
+                                        //         "xs": true,
+                                        //         "item": true
+                                        //       },
+                                        //       "components": [
+                                        //         {
+                                        //           "name": "NamedField",
+                                        //           "props": {
+                                        //             "name": "name"
+                                        //           },
+                                        //           "components": [],
+                                        //           "component": "NamedField"
+                                        //         },
+                                        //         {
+                                        //           "name": "Tag",
+                                        //           "props": {
+                                        //             "tag": "span"
+                                        //           },
+                                        //           "components": [
+                                        //             {
+                                        //               "name": "Tag",
+                                        //               "component": "Tag",
+                                        //               "props": {
+                                        //                 "text": "/"
+                                        //               },
+                                        //               "components": []
+                                        //             }
+                                        //           ],
+                                        //           "component": "Tag"
+                                        //         },
+                                        //         {
+                                        //           "name": "NamedField",
+                                        //           "props": {
+                                        //             "name": "component"
+                                        //           },
+                                        //           "components": [],
+                                        //           "component": "NamedField"
+                                        //         },
+                                        //         // {
+                                        //         //   "name": "Button",
+                                        //         //   "props": {
+                                        //         //     onClick: event => {
+                                        //         //       alert("wefwef");
+                                        //         //     },
+                                        //         //   },
+                                        //         //   "components": [
+                                        //         //     {
+                                        //         //       "name": "NamedField",
+                                        //         //       "props": {
+                                        //         //         "name": "name"
+                                        //         //       },
+                                        //         //       "components": [],
+                                        //         //       "component": "NamedField"
+                                        //         //     },
+                                        //         //   ],
+                                        //         //   "component": "Button"
+                                        //         // },
+                                        //       ],
+                                        //       "component": "Grid"
+                                        //     },
+                                        //     {
+                                        //       "name": "Grid",
+                                        //       "props": {
+                                        //         "spacing": 0,
+                                        //         "item": true
+                                        //       },
+                                        //       "components": [
+                                        //         {
+                                        //           "name": "CreatedBy",
+                                        //           "props": {},
+                                        //           "components": [],
+                                        //           "component": "CreatedBy"
+                                        //         }
+                                        //       ],
+                                        //       "component": "Grid"
+                                        //     },
+                                        //     {
+                                        //       "name": "Grid",
+                                        //       "props": {
+                                        //         "spacing": 0,
+                                        //         "xs": 12,
+                                        //         "item": true
+                                        //       },
+                                        //       "components": [
+                                        //         {
+                                        //           "name": "Typography",
+                                        //           "component": "Typography",
+                                        //           "props": {
+                                        //             "variant": "caption"
+                                        //           },
+                                        //           "components": [
+                                        //             {
+                                        //               "name": "NamedField",
+                                        //               "props": {
+                                        //                 "name": "description"
+                                        //               },
+                                        //               "components": [],
+                                        //               "component": "NamedField"
+                                        //             },
+                                        //           ],
+                                        //         },
+                                        //       ],
+                                        //       "component": "Grid"
+                                        //     }
+                                        //   ],
+                                        //   "component": "Grid"
+                                        // }
                                       ],
                                       "rank": 0,
                                     },
