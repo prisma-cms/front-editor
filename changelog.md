@@ -1,3 +1,4 @@
+1.10.0
 =================================
 - Added Component::getComponentInParent()
 - Added Saving parts of templates
@@ -5,6 +6,7 @@
 - Added name and description editing
 - Fix Tag constructor
 - Added local repository
+- Added source code editor
 
 1.9.4
 =================================

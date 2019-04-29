@@ -883,24 +883,7 @@ class EditorComponent extends ObjectEditable {
 
         if (structureView) {
 
-          const structureViewLength = structureView.length;
 
-
-
-
-          if (maxStructureLengthView && structureViewLength > maxStructureLengthView) {
-
-            structureView = <Button
-              onClick={event => {
-                this.setState({
-                  maxStructureLengthView: structureViewLength,
-                })
-              }}
-            >
-              Show {structureViewLength} chars
-            </Button>
-
-          }
 
         }
 
@@ -908,6 +891,79 @@ class EditorComponent extends ObjectEditable {
       catch (error) {
         console.error(error);
       }
+    }
+
+
+    const structureViewLength = structureView && structureView.length || 0;
+
+    if (maxStructureLengthView && structureViewLength > maxStructureLengthView) {
+
+      structureView = <Button
+        onClick={event => {
+          this.setState({
+            maxStructureLengthView: structureViewLength,
+          })
+        }}
+      >
+        Show {structureViewLength} chars
+      </Button>
+
+    }
+    else {
+      structureView = <div
+        contentEditable={isRoot ? true : false}
+        suppressContentEditableWarning={true}
+        style={isRoot ? {
+          border: "1px dashed #ddd",
+          padding: 3,
+        } : undefined}
+        onInput={event => {
+
+          const {
+            innerText,
+          } = event.target;
+
+          let data;
+
+          if (innerText) {
+
+            try {
+
+              data = JSON.parse(innerText);
+
+            }
+            catch (error) {
+
+            }
+          }
+
+          if (data) {
+
+            const {
+              name,
+              props,
+              // component,
+              components,
+            } = data;
+
+            // if (component && components && props) {
+            if (components && props) {
+
+              this.updateObject({
+                name,
+                props,
+                // component,
+                components,
+              });
+
+            }
+
+          }
+
+        }}
+      >
+        {structureView}
+      </div >
     }
 
 
