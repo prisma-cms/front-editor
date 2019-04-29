@@ -46,14 +46,16 @@ class TemplateWrapper extends EditorComponent {
         }
 
 
-        let {
+        {/* let {
           id,
           externalKey,
           createdAt,
           updatedAt,
           rank,
           ...newObject
-        } = object;
+        } = object; */}
+
+
 
         return <Paper
           style={{
@@ -67,10 +69,30 @@ class TemplateWrapper extends EditorComponent {
             event.preventDefault();
             event.stopPropagation();
 
+
+            let {
+              name,
+              description,
+              props,
+              component,
+              components,
+              Parent,
+            } = object;
+
+            const newObject = JSON.parse(JSON.stringify({
+              name,
+              description,
+              props,
+              component,
+              components,
+              Parent,
+            }));
+
             // alert("Sdfsdfs");
 
             // console.log("TemplateWrapper props", { ...this.props });
 
+            // console.log("newObject", newObject);
 
             if (activeItem) {
               activeItem.addComponent(newObject);

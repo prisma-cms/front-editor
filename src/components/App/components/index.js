@@ -538,6 +538,8 @@ class EditorComponent extends ObjectEditable {
 
     const activeParent = this.getActiveParent();
 
+    console.log("updateParentComponents activeParent", activeParent, activeParent === this);
+
     if (!activeParent) {
       // throw new Error("Can not get absParent");
 
@@ -551,7 +553,7 @@ class EditorComponent extends ObjectEditable {
     });
 
 
-    forceUpdate();
+    // forceUpdate();
 
     return;
 
@@ -562,6 +564,8 @@ class EditorComponent extends ObjectEditable {
    * Проходимся вверх до тех пор, пока не найдем родителя с id
    */
   getActiveParent() {
+
+    console.log("getActiveParent", { ...this });
 
     const {
       parent,
