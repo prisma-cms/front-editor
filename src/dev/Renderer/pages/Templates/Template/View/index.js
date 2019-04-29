@@ -20,7 +20,7 @@ export class TemplateView extends Component {
 
   render() {
 
-    console.log("TemplateView props", { ...this.props });
+    // console.log("TemplateView props", { ...this.props });
 
 
     const {

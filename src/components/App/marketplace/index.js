@@ -38,6 +38,28 @@ class MarketPlace extends PrismaCmsComponent {
 
     }
 
+    let tabs = <Tabs
+      value={tabIndex}
+      onChange={(event, tabIndex) => {
+
+        this.setState({
+          tabIndex,
+        });
+      }}
+    >
+
+      <Tab
+        label={this.lexicon("local")}
+        value="local"
+      />
+
+      <Tab
+        label={this.lexicon("remote")}
+        value="remote"
+      />
+
+    </Tabs>;
+
     return <div
       style={{
         height: "100%",
@@ -46,28 +68,7 @@ class MarketPlace extends PrismaCmsComponent {
       }}
     >
 
-      <Tabs
-        value={tabIndex}
-        onChange={(event, tabIndex) => {
-          console.log("onChange tabIndex", tabIndex);
-
-          this.setState({
-            tabIndex,
-          });
-        }}
-      >
-
-        <Tab
-          label={this.lexicon("local")}
-          value="local"
-        />
-
-        <Tab
-          label={this.lexicon("remote")}
-          value="remote"
-        />
-
-      </Tabs>
+      {/* {tabs} */}
 
       {content}
 
@@ -82,7 +83,7 @@ class MarketPlace extends PrismaCmsComponent {
       activeItem,
     } = this.props;
 
-    console.log("getLocalTemplates props", { ...this.props });
+    // console.log("getLocalTemplates props", { ...this.props });
 
     return <FrontEditor
       inEditMode={false}
