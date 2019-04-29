@@ -368,6 +368,81 @@ class EditorComponent extends ObjectEditable {
 
 
   /**
+   * Двигаем блок вверх
+   */
+  moveBlockUp() {
+
+
+    const component = this.getComponentInParent();
+
+    if (component) {
+
+      let {
+        // components,
+        data: {
+          object: {
+            components,
+          },
+        },
+      } = this.props.parent.props;
+
+      const index = components.indexOf(component);
+
+      /**
+       * Если элемент не на первом месте, двигаем его
+       */
+      if (index > 0) {
+
+        components.splice(index - 1, 0, components.splice(index, 1)[0]);
+
+        this.updateParentComponents();
+
+      }
+
+    }
+
+  }
+
+  /**
+   * Двигаем блок вниз
+   */
+  moveBlockDown() {
+
+
+    const component = this.getComponentInParent();
+
+    if (component) {
+
+      let {
+        // components,
+        data: {
+          object: {
+            components,
+          },
+        },
+      } = this.props.parent.props;
+
+      const index = components.indexOf(component);
+
+      console.log("dragItem component index", index);
+
+      /**
+       * Если элемент не на первом месте, двигаем его
+       */
+      if (index !== -1 && components.length > index + 1) {
+
+        components.splice(index + 1, 0, components.splice(index, 1)[0]);
+
+        this.updateParentComponents();
+
+      }
+
+    }
+
+  }
+
+
+  /**
    * Обновить мы должны текущий элемент или предка
    */
 
@@ -2111,6 +2186,8 @@ class EditorComponent extends ObjectEditable {
                   event.preventDefault();
                   event.stopPropagation();
                   // console.log("Tag badge onClick", event);
+
+                  this.moveBlockUp();
                 }}
                 className={classes.badgeButton}
               >
@@ -2128,6 +2205,8 @@ class EditorComponent extends ObjectEditable {
                   event.preventDefault();
                   event.stopPropagation();
                   // console.log("Tag badge onClick", event);
+
+                  this.moveBlockDown();
                 }}
                 className={classes.badgeButton}
               >
