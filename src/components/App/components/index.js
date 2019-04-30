@@ -34,6 +34,10 @@ import ObjectEditable from "apollo-cms/lib/DataView/Object/Editable";
 import gql from 'graphql-tag';
 import { EditorContext } from '../context';
 
+// import SingleUploader from "@prisma-cms/uploader/lib/components/SingleUploader";
+import Uploader, {
+  FileInput,
+} from "@prisma-cms/uploader";
 
 const emptyMutate = async () => { };
 
@@ -83,6 +87,7 @@ class EditorComponent extends ObjectEditable {
       background: undefined,
       backgroundImage: undefined,
       backgroundColor: undefined,
+      backgroundPosition: undefined,
     },
     src: undefined,
     contentEditable: false,
@@ -157,7 +162,7 @@ class EditorComponent extends ObjectEditable {
 
     const {
       id: currentUserId,
-    } = this.getCurrentUser();
+    } = this.getCurrentUser() || {};
 
     const {
       id: createdById,
@@ -1618,6 +1623,46 @@ class EditorComponent extends ObjectEditable {
 
     let deleteButton;
 
+    let secondary;
+
+
+    switch (name) {
+
+      case "backgroundImage":
+
+
+        secondary = <Uploader
+          // onClick={event => {
+
+          //   console.log("Uploader onClick", event);
+
+          // }}
+          onUpload={response => {
+
+            console.log("onUpload", { ...response });
+
+            const {
+              path,
+            } = response.data.singleUpload || {};
+
+
+            console.log("onUpload", { ...response.singleUpload }, path);
+
+            if (path) {
+
+              this.updateComponentProperty(name, path);
+
+            }
+
+          }}
+        >
+        </Uploader>
+
+        break;
+
+    }
+
+
     if (deletable) {
 
       deleteButton = <IconButton
@@ -1709,6 +1754,17 @@ class EditorComponent extends ObjectEditable {
             />
 
           </Grid>
+
+          {secondary ?
+            <Grid
+              item
+            >
+              {secondary}
+            </Grid>
+            :
+            null
+          }
+
           {deleteButton ?
             <Grid
               item

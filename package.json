@@ -1,62 +1,62 @@
 {
-  "name": "@prisma-cms/front-editor",
-  "version": "1.11.0",
-  "private": false,
-  "main": "lib/App.js",
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "yarn build-less && nwb build --copy-files",
-    "build-app": "react-scripts build",
-    "build-less": "node-less-chokidar src/styles/less",
-    "get-api-schema": "graphql get-schema -o src/schema/generated/api.graphql",
-    "build-api-fragments": "node --experimental-modules src/server/scripts/deploy/build-api-fragments",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
-  },
-  "dependencies": {
-    "@prisma-cms/context": "latest",
-    "css": "^2.2.4",
-    "graphql": "14.0.2"
-  },
-  "devDependencies": {
-    "@prisma-cms/front": "latest",
-    "@prisma-cms/server": "latest",
-    "graphql-cli": "2.17.0",
-    "node-less-chokidar": "^0.3.1",
-    "nwb": "^0.23.0",
-    "react-scripts": "2.1.2"
-  },
-  "resolutions": {
-    "graphql": "14.0.2",
-    "react-router": "4.3.1",
-    "react-router-dom": "4.3.1"
-  },
-  "eslintConfig": {
-    "extends": "react-app"
-  },
-  "browserslist": [
-    ">0.2%",
-    "not dead",
-    "not ie <= 11",
-    "not op_mini all"
-  ],
-  "description": "Front editor for @prisma-cms",
-  "directories": {
-    "lib": "lib"
-  },
-  "keywords": [
-    "prisma-cms",
-    "front",
-    "components"
-  ],
-  "author": "Fi1osof",
-  "license": "ISC",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/prisma-cms/front-editor.git"
-  },
-  "bugs": {
-    "url": "https://github.com/prisma-cms/front-editor/issues"
-  },
-  "homepage": "https://github.com/prisma-cms/front-editor#readme"
+    "name": "@prisma-cms/front-editor",
+    "version": "1.11.1",
+    "private": false,
+    "main": "lib/App.js",
+    "scripts": {
+        "start": "react-scripts start",
+        "build": "yarn build-less && nwb build --copy-files",
+        "build-app": "react-scripts build",
+        "build-less": "node-less-chokidar src/styles/less",
+        "get-api-schema": "graphql get-schema -o src/schema/generated/api.graphql",
+        "build-api-fragments": "node --experimental-modules src/server/scripts/deploy/build-api-fragments",
+        "test": "react-scripts test",
+        "eject": "react-scripts eject"
+    },
+    "dependencies": {
+        "@prisma-cms/context": "latest",
+        "css": "^2.2.4",
+        "graphql": "14.0.2"
+    },
+    "devDependencies": {
+        "@prisma-cms/front": "latest",
+        "@prisma-cms/server": "latest",
+        "graphql-cli": "2.17.0",
+        "node-less-chokidar": "^0.3.1",
+        "nwb": "^0.23.0",
+        "react-scripts": "2.1.2"
+    },
+    "resolutions": {
+        "graphql": "14.0.2",
+        "react-router": "4.3.1",
+        "react-router-dom": "4.3.1"
+    },
+    "eslintConfig": {
+        "extends": "react-app"
+    },
+    "browserslist": [
+        ">0.2%",
+        "not dead",
+        "not ie <= 11",
+        "not op_mini all"
+    ],
+    "description": "Front editor for @prisma-cms",
+    "directories": {
+        "lib": "lib"
+    },
+    "keywords": [
+        "prisma-cms",
+        "front",
+        "components"
+    ],
+    "author": "Fi1osof",
+    "license": "ISC",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/prisma-cms/front-editor.git"
+    },
+    "bugs": {
+        "url": "https://github.com/prisma-cms/front-editor/issues"
+    },
+    "homepage": "https://github.com/prisma-cms/front-editor#readme"
 }
