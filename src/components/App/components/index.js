@@ -2333,7 +2333,14 @@ class EditorComponent extends ObjectEditable {
 
 
   prepareRootElementProps(props) {
-    return props;
+    
+    const {
+      classes,
+      ...other
+    } = props;
+
+    return other;
+
   }
 
   getRootElement() {

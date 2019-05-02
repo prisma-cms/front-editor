@@ -455,6 +455,12 @@ class Tag extends EditorComponent {
 
             break;
 
+          case "staticcontext":
+
+            name = "staticContext";
+
+            break;
+
           case "style":
 
             try {

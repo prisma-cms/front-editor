@@ -1,3 +1,7 @@
+=================================
+- Exclude classes from render props
+- Cleanup Route
+
 1.11.1
 =================================
 - Fix insert template
