@@ -35,13 +35,13 @@ class RoutedObject extends EditorComponent {
   }
 
 
-  renderChildren() {
+  // renderChildren() {
 
 
 
 
-    return super.renderChildren();
-  }
+  //   return super.renderChildren();
+  // }
 
 }
 

@@ -1,6 +1,8 @@
+1.11.2
 =================================
 - Exclude classes from render props
 - Cleanup Route
+- Fix save children with ID
 
 1.11.1
 =================================

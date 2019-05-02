@@ -89,186 +89,6 @@ class EditorSwitch extends EditorComponent {
   }
 
 
-  // renderMainView() {
-
-  //   const {
-  //     inEditMode,
-  //   } = this.context;
-
-  //   let content = null
-
-  //   if (inEditMode) {
-  //     content = <RouterSwitch>
-  //       {super.renderMainView()}
-  //     </RouterSwitch>
-  //   }
-  //   else {
-  //     content = <RouterSwitch>
-  //       {super.renderChildren()}
-  //     </RouterSwitch>
-  //   }
-
-  //   return content;
-  // }
-
-
-  // renderMainView() {
-
-
-  //   return <div
-
-  //   >
-  //     dsf
-  //     <RouterSwitch>
-
-  //       <Route
-  //         path="/"
-  //         exact={false}
-  //       >
-  //         1dsfds
-  //       </Route>
-
-  //       <div
-  //         path="/"
-  //         exact={false}
-  //       >
-  //         1dsfds
-  //       </div>
-
-  //       <div>
-  //         4234dsfds
-  //       </div>
-
-  //     </RouterSwitch>
-  //   </div>
-  // }
-
-
-
-  // renderChildren() {
-
-  //   return <RouterSwitch>
-  //     {super.renderChildren()}
-  //   </RouterSwitch>;
-  // }
-
-
-  // renderChildren() {
-
-  //   const {
-  //     inEditMode,
-  //   } = this.context;
-
-  //   const {
-  //     showRoutes,
-  //   } = this.props;
-
-  //   const {
-
-  //   } = this.getRenderProps();
-
-  //   const object = this.getObjectWithMutations();
-
-  //   const {
-  //     Components,
-  //     // components,
-  //     updateObject,
-  //   } = this.context;
-
-
-  //   const {
-  //     props,
-  //     components: itemComponents,
-  //   } = object;
-
-
-  //   let output = [];
-
-
-  //   if (itemComponents && itemComponents.length) {
-
-  //     itemComponents.map((n, index) => {
-
-  //       const {
-  //         id,
-  //         name,
-  //         props,
-  //         ...other
-  //       } = n;
-
-  //       const {
-  //         exact,
-  //         path,
-  //         routername,
-  //       } = props;
-
-  //       let Component = Components.find(n => n.Name === name);
-
-  //       if (Component) {
-
-  //         let component = <Route
-  //           key={id || index}
-  //           exact={exact === undefined ? true : exact}
-  //           path={path}
-  //           render={() => {
-  //             return <Component
-  //               // key={id || index}
-  //               mode="main"
-  //               // component={n}
-  //               parent={this}
-  //               props={props}
-  //               data={{
-  //                 object: n,
-  //               }}
-  //               exact={exact}
-  //               path={path}
-  //               routername={routername}
-  //               // _dirty={n}
-  //               showRoutes={showRoutes}
-  //               {...other}
-  //               {...props}
-  //             />;
-  //           }}
-  //         />
-
-
-  //         /**
-  //          * Если в режиме редактирования и показывать роутеры, то выводим данные
-  //          */
-  //         if (inEditMode && showRoutes) {
-
-  //           component = <Fragment>
-  //             <Typography>
-  //               {routername} <Typography
-  //                 component="span"
-  //                 variant="caption"
-  //                 style={{
-  //                   display: "inline-block",
-  //                 }}
-  //               >
-  //                 {path}{!exact ? "*" : ""}
-  //               </Typography>
-  //             </Typography>
-
-  //             {component}
-
-  //           </Fragment>
-
-  //         }
-
-  //         output.push(component);
-
-  //       }
-
-  //     })
-
-  //   }
-
-  //   return <RouterSwitch>
-  //     {output}
-  //   </RouterSwitch>;
-  // }
-
 
   renderChildren() {
 
@@ -276,9 +96,11 @@ class EditorSwitch extends EditorComponent {
       inEditMode,
     } = this.getEditorContext();
 
-    // const {
-    //   showRoutes,
-    // } = this.props;
+    const {
+      mutate,
+      createTemplate,
+      updateTemplate,
+    } = this.props;
 
     const {
       showRoutes,
@@ -341,25 +163,6 @@ class EditorSwitch extends EditorComponent {
           let component;
 
 
-          // let element = <Component
-          //   // key={id || index}
-          //   mode="main"
-          //   // component={n}
-          //   parent={this}
-          //   props={props}
-          //   data={{
-          //     object: n,
-          //   }}
-          //   exact={exact}
-          //   path={path}
-          //   routername={routername}
-          //   // _dirty={n}
-          //   showRoutes={showRoutes}
-          //   {...other}
-          //   {...props}
-          // />;
-
-
           let route = <Route
             key={id || index}
             exact={exact === undefined ? false : exact}
@@ -381,6 +184,8 @@ class EditorSwitch extends EditorComponent {
                 routername={routername}
                 // _dirty={n}
                 showRoutes={showRoutes}
+                createTemplate={createTemplate}
+                updateTemplate={updateTemplate}
                 {...other}
                 {...props}
                 {...routerProps}

@@ -2217,6 +2217,9 @@ class EditorComponent extends ObjectEditable {
           <Grid
             container
             alignItems="center"
+            style={{
+              flexWrap: "nowrap",
+            }}
           >
 
             <Grid
@@ -2284,6 +2287,7 @@ class EditorComponent extends ObjectEditable {
 
             <Grid
               item
+              xs
             >
               {name}
             </Grid>
@@ -2333,7 +2337,7 @@ class EditorComponent extends ObjectEditable {
 
 
   prepareRootElementProps(props) {
-    
+
     const {
       classes,
       ...other
@@ -2365,6 +2369,8 @@ class EditorComponent extends ObjectEditable {
 
     const object = this.getObjectWithMutations();
 
+    // console.log(`renderChildren ${this.constructor.Name} createTemplate`, createTemplate);
+    // console.log(`renderChildren ${this.constructor.Name} updateTemplate`, updateTemplate);
 
     const {
       // props,
@@ -2423,6 +2429,8 @@ class EditorComponent extends ObjectEditable {
                 id: templateId,
               }}
               mutate={updateTemplate}
+              createTemplate={createTemplate}
+              updateTemplate={updateTemplate}
             // mutate={async (options) => {
 
             //   console.log("mutate options", { ...options }, mutate);
@@ -2446,6 +2454,8 @@ class EditorComponent extends ObjectEditable {
               }}
               // _dirty={n}
               mutate={createTemplate}
+              createTemplate={createTemplate}
+              updateTemplate={updateTemplate}
               {...other}
             />);
 
