@@ -200,77 +200,18 @@ class Tag extends EditorComponent {
 
             const node = event.target;
 
-
-
-
-            // return;
-
-
             const content = this.makeNewContent(node);
-
-
-
-
-
-
-            // let newState = {
-            //   newContent: content,
-            // };
-
-            // Object.assign(this.state, newState);
-
-            // // onChange(content);
 
             const {
               components,
             } = content;
 
-            // Object.assign(this.state, {
-            //   components,
-            // });
 
             Object.assign(this.state, {
               newContent: {
                 components,
               },
             });
-
-            // const {
-            //   components,
-            // } = this.state;
-
-            // this.setComponents(components);
-
-            // this.props.components.splice(0, this.props.components.length);
-
-            // components.map(n => {
-            //   this.props.components.push(n);
-            // });
-
-            // this.updateParentComponents();
-
-            // this.getActiveParent().updateObject({});
-
-            // const {
-            //   forceUpdate,
-            // } = this.getEditorContext();
-
-            // forceUpdate();
-
-
-            // Object.assign(this.props, {
-            //   components,
-            // });
-
-
-            // this.props.components = this.props.components.concat(components);
-
-            // this.updateComponentProps({
-            //   content,
-            // });
-
-            // this.setComponents(components || []);
-
 
           },
           onFocus: event => {
@@ -365,6 +306,17 @@ class Tag extends EditorComponent {
     } = this.state;
 
     return focused ? null : super.renderBadge(badge);
+  }
+
+
+  isVoidElement() {
+
+    const {
+      tag,
+    } = this.getComponentProps(this);
+
+    return tag && ["img"].indexOf(tag) !== -1 ? true : super.isVoidElement();
+
   }
 
   // shouldComponentUpdate() {

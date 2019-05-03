@@ -6,17 +6,34 @@ import FrontEditor from "../../../../../../App";
 import { Paper } from 'material-ui';
 import { Typography } from 'material-ui';
 
-import PrismaCmsContext from "@prisma-cms/context";
+import PrismaCmsComponent from "@prisma-cms/component";
+import { Button } from 'material-ui';
 
-export class TemplateView extends Component {
-
-
-  static contextType = PrismaCmsContext;
+export class TemplateView extends PrismaCmsComponent {
 
 
-  state = {
-    inEditMode: false,
+  // static contextType = PrismaCmsContext;
+
+
+  // state = {
+  //   inEditMode: false,
+  // }
+
+  constructor(props) {
+
+    super(props);
+
+    const {
+      inEditMode = false,
+    } = props;
+
+    this.state = {
+      ...this.state,
+      inEditMode,
+    };
+
   }
+
 
   render() {
 
@@ -54,12 +71,42 @@ export class TemplateView extends Component {
       CreatedBy,
     } = object;
 
+    let toolbar = <Grid
+      rel="noindex, nofollow"
+      container
+      style={{
+        // flexDirection: "row-reverse",
+        position: "fixed",
+        bottom: 0,
+        right: 0,
+        width: "auto",
+        background: "rgba(255,255,255,0.5)",
+        zIndex: 1000,
+      }}
+    >
+      <Grid
+        item
+      >
+        <Button
+          size="small"
+          onClick={event => this.setState({
+            inEditMode: !inEditMode,
+          })}
+          variant="raised"
+        >
+          {inEditMode ? this.lexicon("Close") : this.lexicon("Edit template")}
+        </Button>
+      </Grid>
+    </Grid>
+
 
     return <Paper
       style={{
         padding: 10,
       }}
     >
+
+      {toolbar}
 
       <Grid
         container
@@ -101,13 +148,13 @@ export class TemplateView extends Component {
         </Grid>
       </Grid>
 
-      
+
       <FrontEditor
-        inEditMode={inEditMode}
         data={{
           object,
         }}
         {...other}
+        inEditMode={inEditMode}
       />
 
     </Paper>

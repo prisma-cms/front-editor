@@ -7,7 +7,9 @@ import { IconButton } from 'material-ui';
 
 import CloneIcon from 'material-ui-icons/ContentCopy';
 import DeleteIcon from 'material-ui-icons/Delete';
+import LinkIcon from "material-ui-icons/Link";
 import gql from 'graphql-tag';
+import { Typography } from 'material-ui';
 
 
 class TemplateWrapper extends EditorComponent {
@@ -33,6 +35,7 @@ class TemplateWrapper extends EditorComponent {
 
     const {
       Grid,
+      Link,
     } = this.context;
 
     const {
@@ -72,6 +75,7 @@ class TemplateWrapper extends EditorComponent {
           id: objectId,
           name,
           component,
+          description,
         } = object;
 
 
@@ -119,6 +123,38 @@ class TemplateWrapper extends EditorComponent {
 
             </Grid>
 
+            {description ?
+              <Grid
+                item
+                xs={12}
+              >
+                <Typography
+                  variant="caption"
+                >
+                  {description}
+                </Typography>
+              </Grid>
+              : null
+            }
+
+            {objectId ?
+              <Grid
+                item
+              >
+                <Link
+                  to={`/templates/${objectId}`}
+                  onClick={event => {
+                    event.stopPropagation();
+                  }}
+                >
+                  <LinkIcon
+
+                  />
+                </Link>
+              </Grid>
+              : null
+            }
+
             <Grid
               item
             >
@@ -161,13 +197,17 @@ class TemplateWrapper extends EditorComponent {
 
           </Grid>
 
-          {this.renderChildren()}
+          {/* {this.renderChildren()} */}
 
           <hr />
 
           <FrontEditor
             data={{
               object,
+            }}
+            style={{
+              maxHeight: 350,
+              overflow: "auto",
             }}
           />
 

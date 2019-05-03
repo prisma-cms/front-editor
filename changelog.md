@@ -1,3 +1,7 @@
+
+=================================
+- Fix render children for void-elements
+
 1.11.3
 =================================
 - Fix events

@@ -21,6 +21,7 @@ import CloneIcon from "material-ui-icons/ContentCopy";
 import DragIcon from "material-ui-icons/DragHandle";
 import ArrowUpIcon from "material-ui-icons/ArrowUpward";
 import ArrowDownIcon from "material-ui-icons/ArrowDownward";
+import LinkIcon from "material-ui-icons/Link";
 
 import { FormControlLabel } from 'material-ui';
 import { Switch } from 'material-ui';
@@ -67,6 +68,7 @@ class EditorComponent extends ObjectEditable {
     mutate: emptyMutate,
     data: {},
     style: {
+      display: undefined,
       marginTop: undefined,
       marginBottom: undefined,
       marginLeft: undefined,
@@ -78,7 +80,10 @@ class EditorComponent extends ObjectEditable {
       color: undefined,
       fontFamily: undefined,
       fontSize: undefined,
+      fontWeight: undefined,
       textAlign: undefined,
+      textTransform: undefined,
+      verticalAlign: undefined,
       minHeight: undefined,
       height: undefined,
       width: undefined,
@@ -92,6 +97,7 @@ class EditorComponent extends ObjectEditable {
       backgroundClip: undefined,
       backgroundSize: undefined,
       backgroundRepeat: undefined,
+      backgroundAttachment: undefined,
       opacity: undefined,
       visibility: undefined,
       zIndex: undefined,
@@ -1066,6 +1072,7 @@ class EditorComponent extends ObjectEditable {
 
     const {
       Grid,
+      Link,
     } = this.context;
 
     const {
@@ -1257,7 +1264,7 @@ class EditorComponent extends ObjectEditable {
           label: name,
           value,
           deletable: style && style[name] !== undefined ? true : false,
-          style: style || {},
+          style: editableStyles || {},
         });
 
         if (field) {
@@ -1272,6 +1279,7 @@ class EditorComponent extends ObjectEditable {
     let buttons = <Grid
       container
       spacing={8}
+      alignItems="center"
     // style={{
     //   flexDirection: "row-reverse",
     // }}
@@ -1283,6 +1291,20 @@ class EditorComponent extends ObjectEditable {
       </Grid>
 
       {/* {!isRoot && !objectId && activeParent && parentId ? */}
+      {objectId ?
+        <Grid
+          item
+        >
+          <Link
+            to={`/templates/${objectId}`}
+          >
+            <LinkIcon
+
+            />
+          </Link>
+        </Grid>
+        : null
+      }
       {!isRoot && !objectId && activeParent ?
         <Grid
           item
@@ -2343,6 +2365,39 @@ class EditorComponent extends ObjectEditable {
     }
 
 
+
+    /**
+     * Для тегов типа img непозволительны дочерние элементы.
+     * Если в такие элементы пытаться выводить дочерние,
+     * будет возникать ошибка "must neither have `children`"
+     */
+    let inner = [];
+
+    const childs = this.renderChildren();
+
+    {/* 
+      Для блоков с contentEditable (например Tag), если текст отсутствует,
+      то фокус уходит в бадж и текст не доступен для редактирования.
+      Пока как временный хак скрываем бадж в режиме фокуса.
+    */}
+    const badgeView = this.renderBadge(badge);
+
+    if (childs) {
+      inner.push(childs);
+    }
+
+
+    if (badgeView) {
+      inner.push(badgeView);
+    }
+
+
+    // console.log("inner2", inner);
+
+    // if (!inner.length) {
+    //   inner = undefined;
+    // }
+
     return <Fragment>
 
       <RootElement
@@ -2357,15 +2412,7 @@ class EditorComponent extends ObjectEditable {
           ...renderProps,
         })}
       >
-
-        {/* 
-          Для блоков с contentEditable (например Tag), если текст отсутствует,
-          то фокус уходит в бадж и текст не доступен для редактирования.
-          Пока как временный хак скрываем бадж в режиме фокуса.
-        */}
-        {this.renderBadge(badge)}
-
-        {this.renderChildren()}
+        {inner && inner.length ? inner : null}
       </RootElement>
 
       {settingsView}
@@ -2375,7 +2422,16 @@ class EditorComponent extends ObjectEditable {
 
   renderBadge(badge) {
 
+    if (this.isVoidElement()) {
+      return null;
+    }
+
     return badge;
+  }
+
+
+  isVoidElement() {
+    return false;
   }
 
 
@@ -2426,6 +2482,10 @@ class EditorComponent extends ObjectEditable {
 
 
   renderChildren(components) {
+
+    if (this.isVoidElement()) {
+      return null;
+    }
 
     const {
       Components,
