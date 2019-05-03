@@ -175,6 +175,7 @@ class EditorComponent extends ObjectEditable {
 
     const {
       id: currentUserId,
+      sudo,
     } = this.getCurrentUser() || {};
 
     const {
@@ -185,7 +186,7 @@ class EditorComponent extends ObjectEditable {
     if (objectId) {
       // return true;
 
-      if (createdById && createdById === currentUserId) {
+      if ((createdById && createdById === currentUserId) || sudo) {
         return true;
       }
 

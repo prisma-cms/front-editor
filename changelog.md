@@ -1,13 +1,12 @@
 
-=================================
-- Fix render children for void-elements
-- Fix templates page
-- Move pages into components
-
 1.11.3
 =================================
 - Fix events
 - Fix upload images
+- Fix render children for void-elements
+- Fix templates page
+- Move pages into components
+- Fix canEdit()
 
 1.11.2
 =================================
