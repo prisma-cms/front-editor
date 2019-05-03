@@ -706,18 +706,19 @@ class EditorComponent extends ObjectEditable {
 
     // console.log("this onClick", { ...event });
 
-    if (event.target === event.currentTarget) {
 
-      event.preventDefault();
-      event.stopPropagation();
+    // if (event.target === event.currentTarget) {
 
-      const {
-        setActiveItem,
-      } = this.getEditorContext();
+    event.preventDefault();
+    event.stopPropagation();
 
-      setActiveItem(this);
+    const {
+      setActiveItem,
+    } = this.getEditorContext();
 
-    }
+    setActiveItem(this);
+
+    // }
 
   }
 
@@ -1449,29 +1450,29 @@ class EditorComponent extends ObjectEditable {
     let output = <Grid
       container
       spacing={8}
-    // onMouseOver={event => {
-    //   // event.preventDefault();
-    //   event.stopPropagation();
-    // }}
-    // onMouseLeave={event => {
-    //   // event.preventDefault();
-    //   event.stopPropagation();
-    // }}
-    // onClick={event => {
+      onMouseOver={event => {
+        // event.preventDefault();
+        event.stopPropagation();
+      }}
+      onMouseLeave={event => {
+        // event.preventDefault();
+        event.stopPropagation();
+      }}
+      onClick={event => {
 
-    //   // console.log("onClick", { ...event });
+        // console.log("onClick", { ...event });
 
-    //   /**
-    //   Важно! Хотя этот блок отрендерен через портал в другую часть HTML-документа, на него распростроняются ивенты
-    //   из родительского компонента. https://prisma-cms.com/chat-messages/cjv791tug5qg50989k3v2tdaa
-    //   Из-за этого при клике событие уходит в ближайший верхний элемент основной области (и устанавливает активный компонент).
-    //   Для предотвращения вызываем event.stopPropagation().
-    //   Если установить и event.preventDefault(), то тогда не срабатывают клики на компонентах типа @prisma-cms/uploader
-    //   event.target === event.currentTarget вроде помогает
-    //    */
-    //   // event.preventDefault();
-    //   event.stopPropagation();
-    // }}
+        /**
+        Важно! Хотя этот блок отрендерен через портал в другую часть HTML-документа, на него распростроняются ивенты
+        из родительского компонента. https://prisma-cms.com/chat-messages/cjv791tug5qg50989k3v2tdaa
+        Из-за этого при клике событие уходит в ближайший верхний элемент основной области (и устанавливает активный компонент).
+        Для предотвращения вызываем event.stopPropagation().
+        Если установить и event.preventDefault(), то тогда не срабатывают клики на компонентах типа @prisma-cms/uploader
+        event.target === event.currentTarget вроде помогает
+         */
+        // event.preventDefault();
+        event.stopPropagation();
+      }}
     >
 
       <Grid
