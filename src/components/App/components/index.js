@@ -80,6 +80,7 @@ class EditorComponent extends ObjectEditable {
       fontSize: undefined,
       textAlign: undefined,
       minHeight: undefined,
+      height: undefined,
       width: undefined,
       maxWidth: undefined,
       border: undefined,
@@ -88,6 +89,12 @@ class EditorComponent extends ObjectEditable {
       backgroundImage: undefined,
       backgroundColor: undefined,
       backgroundPosition: undefined,
+      backgroundClip: undefined,
+      backgroundSize: undefined,
+      backgroundRepeat: undefined,
+      opacity: undefined,
+      visibility: undefined,
+      zIndex: undefined,
     },
     src: undefined,
     contentEditable: false,
@@ -690,51 +697,61 @@ class EditorComponent extends ObjectEditable {
    */
   onClick(event) {
 
+    // console.log("this onClick", { ...event });
 
+    if (event.target === event.currentTarget) {
 
-    event.preventDefault();
-    event.stopPropagation();
+      event.preventDefault();
+      event.stopPropagation();
 
-    const {
-      setActiveItem,
-    } = this.getEditorContext();
+      const {
+        setActiveItem,
+      } = this.getEditorContext();
 
-    setActiveItem(this);
+      setActiveItem(this);
+
+    }
 
   }
 
 
   onMouseOver(event) {
 
+    if (event.target === event.currentTarget) {
 
+      event.preventDefault();
+      event.stopPropagation();
 
-    event.preventDefault();
-    event.stopPropagation();
+      // console.log("onMouseOver", { ...event });
 
-    const {
-      setHoveredItem,
-    } = this.getEditorContext();
+      const {
+        setHoveredItem,
+      } = this.getEditorContext();
 
-    setHoveredItem(this);
+      setHoveredItem(this);
+
+    }
 
   }
 
 
   onMouseLeave(event) {
 
+    if (event.target === event.currentTarget) {
 
+      event.preventDefault();
+      event.stopPropagation();
 
-    event.preventDefault();
-    event.stopPropagation();
+      const {
+        setHoveredItem,
+        hoveredItem,
+      } = this.getEditorContext();
 
-    const {
-      setHoveredItem,
-      hoveredItem,
-    } = this.getEditorContext();
+      if (hoveredItem && hoveredItem === this) {
 
-    if (hoveredItem && hoveredItem === this) {
+        setHoveredItem(null);
 
-      setHoveredItem(null);
+      }
 
     }
 
@@ -1409,12 +1426,29 @@ class EditorComponent extends ObjectEditable {
     let output = <Grid
       container
       spacing={8}
-      onClick={event => {
+    // onMouseOver={event => {
+    //   // event.preventDefault();
+    //   event.stopPropagation();
+    // }}
+    // onMouseLeave={event => {
+    //   // event.preventDefault();
+    //   event.stopPropagation();
+    // }}
+    // onClick={event => {
 
-        event.preventDefault();
-        event.stopPropagation();
+    //   // console.log("onClick", { ...event });
 
-      }}
+    //   /**
+    //   Важно! Хотя этот блок отрендерен через портал в другую часть HTML-документа, на него распростроняются ивенты
+    //   из родительского компонента. https://prisma-cms.com/chat-messages/cjv791tug5qg50989k3v2tdaa
+    //   Из-за этого при клике событие уходит в ближайший верхний элемент основной области (и устанавливает активный компонент).
+    //   Для предотвращения вызываем event.stopPropagation().
+    //   Если установить и event.preventDefault(), то тогда не срабатывают клики на компонентах типа @prisma-cms/uploader
+    //   event.target === event.currentTarget вроде помогает
+    //    */
+    //   // event.preventDefault();
+    //   event.stopPropagation();
+    // }}
     >
 
       <Grid
@@ -1639,18 +1673,23 @@ class EditorComponent extends ObjectEditable {
           // }}
           onUpload={response => {
 
-            console.log("onUpload", { ...response });
+            // console.log("onUpload", { ...response });
 
             const {
               path,
             } = response.data.singleUpload || {};
 
 
-            console.log("onUpload", { ...response.singleUpload }, path);
+            // console.log("onUpload", { ...response.singleUpload }, path);
 
             if (path) {
 
-              this.updateComponentProperty(name, path);
+              const {
+                style,
+              } = this.props.props || {};
+
+              this.updateComponentProperty(name, `url(/images/big/${path})`, style || {
+              });
 
             }
 
@@ -2204,6 +2243,10 @@ class EditorComponent extends ObjectEditable {
 
       if (isActive && settingsViewContainer) {
 
+        /**
+         * Важно по наследованию событий в порталы
+         * https://github.com/facebook/react/issues/11387
+         */
         settingsView = ReactDOM.createPortal(this.renderSettingsView(), settingsViewContainer);
 
       }
@@ -2340,10 +2383,40 @@ class EditorComponent extends ObjectEditable {
 
     const {
       classes,
+      createTemplate,
+      updateTemplate,
+      showRoutes,
+      cacheKeyPrefix,
+      style: propsStyles,
       ...other
     } = props;
 
-    return other;
+    let style;
+
+    if (propsStyles) {
+
+      style = {
+        ...propsStyles,
+      };
+
+      Object.keys(style).map(name => {
+
+        if (style[name] === undefined) {
+          delete style[name];
+        }
+
+      })
+
+      // if (this.isActive()) {
+      //   console.log("prepareRootElementProps style", { ...style }, JSON.stringify(style, true, 2));
+      // }
+
+    }
+
+    return {
+      ...other,
+      style,
+    };
 
   }
 
@@ -2611,58 +2684,6 @@ class EditorComponent extends ObjectEditable {
 
   }
 
-  // renderDefaultView() {
-
-  //   // const {
-  //   //   ComponentContext,
-  //   // } = this;
-
-  //   const {
-  //     id: objectId,
-  //     mode,
-  //     props,
-  //     children,
-  //     ...other
-  //   } = this.props;
-
-  //   let content = null;
-
-
-  //   // return "Sdfdsf";
-
-
-
-  //   switch (mode) {
-
-  //     case "panel":
-
-  //       const activeItem = this.getActiveItem();
-
-  //       if (!activeItem || this.isActive()) {
-  //         content = this.renderPanelView();
-  //       }
-
-  //       break;
-
-  //     case "main":
-
-  //       content = this.renderMainView();
-
-  //       break;
-
-  //     case "settings":
-
-  //       content = this.renderSettingsView();
-  //       break;
-  //   }
-
-  //   if (!content) {
-  //     return null;
-  //   }
-
-  //   return content;
-
-  // }
 }
 
 

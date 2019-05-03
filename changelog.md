@@ -1,3 +1,8 @@
+1.11.3
+=================================
+- Fix events
+- Fix upload images
+
 1.11.2
 =================================
 - Exclude classes from render props
