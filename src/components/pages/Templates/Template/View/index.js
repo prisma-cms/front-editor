@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 
-import FrontEditor from "../../../../../../App";
+import FrontEditor from "../../../../App";
 import { Paper } from 'material-ui';
 import { Typography } from 'material-ui';
 

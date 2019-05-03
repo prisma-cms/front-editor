@@ -5,7 +5,7 @@ import Icon from "material-ui-icons/SettingsOverscan";
 
 // import MainMenu from "@prisma-cms/front/lib/components/App/Renderer/MainMenu";
 import MainMenu from "./MainMenu";
-import EditorComponent from '../../../../../../components/App/components';
+import EditorComponent from '../../../../App/components';
 
 class PageHeader extends EditorComponent {
 

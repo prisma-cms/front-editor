@@ -8,7 +8,7 @@ import PrismaCmsComponent from "@prisma-cms/component";
 import { Paper } from 'material-ui';
 import { Typography } from 'material-ui';
 
-// import FrontEditor from "../../../../../App";
+// import FrontEditor from "../../../App";
 import TemplateView from '../Template/View';
 
 const styles = theme => {

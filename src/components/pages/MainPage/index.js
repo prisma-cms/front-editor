@@ -5,7 +5,7 @@ import Context from "@prisma-cms/context";
 
 import { Button } from 'material-ui';
 import { withStyles } from 'material-ui';
-import FrontEditor from '../../../../components/App';
+import FrontEditor from '../../App';
 
 
 export const styles = {

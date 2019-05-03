@@ -10,12 +10,12 @@ import { Renderer as PrismaCmsRenderer } from '@prisma-cms/front'
 
 import MainMenu from './MainMenu';
 import { withStyles } from 'material-ui';
-import DevMainPage from './pages/MainPage';
-import TemplatesPage from './pages/Templates';
-import TemplatePage from './pages/Templates/Template';
-import TemplateCreatePage from './pages/Templates/Template/Create';
+// import DevMainPage from '../../components/pages/MainPage';
+import TemplatesPage from '../../components/pages/Templates';
+import TemplatePage from '../../components/pages/Templates/Template';
+import TemplateCreatePage from '../../components/pages/Templates/Template/Create';
 
-import RootPage from "./pages/Root";
+import RootPage from "../../components/pages/Root";
 
 export const styles = {
 
