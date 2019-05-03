@@ -187,7 +187,7 @@ class FrontEditorRoot extends PrismaCmsComponent {
           container
           style={{
             // flexDirection: "row-reverse",
-            position: "fixed",
+            position: "absolute",
             bottom: 0,
             right: 0,
             width: "auto",

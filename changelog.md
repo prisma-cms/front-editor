@@ -1,6 +1,7 @@
 
 =================================
 - Fix render children for void-elements
+- Fix templates page
 
 1.11.3
 =================================

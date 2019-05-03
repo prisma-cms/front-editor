@@ -11,13 +11,15 @@ import { Button } from 'material-ui';
 
 export class TemplateView extends PrismaCmsComponent {
 
+  static propTypes = {
+    ...PrismaCmsComponent.propTypes,
+    editable: PropTypes.bool.isRequired,
+  }
 
-  // static contextType = PrismaCmsContext;
-
-
-  // state = {
-  //   inEditMode: false,
-  // }
+  static defaultProps = {
+    ...PrismaCmsComponent.defaultProps,
+    editable: false,
+  }
 
   constructor(props) {
 
@@ -51,6 +53,7 @@ export class TemplateView extends PrismaCmsComponent {
       data: {
         object,
       },
+      editable,
       ...other
     } = this.props;
 
@@ -71,38 +74,45 @@ export class TemplateView extends PrismaCmsComponent {
       CreatedBy,
     } = object;
 
-    let toolbar = <Grid
-      rel="noindex, nofollow"
-      container
-      style={{
-        // flexDirection: "row-reverse",
-        position: "fixed",
-        bottom: 0,
-        right: 0,
-        width: "auto",
-        background: "rgba(255,255,255,0.5)",
-        zIndex: 1000,
-      }}
-    >
-      <Grid
-        item
+    let toolbar;
+
+    if (editable || true) {
+
+      toolbar = <Grid
+        rel="noindex, nofollow"
+        container
+        style={{
+          // flexDirection: "row-reverse",
+          position: "absolute",
+          bottom: 0,
+          right: 0,
+          width: "auto",
+          background: "rgba(255,255,255,0.5)",
+          zIndex: 1000,
+        }}
       >
-        <Button
-          size="small"
-          onClick={event => this.setState({
-            inEditMode: !inEditMode,
-          })}
-          variant="raised"
+        <Grid
+          item
         >
-          {inEditMode ? this.lexicon("Close") : this.lexicon("Edit template")}
-        </Button>
+          <Button
+            size="small"
+            onClick={event => this.setState({
+              inEditMode: !inEditMode,
+            })}
+            variant="raised"
+          >
+            {inEditMode ? this.lexicon("Close") : this.lexicon("Edit template")}
+          </Button>
+        </Grid>
       </Grid>
-    </Grid>
+
+    }
 
 
     return <Paper
       style={{
         padding: 10,
+        position: "relative",
       }}
     >
 

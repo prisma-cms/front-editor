@@ -463,6 +463,45 @@ class Tag extends EditorComponent {
   }
 
 
+  getEditorField(props) {
+
+    const {
+      key,
+      name,
+      value,
+    } = props;
+
+    let field = super.getEditorField(props);
+
+    const {
+      tag,
+    } = this.getComponentProps(this);
+
+
+    if (tag === "img" && name === "src") {
+
+      return <div>
+
+        <div>
+          {field}
+        </div>
+
+        <div>
+          {this.renderUploader(name, {
+            onUpload: path => {
+              this.updateComponentProperty(name, `/images/big/${path}`);
+            },
+          })}
+        </div>
+
+      </div>
+
+    }
+
+
+    return field;
+  }
+
 }
 
 export default Tag;

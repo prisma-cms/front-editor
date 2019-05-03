@@ -1687,37 +1687,29 @@ class EditorComponent extends ObjectEditable {
       case "backgroundImage":
 
 
-        secondary = <Uploader
-          // onClick={event => {
+        // secondary = <Uploader
+        //   onUpload={response => {
 
-          //   console.log("Uploader onClick", event);
-
-          // }}
-          onUpload={response => {
-
-            // console.log("onUpload", { ...response });
-
-            const {
-              path,
-            } = response.data.singleUpload || {};
+        //     const {
+        //       path,
+        //     } = response.data.singleUpload || {};
 
 
-            // console.log("onUpload", { ...response.singleUpload }, path);
+        //     if (path) {
 
-            if (path) {
+        //       const {
+        //         style,
+        //       } = this.props.props || {};
 
-              const {
-                style,
-              } = this.props.props || {};
+        //       this.updateComponentProperty(name, `url(/images/big/${path})`, style || {
+        //       });
 
-              this.updateComponentProperty(name, `url(/images/big/${path})`, style || {
-              });
+        //     }
+        //   }}
+        // >
+        // </Uploader>
 
-            }
-
-          }}
-        >
-        </Uploader>
+        secondary = this.renderUploader(name);
 
         break;
 
@@ -1845,6 +1837,44 @@ class EditorComponent extends ObjectEditable {
     return field;
   }
 
+
+  renderUploader(name, props = {}) {
+
+    const {
+      onUpload = path => {
+
+        const {
+          style,
+        } = this.props.props || {};
+
+        this.updateComponentProperty(name, `url(/images/big/${path})`, style || {
+        });
+
+      },
+      ...other
+    } = props;
+
+    return <Uploader
+      onUpload={response => {
+
+        const {
+          path,
+        } = response.data.singleUpload || {};
+
+        if (path) {
+
+
+          onUpload(path);
+
+          // this.updateComponentProperty(name, `url(/images/big/${path})`, style || {
+          // });
+
+        }
+      }}
+      {...other}
+    >
+    </Uploader>
+  }
 
   onChangeProps(event, style) {
 

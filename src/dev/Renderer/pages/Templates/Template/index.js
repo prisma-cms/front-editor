@@ -87,7 +87,7 @@ class Template extends Page {
           status: id ? 200 : 404,
         })
       }}
-      inEditMode={true}
+      editable={true}
       {...other}
     />
   }
