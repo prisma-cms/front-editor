@@ -113,11 +113,11 @@ class DevRenderer extends PrismaCmsRenderer {
 
 
 
-  renderMenu() {
+  // renderMenu() {
 
-    return <MainMenu />
-    // return null;
-  }
+  //   return <MainMenu />
+  //   // return null;
+  // }
 
 
   renderWrapper() {
@@ -139,29 +139,35 @@ class DevRenderer extends PrismaCmsRenderer {
       ...other
     } = this.props;
 
-    // return pure ? <App
-    //   {...other}
-    // /> :
-    //   <div
-    //     className={classes.root}
-    //   >
-    //     <style
-    //       dangerouslySetInnerHTML={{
-    //         __html: `
-    //         body, html, #root{
-    //           height: 100%;
-    //         }
-    //       `,
-    //       }}
-    //     />
-    //     {super.render()}
-    //   </div>;
-
     return pure ? <App
       {...other}
-    />
-      :
-      super.render();
+    /> :
+      <div
+        className={classes.root}
+      >
+        <style
+          dangerouslySetInnerHTML={{
+            __html: `
+            /* 
+            body, html, #root{
+              height: 100%;
+            }
+            */
+            #root {
+              position: relative;
+              overflow: auto;
+            }
+          `,
+          }}
+        />
+        {super.render()}
+      </div>;
+
+    // return pure ? <App
+    //   {...other}
+    // />
+    //   :
+    // super.render();
 
   }
 

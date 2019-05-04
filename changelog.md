@@ -1,3 +1,4 @@
+1.12.0
 =================================
 - Added query builder
 - Connectors code refactoring

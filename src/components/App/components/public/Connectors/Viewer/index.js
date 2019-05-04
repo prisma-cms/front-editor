@@ -309,10 +309,8 @@ class Viewer extends Component {
         if (OperationDefinition) {
 
           const {
-            name: {
-              value,
-            },
-          } = OperationDefinition;
+            value,
+          } = OperationDefinition.name || {};
 
           return value;
 

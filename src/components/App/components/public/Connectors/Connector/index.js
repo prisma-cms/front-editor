@@ -28,6 +28,7 @@ class Connector extends EditorComponent {
     pagevariable: "page",
     filtersname: "filters",
     first: 10,
+    orderBy: undefined,
   };
 
 

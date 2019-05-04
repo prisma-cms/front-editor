@@ -192,7 +192,7 @@ class FrontEditorRoot extends PrismaCmsComponent {
             right: 0,
             width: "auto",
             background: "rgba(255,255,255,0.5)",
-            zIndex: 1000,
+            zIndex: 2000,
           }}
         >
           <Grid
