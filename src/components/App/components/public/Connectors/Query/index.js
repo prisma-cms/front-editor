@@ -31,6 +31,8 @@ class Query extends EditorComponent {
 
   renderChildren() {
 
+    // console.log("QueryProps", { ...this });
+
     const {
       activeItem,
     } = this.getEditorContext();

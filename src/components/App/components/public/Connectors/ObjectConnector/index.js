@@ -7,19 +7,10 @@ import { FormControl } from 'material-ui';
 import { InputLabel } from 'material-ui';
 import { MenuItem } from 'material-ui';
 
-import {
-  createContext,
-} from 'react';
-
-import Context from "@prisma-cms/context";
-
-import { graphql } from 'react-apollo';
-import gql from 'graphql-tag';
 import EditorComponent from '../../..';
 import { Typography } from 'material-ui';
 import { ConnectorContext } from '../Connector';
 import { ObjectView } from '../Viewer';
-import { parse } from 'graphql';
 
 
 // export const ConnectorContext = createContext({});
@@ -437,163 +428,7 @@ class ObjectConnector extends EditorComponent {
   }
 
 
-
-  // getFilters() {
-
-  //   const {
-  //     filtersname,
-  //     // pagevariable,
-  //   } = this.getComponentProps(this);
-
-  //   const {
-  //     uri,
-  //   } = this.context;
-
-
-  //   let {
-  //     // [pagevariable]: page,
-  //     [filtersname]: filters,
-  //   } = uri.query(true);
-
-  //   try {
-  //     filters = filters && JSON.parse(filters) || null;
-  //   }
-  //   catch (error) {
-  //     console.error(console.error(error));
-  //   }
-
-  //   return filters || {};
-  // }
-
-
-  // setFilters(filters) {
-
-  //   const {
-  //     uri,
-  //     router: {
-  //       history,
-  //     },
-  //   } = this.context;
-
-  //   const {
-  //     filtersname,
-  //   } = this.getComponentProps(this);
-
-  //   let newUri = uri.clone();
-
-  //   try {
-
-  //     filters = filters ? JSON.stringify(filters) : undefined;
-  //   }
-  //   catch (error) {
-  //     console.error(error);
-  //   }
-
-  //   if (filters === "{}") {
-  //     filters = null;
-  //   }
-
-  //   if (filters) {
-
-  //     if (newUri.hasQuery) {
-  //       newUri = newUri.setQuery({
-  //         [filtersname]: filters,
-  //       });
-  //     }
-  //     else {
-  //       newUri = newUri.addQuery({
-  //         [filtersname]: filters,
-  //       });
-  //     }
-
-  //   }
-  //   else {
-
-  //     newUri.removeQuery("filters");
-
-  //   }
-
-  //   newUri.removeQuery("page");
-
-
-  //   const url = newUri.resource();
-
-
-  //   history.push(url);
-
-  // }
-
-
-
-
-  // renderMainView() {
-
-  //   const {
-  //     props: {
-  //       orderBy,
-  //       query,
-  //       ...otherProps
-  //     },
-  //     where: propsWhere,
-  //     ...other
-  //   } = this.getRenderProps();
-
-
-  //   // const {
-  //   // } = this.getComponentProps(this);
-
-  //   const filters = this.getFilters();
-
-
-  //   let where;
-
-  //   let AND = [];
-
-  //   if (propsWhere) {
-  //     // AND.push({
-  //     //   ...propsWhere,
-  //     // });
-  //     AND.push(propsWhere);
-  //   }
-
-  //   if (filters) {
-  //     AND.push(filters);
-  //   }
-
-  //   if (AND.length) {
-
-
-  //     where = {
-  //       AND,
-  //     }
-  //   }
-
-
-
-  //   return <div
-  //     {...other}
-  //   >
-  //     <Viewer
-  //       key={query}
-  //       query={query}
-  //       setFilters={filters => this.setFilters(filters)}
-  //       filters={filters || []}
-  //       where={where}
-  //       {...otherProps}
-  //     >
-  //       {super.renderMainView()}
-  //     </Viewer>
-
-  //   </div>
-  // }
-
-
-
   getFilters() {
-
-
-
-
 
 
     const {
@@ -672,9 +507,6 @@ class ObjectConnector extends EditorComponent {
 
     }
 
-    // return super.renderChildren();
-
-
 
 
     if (!query && !parentQuery) {
@@ -701,14 +533,20 @@ class ObjectConnector extends EditorComponent {
 
 
       /**
-       * Если элемент находится в роутере, пытаемся получить параметры из УРЛ
+       * Если элемент находится в роутере, пытаемся получить параметры из УРЛ.
+       * Так как у нас добавился еще объект Query, который может возникнуть между 
+       * коннектором и роутером. то роутинг смотрим и в прародителе
        */
       // let matchParams;
+
+      // console.log("this.context", { ...this.context });
+      // console.log("this.context parent", { ...parent });
 
       if (parent) {
 
         const {
           match,
+          parent: grandParent,
         } = parent.props;
 
         const {
@@ -716,43 +554,27 @@ class ObjectConnector extends EditorComponent {
         } = match || {};
 
 
-
-
-
         if (params) {
           where = params;
         }
+        else if (grandParent) {
+
+          const {
+            match,
+          } = grandParent.props;
+
+          const {
+            params,
+          } = match || {};
+
+          if (params) {
+            where = params;
+          }
+
+        }
       }
 
-
-
     }
-
-
-
-
-    // let AND = [];
-
-    // if (propsWhere) {
-    //   // AND.push({
-    //   //   ...propsWhere,
-    //   // });
-    //   AND.push(propsWhere);
-    // }
-
-    // if (filters) {
-    //   AND.push(filters);
-    // }
-
-    // if (AND.length) {
-
-
-    //   where = {
-    //     AND,
-    //   }
-    // }
-
-
 
     return <ObjectView
       {...otherProps}
@@ -772,116 +594,6 @@ class ObjectConnector extends EditorComponent {
 
 }
 
-
-
-// class Viewer extends Component {
-
-//   static contextType = Context;
-
-
-//   componentWillMount() {
-
-
-//     const {
-//       query,
-//     } = this.props;
-
-
-
-//     if (query) {
-
-//       const {
-//         query: {
-//           [query]: apiQuery,
-//         },
-//       } = this.context;
-
-//       this.Renderer = graphql(gql(apiQuery))(props => {
-
-//         const {
-//           children,
-//           ...other
-//         } = props;
-
-
-
-//         return <ConnectorContext.Consumer>
-//           {context => <ConnectorContext.Provider
-//             value={{
-//               ...context,
-//               ...other,
-//             }}
-//           >
-//             {children}
-//           </ConnectorContext.Provider>}
-//         </ConnectorContext.Consumer>;
-
-//       });
-
-//     }
-
-//     super.componentWillMount && super.componentWillMount();
-//   }
-
-
-//   render() {
-
-//     const {
-//       query,
-//       children,
-//       // first,
-//       // pagevariable: pageVariable = "page",
-//       ...other
-//     } = this.props;
-
-//     const {
-//       Renderer,
-//     } = this;
-
-
-
-
-//     // const {
-//     //   uri,
-//     // } = this.context;
-
-
-//     // let {
-//     //   [pageVariable]: page,
-//     // } = uri.query(true);
-
-
-//     // page = parseInt(page) || 0;
-
-//     // const skip = page ? (page - 1) * first : 0;
-
-
-
-//     // return "Sdfdsf";
-
-
-
-//     return <ConnectorContext.Provider
-//       value={{
-//         query,
-//         // pageVariable,
-//       }}
-//     >
-//       {Renderer ?
-//         <Renderer
-//           // page={page}
-//           // skip={skip}
-//           // first={first}
-//           {...other}
-//         >
-//           {children}
-//         </Renderer> :
-//         children
-//       }
-//     </ConnectorContext.Provider>
-
-//   }
-// }
 
 
 export default ObjectConnector;

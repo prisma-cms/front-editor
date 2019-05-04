@@ -1,6 +1,7 @@
 =================================
 - Added query builder
 - Connectors code refactoring
+- Fix router objectConnector
 
 1.11.4
 =================================

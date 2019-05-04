@@ -219,7 +219,7 @@ class FrontEditor extends Component {
       PageHeader,
       Switch,
       Route,
-      RoutedObject,
+      // RoutedObject,
       // ParralaxTest,
       // DraftEditor,
     ],
