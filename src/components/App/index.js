@@ -38,6 +38,7 @@ import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 import MarketPlace from './marketplace';
 import Button from './components/public/Button';
+import Query from './components/public/Connectors/Query';
 
 const styles = theme => {
 
@@ -200,6 +201,7 @@ class FrontEditor extends Component {
       Tag,
       // TextArea,
       UsersGrid,
+      Query,
       Connector,
       ObjectConnector,
       ListView,

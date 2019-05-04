@@ -18,6 +18,8 @@ import gql from 'graphql-tag';
 import EditorComponent from '../../..';
 import { Typography } from 'material-ui';
 import { ConnectorContext } from '../Connector';
+import { ObjectView } from '../Viewer';
+import { parse } from 'graphql';
 
 
 // export const ConnectorContext = createContext({});
@@ -624,6 +626,22 @@ class ObjectConnector extends EditorComponent {
   renderChildren() {
 
     const {
+      schema,
+    } = this.context;
+
+    /**
+     * schema required for viewer
+     */
+    if (!schema) {
+      return null;
+    }
+
+    const {
+      parent: offsetParent,
+    } = this.props;
+
+
+    const {
       props: {
         orderBy,
         query,
@@ -636,12 +654,30 @@ class ObjectConnector extends EditorComponent {
 
 
 
+    /**
+     * Если есть родитель и у родителя имеется свойство query, то используем его
+     */
+
+    let parentQuery;
+
+    if (offsetParent) {
+
+      const {
+        query,
+      } = offsetParent.props.data.object.props;
+
+      if (query) {
+        parentQuery = query;
+      }
+
+    }
 
     // return super.renderChildren();
 
+    // console.log("parentQuery", parentQuery);
 
 
-    if (!query) {
+    if (!query && !parentQuery) {
       return <Typography
         color="error"
       >
@@ -718,131 +754,134 @@ class ObjectConnector extends EditorComponent {
 
 
 
-    return <Viewer
+    return <ObjectView
       {...otherProps}
       {...this.getComponentProps(this)}
       key={query}
       query={query}
+      parentQuery={parentQuery}
       setFilters={filters => this.setFilters(filters)}
       filters={filters || []}
       where={where}
+      ConnectorContext={ConnectorContext}
     >
       {super.renderChildren()}
-    </Viewer>
+    </ObjectView>
   }
+
 
 }
 
 
 
-class Viewer extends Component {
+// class Viewer extends Component {
 
-  static contextType = Context;
-
-
-  componentWillMount() {
+//   static contextType = Context;
 
 
-    const {
-      query,
-    } = this.props;
+//   componentWillMount() {
 
 
-
-    if (query) {
-
-      const {
-        query: {
-          [query]: apiQuery,
-        },
-      } = this.context;
-
-      this.Renderer = graphql(gql(apiQuery))(props => {
-
-        const {
-          children,
-          ...other
-        } = props;
+//     const {
+//       query,
+//     } = this.props;
 
 
 
-        return <ConnectorContext.Consumer>
-          {context => <ConnectorContext.Provider
-            value={{
-              ...context,
-              ...other,
-            }}
-          >
-            {children}
-          </ConnectorContext.Provider>}
-        </ConnectorContext.Consumer>;
+//     if (query) {
 
-      });
+//       const {
+//         query: {
+//           [query]: apiQuery,
+//         },
+//       } = this.context;
 
-    }
+//       this.Renderer = graphql(gql(apiQuery))(props => {
 
-    super.componentWillMount && super.componentWillMount();
-  }
-
-
-  render() {
-
-    const {
-      query,
-      children,
-      // first,
-      // pagevariable: pageVariable = "page",
-      ...other
-    } = this.props;
-
-    const {
-      Renderer,
-    } = this;
+//         const {
+//           children,
+//           ...other
+//         } = props;
 
 
 
+//         return <ConnectorContext.Consumer>
+//           {context => <ConnectorContext.Provider
+//             value={{
+//               ...context,
+//               ...other,
+//             }}
+//           >
+//             {children}
+//           </ConnectorContext.Provider>}
+//         </ConnectorContext.Consumer>;
 
-    // const {
-    //   uri,
-    // } = this.context;
+//       });
 
+//     }
 
-    // let {
-    //   [pageVariable]: page,
-    // } = uri.query(true);
-
-
-    // page = parseInt(page) || 0;
-
-    // const skip = page ? (page - 1) * first : 0;
-
-
-
-    // return "Sdfdsf";
-
+//     super.componentWillMount && super.componentWillMount();
+//   }
 
 
-    return <ConnectorContext.Provider
-      value={{
-        query,
-        // pageVariable,
-      }}
-    >
-      {Renderer ?
-        <Renderer
-          // page={page}
-          // skip={skip}
-          // first={first}
-          {...other}
-        >
-          {children}
-        </Renderer> :
-        children
-      }
-    </ConnectorContext.Provider>
+//   render() {
 
-  }
-}
+//     const {
+//       query,
+//       children,
+//       // first,
+//       // pagevariable: pageVariable = "page",
+//       ...other
+//     } = this.props;
+
+//     const {
+//       Renderer,
+//     } = this;
+
+
+
+
+//     // const {
+//     //   uri,
+//     // } = this.context;
+
+
+//     // let {
+//     //   [pageVariable]: page,
+//     // } = uri.query(true);
+
+
+//     // page = parseInt(page) || 0;
+
+//     // const skip = page ? (page - 1) * first : 0;
+
+
+
+//     // return "Sdfdsf";
+
+
+
+//     return <ConnectorContext.Provider
+//       value={{
+//         query,
+//         // pageVariable,
+//       }}
+//     >
+//       {Renderer ?
+//         <Renderer
+//           // page={page}
+//           // skip={skip}
+//           // first={first}
+//           {...other}
+//         >
+//           {children}
+//         </Renderer> :
+//         children
+//       }
+//     </ConnectorContext.Provider>
+
+//   }
+// }
 
 
 export default ObjectConnector;

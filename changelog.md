@@ -1,3 +1,7 @@
+=================================
+- Added query builder
+- Connectors code refactoring
+
 1.11.4
 =================================
 - Fix onClick()

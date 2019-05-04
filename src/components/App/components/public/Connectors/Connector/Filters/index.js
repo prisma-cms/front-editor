@@ -61,19 +61,19 @@ class Filters extends EditorComponent {
 
 
         const {
-          query,
+          queryName,
           filters,
           setFilters,
           ...other
         } = context;
 
-        if (!query) {
+        if (!queryName) {
           return null;
         }
 
 
         return <PrismaCmsFilters
-          queryName={query}
+          queryName={queryName}
           filters={filters}
           setFilters={setFilters}
         />;

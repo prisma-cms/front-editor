@@ -11,12 +11,9 @@ import {
   createContext,
 } from 'react';
 
-import Context from "@prisma-cms/context";
-
-import { graphql } from 'react-apollo';
-import gql from 'graphql-tag';
 import EditorComponent from '../../..';
 import { Typography } from 'material-ui';
+import { ObjectsView } from '../Viewer';
 
 export const ConnectorContext = createContext({});
 
@@ -745,6 +742,21 @@ class Connector extends EditorComponent {
   renderChildren() {
 
     const {
+      schema,
+    } = this.context;
+
+    /**
+     * schema required for viewer
+     */
+    if (!schema) {
+      return null;
+    }
+
+    const {
+      parent,
+    } = this.props;
+
+    const {
       props: componentProps,
       where: propsWhere,
       ...other
@@ -757,8 +769,30 @@ class Connector extends EditorComponent {
       ...otherProps
     } = componentProps || {};
 
+    // console.log("Connector props", { ...this.props });
 
-    if (!query) {
+    /**
+     * Если есть родитель и у родителя имеется свойство query, то используем его
+     */
+
+    let parentQuery;
+
+    if (parent) {
+
+      const {
+        query,
+      } = parent.props.data.object.props;
+
+      if (query) {
+        parentQuery = query;
+      }
+
+    }
+
+
+    // console.log("Connector props parentQuery", parentQuery);
+
+    if (!query && !parentQuery) {
       return <Typography
         color="error"
       >
@@ -808,126 +842,23 @@ class Connector extends EditorComponent {
 
 
 
-    return <Viewer
+    return <ObjectsView
       key={query}
       query={query}
+      parentQuery={parentQuery}
       setFilters={filters => this.setFilters(filters)}
       filters={filters || []}
       {...otherProps}
       {...this.getComponentProps(this)}
       where={where}
+      ConnectorContext={ConnectorContext}
     >
       {super.renderChildren()}
-    </Viewer>
+    </ObjectsView>
   }
 
 }
 
-
-
-class Viewer extends Component {
-
-  static contextType = Context;
-
-
-  componentWillMount() {
-
-
-    const {
-      query,
-    } = this.props;
-
-
-    if (query) {
-
-      const {
-        query: {
-          [query]: apiQuery,
-        },
-      } = this.context;
-
-      this.Renderer = graphql(gql(apiQuery))(props => {
-
-
-
-        const {
-          children,
-          ...other
-        } = props;
-
-        return <ConnectorContext.Consumer>
-          {context => <ConnectorContext.Provider
-            value={{
-              ...context,
-              ...other,
-            }}
-          >
-            {children}
-          </ConnectorContext.Provider>}
-        </ConnectorContext.Consumer>;
-
-      });
-
-    }
-
-    super.componentWillMount && super.componentWillMount();
-  }
-
-
-  render() {
-
-    const {
-      query,
-      children,
-      first,
-      pagevariable: pageVariable = "page",
-      ...other
-    } = this.props;
-
-    const {
-      Renderer,
-    } = this;
-
-
-    const {
-      uri,
-    } = this.context;
-
-
-    let {
-      [pageVariable]: page,
-    } = uri.query(true);
-
-
-    page = parseInt(page) || 0;
-
-    const skip = page ? (page - 1) * first : 0;
-
-
-
-    // return "Sdfdsf";
-
-    return <ConnectorContext.Provider
-      value={{
-        query,
-        pageVariable,
-      }}
-    >
-      {Renderer ?
-        <Renderer
-          page={page}
-          skip={skip}
-          first={first}
-          {...other}
-        >
-          {children}
-        </Renderer> :
-        children
-      }
-    </ConnectorContext.Provider>
-
-  }
-}
 
 
 export default Connector;
