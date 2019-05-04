@@ -50,7 +50,7 @@ class TemplateWrapper extends EditorComponent {
     return <ObjectContext.Consumer>
       {context => {
 
-        // console.log("TemplateWrapper context", { ...context });
+
 
         const {
           object,
@@ -255,9 +255,9 @@ class TemplateWrapper extends EditorComponent {
 
     // alert("Sdfsdfs");
 
-    // console.log("TemplateWrapper props", { ...this.props });
 
-    // console.log("newObject", newObject);
+
+
 
     if (activeItem) {
       activeItem.addComponent(newObject);
@@ -281,7 +281,7 @@ class TemplateWrapper extends EditorComponent {
         },
       } = this.context;
 
-      // console.log("deleteTemplate", deleteTemplate);
+
 
       this.mutate({
         mutation: gql(deleteTemplate),

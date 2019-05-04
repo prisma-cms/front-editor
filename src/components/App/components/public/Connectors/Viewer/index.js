@@ -39,7 +39,7 @@ class Viewer extends Component {
      */
     let queryName;
 
-    // console.log("queryName parentQuery", parentQuery);
+
 
     if (query) {
 
@@ -63,7 +63,7 @@ class Viewer extends Component {
 
     }
 
-    // console.log("queryName queryName", queryName);
+
 
     if (Query) {
 
@@ -116,11 +116,11 @@ class Viewer extends Component {
        * Проходим запрос на предмет директив в фрагментах
        */
 
-      // console.log("ConnectorViewer Query", Query);
+
 
       const parsedQuery = parse(Query);
 
-      // console.log("ConnectorViewer Query parsedQuery", parsedQuery);
+
 
       if (parsedQuery && schema) {
 
@@ -172,25 +172,25 @@ class Viewer extends Component {
                   },
                 } = typeCondition;
 
-                // console.log("ConnectorViewer Query parsedQuery type", type);
 
-                // console.log("ConnectorViewer Query parsedQuery schema", schema, this.context);
-                // console.log("ConnectorViewer Query parsedQuery schema", { ...schema });
 
-                // console.log("ConnectorViewer Query parsedQuery schema context", this.context);
+
+
+
+
 
                 /**
                  * Если указана автоподгрузка типов и получен тип, то получаем все скалярные поля для этого типа
                  */
 
-                // console.log("ConnectorViewer Query parsedQuery needAutoloadFields", needAutoloadFields);
 
-                // console.log("ConnectorViewer Query parsedQuery start end", start, end);
-                // console.log("ConnectorViewer Query parsedQuery source body", body);
+
+
+
 
                 const fragmentSource = body.slice(start, end);
 
-                // console.log("ConnectorViewer Query parsedQuery fragmentSource", fragmentSource);
+
 
                 if (type) {
 
@@ -205,7 +205,7 @@ class Viewer extends Component {
 
                   });
 
-                  // console.log("ConnectorViewer Query parsedQuery field", { ...field });
+
 
 
                   if (field) {
@@ -215,7 +215,7 @@ class Viewer extends Component {
                     } = field;
 
 
-                    // console.log("ConnectorViewer Query parsedQuery fields", fields);
+
 
                     fields = fields.filter(n => {
 
@@ -223,7 +223,7 @@ class Viewer extends Component {
                     });
 
 
-                    // console.log("ConnectorViewer Query parsedQuery fields filtered", fields);
+
 
                     /**
                      * Если были получены скалярные поля,
@@ -233,13 +233,13 @@ class Viewer extends Component {
 
                       const fieldsList = "\n" + fields.map(({ name }) => name).join("\n") + "\n";
 
-                      // console.log("ConnectorViewer Query parsedQuery fieldsList", fieldsList);
+
 
                       const position = end - 1;
 
                       Query = [Query.slice(0, position), fieldsList, Query.slice(position)].join('');
 
-                      // console.log("ConnectorViewer new Query", Query);
+
 
                     }
 
@@ -293,10 +293,10 @@ class Viewer extends Component {
 
     const parsedSchema = parse(query);
 
-    console.log("queryName parsedSchema query", query);
+
 
     if (parsedSchema) {
-      console.log("queryName parsedSchema", parsedSchema);
+
 
       const {
         definitions,
@@ -418,7 +418,7 @@ export class ObjectView extends Viewer {
       queryName,
     } = this.state;
 
-    console.log("queryName", queryName);
+
 
 
     return <ConnectorContext.Provider

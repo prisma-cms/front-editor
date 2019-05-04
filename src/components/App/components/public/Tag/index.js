@@ -216,7 +216,7 @@ class Tag extends EditorComponent {
           },
           onFocus: event => {
 
-            // console.log("Tag onFocus", event);
+
 
             const {
               activeItem,
@@ -231,7 +231,7 @@ class Tag extends EditorComponent {
           },
           onBlur: event => {
 
-            // console.log("Tag onBlur", event);
+
 
             const {
               activeItem,

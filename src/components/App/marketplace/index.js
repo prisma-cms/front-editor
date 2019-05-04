@@ -83,7 +83,7 @@ class MarketPlace extends PrismaCmsComponent {
       activeItem,
     } = this.props;
 
-    // console.log("getLocalTemplates props", { ...this.props });
+
 
     return <FrontEditor
       inEditMode={false}

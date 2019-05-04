@@ -158,13 +158,13 @@ class TemplatesPage extends Page {
 
     const where = this.getFilters();
 
-    // console.log("Page", this);
+
 
     let {
       templates_page: page,
     } = uri.query(true);
 
-    // console.log("Page page", page);
+
 
     page = parseInt(page) || 0;
 

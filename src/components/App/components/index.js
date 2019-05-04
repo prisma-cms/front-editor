@@ -279,11 +279,11 @@ class EditorComponent extends ObjectEditable {
       onDragEnd,
     } = this.getEditorContext();
 
-    // console.log("onDrop", { ...event });
 
-    // console.log("onDrop dragItem", { ...dragItem });
-    // console.log("onDrop dragItem getActiveItem", { ...dragItem.getActiveItem() });
-    // console.log("onDrop dragItem parent", { ...dragItem.getActiveParent() });
+
+
+
+
 
 
     if (dragItem && dragTarget && dragTarget === this) {
@@ -304,7 +304,7 @@ class EditorComponent extends ObjectEditable {
           parent: dragItemParent,
         } = dragItem.props;
 
-        // console.log("onDrop dragItem this", { ...this });
+
 
         /**
          * Нельзя переносить элементы, у которых нет родителя
@@ -328,7 +328,7 @@ class EditorComponent extends ObjectEditable {
 
           const component = dragItem.getComponentInParent();
 
-          // console.log("dragItem component", component);
+
 
           if (component) {
 
@@ -343,7 +343,7 @@ class EditorComponent extends ObjectEditable {
 
             const index = components.indexOf(component);
 
-            // console.log("dragItem component index", index);
+
 
             /**
              * Если компонент найден, то исключаем его из массива
@@ -443,7 +443,7 @@ class EditorComponent extends ObjectEditable {
 
       const index = components.indexOf(component);
 
-      // console.log("dragItem component index", index);
+
 
       /**
        * Если элемент не на первом месте, двигаем его
@@ -632,7 +632,7 @@ class EditorComponent extends ObjectEditable {
 
     const activeParent = this.getActiveParent();
 
-    // console.log("updateParentComponents activeParent", activeParent, activeParent === this);
+
 
     if (!activeParent) {
       // throw new Error("Can not get absParent");
@@ -659,7 +659,7 @@ class EditorComponent extends ObjectEditable {
    */
   getActiveParent() {
 
-    // console.log("getActiveParent", { ...this });
+
 
     const {
       parent,
@@ -704,7 +704,7 @@ class EditorComponent extends ObjectEditable {
    */
   onClick(event) {
 
-    // console.log("this onClick", { ...event });
+
 
 
     // if (event.target === event.currentTarget) {
@@ -730,7 +730,7 @@ class EditorComponent extends ObjectEditable {
       event.preventDefault();
       event.stopPropagation();
 
-      // console.log("onMouseOver", { ...event });
+
 
       const {
         setHoveredItem,
@@ -792,8 +792,8 @@ class EditorComponent extends ObjectEditable {
         return false;
       }
 
-      // console.log("canBeDropped this", this);
-      // console.log("canBeDropped dragItem", dragItem);
+
+
 
       let Parent = this.props.parent;
 
@@ -805,7 +805,7 @@ class EditorComponent extends ObjectEditable {
 
         // Parent = Parent.props.parent;
 
-        // console.log("canBeDropped Parent", Parent);
+
 
       }
 
@@ -1096,7 +1096,7 @@ class EditorComponent extends ObjectEditable {
       id: parentId,
     } = activeParent.getObjectWithMutations();
 
-    // console.log("activeParent", activeParent);
+
 
     const deletable = this.isDeletable();
 
@@ -1323,8 +1323,8 @@ class EditorComponent extends ObjectEditable {
               event.stopPropagation();
 
 
-              // console.log("Сохранить в отдельный компонент", { ...this.context });
-              // console.log("Сохранить в отдельный компонент this", { ...this });
+
+
 
               const {
                 query: {
@@ -1370,7 +1370,7 @@ class EditorComponent extends ObjectEditable {
               })
                 .then(r => {
 
-                  // console.log("save result", r);
+
 
                   const {
                     success,
@@ -1460,7 +1460,7 @@ class EditorComponent extends ObjectEditable {
       }}
       onClick={event => {
 
-        // console.log("onClick", { ...event });
+
 
         /**
         Важно! Хотя этот блок отрендерен через портал в другую часть HTML-документа, на него распростроняются ивенты
@@ -2110,8 +2110,8 @@ class EditorComponent extends ObjectEditable {
       parent,
     } = this.props;
 
-    // console.log("getComponentInParent object", { ...object });
-    // console.log("getComponentInParent parent", { ...parent });
+
+
 
     // let {
     //   components,
@@ -2144,7 +2144,7 @@ class EditorComponent extends ObjectEditable {
 
     }
 
-    // console.log("getComponentInParent components", components);
+
 
     const index = components.indexOf(object);
 
@@ -2327,7 +2327,7 @@ class EditorComponent extends ObjectEditable {
               draggable={true}
               onDragStart={event => {
 
-                // console.log("onDragStart", { ...event });
+
 
                 // event.dataTransfer.setData("text/plain", "ev.target.id");
 
@@ -2337,7 +2337,7 @@ class EditorComponent extends ObjectEditable {
               onClick={event => {
                 event.preventDefault();
                 event.stopPropagation();
-                // console.log("Tag badge onClick", event);
+
               }}
             >
               <DragIcon
@@ -2351,7 +2351,7 @@ class EditorComponent extends ObjectEditable {
                 onClick={event => {
                   event.preventDefault();
                   event.stopPropagation();
-                  // console.log("Tag badge onClick", event);
+
 
                   this.moveBlockUp();
                 }}
@@ -2370,7 +2370,7 @@ class EditorComponent extends ObjectEditable {
                 onClick={event => {
                   event.preventDefault();
                   event.stopPropagation();
-                  // console.log("Tag badge onClick", event);
+
 
                   this.moveBlockDown();
                 }}
@@ -2424,7 +2424,7 @@ class EditorComponent extends ObjectEditable {
     }
 
 
-    // console.log("inner2", inner);
+
 
     // if (!inner.length) {
     //   inner = undefined;
@@ -2496,7 +2496,7 @@ class EditorComponent extends ObjectEditable {
       })
 
       // if (this.isActive()) {
-      //   console.log("prepareRootElementProps style", { ...style }, JSON.stringify(style, true, 2));
+
       // }
 
     }
@@ -2534,8 +2534,8 @@ class EditorComponent extends ObjectEditable {
 
     const object = this.getObjectWithMutations();
 
-    // console.log(`renderChildren ${this.constructor.Name} createTemplate`, createTemplate);
-    // console.log(`renderChildren ${this.constructor.Name} updateTemplate`, updateTemplate);
+
+
 
     const {
       // props,
@@ -2563,8 +2563,8 @@ class EditorComponent extends ObjectEditable {
 
 
         // if (templateId) {
-        //   console.log("id renderChildren", { ...n });
-        //   console.log("id renderChildren this", { ...this });
+
+
         // }
 
 
@@ -2572,9 +2572,9 @@ class EditorComponent extends ObjectEditable {
 
         if (Component) {
 
-          // console.log("Component", Component);
 
-          // console.log("Component props", { ...this.props });
+
+
 
           if (templateId) {
 
@@ -2598,7 +2598,7 @@ class EditorComponent extends ObjectEditable {
               updateTemplate={updateTemplate}
             // mutate={async (options) => {
 
-            //   console.log("mutate options", { ...options }, mutate);
+
 
             //   return mutate(options);
             // }}

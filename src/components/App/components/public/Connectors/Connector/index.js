@@ -769,7 +769,7 @@ class Connector extends EditorComponent {
       ...otherProps
     } = componentProps || {};
 
-    // console.log("Connector props", { ...this.props });
+
 
     /**
      * Если есть родитель и у родителя имеется свойство query, то используем его
@@ -790,7 +790,7 @@ class Connector extends EditorComponent {
     }
 
 
-    // console.log("Connector props parentQuery", parentQuery);
+
 
     if (!query && !parentQuery) {
       return <Typography

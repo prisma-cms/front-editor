@@ -39,7 +39,7 @@ export class TemplateView extends PrismaCmsComponent {
 
   render() {
 
-    // console.log("TemplateView props", { ...this.props });
+
 
 
     const {

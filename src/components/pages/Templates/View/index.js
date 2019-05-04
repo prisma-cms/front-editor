@@ -113,8 +113,8 @@ export class TemplatesListView extends PrismaCmsComponent {
       uri,
     } = this.context;
 
-    // console.log("TemplatesListView", this);
-    // console.log("TemplatesListView props", { ...this.props });
+
+
 
     const {
       data: {

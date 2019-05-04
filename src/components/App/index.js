@@ -42,7 +42,7 @@ import Query from './components/public/Connectors/Query';
 
 const styles = theme => {
 
-  // console.log("theme", { ...theme });
+
 
   const {
     breakpoints,
@@ -269,11 +269,11 @@ class FrontEditor extends Component {
       },
     } = this.context;
 
-    // console.log("template", template);
+
 
     this.TemplateRenderer = graphql(gql(template))(options => {
 
-      // console.log("TemplateRenderer props", { ...props });
+
 
       const {
         Component,
@@ -1111,7 +1111,7 @@ class FrontEditor extends Component {
       return null;
     }
 
-    // console.log("Editor props", { ...this.props });
+
 
     const RenderComponents = this.getComponents();
 

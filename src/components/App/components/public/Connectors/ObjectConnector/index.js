@@ -674,7 +674,7 @@ class ObjectConnector extends EditorComponent {
 
     // return super.renderChildren();
 
-    // console.log("parentQuery", parentQuery);
+
 
 
     if (!query && !parentQuery) {
