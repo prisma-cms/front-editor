@@ -68,6 +68,7 @@ class EditorComponent extends ObjectEditable {
     mutate: emptyMutate,
     data: {},
     style: {
+      position: undefined,
       display: undefined,
       marginTop: undefined,
       marginBottom: undefined,

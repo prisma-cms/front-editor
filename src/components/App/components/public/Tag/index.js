@@ -136,7 +136,7 @@ class Tag extends EditorComponent {
       switch (tag.toLowerCase) {
 
         case "script":
-        case "link":
+        // case "link":
 
           console.error(`Tag "${tag}" not allowed`);
 
