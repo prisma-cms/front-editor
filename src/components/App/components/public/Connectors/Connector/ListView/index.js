@@ -122,6 +122,7 @@ class ListView extends EditorComponent {
   renderChildren() {
 
     const {
+      style,
       ...other
       // } = this.getRenderProps();
     } = this.getComponentProps(this);

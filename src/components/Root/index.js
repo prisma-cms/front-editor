@@ -274,11 +274,16 @@ export class RootConnector extends Component {
   static propTypes = {
     View: PropTypes.func.isRequired,
     // first: PropTypes.number,
+
+    // Get templates for current project only (via domain)
+    currentProjectOnly: PropTypes.bool.isRequired,
   }
 
   static defaultProps = {
     View: FrontEditorRoot,
     // first: 1,
+
+    currentProjectOnly: true,
   }
 
 
@@ -319,6 +324,7 @@ export class RootConnector extends Component {
       // orderBy,
       // first,
       View,
+      currentProjectOnly,
       ...other
     } = this.props;
 
@@ -328,6 +334,7 @@ export class RootConnector extends Component {
 
     const {
       user: currentUser,
+      uri,
     } = this.context;
 
 
@@ -367,15 +374,37 @@ export class RootConnector extends Component {
     // }
 
 
+    let where = {
+      OR,
+    };
+
+
+    if(currentProjectOnly) {
+
+      const domain = uri.domain();
+
+      if(!domain) {
+
+        console.error("Can not get domain");
+        return null;
+      }
+
+      Object.assign(where, {
+        PrismaProject: {
+          domain,
+        },
+      });
+
+    }
+
+
     Object.assign(conditions, {
       orderBy: "rank_DESC",
       first: 1,
     });
 
     Object.assign(conditions, {
-      where: {
-        OR,
-      },
+      where,
     });
 
     return <Renderer

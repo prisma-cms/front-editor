@@ -1,3 +1,8 @@
+1.12.1
+=================================
+- Fix ListView styles
+- Added Root::currentProjectOnly property
+
 1.12.0
 =================================
 - Added query builder
