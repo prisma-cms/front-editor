@@ -86,7 +86,6 @@ class PageHeader extends EditorComponent {
                   marginLeft: 5,
                 }}
                 variant={null}
-                {...this.props}
               >
                 <Typography
                   color="inherit"

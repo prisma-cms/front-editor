@@ -2477,6 +2477,20 @@ class EditorComponent extends ObjectEditable {
       showRoutes,
       cacheKeyPrefix,
       style: propsStyles,
+      errorDelay,
+      SaveIcon,
+      ResetIcon,
+      EditIcon,
+      mutate,
+      createdAt,
+      updatedAt,
+      externalKey,
+      CreatedBy,
+      orderBy,
+
+      // ToDo render bool props as string
+      visible,
+      staticContext,
       ...other
     } = props;
 

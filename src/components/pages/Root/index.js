@@ -1,14 +1,14 @@
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 
-import Context from "@prisma-cms/context";
+// import Context from "@prisma-cms/context";
 import PrismaCmsComponent from "@prisma-cms/component";
-import FrontEditor from "../../App";
+// import FrontEditor from "../../App";
 
-import { compose, graphql } from 'react-apollo';
-import gql from 'graphql-tag';
-import { Button } from 'material-ui';
-import PageHeader from './components/PageHeader';
+// import { compose, graphql } from 'react-apollo';
+// import gql from 'graphql-tag';
+// import { Button } from 'material-ui';
+// import PageHeader from './components/PageHeader';
 import RootConnector from '../../Root';
 
 

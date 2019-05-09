@@ -1,3 +1,8 @@
+1.12.4
+=================================
+- Fix render UserLink
+- Fix warnings
+
 1.12.3
 =================================
 - PageHeader refactoring
