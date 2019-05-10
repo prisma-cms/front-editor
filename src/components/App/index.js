@@ -39,6 +39,8 @@ import gql from 'graphql-tag';
 import MarketPlace from './marketplace';
 import Button from './components/public/Button';
 import Query from './components/public/Connectors/Query';
+import Slider from './components/public/Slider';
+import Iterable from './components/public/Connectors/Connector/ListView/Iterable';
 
 const styles = theme => {
 
@@ -205,6 +207,7 @@ class FrontEditor extends Component {
       Connector,
       ObjectConnector,
       ListView,
+      Iterable,
       ObjectView,
       Pagination,
       NamedField,
@@ -219,6 +222,7 @@ class FrontEditor extends Component {
       PageHeader,
       Switch,
       Route,
+      Slider,
       // RoutedObject,
       // ParralaxTest,
       // DraftEditor,

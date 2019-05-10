@@ -2544,7 +2544,13 @@ class EditorComponent extends ObjectEditable {
       mutate,
       createTemplate,
       updateTemplate,
+      children,
     } = this.props;
+
+
+    if (children !== undefined) {
+      return children;
+    }
 
 
     const object = this.getObjectWithMutations();

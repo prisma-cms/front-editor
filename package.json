@@ -1,6 +1,6 @@
 {
   "name": "@prisma-cms/front-editor",
-  "version": "1.12.4",
+  "version": "1.13.0",
   "private": false,
   "main": "lib/App.js",
   "scripts": {
@@ -17,7 +17,9 @@
     "@prisma-cms/context": "latest",
     "@prisma-cms/query-builder": "latest",
     "css": "^2.2.4",
-    "graphql": "14.0.2"
+    "graphql": "14.0.2",
+    "react-slick": "^0.24.0",
+    "slick-carousel": "^1.8.1"
   },
   "devDependencies": {
     "@prisma-cms/front": "latest",
