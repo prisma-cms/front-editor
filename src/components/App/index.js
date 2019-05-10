@@ -41,6 +41,7 @@ import Button from './components/public/Button';
 import Query from './components/public/Connectors/Query';
 import Slider from './components/public/Slider';
 import Iterable from './components/public/Connectors/Connector/ListView/Iterable';
+import UserPage from './components/public/pages/Users/User';
 
 const styles = theme => {
 
@@ -202,7 +203,6 @@ class FrontEditor extends Component {
       Typography,
       Tag,
       // TextArea,
-      UsersGrid,
       Query,
       Connector,
       ObjectConnector,
@@ -223,6 +223,9 @@ class FrontEditor extends Component {
       Switch,
       Route,
       Slider,
+      
+      UsersGrid,
+      UserPage,
       // RoutedObject,
       // ParralaxTest,
       // DraftEditor,
