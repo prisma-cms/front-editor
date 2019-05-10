@@ -887,6 +887,17 @@ class EditorComponent extends ObjectEditable {
       // marginTop,
       // marginBottom,
       style: defaultStyle,
+
+      createTemplate,
+      updateTemplate,
+      deleteTemplate,
+      errorDelay,
+      SaveIcon,
+      ResetIcon,
+      EditIcon,
+      cacheKeyPrefix,
+      mutate,
+      fullWidth,
       ...other
     } = component.props;
 
@@ -2474,6 +2485,7 @@ class EditorComponent extends ObjectEditable {
       classes,
       createTemplate,
       updateTemplate,
+      deleteTemplate,
       showRoutes,
       cacheKeyPrefix,
       style: propsStyles,

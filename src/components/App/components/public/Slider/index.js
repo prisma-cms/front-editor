@@ -14,10 +14,42 @@ class Slider extends Iterable {
   static defaultProps = {
     ...Iterable.defaultProps,
     dots: true,
-    infinite: true,
+    dotsClass: "slick-dots",
     speed: 500,
-    slidesToShow: 3,
     slidesToScroll: 1,
+    slidesToShow: 1,
+    slidesPerRow: 1,
+    accessibility: false,
+    adaptiveHeight: false,
+    arrows: true,
+    autoplay: false,
+    autoplaySpeed: 3000,
+    centerMode: false,
+    centerPadding: 50,
+    draggable: true,
+    easing: "linear",
+    fade: false,
+    focusOnSelect: false,
+    infinite: true,
+    initialSlide: 0,
+    lazyLoad: undefined,
+    pauseOnDotsHover: false,
+    pauseOnFocus: false,
+    pauseOnHover: true,
+    // ToDo Add array/json params
+    // responsive: array,
+    
+    rows: 1,
+    slide: "div",
+    swipe: true,
+    swipeToSlide: false,
+    touchMove: true,
+    touchThreshold: 5,
+    useCSS: true,
+    useTransform: true,
+    variableWidth: false,
+    vertical: false,
+
     style: {
       ...Iterable.defaultProps.style,
       paddingBottom: 30,
@@ -26,13 +58,13 @@ class Slider extends Iterable {
 
   static Name = "Slider"
 
-  renderPanelView() {
+  renderPanelView(content) {
 
     const {
       classes,
     } = this.getEditorContext();
 
-    return super.renderPanelView(<div
+    return super.renderPanelView(content || <div
       className={classes.panelButton}
     >
       Slider
@@ -151,6 +183,54 @@ class Slider extends Iterable {
     >
       {childs}
     </SlickSlider>
+  }
+
+
+  prepareRootElementProps(props) {
+
+    const {
+      dots,
+      dotsClass,
+      speed,
+      slidesToScroll,
+      slidesToShow,
+      slidesPerRow,
+      accessibility,
+      adaptiveHeight,
+      arrows,
+      autoplay,
+      autoplaySpeed,
+      centerMode,
+      centerPadding,
+      draggable,
+      easing,
+      fade,
+      focusOnSelect,
+      infinite,
+      initialSlide,
+      lazyLoad,
+      pauseOnDotsHover,
+      pauseOnFocus,
+      pauseOnHover,
+      // ToDo Add array/json params
+      // responsive,
+      
+      rows,
+      slide,
+      swipe,
+      swipeToSlide,
+      touchMove,
+      touchThreshold,
+      useCSS,
+      useTransform,
+      variableWidth,
+      vertical,
+      ObjectContext,
+      items,
+      ...other
+    } = super.prepareRootElementProps(props);
+
+    return other;
   }
 
 

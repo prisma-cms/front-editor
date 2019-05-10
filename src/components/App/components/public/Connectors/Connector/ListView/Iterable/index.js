@@ -13,8 +13,8 @@ class Iterable extends EditorComponent {
 
   static propTypes = {
     ...EditorComponent.propTypes,
-    items: PropTypes.array.isRequired,
-    ObjectContext: PropTypes.object.isRequired,
+    items: PropTypes.array,
+    ObjectContext: PropTypes.object,
   }
 
 
@@ -22,7 +22,7 @@ class Iterable extends EditorComponent {
 
     super(props);
   }
-  
+
 
   renderPanelView(content) {
 
@@ -48,10 +48,22 @@ class Iterable extends EditorComponent {
       children = null,
     } = this.props;
 
-    if (!items) {
+
+    /**
+     * Если не были переданы объекты или не был передан контекст,
+     * возвращаем нативный результат.
+     * Так сделано, потому что этот компонент может быть вставлен как в тело запроса (и выводить результаты из базы данных),
+     * так и просто выводить дочерние элементы
+     */
+    if (items === undefined || !ObjectContext) {
+      return super.renderChildren();
+    }
+
+    else if (!items) {
       return null;
     }
 
+    // else
 
     return items.length ? items.map((n, index) => {
 
