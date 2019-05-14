@@ -381,7 +381,15 @@ export class RootConnector extends Component {
 
     if(currentProjectOnly) {
 
-      const domain = uri.domain();
+      const domain = uri.hostname();
+      
+      // let domain = null;
+
+      // if(hostname) {
+        
+      //   console.log("hostname", hostname);
+
+      // }
 
       if(!domain) {
 
