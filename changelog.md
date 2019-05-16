@@ -1,3 +1,6 @@
+=================================
+- Added nested objects
+
 1.13.3
 =================================
 - Get template by hostname
