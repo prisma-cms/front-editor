@@ -539,8 +539,6 @@ class ObjectConnector extends EditorComponent {
        */
       // let matchParams;
 
-      // console.log("this.context", { ...this.context });
-      // console.log("this.context parent", { ...parent });
 
       if (parent) {
 

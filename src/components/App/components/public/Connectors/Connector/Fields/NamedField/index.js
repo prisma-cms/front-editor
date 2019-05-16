@@ -68,9 +68,6 @@ class NamedField extends EditorComponent {
      * Дочерние элементы выводим только в том случае, если значение массив или объект,
      * иначе есть вероятность, что на нижних уровнях компоненты попадут в контект не того объекта
      */
-    // const children = super.renderChildren();
-
-    // console.log("NamedField children", children);
 
     return <ObjectContext.Consumer>
       {context => {
@@ -104,9 +101,12 @@ class NamedField extends EditorComponent {
             [name]: value,
           } = object;
 
-          {/* console.log("NamedField value", value); */ }
 
-          if (value !== undefined) {
+          /**
+          Так как без опеределения типа данных мы можем уйти не в тот контекст, возвращаем ничего,
+          если значение отсутствует или null
+           */
+          if (value !== undefined && value !== null) {
 
             if (typeof value === "object") {
 
@@ -115,23 +115,6 @@ class NamedField extends EditorComponent {
                 Если это массив, то передаем как массив объектов.
                 Если объект, то передаем как объект
                  */
-
-                {/* console.log("NamedField Array.isArray", value); */ }
-
-                {/* output = value.filter(n => n).map((n, index) => {
-                  const {
-                    id,
-                  } = n;
-
-                  return <ObjectContext.Provider
-                    key={id || index}
-                    value={{
-                      object: n,
-                    }}
-                  >
-                    {children}
-                  </ObjectContext.Provider>
-                }); */}
 
                 output = <ConnectorContext.Provider
                   value={{
@@ -145,8 +128,6 @@ class NamedField extends EditorComponent {
 
               }
               else {
-
-                {/* console.log("NamedField value is object", { ...value }); */ }
 
                 return <ObjectContext.Provider
                   value={{

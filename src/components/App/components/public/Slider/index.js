@@ -157,8 +157,6 @@ class Slider extends Iterable {
 
     const childs = super.renderChildren();
 
-    // console.log("childs", childs);
-
     if (!childs) {
       return childs;
     }

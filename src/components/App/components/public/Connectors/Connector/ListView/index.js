@@ -100,8 +100,6 @@ class ListView extends EditorComponent {
 
         const children = super.renderChildren();
 
-        {/* console.log("children", children); */ }
-
         let output = null;
 
         /**
@@ -146,11 +144,6 @@ class ListView extends EditorComponent {
           } = child;
 
 
-          {/* 
-          console.log("Iterable child", child);
-          console.log("Iterable props", props); 
-          */}
-
           output = <Type
             {...props}
             items={items}
@@ -158,14 +151,6 @@ class ListView extends EditorComponent {
           >
             {/* {output} */}
           </Type>
-
-          {/* 
-
-          return <Iterable
-            mode="main"
-          >
-            ewfwef
-          </Iterable> */}
 
         }
         else {

@@ -383,13 +383,6 @@ export class RootConnector extends Component {
 
       const domain = uri.hostname();
       
-      // let domain = null;
-
-      // if(hostname) {
-        
-      //   console.log("hostname", hostname);
-
-      // }
 
       if(!domain) {
 
