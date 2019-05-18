@@ -38,7 +38,7 @@ class Slider extends Iterable {
     pauseOnHover: true,
     // ToDo Add array/json params
     // responsive: array,
-    
+
     rows: 1,
     slide: "div",
     swipe: true,
@@ -150,37 +150,36 @@ class Slider extends Iterable {
 
   renderChildren() {
 
-    const {
-      Grid,
-    } = this.context;
-
-
     const childs = super.renderChildren();
 
     if (!childs) {
       return childs;
     }
 
-    // const settings = {
-    //   dots: true,
-    //   infinite: true,
-    //   speed: 500,
-    //   slidesToShow: childs.length > 3 ? 3 : childs.length,
-    //   slidesToScroll: 1
-    // };
+    return <SlickSlider
+      {...this.getSliderProps()}
+    >
+      {childs}
+    </SlickSlider>
+  }
 
+
+  getSliderProps() {
 
     const {
       slidesToShow = 1,
       ...other
     } = this.getComponentProps(this);
 
-    return <SlickSlider
-      slidesToShow={childs.length > slidesToShow ? slidesToShow : childs.length}
-      {...other}
-    >
-      {childs}
-    </SlickSlider>
+    const childs = super.renderChildren();
+
+    return {
+      ref: slider => this.slider = slider,
+
+      // Fix issue https://github.com/akiran/react-slick/issues/1553
+      slidesToShow: childs.length > slidesToShow ? slidesToShow : childs.length,
+      ...other,
+    }
   }
 
 
@@ -212,7 +211,7 @@ class Slider extends Iterable {
       pauseOnHover,
       // ToDo Add array/json params
       // responsive,
-      
+
       rows,
       slide,
       swipe,
