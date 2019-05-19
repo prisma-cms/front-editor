@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import EditorComponent from '../..';
 
-import Icon from "material-ui-icons/SettingsOverscan";
+// import Icon from "material-ui-icons/SettingsOverscan";
 
-import MainMenu from "@prisma-cms/front/lib/components/App/Renderer/MainMenu";
-import Language from "@prisma-cms/front/lib/components/Language";
+// import MainMenu from "@prisma-cms/front/lib/components/App/Renderer/MainMenu";
+// import Language from "@prisma-cms/front/lib/components/Language";
 import { AppBar } from 'material-ui';
 import { Typography } from 'material-ui';
 import { Button } from 'material-ui';
@@ -14,6 +14,7 @@ class PageHeader extends EditorComponent {
 
   static defaultProps = {
     ...EditorComponent.defaultProps,
+    position: "relative",
   }
 
   static Name = "PageHeader"

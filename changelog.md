@@ -1,3 +1,7 @@
+1.14.2
+=================================
+- Set PageHeader::position relative by default
+
 1.14.1
 =================================
 - Added Slider::getSliderProps()
