@@ -44,6 +44,7 @@ import Iterable from './components/public/Connectors/Connector/ListView/Iterable
 import UserPage from './components/public/pages/Users/User';
 import AppBar from './components/public/AppBar';
 import Login from './components/public/Login';
+import ChangeLanguage from './components/public/ChangeLanguage';
 
 const styles = theme => {
 
@@ -224,6 +225,7 @@ class FrontEditor extends Component {
       PageHeader,
       AppBar,
       Login,
+      ChangeLanguage,
       Switch,
       Route,
       Slider,

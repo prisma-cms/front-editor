@@ -2,6 +2,7 @@
 - Components code refactoring
 - Added AppBar
 - Added Login
+- Added ChangeLanguage
 
 1.14.2
 =================================
