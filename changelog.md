@@ -1,8 +1,10 @@
+1.15.0
 =================================
 - Components code refactoring
 - Added AppBar
 - Added Login
 - Added ChangeLanguage
+- Added LanguageRouter
 
 1.14.2
 =================================

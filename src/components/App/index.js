@@ -45,6 +45,7 @@ import UserPage from './components/public/pages/Users/User';
 import AppBar from './components/public/AppBar';
 import Login from './components/public/Login';
 import ChangeLanguage from './components/public/ChangeLanguage';
+import LanguageRouter from './components/public/LanguageRouter';
 
 const styles = theme => {
 
@@ -222,12 +223,13 @@ class FrontEditor extends Component {
       Link,
       Button,
       Section,
+      Switch,
+      Route,
       PageHeader,
       AppBar,
       Login,
       ChangeLanguage,
-      Switch,
-      Route,
+      LanguageRouter,
       Slider,
       
       UsersGrid,

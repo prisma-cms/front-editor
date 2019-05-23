@@ -108,6 +108,7 @@ class EditorComponent extends ObjectEditable {
     name: undefined,
     contentEditable: false,
     className: undefined,
+    lang: undefined,
   }
 
 
