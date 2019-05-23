@@ -103,7 +103,9 @@ class EditorComponent extends ObjectEditable {
       visibility: undefined,
       zIndex: undefined,
     },
+    id: undefined,
     src: undefined,
+    name: undefined,
     contentEditable: false,
     className: undefined,
   }
@@ -2721,18 +2723,6 @@ class EditorComponent extends ObjectEditable {
   // }
 
 
-  renderEditableView() {
-
-    return this.renderDefaultView();
-  }
-
-
-  renderEmpty() {
-
-    return this.renderDefaultView();
-  }
-
-
   // getComponents = () => {
 
   //   const {
@@ -2742,7 +2732,25 @@ class EditorComponent extends ObjectEditable {
   //   return Components;
   // }
 
+  renderEmpty() {
+
+    return this.renderDefaultView();
+  }
+
+
+  renderEditableView() {
+
+    return this.renderDefaultView();
+  }
+
+
   renderDefaultView() {
+
+    return this.renderMainView();
+  }
+
+
+  render() {
 
 
     return <EditorContext.Consumer>
@@ -2787,7 +2795,8 @@ class EditorComponent extends ObjectEditable {
 
           case "main":
 
-            content = this.renderMainView();
+            {/* content = this.renderMainView(); */ }
+            content = super.render();
 
             break;
 

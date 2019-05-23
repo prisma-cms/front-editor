@@ -1,3 +1,6 @@
+=================================
+- Components code refactoring
+
 1.14.2
 =================================
 - Set PageHeader::position relative by default
