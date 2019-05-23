@@ -42,6 +42,8 @@ import Query from './components/public/Connectors/Query';
 import Slider from './components/public/Slider';
 import Iterable from './components/public/Connectors/Connector/ListView/Iterable';
 import UserPage from './components/public/pages/Users/User';
+import AppBar from './components/public/AppBar';
+import Login from './components/public/Login';
 
 const styles = theme => {
 
@@ -220,6 +222,8 @@ class FrontEditor extends Component {
       Button,
       Section,
       PageHeader,
+      AppBar,
+      Login,
       Switch,
       Route,
       Slider,

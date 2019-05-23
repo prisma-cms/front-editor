@@ -17,6 +17,7 @@ class Grid extends EditorComponent {
 
   static defaultProps = {
     ...EditorComponent.defaultProps,
+    alignItems: undefined,
   }
 
   static Name = "Grid"
@@ -110,7 +111,7 @@ class Grid extends EditorComponent {
         md: undefined,
         lg: undefined,
         xl: undefined,
-        alignItems: "flex-end",
+        // alignItems: "flex-end",
         spacing: 0,
       });
 
@@ -211,7 +212,7 @@ class Grid extends EditorComponent {
         else {
           Object.assign(props, {
             container: true,
-            alignItems: "flex-end",
+            // alignItems: "flex-end",
             spacing: 0,
           });
         }

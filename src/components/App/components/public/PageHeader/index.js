@@ -18,8 +18,11 @@ class PageHeader extends EditorComponent {
   }
 
   static Name = "PageHeader"
+  
 
   renderPanelView() {
+
+    return null;
 
     const {
       classes,

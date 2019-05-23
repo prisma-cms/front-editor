@@ -1,5 +1,7 @@
 =================================
 - Components code refactoring
+- Added AppBar
+- Added Login
 
 1.14.2
 =================================
