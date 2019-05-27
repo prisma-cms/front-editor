@@ -900,7 +900,7 @@ class EditorComponent extends ObjectEditable {
       EditIcon,
       cacheKeyPrefix,
       mutate,
-      fullWidth,
+      // fullWidth,
       ...other
     } = component.props;
 

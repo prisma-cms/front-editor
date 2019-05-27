@@ -46,6 +46,10 @@ import AppBar from './components/public/AppBar';
 import Login from './components/public/Login';
 import ChangeLanguage from './components/public/ChangeLanguage';
 import LanguageRouter from './components/public/LanguageRouter';
+import TextField from './components/public/form/TextField';
+import EditableObject from './components/public/form/EditableObject';
+import EditableView from './components/public/form/EditableObject/EditableView';
+import DefaultView from './components/public/form/EditableObject/DefaultView';
 
 const styles = theme => {
 
@@ -237,6 +241,11 @@ class FrontEditor extends Component {
       // RoutedObject,
       // ParralaxTest,
       // DraftEditor,
+
+      EditableObject,
+      EditableView,
+      DefaultView,
+      TextField,
     ],
     CustomComponents: [],
     className: "fullheight",

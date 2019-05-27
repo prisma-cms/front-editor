@@ -1,3 +1,10 @@
+1.16.0
+=================================
+- Added EditableObject
+- Added EditableView
+- Added DefaultView
+- Added TextField
+
 1.15.0
 =================================
 - Components code refactoring
