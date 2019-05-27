@@ -90,6 +90,7 @@ class ListView extends EditorComponent {
         const {
           objects,
           objectsConnection,
+          ...otherData
         } = data;
 
         let items = objects ? objects : objectsConnection ? objectsConnection.edges.map(n => n.node) : null;
@@ -170,6 +171,7 @@ class ListView extends EditorComponent {
                 key={id || index}
                 value={{
                   object: n,
+                  ...otherData,
                 }}
               >
                 {children}

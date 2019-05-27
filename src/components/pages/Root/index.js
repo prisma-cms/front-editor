@@ -18,7 +18,7 @@ class DevRoot extends PrismaCmsComponent {
   render() {
 
     return <RootConnector
-      inEditMode={true}
+      inEditMode={false}
       {...this.props}
       // _dirty={{
       //   components: [

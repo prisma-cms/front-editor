@@ -77,15 +77,13 @@ class ObjectView extends EditorComponent {
           return null;
         }
 
-
+{/* 
         const {
           object,
-        } = data;
+        } = data; */}
 
         return <ObjectContext.Provider
-          value={{
-            object,
-          }}
+          value={data}
         >
           {children}
         </ObjectContext.Provider>

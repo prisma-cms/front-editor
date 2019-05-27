@@ -1,3 +1,8 @@
+1.16.2
+=================================
+- Fix EditableObject init object
+- Added ObjectView pass data context
+
 1.16.1
 =================================
 - Fix EditableObject

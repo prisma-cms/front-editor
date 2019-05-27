@@ -191,11 +191,23 @@ class EditableObject extends EditorComponent {
     return <ObjectContext.Consumer>
       {context => {
 
-        {/* console.log("EditableObject context", { ...context }); */ }
+        // console.log("EditableObject context", { ...context });
 
         const {
           object,
+          loading,
         } = context;
+
+
+        /**
+        Если объекта нет и еще выполняется загрузка,
+        прерываем рендерер.
+        Иначе объект будет инициализирован как новый, то есть в режиме редактирования со свойством _dirty
+         */
+        if (!object && loading) {
+          return null;
+        }
+
 
         const {
           id: objectId,
