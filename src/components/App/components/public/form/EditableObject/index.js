@@ -188,53 +188,6 @@ class EditableObject extends EditorComponent {
     let children = super.renderChildren();
 
 
-
-    let queries = {
-
-    }
-
-    let renderChildren = children.filter(n => {
-
-      const {
-        type,
-        props: {
-          props: {
-            query,
-          },
-        },
-      } = n;
-
-      // console.log("EditableObject children type", type);
-      // console.log("EditableObject children type Query", Query);
-
-      // console.log("EditableObject children type === Query", type === Query);
-
-      if (type === Query) {
-
-        // console.log("EditableObject children type Query n", n);
-
-        // console.log("EditableObject children type Query query", query);
-
-        if (query) {
-
-          const queryName = this.getQueryNameFromQuery(query);
-
-          // console.log("EditableObject children type Query query name", queryName);
-
-          if (queryName) {
-            queries[queryName] = query;
-          }
-
-        }
-
-        if (!inEditMode) {
-          return false;
-        }
-      }
-
-      return true;
-    });
-
     return <ObjectContext.Consumer>
       {context => {
 
@@ -259,6 +212,50 @@ class EditableObject extends EditorComponent {
               const {
                 client,
               } = this.context;
+
+
+
+              let queries = {
+
+              }
+
+              children.map(n => {
+
+                const {
+                  type,
+                  props: {
+                    props: {
+                      query,
+                    },
+                  },
+                } = n;
+
+                // console.log("EditableObject children type", type);
+                // console.log("EditableObject children type Query", Query);
+
+                // console.log("EditableObject children type === Query", type === Query);
+
+                if (type === Query) {
+
+                  // console.log("EditableObject children type Query n", n);
+
+                  // console.log("EditableObject children type Query query", query);
+
+                  if (query) {
+
+                    const queryName = this.getQueryNameFromQuery(query);
+
+                    // console.log("EditableObject children type Query query name", queryName);
+
+                    if (queryName) {
+                      queries[queryName] = query;
+                    }
+
+                  }
+                }
+
+              });
+
 
               let mutation = objectId ? queries.update : queries.create;
 
@@ -293,7 +290,7 @@ class EditableObject extends EditorComponent {
           }}
           onSave={this.prepareOnSave(object)}
         >
-          {renderChildren}
+          {children}
         </Editable>;
       }
       }
@@ -578,33 +575,40 @@ class EditableObject extends EditorComponent {
   getQueryNameFromQuery(query) {
 
 
-    const parsedSchema = parse(query);
+    try {
+
+      const parsedSchema = parse(query);
 
 
 
-    if (parsedSchema) {
+      if (parsedSchema) {
 
 
-      const {
-        definitions,
-      } = parsedSchema;
+        const {
+          definitions,
+        } = parsedSchema;
 
-      if (definitions) {
+        if (definitions) {
 
-        const OperationDefinition = definitions.find(n => n.kind === "OperationDefinition");
+          const OperationDefinition = definitions.find(n => n.kind === "OperationDefinition");
 
-        if (OperationDefinition) {
+          if (OperationDefinition) {
 
-          const {
-            value,
-          } = OperationDefinition.name || {};
+            const {
+              value,
+            } = OperationDefinition.name || {};
 
-          return value;
+            return value;
+
+          }
 
         }
 
       }
 
+    }
+    catch (error) {
+      console.error(error);
     }
 
   }
