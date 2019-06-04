@@ -6,6 +6,10 @@ import { ObjectContext } from '../../ListView';
 import Icon from "material-ui-icons/ShortText";
 import { ConnectorContext } from '../..';
 
+import NumberFormat from "react-number-format";
+import moment from "moment";
+import { Typography } from 'material-ui';
+
 class NamedField extends EditorComponent {
 
 
@@ -13,6 +17,8 @@ class NamedField extends EditorComponent {
     ...EditorComponent.defaultProps,
     name: "",
     tag: "span",
+    type: undefined,
+    format: undefined,
   }
 
 
@@ -43,6 +49,56 @@ class NamedField extends EditorComponent {
   }
 
 
+  getComponentProps(component) {
+
+    const {
+      type,
+      ...props
+    } = super.getComponentProps(component);
+
+    let otherProps = {};
+
+    switch (type) {
+
+      case "number":
+
+        const {
+          thousandSeparator = " ",
+          decimalSeparator = ".",
+          decimalScale,
+          prefix,
+          suffix,
+          defaultValue,
+          isNumericString = false,
+          displayType = "text",
+          mask,
+        } = props;
+
+        otherProps = {
+          thousandSeparator,
+          decimalSeparator,
+          decimalScale: decimalScale ? parseInt(decimalScale) : undefined,
+          prefix,
+          suffix,
+          defaultValue: defaultValue ? parseFloat(defaultValue) : undefined,
+          isNumericString,
+          displayType,
+          mask,
+        }
+
+        break;
+
+    }
+
+    return {
+      type,
+      ...props,
+      ...otherProps,
+    }
+
+  }
+
+
   renderChildren() {
 
     // const {
@@ -55,6 +111,7 @@ class NamedField extends EditorComponent {
       //   ...otherProps
       // },
       name,
+      type,
       ...other
     } = this.getComponentProps(this);
 
@@ -62,6 +119,11 @@ class NamedField extends EditorComponent {
     if (!name) {
       return null;
     }
+
+
+    const {
+      inEditMode,
+    } = this.getEditorContext();
 
 
     /**
@@ -76,7 +138,7 @@ class NamedField extends EditorComponent {
 
         const {
           object,
-          ...other
+          ...otherContext
         } = context;
 
         if (!object) {
@@ -88,13 +150,6 @@ class NamedField extends EditorComponent {
 
         let output = null;
 
-        {/* 
-        if (children && children.length) {
-
-          output = children;
-
-        }
-        else { */}
 
         if (name) {
           const {
@@ -106,9 +161,9 @@ class NamedField extends EditorComponent {
           Так как без опеределения типа данных мы можем уйти не в тот контекст, возвращаем ничего,
           если значение отсутствует или null
            */
-          if (value !== undefined && value !== null) {
+          if (value !== undefined || true) {
 
-            if (typeof value === "object") {
+            if (typeof value === "object" && value !== null) {
 
               if (Array.isArray(value)) {
                 /**
@@ -141,7 +196,64 @@ class NamedField extends EditorComponent {
 
             }
             else {
-              output = value;
+
+              switch (type) {
+
+                case "number":
+
+                  {
+                    const {
+                      defaultValue,
+                    } = other;
+
+                    output = <NumberFormat
+                      value={value || defaultValue || ""}
+                      {...other}
+                    />;
+                  }
+
+                  break;
+
+                case "date":
+
+                  if (value) {
+
+
+                    const {
+                      format,
+                    } = other;
+
+                    let date = moment(value);
+
+                    if (date.isValid()) {
+
+
+                      if (format) {
+                        date = date.format(format)
+                      }
+
+
+                      output = date.toString();
+
+                    }
+                    else {
+
+                      output = <Typography
+                        color="error"
+                      >
+                        Invalid date
+                        </Typography>
+
+                    }
+
+                  }
+
+                  break;
+
+                default: output = value;
+              }
+
+
             }
 
           }

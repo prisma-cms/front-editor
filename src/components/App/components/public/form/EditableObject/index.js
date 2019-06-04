@@ -125,6 +125,10 @@ export class Editable extends ApolloEditableObject {
       value={{
         updateObject: data => this.updateObject(data),
         getEditor: props => this.getEditor(props),
+        inEditMode: this.isInEditMode(),
+        canEdit: this.canEdit(),
+        getObjectWithMutations: () => this.getObjectWithMutations(),
+        ...this.props,
       }}
     >
 

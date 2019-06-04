@@ -1,3 +1,6 @@
+=================================
+- Added number and date formats for NamedField
+
 1.16.3
 =================================
 - Fix render routes
