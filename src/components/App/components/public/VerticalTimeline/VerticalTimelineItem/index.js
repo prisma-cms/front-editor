@@ -65,7 +65,7 @@ export class TimelineItem extends TimelineItemProto {
             <div className="body">
               <div
                 className={`body-container ${
-                  visible ? 'bounce-in' : 'is-hidden'
+                  visible || isSSR ? 'bounce-in' : 'is-hidden'
                   }`}
                 style={bodyContainerStyle}
               >
