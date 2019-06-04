@@ -1,3 +1,7 @@
+1.17.1
+=================================
+- Fix Iterable
+
 1.17.0
 =================================
 - Added number and date formats for NamedField

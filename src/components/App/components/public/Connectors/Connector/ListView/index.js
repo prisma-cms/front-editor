@@ -109,7 +109,11 @@ class ListView extends EditorComponent {
         Если является таковым, то рендерим в него все полученные объекты
          */
         {/* if (children.length === 1 && children[0].__proto__.isPrototypeOf(Iterable)) { */ }
-        if (children.length === 1 && (Iterable.isPrototypeOf(children[0].type) || children[0].type === Iterable)) {
+        if (children.length === 1 && children[0]
+          && (
+            Iterable.isPrototypeOf(children[0].type)
+            || children[0].type === Iterable
+          )) {
 
           let child = children[0];
 
