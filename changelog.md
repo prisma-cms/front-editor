@@ -1,5 +1,7 @@
+1.17.0
 =================================
 - Added number and date formats for NamedField
+- Added VerticalTimeline
 
 1.16.3
 =================================

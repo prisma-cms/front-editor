@@ -708,9 +708,6 @@ class EditorComponent extends ObjectEditable {
    */
   onClick(event) {
 
-
-
-
     // if (event.target === event.currentTarget) {
 
     event.preventDefault();
@@ -2549,16 +2546,12 @@ class EditorComponent extends ObjectEditable {
       return null;
     }
 
-    const {
-      Components,
-      TemplateRenderer,
-    } = this.getEditorContext();
 
 
     const {
-      mutate,
-      createTemplate,
-      updateTemplate,
+      // mutate,
+      // createTemplate,
+      // updateTemplate,
       children,
     } = this.props;
 
@@ -2586,90 +2579,117 @@ class EditorComponent extends ObjectEditable {
 
     if (itemComponents && itemComponents.length) {
 
-      itemComponents.map((n, index) => {
+      this.getComponents(itemComponents).map((n, index) => {
 
-        const {
-          id: templateId,
-          name,
-          component,
-          props,
-          components,
-          ...other
-        } = n;
-
-
-        // if (templateId) {
-
-
-        // }
-
-
-        let Component = Components.find(n => n.Name === component);
-
-        if (Component) {
-
-
-
-
-
-          if (templateId) {
-
-
-            output.push(<TemplateRenderer
-              key={`${templateId}--${index}`}
-              Component={Component}
-              mode="main"
-              parent={this}
-              // props={props}
-              // data={{
-              //   object: n,
-              // }}
-              // _dirty={n}
-              {...other}
-              where={{
-                id: templateId,
-              }}
-              mutate={updateTemplate}
-              createTemplate={createTemplate}
-              updateTemplate={updateTemplate}
-            // mutate={async (options) => {
-
-
-
-            //   return mutate(options);
-            // }}
-            />);
-
-          }
-          else {
-
-            output.push(<Component
-              key={index}
-              mode="main"
-              // component={n}
-              parent={this}
-              props={props}
-              components={components}
-              data={{
-                object: n,
-              }}
-              // _dirty={n}
-              mutate={createTemplate}
-              createTemplate={createTemplate}
-              updateTemplate={updateTemplate}
-              {...other}
-            />);
-
-          }
-
-
-        }
+        output.push(this.renderComponent(n, index));
 
       })
 
     }
 
     return output;
+  }
+
+
+  getComponents(itemComponents) {
+
+    return itemComponents;
+  }
+
+
+  renderComponent(n, index) {
+
+    const {
+      Components,
+      TemplateRenderer,
+    } = this.getEditorContext();
+
+    const {
+      // mutate,
+      createTemplate,
+      updateTemplate,
+      // children,
+    } = this.props;
+
+    const {
+      id: templateId,
+      name,
+      component,
+      props,
+      components,
+      ...other
+    } = n;
+
+
+    // if (templateId) {
+
+
+    // }
+
+
+    let Component = Components.find(n => n.Name === component);
+
+    if (Component) {
+
+
+
+
+
+      if (templateId) {
+
+
+
+
+        return <TemplateRenderer
+          key={`${templateId}--${index}`}
+          Component={Component}
+          mode="main"
+          parent={this}
+          // props={props}
+          // data={{
+          //   object: n,
+          // }}
+          // _dirty={n}
+          {...other}
+          where={{
+            id: templateId,
+          }}
+          mutate={updateTemplate}
+          createTemplate={createTemplate}
+          updateTemplate={updateTemplate}
+        // mutate={async (options) => {
+
+
+
+        //   return mutate(options);
+        // }}
+        />;
+
+      }
+      else {
+
+        return <Component
+          key={index}
+          mode="main"
+          // component={n}
+          parent={this}
+          props={props}
+          components={components}
+          data={{
+            object: n,
+          }}
+          // _dirty={n}
+          mutate={createTemplate}
+          createTemplate={createTemplate}
+          updateTemplate={updateTemplate}
+          {...other}
+        />;
+
+      }
+
+
+    }
+
   }
 
 
