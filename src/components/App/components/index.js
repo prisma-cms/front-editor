@@ -994,6 +994,7 @@ class EditorComponent extends ObjectEditable {
       const isDragOvered = dragTarget === this ? true : false;
       const isActive = activeItem === this ? true : false;
       const isHovered = hoveredItem === this ? true : false;
+      const isRoot = this.isRoot();
 
       const isDirty = this.isDirty();
 
@@ -1004,6 +1005,7 @@ class EditorComponent extends ObjectEditable {
         isActive ? "active" : "",
         isHovered ? "hovered" : "",
         isDirty ? "dirty" : "",
+        isRoot ? "root" : "",
       ]);
 
       Object.assign(componentProps, {
@@ -1119,7 +1121,7 @@ class EditorComponent extends ObjectEditable {
     } = this.getComponentProps(this);
 
 
-    const isRoot = activeParent === this;
+    const isRoot = this.isRoot();
 
     const structure = this.getStructure(this);
 
@@ -1356,6 +1358,9 @@ class EditorComponent extends ObjectEditable {
 
 
               const {
+                createdAt,
+                updatedAt,
+                __typename,
                 ...template
               } = this.getObjectWithMutations();
 
@@ -1627,6 +1632,13 @@ class EditorComponent extends ObjectEditable {
     return output;
   }
 
+
+  isRoot() {
+
+    const activeParent = this.getActiveParent();
+
+    return activeParent === this;
+  }
 
   getStructure(item) {
 

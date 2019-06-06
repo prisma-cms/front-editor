@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui';
 
 import CloseIcon from 'material-ui-icons/Close';
+import OpenTemplatesIcon from 'material-ui-icons/ArrowForward';
+import CloseTemplatesIcon from 'material-ui-icons/ArrowBack';
 
 import Context from "@prisma-cms/context";
 
@@ -106,18 +108,27 @@ const styles = theme => {
     panel: {
 
       [desktop]: {
-        width: itemsPanelWidth,
+        width: "min-content",
         height: "100%",
         // overflow: "auto",
         position: "relative",
+        transition: "width 0.5s",
+
+        "&.templates": {
+          width: 50,
+        },
+        "&.opened": {
+          width: itemsPanelWidth,
+        },
       },
     },
     panelItems: {
 
       [desktop]: {
         height: "100%",
-        width: itemsPanelWidth,
-        position: "absolute",
+        width: "100%",
+        // width: itemsPanelWidth,
+        // position: "absolute",
         overflow: "auto",
       },
     },
@@ -162,6 +173,9 @@ const styles = theme => {
       },
       "&.hovered": {
         border: `1px solid ${hoveredBorderColor}`,
+      },
+      "&.root": {
+        borderWidth: 2,
       },
     },
     blockBadge: {
@@ -237,7 +251,7 @@ class FrontEditor extends Component {
       ChangeLanguage,
       LanguageRouter,
       Slider,
-      
+
       UsersGrid,
       UserPage,
       // RoutedObject,
@@ -284,6 +298,11 @@ class FrontEditor extends Component {
       hoveredItem: null,
 
       Components: this.prepareComponents(),
+
+      /**
+       * Открыта ли панель с каталогом шаблонов
+       */
+      templatesOpened: false,
     }
 
   }
@@ -428,6 +447,7 @@ class FrontEditor extends Component {
     const {
       activeItem,
       templatesGroup,
+      templatesOpened,
     } = this.state;
 
 
@@ -442,59 +462,70 @@ class FrontEditor extends Component {
       ...other
     } = this.props;
 
-    // const templates = this.getTemplates();
+    return <div
+      className={[classes.panel, classes.bordered, "templates", templatesOpened ? "opened" : ""].join(" ")}
+    >
+      <div
+        style={{
+          position: "relative",
+          // border: "1px solid red",
+          height: "100%",
+          display: "flex",
+          flexDirection: "column",
+        }}
+      >
 
+        <div>
+          <IconButton
+            onClick={event => {
+              this.setState({
+                templatesOpened: !templatesOpened,
+              })
+            }}
+          >
+            {templatesOpened ?
+              <CloseTemplatesIcon
 
+              />
+              :
+              <OpenTemplatesIcon
 
-    // // let components;
+              />
+            }
+          </IconButton>
+        </div>
 
-    // let list;
+        {templatesOpened ?
+          <MarketPlace
+            classes={classes}
+            activeItem={activeItem}
+            FrontEditor={FrontEditorRenderer}
+          />
+          : null
+        }
 
-    // let list__ = templates.map((n, index) => {
+      </div>
+    </div>
 
-    //   const {
-    //     label,
-    //     templates,
-    //   } = n;
+    // if (templatesOpened) {
 
-    //   return <div
-    //     key={index}
-    //     style={{
-    //       padding: 10,
-    //       margin: "5px 0",
-    //       cursor: "pointer",
-    //       borderTop: "1px solid #ddd",
-    //       borderBottom: "1px solid #ddd",
-    //     }}
+    // }
+    // else {
+
+    //   return <IconButton
     //     onClick={event => {
-
     //       this.setState({
-    //         templatesGroup: templates,
-    //         // templatesGroup: templatesGroup && templatesGroup === templates ? null : templates,
-    //       });
-
+    //         templatesOpened: !templatesOpened,
+    //       })
     //     }}
     //   >
-    //     {label}
-    //   </div>
+    //     <OpenTemplatesIcon
 
-    // })
+    //     />
+    //   </IconButton>
+    // }
 
-    return <div
-      style={{
-        position: "relative",
-        // border: "1px solid red",
-        height: "100%",
-      }}
-    >
 
-      <MarketPlace
-        classes={classes}
-        activeItem={activeItem}
-        FrontEditor={FrontEditorRenderer}
-      />
-
-    </div>
 
   }
 
@@ -1301,11 +1332,12 @@ class FrontEditor extends Component {
             <div
               className={[classes.root, className].join(" ")}
             >
-              <div
+              {/* <div
                 className={[classes.panel, classes.bordered].join(" ")}
               >
                 {this.renderTemplates()}
-              </div>
+              </div> */}
+              {this.renderTemplates()}
               <div
                 className={[classes.editor, classes.bordered].join(" ")}
               >
@@ -1313,7 +1345,7 @@ class FrontEditor extends Component {
 
               </div>
               <div
-                className={[classes.panel, classes.bordered].join(" ")}
+                className={[classes.panel, classes.bordered, "opened"].join(" ")}
               >
                 {this.renderPanels()}
               </div>

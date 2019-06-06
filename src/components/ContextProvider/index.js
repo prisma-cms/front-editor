@@ -257,6 +257,7 @@ class ContextProvider extends Component {
       TemplateNoNestingFragment,
       UserNoNestingFragment,
       BatchPayloadNoNestingFragment,
+      ProjectNoNestingFragment,
     } = queryFragments;
 
 
@@ -266,10 +267,14 @@ class ContextProvider extends Component {
         CreatedBy{
           ...UserNoNesting
         }
+        PrismaProject {
+          ...ProjectNoNesting
+        }
       }
 
       ${TemplateNoNestingFragment}
       ${UserNoNestingFragment}
+      ${ProjectNoNestingFragment}
     `;
 
 

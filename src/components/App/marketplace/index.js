@@ -96,7 +96,8 @@ class MarketPlace extends PrismaCmsComponent {
           component: "Section",
           props: {
             style: {
-              height: "100",
+              // height: "100",
+              flexGrow: 1,
               overflow: "auto",
             },
           },
@@ -104,12 +105,10 @@ class MarketPlace extends PrismaCmsComponent {
             {
               "name": "Connector",
               "props": {
-                "first": 10,
-                "filtersname": "filters",
-                "orderBy": null,
-                "skip": null,
-                "last": null,
                 "query": "templatesConnection",
+                "filtersname": "mkplace-templates-filters",
+                pagevariable: "mkplace-templates-page",
+                "first": 5,
                 where: {
                   component_not: "Page",
                 },

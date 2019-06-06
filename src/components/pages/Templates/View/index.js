@@ -5,11 +5,14 @@ import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 
 import PrismaCmsComponent from "@prisma-cms/component";
-import { Paper } from 'material-ui';
-import { Typography } from 'material-ui';
+// import { Paper } from 'material-ui';
+// import { Typography } from 'material-ui';
 
 // import FrontEditor from "../../../App";
 import TemplateView from '../Template/View';
+
+
+import PrismaCmsFilters from "@prisma-cms/filters";
 
 const styles = theme => {
 
@@ -124,6 +127,8 @@ export class TemplatesListView extends PrismaCmsComponent {
         },
       },
       classes,
+      getFilters,
+      setFilters,
     } = this.props;
 
     const templates = objectsConnection ? objectsConnection.edges.map(({ node }) => node) : []
@@ -131,6 +136,8 @@ export class TemplatesListView extends PrismaCmsComponent {
 
 
     const pageVariable = "templates_page";
+
+    const filters = getFilters();
 
 
     const {
@@ -143,6 +150,17 @@ export class TemplatesListView extends PrismaCmsComponent {
         container
         spacing={16}
       >
+        <Grid
+          item
+          xs={12}
+        >
+          <PrismaCmsFilters
+            queryName={"templates"}
+            filters={filters || {}}
+            setFilters={setFilters}
+          />
+        </Grid>
+
         {templates.map(n => {
 
           const {
@@ -158,6 +176,9 @@ export class TemplatesListView extends PrismaCmsComponent {
             <TemplateView
               data={{
                 object: n,
+              }}
+              edit_button_styles={{
+                position: "absolute",
               }}
             />
           </Grid>

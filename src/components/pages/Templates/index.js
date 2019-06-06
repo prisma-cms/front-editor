@@ -176,6 +176,8 @@ class TemplatesPage extends Page {
       where={{
         ...where,
       }}
+      setFilters={filters => this.setFilters(filters)}
+      getFilters={() => this.getFilters()}
       addObject={() => {
         const {
           router: {

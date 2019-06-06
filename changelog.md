@@ -1,3 +1,8 @@
+1.17.3
+=================================
+- Added Component::isRoot()
+- Added open/close templates panel
+
 1.17.2
 =================================
 - Fix TimelineItem render

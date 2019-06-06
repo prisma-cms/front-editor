@@ -14,6 +14,7 @@ export class TemplateView extends PrismaCmsComponent {
   static propTypes = {
     ...PrismaCmsComponent.propTypes,
     editable: PropTypes.bool.isRequired,
+    edit_button_styles: PropTypes.object,
   }
 
   static defaultProps = {
@@ -54,6 +55,7 @@ export class TemplateView extends PrismaCmsComponent {
         object,
       },
       editable,
+      edit_button_styles,
       ...other
     } = this.props;
 
@@ -89,6 +91,7 @@ export class TemplateView extends PrismaCmsComponent {
           width: "auto",
           background: "rgba(255,255,255,0.5)",
           zIndex: 2000,
+          ...edit_button_styles,
         }}
       >
         <Grid
