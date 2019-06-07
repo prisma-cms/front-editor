@@ -935,7 +935,7 @@ class EditorComponent extends ObjectEditable {
   }
 
 
-  getRenderProps() {
+  getRenderProps(componentProps = {}) {
 
 
 
@@ -979,14 +979,14 @@ class EditorComponent extends ObjectEditable {
       // propsClassName,
     ];
 
-    let componentProps = {
+    Object.assign(componentProps, {
       // ...component,
       ...other,
       ...object,
       ...objectProps,
       // ...otherProps,
       ...this.getComponentProps(this),
-    };
+    });
 
 
     if (inEditMode) {

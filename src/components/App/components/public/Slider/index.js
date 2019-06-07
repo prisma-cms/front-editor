@@ -5,8 +5,8 @@ import PropTypes from 'prop-types';
 
 import SlickSlider from "react-slick";
 
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
+// import "slick-carousel/slick/slick.css";
+// import "slick-carousel/slick/slick-theme.css";
 import Iterable from '../Connectors/Connector/ListView/Iterable';
 
 class Slider extends Iterable {

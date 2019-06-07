@@ -1,3 +1,8 @@
+1.17.4
+=================================
+- Component::getRenderProps() code refactoring
+- Remove slick styles
+
 1.17.3
 =================================
 - Added Component::isRoot()
