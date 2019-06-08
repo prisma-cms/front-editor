@@ -767,24 +767,82 @@ class EditorComponent extends ObjectEditable {
   }
 
 
+  // onDragEnter(event) {
+
+
+  //   const {
+  //     setDragTarget,
+  //     dragItem,
+  //   } = this.getEditorContext();
+
+  //   if (dragItem && this.canBeChild(dragItem)) {
+
+  //     event.preventDefault();
+  //     event.stopPropagation();
+
+  //     setDragTarget(this);
+
+  //     return true;
+
+  //   }
+
+
+  // }
+
+
+  onDragEnter(event) {
+
+
+    const {
+      setDragTarget,
+      dragItem,
+    } = this.getEditorContext();
+
+    if (dragItem && dragItem.component && this.canBeChild(dragItem) && dragItem.component.canBeParent(this)) {
+
+      event.preventDefault();
+      event.stopPropagation();
+
+      setDragTarget(this);
+
+      return true;
+
+    }
+
+  }
+
+
+  /**
+   * Определяем, может ли быть текущий компонент родителем
+   */
+  canBeParent(target) {
+
+    return true;
+  }
+
+
   /**
    * Учитывается при наведении. 
    * Определяет может ли быть брошен сюда перетаскиваемый элемент
    */
-  canBeDropped(dragItem) {
+  canBeChild(dragItem) {
+    return this.canBeDropped(dragItem);
+  }
 
-    if (!dragItem || dragItem === this) {
+  canBeChild(child) {
+
+    if (!child || child === this) {
       return false;
     }
 
     /**
      * Если это готовый инстанс, проверяем, чтобы это не был родитель
      */
-    if (dragItem instanceof EditorComponent) {
+    if (child instanceof EditorComponent) {
 
       const {
         parent: dragItemParent,
-      } = dragItem.props;
+      } = child.props;
 
       /**
        * Если у перетаскиваемого элемента нет родителя, то нельзя вкидывать
@@ -816,28 +874,6 @@ class EditorComponent extends ObjectEditable {
     return true;
   }
 
-
-  onDragEnter(event) {
-
-
-    const {
-      setDragTarget,
-      dragItem,
-    } = this.getEditorContext();
-
-    if (dragItem && this.canBeDropped(dragItem)) {
-
-      event.preventDefault();
-      event.stopPropagation();
-
-      setDragTarget(this);
-
-      return true;
-
-    }
-
-
-  }
 
   onDragOver(event) {
 

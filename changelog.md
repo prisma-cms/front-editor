@@ -1,3 +1,8 @@
+1.18.0
+=================================
+- Added Component::canBeParent()
+- Added Component::canBeChild()
+
 1.17.4
 =================================
 - Component::getRenderProps() code refactoring
