@@ -9,6 +9,7 @@ import CSSTransform from "./CSSTransform";
 class Tag extends EditorComponent {
 
   static Name = "Tag"
+  static help_url = "https://front-editor.prisma-cms.com/topics/html-tag.html";
 
   static defaultProps = {
     ...EditorComponent.defaultProps,

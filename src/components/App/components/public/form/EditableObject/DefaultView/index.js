@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import EditorComponent from '../../../..';
+import EditableObject from '..';
 
 class DefaultView extends EditorComponent {
 
@@ -11,9 +12,16 @@ class DefaultView extends EditorComponent {
   // }
 
   static Name = "DefaultView"
+  static help_url = "https://front-editor.prisma-cms.com/topics/editableobject.html";
 
   onBeforeDrop = () => {
 
+  }
+
+
+  canBeParent(parent) {
+
+    return parent.constructor === EditableObject && super.canBeParent(parent);
   }
 
 

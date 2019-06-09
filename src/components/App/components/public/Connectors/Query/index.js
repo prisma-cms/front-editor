@@ -14,6 +14,7 @@ class Query extends EditorComponent {
   }
 
   static Name = "Query"
+  static help_url = "https://front-editor.prisma-cms.com/topics/query.html";
 
   renderPanelView() {
 

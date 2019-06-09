@@ -1,3 +1,11 @@
+1.18.1
+=================================
+- Fix Component::canBeParent()
+- Fix Component::canBeChild()
+- Fix VerticalTimeline hierarchy
+- Fix EditorSwitch hierarchy
+- Added help_url
+
 1.18.0
 =================================
 - Added Component::canBeParent()

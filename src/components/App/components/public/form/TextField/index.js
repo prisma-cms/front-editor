@@ -20,6 +20,7 @@ class TextField extends EditorComponent {
   }
 
   static Name = "TextField"
+  static help_url = "https://front-editor.prisma-cms.com/topics/editableobject.html";
 
   onBeforeDrop = () => {
 

@@ -12,6 +12,7 @@ class LanguageRouter extends EditorComponent {
   }
 
   static Name = "LanguageRouter"
+  static help_url = "https://front-editor.prisma-cms.com/topics/language-router.html";
 
   onBeforeDrop = () => {
 

@@ -21,6 +21,7 @@ class Connector extends EditorComponent {
 
 
   static Name = "Connector"
+  static help_url = "https://front-editor.prisma-cms.com/topics/query.html";
 
   static defaultProps = {
     ...EditorComponent.defaultProps,

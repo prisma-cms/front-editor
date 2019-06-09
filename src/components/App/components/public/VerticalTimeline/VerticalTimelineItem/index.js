@@ -9,6 +9,7 @@ import { ObjectContext } from '../../Connectors/Connector/ListView';
 
 import classNames from "classnames"
 import VisibilitySensor from 'react-visibility-sensor';
+import VerticalTimeline from '..';
 
 export class TimelineItem extends TimelineItemProto {
 
@@ -93,6 +94,7 @@ class VerticalTimelineItem extends EditorComponent {
   }
 
   static Name = "VerticalTimelineItem"
+  static help_url = "https://front-editor.prisma-cms.com/topics/verticaltimeline.html";
 
   onBeforeDrop = () => {
 
@@ -234,6 +236,12 @@ class VerticalTimelineItem extends EditorComponent {
     return itemComponents && itemComponents.length ? itemComponents.slice(1) : [];
   }
 
+
+
+  canBeParent(parent) {
+
+    return parent instanceof VerticalTimeline && super.canBeParent(parent);
+  }
 
 }
 

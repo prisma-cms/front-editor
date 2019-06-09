@@ -9,6 +9,7 @@ import {
   Route,
 } from "react-router-dom";
 import { Typography } from 'material-ui';
+import EditorRoute from '../Route';
 
 class EditorSwitch extends EditorComponent {
 
@@ -29,48 +30,57 @@ class EditorSwitch extends EditorComponent {
 
 
 
-  prepareDragItemComponents() {
+  // prepareDragItemComponents() {
 
-    return super.prepareDragItemComponents().concat([
-      {
-        name: "EditorRoute",
-        component: "EditorRoute",
-        props: {
-          path: "/",
-          exact: true,
-        },
-        components: [],
-      }
-    ]);
-  }
+  //   return super.prepareDragItemComponents().concat([
+  //     {
+  //       name: "EditorRoute",
+  //       component: "EditorRoute",
+  //       props: {
+  //         path: "/",
+  //         exact: true,
+  //       },
+  //       components: [],
+  //     }
+  //   ]);
+  // }
 
 
-  onDrop(event) {
+  // onDrop(event) {
 
-    const {
-      dragItem,
-      dragTarget,
-    } = this.getEditorContext();
+  //   const {
+  //     dragItem,
+  //     dragTarget,
+  //   } = this.getEditorContext();
 
-    if (dragItem && dragTarget && dragTarget === this) {
+  //   if (dragItem && dragTarget && dragTarget === this) {
 
-      event.preventDefault();
-      event.stopPropagation();
+  //     event.preventDefault();
+  //     event.stopPropagation();
 
-      const {
-        name,
-      } = dragItem;
+  //     const {
+  //       name,
+  //     } = dragItem;
 
-      /**
-       * Позволяем добавить только роутеры
-       */
-      if (name !== "EditorRoute") {
-        return false;
-      }
-    }
+  //     /**
+  //      * Позволяем добавить только роутеры
+  //      */
+  //     if (name !== "EditorRoute") {
+  //       return false;
+  //     }
+  //   }
 
-    return super.onDrop(event);
+  //   return super.onDrop(event);
 
+  // }
+
+
+  /**
+   * Не может быть дочерним для другого роутера
+   */
+  canBeChild(child) {
+
+    return child instanceof EditorRoute && super.canBeChild(child);
   }
 
 

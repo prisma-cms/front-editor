@@ -139,6 +139,9 @@ const styles = theme => {
       cursor: "grab",
       padding: 10,
       border: "1px solid #ddd",
+      display: "flex",
+      flexDirection: "row",
+      alignItems: "center",
       "&:hover": {
         border: `1px solid ${hoveredBorderColor}`,
       },
@@ -177,6 +180,9 @@ const styles = theme => {
       "&.root": {
         borderWidth: 2,
       },
+      "&.disabled": {
+        borderColor: "transparent",
+      },
     },
     blockBadge: {
       border: "1px solid #ddd",
@@ -199,6 +205,10 @@ const styles = theme => {
     },
     bordered: {
       border: "1px solid #ddd",
+    },
+    helpLink: {
+      color: "inherit",
+      marginLeft: 3,
     },
   }
 }

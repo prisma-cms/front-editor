@@ -18,6 +18,7 @@ class ListView extends EditorComponent {
   };
 
   static Name = "ListView"
+  static help_url = "https://front-editor.prisma-cms.com/topics/list-view.html";
 
 
   renderPanelView() {

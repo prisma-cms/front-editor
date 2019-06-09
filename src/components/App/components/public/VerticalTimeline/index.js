@@ -3,10 +3,12 @@ import PropTypes from 'prop-types';
 
 import { Timeline } from 'vertical-timeline-component-for-react';
 import Iterable from '../Connectors/Connector/ListView/Iterable';
+import VerticalTimelineItem from './VerticalTimelineItem';
 
 class VerticalTimeline extends Iterable {
 
   static Name = "VerticalTimeline"
+  static help_url = "https://front-editor.prisma-cms.com/topics/verticaltimeline.html";
 
   static propTypes = {
     ...Iterable.propTypes,
@@ -38,6 +40,11 @@ class VerticalTimeline extends Iterable {
     </Timeline>
 
 
+  }
+
+  canBeChild(child) {
+
+    return child instanceof VerticalTimelineItem && super.canBeChild(child);
   }
 
 

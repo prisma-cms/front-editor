@@ -19,6 +19,7 @@ class ObjectConnector extends EditorComponent {
 
 
   static Name = "ObjectConnector"
+  static help_url = "https://front-editor.prisma-cms.com/topics/query.html";
 
   static defaultProps = {
     ...EditorComponent.defaultProps,

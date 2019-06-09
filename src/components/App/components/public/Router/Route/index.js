@@ -6,6 +6,7 @@ import Icon from "material-ui-icons/SettingsOverscan";
 
 import { Route as RouterRoute } from "react-router-dom";
 import { Typography } from 'material-ui';
+import EditorSwitch from '../Switch';
 
 class EditorRoute extends EditorComponent {
 
@@ -50,25 +51,9 @@ class EditorRoute extends EditorComponent {
   }
 
 
-  /**
-   * Учитывается при наведении. 
-   * Определяет может ли быть брошен сюда перетаскиваемый элемент
-   */
-  canBeDropped(dragItem) {
+  canBeParent(parent) {
 
-
-
-
-    /**
-     * Нельзя роутеры сюда же кидать
-     */
-    if (dragItem && dragItem.constructor === this.constructor) {
-      return false;
-    }
-
-    // else
-    return super.canBeDropped(dragItem);
-
+    return parent.constructor === EditorSwitch && super.canBeParent(parent);
   }
 
 

@@ -22,6 +22,7 @@ import DragIcon from "material-ui-icons/DragHandle";
 import ArrowUpIcon from "material-ui-icons/ArrowUpward";
 import ArrowDownIcon from "material-ui-icons/ArrowDownward";
 import LinkIcon from "material-ui-icons/Link";
+import HelpIcon from "material-ui-icons/HelpOutline";
 
 import { FormControlLabel } from 'material-ui';
 import { Switch } from 'material-ui';
@@ -790,6 +791,51 @@ class EditorComponent extends ObjectEditable {
   // }
 
 
+  // onDragEnter(event) {
+
+
+  //   const {
+  //     setDragTarget,
+  //     dragItem,
+  //   } = this.getEditorContext();
+
+  //   if (dragItem && dragItem.component && this.canBeChild(dragItem) && dragItem.component.canBeParent(this)) {
+
+  //     event.preventDefault();
+  //     event.stopPropagation();
+
+  //     setDragTarget(this);
+
+  //     return true;
+
+  //   }
+
+  // }
+
+  // onDragEnter(event) {
+
+
+  //   const {
+  //     setDragTarget,
+  //     dragItem,
+  //   } = this.getEditorContext();
+
+  //   // if (dragItem && dragItem.component && this.canBeChild(dragItem) && dragItem.component.canBeParent(this)) {
+  //   if (dragItem && this.canBeChild(dragItem)) {
+
+  //     event.preventDefault();
+  //     event.stopPropagation();
+
+  //     setDragTarget(this);
+
+  //     return true;
+
+  //   }
+
+  // }
+
+
+
   onDragEnter(event) {
 
 
@@ -798,7 +844,7 @@ class EditorComponent extends ObjectEditable {
       dragItem,
     } = this.getEditorContext();
 
-    if (dragItem && dragItem.component && this.canBeChild(dragItem) && dragItem.component.canBeParent(this)) {
+    if (dragItem && this.canBeDropped(dragItem)) {
 
       event.preventDefault();
       event.stopPropagation();
@@ -809,15 +855,7 @@ class EditorComponent extends ObjectEditable {
 
     }
 
-  }
 
-
-  /**
-   * Определяем, может ли быть текущий компонент родителем
-   */
-  canBeParent(target) {
-
-    return true;
   }
 
 
@@ -825,20 +863,34 @@ class EditorComponent extends ObjectEditable {
    * Учитывается при наведении. 
    * Определяет может ли быть брошен сюда перетаскиваемый элемент
    */
-  canBeChild(dragItem) {
-    return this.canBeDropped(dragItem);
-  }
+  // canBeDropped(dragItem) {
 
-  canBeChild(child) {
+  //   return this.canBeChild(dragItem);
+  // }
+
+  /**
+   * Возможно этот метод будет оставлен (или переименован).
+   * Получается следующая логика:
+   * При перетаскивании, дочерний элемент смотрим, хочет ли он стать дочерним 
+   * через метод canBeChild(), в котором смотрит
+   * 
+   */
+
+  canBeDropped(child) {
 
     if (!child || child === this) {
       return false;
     }
 
+    let item;
+
+
     /**
-     * Если это готовый инстанс, проверяем, чтобы это не был родитель
+     * Если это перетаскивается готовый элемент на странице, проверяем, чтобы это не был родитель
      */
     if (child instanceof EditorComponent) {
+
+      item = child;
 
       const {
         parent: dragItemParent,
@@ -870,8 +922,47 @@ class EditorComponent extends ObjectEditable {
 
       // return false;
     }
+    /**
+     * Иначе это новый компонент, перетаскиваемый из панели компонентов
+     */
+    else {
 
-    return true;
+      if (child && child.component) {
+
+        item = child.component;
+
+      }
+    }
+
+    if (item) {
+
+      return item.canBeParent(this);
+
+    }
+
+    return false;
+  }
+
+
+  /**
+   * В новом компоненте проверяет может ли компонент на странице стать родительским для него.
+   */
+  canBeParent(parent) {
+
+    /**
+     * Может, если этот компонент может быть дочерним для целевого.
+     */
+
+    return parent.canBeChild(this);
+  }
+
+
+  /**
+   * В родительском компоненте проверяет может ли новый компонент стать дочерним.
+   */
+  canBeChild(child) {
+
+    return child ? true : false;
   }
 
 
@@ -976,9 +1067,6 @@ class EditorComponent extends ObjectEditable {
 
 
     const {
-      dragTarget,
-      activeItem,
-      hoveredItem,
       inEditMode,
       classes,
     } = this.getEditorContext();
@@ -1027,32 +1115,63 @@ class EditorComponent extends ObjectEditable {
 
     if (inEditMode) {
 
-      const isDragOvered = dragTarget === this ? true : false;
-      const isActive = activeItem === this ? true : false;
-      const isHovered = hoveredItem === this ? true : false;
-      const isRoot = this.isRoot();
+      const {
+        dragItem,
+        dragTarget,
+        activeItem,
+        hoveredItem,
+      } = this.getEditorContext();
 
-      const isDirty = this.isDirty();
+
+      // if (dragItem && (dragItem.component && !dragItem.component.canBeParent(this))) {
+
+      // }
+
+      const isRoot = this.isRoot();
 
       classNames = classNames.concat([
         classes.item,
         inEditMode ? classes.itemEditable : "",
-        isDragOvered ? "dragOvered" : "",
-        isActive ? "active" : "",
-        isHovered ? "hovered" : "",
-        isDirty ? "dirty" : "",
         isRoot ? "root" : "",
       ]);
 
-      Object.assign(componentProps, {
-        onDrop: event => this.onDrop(event),
-        onDragEnter: event => this.onDragEnter(event),
-        onDragOver: event => this.onDragOver(event),
-        onClick: event => this.onClick(event),
-        onMouseOver: event => this.onMouseOver(event),
-        onMouseLeave: event => this.onMouseLeave(event),
 
-      });
+
+      /**
+       * Если есть перетаскиваемый элемент, проверяем, может ли компонент стать родительским для него.
+       * Если нет, то убираем бордеры и события.
+       */
+      if (dragItem && (dragItem.component && !dragItem.component.canBeParent(this))) {
+        classNames = classNames.concat([
+          "disabled",
+        ]);
+      }
+      else {
+        // if (!dragItem || (!dragItem.component || dragItem.component.canBeParent(this))) {
+        const isDragOvered = dragTarget === this ? true : false;
+        const isActive = activeItem === this ? true : false;
+        const isHovered = hoveredItem === this ? true : false;
+        const isDirty = this.isDirty();
+
+        classNames = classNames.concat([
+          isDragOvered ? "dragOvered" : "",
+          isActive ? "active" : "",
+          isHovered ? "hovered" : "",
+          isDirty ? "dirty" : "",
+        ]);
+
+        Object.assign(componentProps, {
+          onDrop: event => this.onDrop(event),
+          onDragEnter: event => this.onDragEnter(event),
+          onDragOver: event => this.onDragOver(event),
+          onClick: event => this.onClick(event),
+          onMouseOver: event => this.onMouseOver(event),
+          onMouseLeave: event => this.onMouseLeave(event),
+
+        });
+
+      }
+
     }
 
     Object.assign(componentProps, {
@@ -1081,6 +1200,10 @@ class EditorComponent extends ObjectEditable {
 
     const isDragOvered = dragTarget && dragTarget instanceof this.constructor ? true : false;
 
+    const {
+      help_url,
+    } = this.constructor;
+
     return <Grid
       item
     >
@@ -1095,7 +1218,13 @@ class EditorComponent extends ObjectEditable {
         onDragStart={event => this.onDragStart(event)}
         onDragEnd={event => this.onDragEnd(event)}
       >
-        {content || this.constructor.Name}
+        {content || this.constructor.Name} {help_url ? <a
+          href={help_url}
+          target="_blank"
+          className={classes.helpLink}
+        >
+          <HelpIcon />
+        </a> : null}
       </div>
     </Grid>
   }

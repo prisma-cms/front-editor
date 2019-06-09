@@ -17,6 +17,7 @@ class ObjectView extends EditorComponent {
   };
 
   static Name = "ObjectView"
+  static help_url = "https://front-editor.prisma-cms.com/topics/object-view.html";
 
 
   renderPanelView() {

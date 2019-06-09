@@ -163,6 +163,7 @@ class EditableObject extends EditorComponent {
   }
 
   static Name = "EditableObject"
+  static help_url = "https://front-editor.prisma-cms.com/topics/editableobject.html";
 
   onBeforeDrop = () => {
 
