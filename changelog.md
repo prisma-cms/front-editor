@@ -1,3 +1,8 @@
+1.18.2
+=================================
+- Fix DefaultView::canBeParent()
+- Fix EditableView::canBeParent()
+
 1.18.1
 =================================
 - Fix Component::canBeParent()

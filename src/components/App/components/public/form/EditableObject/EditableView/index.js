@@ -21,7 +21,7 @@ class EditableView extends EditorComponent {
 
   canBeParent(parent) {
 
-    return parent.constructor === EditableObject && super.canBeParent(parent);
+    return parent instanceof EditableObject && super.canBeParent(parent);
   }
 
 
