@@ -154,6 +154,10 @@ const styles = theme => {
       "&.dragOvered": {
         border: `1px solid ${dragOveredBorderColor}`,
       },
+
+      "&.add_child": {
+        cursor: "pointer",
+      },
     },
     item: {
 

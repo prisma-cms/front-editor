@@ -368,7 +368,11 @@ class EditorComponent extends ObjectEditable {
       }
       else {
 
-        const newItem = this.prepareNewItem();
+        const {
+          dragItem,
+        } = this.getEditorContext();
+
+        const newItem = this.prepareNewItem(dragItem);
 
 
         if (newItem) {
@@ -387,6 +391,20 @@ class EditorComponent extends ObjectEditable {
 
       return true;
     }
+
+  }
+
+
+  prepareNewItem(item) {
+
+
+    let {
+      component: componentProto,
+      ...newItem
+    } = item;
+
+
+    return newItem;
 
   }
 
@@ -682,24 +700,6 @@ class EditorComponent extends ObjectEditable {
     else {
       return this;
     }
-
-  }
-
-
-  prepareNewItem() {
-
-    const {
-      dragItem,
-    } = this.getEditorContext();
-
-
-    let {
-      component: componentProto,
-      ...newItem
-    } = dragItem;
-
-
-    return newItem;
 
   }
 
@@ -1228,6 +1228,124 @@ class EditorComponent extends ObjectEditable {
       </div>
     </Grid>
   }
+
+
+  renderAddButton(content) {
+
+    const {
+      Grid,
+    } = this.context;
+
+    const {
+      classes,
+    } = this.getEditorContext();
+
+
+    const {
+      help_url,
+    } = this.constructor;
+
+    const {
+      className,
+      ...other
+    } = this.props;
+
+
+
+    return <Grid
+      item
+    >
+      <div
+        // className={[classes.panelItem, isActive ? "active" : ""].join(" ")}
+        className={[
+          classes.panelItem,
+          className,
+        ].join(" ")}
+        onClick={event => {
+
+          event.preventDefault();
+          event.stopPropagation();
+
+          // alert("dsfsdf");
+
+          // const {}
+
+
+          // this.addChildOnClick();
+
+          const {
+            parent,
+          } = this.props;
+
+
+          if (parent) {
+
+
+
+
+            // if (newItem) {
+
+            //   parent.addComponent(newItem);
+
+            //   // return;
+
+            // }
+
+
+
+            const newItem = parent.prepareNewItem(this.prepareDragItem());
+            // const newItem = parent.prepareDragItem();
+            // const newItem = parent.prepareNewItem(this);
+
+            // console.log("newItem", newItem);
+
+
+
+
+            // const newItem = this.prepareNewItem(dragItem);
+
+
+            if (newItem) {
+
+              parent.addComponent(newItem);
+
+              // return;
+
+            }
+
+          }
+
+
+
+
+          // if (newItem) {
+
+          //   this.addComponent(newItem);
+
+          //   // return;
+
+          // }
+
+        }}
+        {...other}
+      >
+        {content || this.constructor.Name} {help_url ? <a
+          href={help_url}
+          target="_blank"
+          className={classes.helpLink}
+        >
+          <HelpIcon />
+        </a> : null}
+      </div>
+    </Grid>
+  }
+
+
+  // addChildOnClick() {
+
+  //   console.log("onClick prepareDragItem", this.prepareDragItem());
+
+  // }
 
 
 
@@ -2453,6 +2571,7 @@ class EditorComponent extends ObjectEditable {
       inEditMode,
       classes,
       onDragStart,
+      Components,
     } = this.getEditorContext();
 
     // return this.renderChildren();
@@ -2477,6 +2596,22 @@ class EditorComponent extends ObjectEditable {
      */
     let badge;
 
+
+    /**
+     * Для тегов типа img непозволительны дочерние элементы.
+     * Если в такие элементы пытаться выводить дочерние,
+     * будет возникать ошибка "must neither have `children`"
+     */
+    let inner = [];
+
+
+    const childs = this.renderChildren();
+
+    if (childs) {
+      inner.push(childs);
+    }
+
+
     if (inEditMode) {
 
       const isActive = activeItem === this ? true : false;
@@ -2492,11 +2627,14 @@ class EditorComponent extends ObjectEditable {
          */
         settingsView = ReactDOM.createPortal(this.renderSettingsView(), settingsViewContainer);
 
+
+
       }
 
       if (isActive || isDragOvered || isHovered) {
 
         badge = <div
+          key="badge"
           className={classes.blockBadge}
           contentEditable={false}
         >
@@ -2583,34 +2721,58 @@ class EditorComponent extends ObjectEditable {
 
       }
 
+      {/* 
+                Для блоков с contentEditable (например Tag), если текст отсутствует,
+                то фокус уходит в бадж и текст не доступен для редактирования.
+                Пока как временный хак скрываем бадж в режиме фокуса.
+              */}
+      const badgeView = this.renderBadge(badge);
+
+
+      if (badgeView) {
+        inner.push(badgeView);
+      }
+
+
+      if (isActive && !this.isVoidElement()) {
+
+        let addBlocks;
+
+        // console.log("Components", Components);
+
+        // const components = Components.filter(n => n.canBeParent(this));
+
+        // console.log("components", components);
+
+        addBlocks = this.renderAddButtons(<Grid
+          key="add_buttons"
+          container
+          spacing={8}
+        >
+
+          {Components.map((Component, index) => {
+
+            const name = Component.Name;
+
+            return <Component
+              key={`${name}-${index}`}
+              mode="add_child"
+              className={"add_child"}
+              parent={this}
+            />
+          })}
+
+        </Grid>);
+
+        if (addBlocks) {
+          inner.push(addBlocks);
+        }
+
+
+      }
+
     }
 
-
-
-    /**
-     * Для тегов типа img непозволительны дочерние элементы.
-     * Если в такие элементы пытаться выводить дочерние,
-     * будет возникать ошибка "must neither have `children`"
-     */
-    let inner = [];
-
-    const childs = this.renderChildren();
-
-    {/* 
-      Для блоков с contentEditable (например Tag), если текст отсутствует,
-      то фокус уходит в бадж и текст не доступен для редактирования.
-      Пока как временный хак скрываем бадж в режиме фокуса.
-    */}
-    const badgeView = this.renderBadge(badge);
-
-    if (childs) {
-      inner.push(childs);
-    }
-
-
-    if (badgeView) {
-      inner.push(badgeView);
-    }
 
 
 
@@ -2648,6 +2810,12 @@ class EditorComponent extends ObjectEditable {
     }
 
     return badge;
+  }
+
+
+  renderAddButtons(content){
+
+    return content;
   }
 
 
@@ -2981,20 +3149,34 @@ class EditorComponent extends ObjectEditable {
 
         switch (mode) {
 
-          case "panel":
-
-            const activeItem = this.getActiveItem();
-
-            if (!activeItem || this.isActive()) {
-              content = this.renderPanelView();
-            }
-
-            break;
-
           case "main":
 
             {/* content = this.renderMainView(); */ }
             content = super.render();
+
+            break;
+
+          case "panel":
+            {
+              const activeItem = this.getActiveItem();
+              {/* 
+            if (!activeItem || (activeItem && activeItem.canBeChild(this)) || this.isActive()) {
+              content = this.renderPanelView();
+            } */}
+
+              if (!activeItem || this.isActive()) {
+                content = this.renderPanelView();
+              }
+            }
+            break;
+
+          case "add_child":
+
+            const activeItem = this.getActiveItem();
+
+            if (activeItem && activeItem.canBeChild(this)) {
+              content = this.renderAddButton();
+            }
 
             break;
 

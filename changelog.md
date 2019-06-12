@@ -1,5 +1,7 @@
+1.19.0
 =================================
 - Configured components hierarchy
+- Added add_buttons
 
 1.18.2
 =================================

@@ -458,6 +458,55 @@ class ObjectConnector extends EditorComponent {
   }
 
 
+  
+  canBeChild(child) {
+
+    let can = false;
+
+    if (super.canBeChild(child)) {
+
+
+      const {
+        props: componentProps,
+      } = this.getComponentProps(this);
+
+
+      const {
+        query,
+      } = componentProps || {};
+
+
+      let parentQuery;
+
+      const {
+        parent,
+      } = this.props;
+
+      if (parent) {
+
+        const {
+          query,
+        } = parent.props.data.object.props;
+
+        if (query) {
+          parentQuery = query;
+        }
+
+      }
+
+
+      if (query || parentQuery) {
+
+        can = true;
+
+      }
+
+    }
+
+    return can;
+
+  }
+
 
   renderChildren() {
 
@@ -471,6 +520,10 @@ class ObjectConnector extends EditorComponent {
     if (!schema) {
       return null;
     }
+
+    const {
+      inEditMode,
+    } = this.getEditorContext();
 
     const {
       parent: offsetParent,
@@ -511,11 +564,11 @@ class ObjectConnector extends EditorComponent {
 
 
     if (!query && !parentQuery) {
-      return <Typography
+      return inEditMode ? <Typography
         color="error"
       >
         Query props required
-      </Typography>
+      </Typography> : null;
     }
 
     // const {

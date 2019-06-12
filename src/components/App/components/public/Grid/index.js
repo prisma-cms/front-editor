@@ -27,6 +27,30 @@ class Grid extends EditorComponent {
   }
 
 
+  /**
+   * Если это контейнер, то дочерним может быть только другой грид.
+   * Иначе все остальное.
+   */
+  canBeChild(child) {
+
+    let can = false;
+
+    if (super.canBeChild(child)) {
+
+      const {
+        container,
+      } = this.getComponentProps(this);
+
+      if (!container || child instanceof Grid) {
+        can = true;
+      }
+
+    }
+
+    return can;
+  }
+
+
   getEditorField(props) {
 
     const {
@@ -162,10 +186,10 @@ class Grid extends EditorComponent {
   }
 
 
-  prepareNewItem() {
+  prepareNewItem(item) {
 
 
-    let newItem = super.prepareNewItem();
+    let newItem = super.prepareNewItem(item);
 
 
 
@@ -173,9 +197,9 @@ class Grid extends EditorComponent {
       return false;
     }
 
-    const {
-      dragItem,
-    } = this.getEditorContext();
+    // const {
+    //   dragItem,
+    // } = this.getEditorContext();
 
 
 
@@ -193,7 +217,7 @@ class Grid extends EditorComponent {
       props: {
         ...props
       },
-    } = dragItem;
+    } = item;
 
 
     switch (name) {

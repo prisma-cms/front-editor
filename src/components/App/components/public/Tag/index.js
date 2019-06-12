@@ -55,14 +55,31 @@ class Tag extends EditorComponent {
   }
 
 
-  canBeDropped(dragItem) {
+  // canBeDropped(dragItem) {
 
 
 
-    // return dragItem.name === "Tag";
+  //   // return dragItem.name === "Tag";
+
+  //   return false;
+  // }
+
+  canBeChild(child) {
+
+    // return super.canBeChild(child) && child instanceof Tag;
 
     return false;
   }
+
+
+  /**
+   * Не выводим кнопки, так как иначе сбивается редактирование текста
+   */
+  renderAddButtons(content){
+
+    return null;
+  }
+
 
   renderPanelView() {
 
@@ -137,7 +154,7 @@ class Tag extends EditorComponent {
       switch (tag.toLowerCase) {
 
         case "script":
-        // case "link":
+          // case "link":
 
           console.error(`Tag "${tag}" not allowed`);
 

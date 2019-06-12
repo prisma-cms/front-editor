@@ -24,8 +24,18 @@ class Page extends EditorComponent {
 
   // }
 
+  canBeParent(parent) {
+
+    return false;
+  }
+
 
   renderPanelView() {
+
+    return null;
+  }
+
+  renderAddButton(){
 
     return null;
   }
