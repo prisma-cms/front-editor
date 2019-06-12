@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 
-import { ConnectorContext } from '..';
+import Connector, { ConnectorContext } from '..';
 
 import PaginationIcon from "material-ui-icons/LastPage";
 import EditorComponent from '../../../..';
@@ -22,6 +22,39 @@ class Pagination extends EditorComponent {
     >
       <PaginationIcon /> Pagination
     </div>);
+  }
+
+
+  canBeChild(child) {
+
+    return false;
+  }
+
+
+  canBeParent(parent) {
+
+
+    let can = false;
+
+    // return false;
+
+    if (super.canBeParent(parent)) {
+
+      while (parent) {
+
+        if (parent instanceof Connector) {
+
+          can = true;
+
+          break;
+        }
+
+        parent = parent.props.parent;
+      }
+
+    }
+
+    return can;
   }
 
 

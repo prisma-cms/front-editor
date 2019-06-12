@@ -1,11 +1,12 @@
-import React, { Component, Fragment, createContext } from 'react';
+import React, { Component, Fragment, createContext, Children } from 'react';
 import PropTypes from 'prop-types';
 
 import ViewIcon from "material-ui-icons/ViewModule";
-import { ConnectorContext } from '..';
+import Connector, { ConnectorContext } from '..';
 import EditorComponent from '../../../..';
 
-import Iterable, { TestIterable } from "./Iterable";
+import Iterable from "./Iterable";
+import NamedField from '../Fields/NamedField';
 
 export const ObjectContext = createContext({});
 
@@ -53,11 +54,42 @@ class ListView extends EditorComponent {
   }
 
 
-  // renderMainView() {
+  canBeParent(parent) {
 
-  //   return this.renderChildren();
 
-  // }
+    let can = false;
+
+    // return false;
+
+    if (super.canBeParent(parent)) {
+
+      while (parent) {
+
+        if (parent instanceof Connector || parent instanceof NamedField) {
+
+          can = true;
+
+          break;
+        }
+
+        parent = parent.props.parent;
+      }
+
+    }
+
+    return can;
+  }
+
+
+  renderMainView() {
+
+    const {
+      inEditMode,
+    } = this.getEditorContext();
+
+    return inEditMode ? super.renderMainView() : this.renderChildren();
+
+  }
 
 
   renderChildren() {

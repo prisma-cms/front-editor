@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import PropTypes, { bool } from 'prop-types';
 
-import { ConnectorContext } from '..';
+import Connector, { ConnectorContext } from '..';
 
 import FiltersIcon from "material-ui-icons/FilterList";
 import EditorComponent from '../../../..';
 
 
 import PrismaCmsFilters from "@prisma-cms/filters";
+import ObjectConnector from '../../ObjectConnector';
 
 class Filters extends EditorComponent {
 
@@ -22,6 +23,40 @@ class Filters extends EditorComponent {
     ...EditorComponent.defaultProps,
     visible: true,
   }
+
+
+  canBeChild(child) {
+
+    return false;
+  }
+
+
+  canBeParent(parent) {
+
+
+    let can = false;
+
+    // return false;
+
+    if (super.canBeParent(parent)) {
+
+      while (parent) {
+
+        if (parent instanceof Connector || parent instanceof ObjectConnector) {
+
+          can = true;
+
+          break;
+        }
+
+        parent = parent.props.parent;
+      }
+
+    }
+
+    return can;
+  }
+
 
   renderPanelView() {
 

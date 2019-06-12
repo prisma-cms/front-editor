@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 // import ViewIcon from "material-ui-icons/ViewModule";
 
 import EditorComponent from '../../../../..';
+import ListView from '..';
 
 
 
@@ -37,6 +38,11 @@ class Iterable extends EditorComponent {
       {/* <Icon />  */}
       Iterable
     </div>);
+  }
+
+  canBeParent(parent) {
+
+    return parent instanceof ListView && super.canBeParent(parent);
   }
 
 
@@ -83,16 +89,6 @@ class Iterable extends EditorComponent {
 
   }
 
-
-}
-
-export class TestIterable extends Iterable {
-
-  constructor(props) {
-
-    super(props);
-
-  }
 
 }
 

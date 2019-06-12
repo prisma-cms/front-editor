@@ -1,3 +1,6 @@
+=================================
+- Configured components hierarchy
+
 1.18.2
 =================================
 - Fix DefaultView::canBeParent()

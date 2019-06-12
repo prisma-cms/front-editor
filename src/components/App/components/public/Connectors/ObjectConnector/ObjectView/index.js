@@ -7,6 +7,8 @@ import EditorComponent from '../../../..';
 
 
 import { ObjectContext } from '../../Connector/ListView';
+import ObjectConnector from '..';
+import NamedField from '../../Connector/Fields/NamedField';
 
 class ObjectView extends EditorComponent {
 
@@ -18,6 +20,34 @@ class ObjectView extends EditorComponent {
 
   static Name = "ObjectView"
   static help_url = "https://front-editor.prisma-cms.com/topics/object-view.html";
+
+
+
+  canBeParent(parent) {
+
+
+    let can = false;
+
+    // return false;
+
+    if (super.canBeParent(parent)) {
+
+      while (parent) {
+
+        if (parent instanceof ObjectConnector || parent instanceof NamedField) {
+
+          can = true;
+
+          break;
+        }
+
+        parent = parent.props.parent;
+      }
+
+    }
+
+    return can;
+  }
 
 
   renderPanelView() {
@@ -78,7 +108,7 @@ class ObjectView extends EditorComponent {
           return null;
         }
 
-{/* 
+        {/* 
         const {
           object,
         } = data; */}
