@@ -1238,6 +1238,7 @@ class EditorComponent extends ObjectEditable {
 
     const {
       classes,
+      setActiveItem,
     } = this.getEditorContext();
 
 
@@ -1308,6 +1309,8 @@ class EditorComponent extends ObjectEditable {
             if (newItem) {
 
               parent.addComponent(newItem);
+
+              // setActiveItem(null);
 
               // return;
 
@@ -2813,7 +2816,7 @@ class EditorComponent extends ObjectEditable {
   }
 
 
-  renderAddButtons(content){
+  renderAddButtons(content) {
 
     return content;
   }
@@ -3174,7 +3177,7 @@ class EditorComponent extends ObjectEditable {
 
             const activeItem = this.getActiveItem();
 
-            if (activeItem && activeItem.canBeChild(this)) {
+            if (activeItem && this.canBeParent(activeItem)) {
               content = this.renderAddButton();
             }
 

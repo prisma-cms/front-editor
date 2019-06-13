@@ -1,3 +1,8 @@
+1.19.1
+=================================
+- Fix renderAddButton()
+- Fix VerticalTimeLine::canBeParent()
+
 1.19.0
 =================================
 - Configured components hierarchy

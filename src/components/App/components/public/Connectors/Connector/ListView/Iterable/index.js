@@ -40,10 +40,10 @@ class Iterable extends EditorComponent {
     </div>);
   }
 
-  canBeParent(parent) {
+  // canBeParent(parent) {
 
-    return parent instanceof ListView && super.canBeParent(parent);
-  }
+  //   return parent instanceof ListView && super.canBeParent(parent);
+  // }
 
 
   renderChildren() {

@@ -465,9 +465,6 @@ class FrontEditor extends Component {
     } = this.state;
 
 
-    if (!activeItem) {
-      return null;
-    }
 
     const {
       data,
@@ -476,10 +473,11 @@ class FrontEditor extends Component {
       ...other
     } = this.props;
 
-    return <div
-      className={[classes.panel, classes.bordered, "templates", templatesOpened ? "opened" : ""].join(" ")}
-    >
-      <div
+    let content;
+
+
+    if (activeItem) {
+      content = <div
         style={{
           position: "relative",
           // border: "1px solid red",
@@ -519,6 +517,12 @@ class FrontEditor extends Component {
         }
 
       </div>
+    }
+
+    return <div
+      className={[classes.panel, classes.bordered, "templates", templatesOpened ? "opened" : ""].join(" ")}
+    >
+      {content}
     </div>
 
     // if (templatesOpened) {
