@@ -2888,7 +2888,7 @@ class EditorComponent extends ObjectEditable {
   }
 
 
-  renderChildren(components) {
+  renderChildren() {
 
     if (this.isVoidElement()) {
       return null;
@@ -2919,13 +2919,14 @@ class EditorComponent extends ObjectEditable {
       components: itemComponents,
     } = object;
 
-    components = components || itemComponents;
+    // components = components || itemComponents;
 
 
     let output = [];
 
 
-    if (itemComponents && itemComponents.length) {
+    // if (itemComponents && itemComponents.length) {
+    if (itemComponents) {
 
       this.getComponents(itemComponents).map((n, index) => {
 

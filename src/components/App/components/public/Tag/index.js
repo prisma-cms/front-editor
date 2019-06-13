@@ -310,7 +310,7 @@ class Tag extends EditorComponent {
 
     if (itemComponents && itemComponents.length) {
 
-      return super.renderChildren(itemComponents);
+      return super.renderChildren();
 
     }
 
