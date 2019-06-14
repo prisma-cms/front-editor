@@ -236,7 +236,7 @@ class EditableObject extends EditorComponent {
 
               }
 
-              children.map(n => {
+              children && children.length && children.filter(n => n).map(n => {
 
                 const {
                   type,
