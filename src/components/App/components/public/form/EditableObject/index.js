@@ -26,7 +26,7 @@ export class Editable extends ApolloEditableObject {
       children,
     } = this.props;
 
-    return children ? children.filter(n => n.type !== DefaultView) : children;
+    return children ? children.filter(n => n && n.type !== DefaultView) : children;
   }
 
   renderDefaultView() {
@@ -35,7 +35,7 @@ export class Editable extends ApolloEditableObject {
       children,
     } = this.props;
 
-    return children ? children.filter(n => n.type !== EditableView) : children;
+    return children ? children.filter(n => n && n.type !== EditableView) : children;
 
     // const {
     //   fullname,
