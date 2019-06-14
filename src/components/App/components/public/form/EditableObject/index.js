@@ -373,7 +373,7 @@ class EditableObject extends EditorComponent {
               },
             } = this.context;
 
-            history.push(url);
+            history.push(decodeURIComponent(url));
 
           }
 

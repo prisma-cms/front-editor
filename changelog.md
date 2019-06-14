@@ -1,3 +1,7 @@
+1.19.3
+=================================
+- Fix on_create_redirect_url
+
 1.19.2
 =================================
 - Fix Component::getComponents()
