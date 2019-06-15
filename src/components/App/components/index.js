@@ -2620,6 +2620,7 @@ class EditorComponent extends ObjectEditable {
       const isActive = activeItem === this ? true : false;
       const isDragOvered = dragTarget === this ? true : false;
       const isHovered = hoveredItem === this ? true : false;
+      const deletable = this.isDeletable();
 
 
       if (isActive && settingsViewContainer) {
@@ -2712,11 +2713,33 @@ class EditorComponent extends ObjectEditable {
               </IconButton>
             </Grid>
 
+            {deletable ?
+              <Grid
+                item
+              >
+                <IconButton
+                  title="Удалить элемент"
+                  onClick={event => {
+                    event.preventDefault();
+                    event.stopPropagation();
+
+                    this.deleteItem();
+                  }}
+                  className={classes.badgeButton}
+                >
+                  <DeleteIcon
+
+                  />
+                </IconButton>
+              </Grid>
+              : null
+            }
+
             <Grid
               item
               xs
             >
-              {name}
+              {component}
             </Grid>
 
           </Grid>

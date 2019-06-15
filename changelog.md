@@ -1,3 +1,7 @@
+1.19.6
+=================================
+- Added deleteItem() button in badge
+
 1.19.5
 =================================
 - Fix Editable::mutate();
