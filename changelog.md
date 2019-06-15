@@ -1,3 +1,8 @@
+1.19.7
+=================================
+- Fix deleteItem()
+- Fix badge
+
 1.19.6
 =================================
 - Added deleteItem() button in badge

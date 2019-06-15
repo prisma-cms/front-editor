@@ -192,7 +192,7 @@ const styles = theme => {
       border: "1px solid #ddd",
       position: "absolute",
       bottom: "100%",
-      left: 0,
+      right: 0,
       zIndex: "2000",
       background: bgDefault,
       color: textPrimary,

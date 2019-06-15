@@ -546,13 +546,13 @@ class EditorComponent extends ObjectEditable {
    * Если это корневой элемент, удаляем его.
    * Если нет, то удаляем из родительского
    */
-  deleteItem() {
+  deleteItem(activeItem) {
 
     const {
       setActiveItem,
     } = this.getEditorContext();
 
-    const activeItem = this.getActiveItem();
+    // const activeItem = this.getActiveItem();
 
     const activeParent = activeItem.getActiveParent();
 
@@ -611,17 +611,18 @@ class EditorComponent extends ObjectEditable {
     } = this.props;
 
 
-    const activeItem = this.getActiveItem();
+    // const activeItem = this.getActiveItem();
 
-    if (!activeItem) {
-      return false;
-    }
+    // if (!activeItem) {
+    //   return false;
+    // }
 
     // const activeParent = activeItem.getActiveParent();
 
     // return deletable && activeItem !== activeParent ? true : false;
 
-    return deletable && activeItem.props.parent ? true : false;
+    // return deletable && activeItem.props.parent ? true : false;
+    return deletable && this.props.parent ? true : false;
   }
 
 
@@ -1719,7 +1720,11 @@ class EditorComponent extends ObjectEditable {
             title="Удалить элемент"
             onClick={event => {
 
-              this.deleteItem();
+              const activeItem = this.getActiveItem();
+
+              if (activeItem) {
+                this.deleteItem(activeItem);
+              }
 
             }}
           >
@@ -2339,6 +2344,12 @@ class EditorComponent extends ObjectEditable {
      * getActiveItem - Элемент из основной части редактора.
      */
 
+
+
+    if (!activeItem) {
+      return null;
+    }
+
     const activeParent = activeItem.getActiveParent();
 
     // let props = activeItem.props.props || {};
@@ -2652,27 +2663,9 @@ class EditorComponent extends ObjectEditable {
 
             <Grid
               item
-              style={{
-                cursor: "pointer",
-              }}
-              draggable={true}
-              onDragStart={event => {
-
-
-
-                // event.dataTransfer.setData("text/plain", "ev.target.id");
-
-                this.onDragStart(event, this);
-              }}
-              onDragEnd={event => this.onDragEnd(event)}
-              onClick={event => {
-                event.preventDefault();
-                event.stopPropagation();
-
-              }}
+              xs
             >
-              <DragIcon
-              />
+              {component}
             </Grid>
 
             <Grid
@@ -2713,7 +2706,7 @@ class EditorComponent extends ObjectEditable {
               </IconButton>
             </Grid>
 
-            {deletable ?
+            {deletable && activeItem && activeItem === this ?
               <Grid
                 item
               >
@@ -2723,7 +2716,7 @@ class EditorComponent extends ObjectEditable {
                     event.preventDefault();
                     event.stopPropagation();
 
-                    this.deleteItem();
+                    this.deleteItem(this);
                   }}
                   className={classes.badgeButton}
                 >
@@ -2737,9 +2730,27 @@ class EditorComponent extends ObjectEditable {
 
             <Grid
               item
-              xs
+              style={{
+                cursor: "pointer",
+              }}
+              draggable={true}
+              onDragStart={event => {
+
+
+
+                // event.dataTransfer.setData("text/plain", "ev.target.id");
+
+                this.onDragStart(event, this);
+              }}
+              onDragEnd={event => this.onDragEnd(event)}
+              onClick={event => {
+                event.preventDefault();
+                event.stopPropagation();
+
+              }}
             >
-              {component}
+              <DragIcon
+              />
             </Grid>
 
           </Grid>
