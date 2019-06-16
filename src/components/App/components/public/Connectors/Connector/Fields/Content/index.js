@@ -33,7 +33,7 @@ class Content extends EditorComponent {
 
   getRootElement() {
 
-    return "span";
+    return "div";
   }
 
 

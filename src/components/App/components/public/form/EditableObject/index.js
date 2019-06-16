@@ -37,84 +37,14 @@ export class Editable extends ApolloEditableObject {
 
     return children ? children.filter(n => n && n.type !== EditableView) : children;
 
-    // const {
-    //   fullname,
-    // } = this.getObjectWithMutations();
-
-    // return <div>
-
-    //   <input
-    //     onChange={event => this.onChange(event)}
-    //     name="fullname"
-    //     value={fullname || ""}
-    //   />
-
-    //   {children}
-
-    // </div>;
-
   }
 
 
-
-  // getEditor(props) {
-
-  //   const {
-  //     Editor,
-  //     name,
-  //     helperText,
-  //     onFocus,
-  //     fullWidth = true,
-  //     label,
-  //     ...other
-  //   } = props;
-
-
-  //   const object = this.getObjectWithMutations();
-
-  //   console.log("getEditor object", { ...object });
-
-  //   return super.getEditor(props);
-
-  // }
-
-
-
-
-  // async saveObject(data) {
-
-  //   // const {
-  //   //   object,
-  //   //   saveObject,
-  //   // } = this.props;
-
-  //   // if(saveObject){
-  //   //   return saveObject(data);
-  //   // }
-
-  //   console.log("saveObject data", data);
+  // getCacheKey = () => {
 
   //   const {
-  //     mutate,
+  //     cacheKey,
   //   } = this.props;
-
-  //   if (!mutate) {
-  //     throw (new Error("Mutate not defined"));
-  //   }
-
-  //   const mutation = this.getMutation(data);
-
-  //   const result = await mutate(mutation).then(r => r).catch(e => {
-
-  //     console.error("saveObject error", e);
-
-  //     // throw (e);
-  //     return e;
-  //   });
-
-  //   // console.log("result 333", result);
-
-  //   return result;
 
   // }
 
@@ -128,6 +58,7 @@ export class Editable extends ApolloEditableObject {
         inEditMode: this.isInEditMode(),
         canEdit: this.canEdit(),
         getObjectWithMutations: () => this.getObjectWithMutations(),
+        // getCacheKey: this.getCacheKey,
         ...this.props,
       }}
     >
@@ -160,6 +91,9 @@ class EditableObject extends EditorComponent {
      * УРЛ, куда редиректить при создании нового объекта
      */
     on_create_redirect_url: undefined,
+    cache_key: undefined,
+    cache_key_prefix: undefined,
+    new_object_cache_key: undefined,
   }
 
   static Name = "EditableObject"
@@ -184,19 +118,40 @@ class EditableObject extends EditorComponent {
   }
 
 
+  getEditableClass() {
+
+    return Editable;
+  }
+
+
   renderChildren() {
 
-    const {
-      inEditMode,
-    } = this.getEditorContext();
+    // const {
+    //   inEditMode,
+    // } = this.getEditorContext();
 
     let children = super.renderChildren();
 
 
+
+    const {
+      on_create_redirect_url,
+      props,
+      data,
+      components,
+      style,
+      cache_key,
+      cache_key_prefix,
+      new_object_cache_key,
+      ...other
+    } = this.getComponentProps(this);
+
+
+    const Editable = this.getEditableClass();
+
+
     return <ObjectContext.Consumer>
       {context => {
-
-        // console.log("EditableObject context", { ...context });
 
         const {
           object,
@@ -217,6 +172,10 @@ class EditableObject extends EditorComponent {
         const {
           id: objectId,
         } = object || {};
+
+        const cacheKey = cache_key ? cache_key : new_object_cache_key && !objectId ? new_object_cache_key : undefined;
+        const cacheKeyPrefix = cache_key_prefix;
+
 
         return <Editable
           data={{
@@ -247,22 +206,11 @@ class EditableObject extends EditorComponent {
                   },
                 } = n;
 
-                // console.log("EditableObject children type", type);
-                // console.log("EditableObject children type Query", Query);
-
-                // console.log("EditableObject children type === Query", type === Query);
-
                 if (type === Query) {
-
-                  // console.log("EditableObject children type Query n", n);
-
-                  // console.log("EditableObject children type Query query", query);
 
                   if (query) {
 
                     const queryName = this.getQueryNameFromQuery(query);
-
-                    // console.log("EditableObject children type Query query name", queryName);
 
                     if (queryName) {
                       queries[queryName] = query;
@@ -283,11 +231,7 @@ class EditableObject extends EditorComponent {
                 return false;
               }
 
-              // console.log("mutate props", { ...props });
-
               const extendedQuery = this.extendQuery(mutation);
-
-              // console.log("mutate extendQuery", extendedQuery);
 
               return await client.mutate({
                 mutation: gql(extendedQuery),
@@ -306,6 +250,9 @@ class EditableObject extends EditorComponent {
 
           }}
           onSave={this.prepareOnSave(object)}
+          cacheKey={cacheKey}
+          cacheKeyPrefix={cacheKeyPrefix}
+          {...other}
         >
           {children}
         </Editable>;

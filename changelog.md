@@ -1,3 +1,8 @@
+1.19.8
+=================================
+- Set Content default container is div
+- Fix EditableObject::cacheKey
+
 1.19.7
 =================================
 - Fix deleteItem()
