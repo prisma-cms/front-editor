@@ -93,6 +93,7 @@ const styles = theme => {
       "&.fullheight": {
         height: "100vh",
       },
+
     },
     editor: {
 
@@ -187,6 +188,14 @@ const styles = theme => {
       "&.disabled": {
         borderColor: "transparent",
       },
+
+      // https://habr.com/ru/post/456248/
+      "&[contenteditable=true]": {
+        "&:empty:before": {
+          content: "unset",
+        },
+      },
+
     },
     blockBadge: {
       border: "1px solid #ddd",

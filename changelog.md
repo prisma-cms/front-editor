@@ -1,3 +1,7 @@
+1.19.9
+=================================
+- Fix [contenteditable=true]:empty:before
+
 1.19.8
 =================================
 - Set Content default container is div
