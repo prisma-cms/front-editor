@@ -54,6 +54,7 @@ import EditableView from './components/public/form/EditableObject/EditableView';
 import DefaultView from './components/public/form/EditableObject/DefaultView';
 import VerticalTimeline from './components/public/VerticalTimeline';
 import VerticalTimelineItem from './components/public/VerticalTimeline/VerticalTimelineItem';
+import RichText from './components/public/Connectors/Connector/Fields/RichText';
 
 const styles = theme => {
 
@@ -258,6 +259,7 @@ class FrontEditor extends Component {
       ObjectView,
       Pagination,
       NamedField,
+      RichText,
       ObjectImage,
       UserLink,
       Filters,

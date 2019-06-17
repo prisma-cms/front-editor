@@ -1,3 +1,7 @@
+1.19.10
+=================================
+- Added RichText
+
 1.19.9
 =================================
 - Fix [contenteditable=true]:empty:before
