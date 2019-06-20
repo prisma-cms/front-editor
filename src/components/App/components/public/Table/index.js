@@ -12,10 +12,10 @@ export class Table extends EditorComponent {
   static defaultProps = {
     ...EditorComponent.defaultProps,
     style: {
+      ...EditorComponent.defaultProps.style,
       cellBorder: "1px solid red",
       borderCollapse: "collapse",
       width: "100%",
-      ...EditorComponent.defaultProps.style,
     },
   }
 

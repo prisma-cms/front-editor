@@ -107,23 +107,33 @@ class Connector extends EditorComponent {
             },
             components: [
               {
-                "name": "ListView",
-                "component": "ListView",
+                "name": "Grid",
+                "component": "Grid",
                 props: {
+                  "container": true,
+                  spacing: 8,
                 },
-                "components": [
+                components: [
                   {
-                    "name": "Grid",
-                    "component": "Grid",
+                    "name": "ListView",
+                    "component": "ListView",
                     props: {
-                      "item": true,
-                      "xs": 12,
-                      "md": 6,
-                      "xl": 3,
                     },
-                    components: [],
-                  }
-                ]
+                    "components": [
+                      {
+                        "name": "Grid",
+                        "component": "Grid",
+                        props: {
+                          "item": true,
+                          "xs": 12,
+                          "md": 6,
+                          "xl": 3,
+                        },
+                        components: [],
+                      }
+                    ]
+                  },
+                ],
               },
             ],
           },

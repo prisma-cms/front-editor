@@ -48,8 +48,11 @@ class ListView extends EditorComponent {
 
     return {
       style: {
-        width: "100%",
         ...style,
+        width: "100%",
+        display: "flex",
+        flexDirection: "row",
+        flexWrap: "wrap",
       },
       ...props,
     }

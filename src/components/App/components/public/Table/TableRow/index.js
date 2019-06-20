@@ -61,31 +61,26 @@ export class TableRow extends EditorComponent {
       inEditMode,
     } = this.getEditorContext();
 
-    // let output = null;
+    let inEditModeProps;
 
-    return inEditMode ? super.renderMainView() : this.renderChildren();
+    if (inEditMode) {
 
-    // if (inEditMode) {
+      const {
+        style,
+      } = this.getComponentProps(this);
 
-    //   const {
-    //     style,
-    //   } = this.getComponentProps(this);
-
-    //   output = super.renderMainView({
-    //     style: {
-    //       ...style,
-    //       display: "flex",
-    //       width: "100%",
-    //       borderColor: "red",
-    //       border: "1px solid",
-    //     },
-    //   });
-    // }
-    // else {
-    //   output = this.renderChildren();;
-    // }
-
-    // return output;
+      inEditModeProps = {
+        style: {
+          ...style,
+          width: "100%",
+          flexBasis: "100%",
+        },
+      };
+      return super.renderMainView(inEditModeProps);
+    }
+    else {
+      return this.renderChildren();
+    }
 
   }
 

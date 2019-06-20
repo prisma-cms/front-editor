@@ -1,3 +1,8 @@
+1.20.1
+=================================
+- Fix Table
+- Fix ListView
+
 1.20.0
 =================================
 - Fix components renderPanelView()
