@@ -2665,7 +2665,7 @@ class EditorComponent extends ObjectEditable {
               item
               xs
             >
-              {component}
+              {this.renderBadgeTitle(component)}
             </Grid>
 
             <Grid
@@ -2837,6 +2837,11 @@ class EditorComponent extends ObjectEditable {
 
       {settingsView}
     </Fragment>
+  }
+
+
+  renderBadgeTitle(title) {
+    return title;
   }
 
 

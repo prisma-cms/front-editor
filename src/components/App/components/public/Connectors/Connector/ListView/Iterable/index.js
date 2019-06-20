@@ -46,6 +46,17 @@ class Iterable extends EditorComponent {
   // }
 
 
+  renderMainView() {
+
+    const {
+      inEditMode,
+    } = this.getEditorContext();
+
+    return inEditMode ? super.renderMainView() : this.renderChildren();
+
+  }
+
+
   renderChildren() {
 
     const {

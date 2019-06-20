@@ -55,6 +55,9 @@ import DefaultView from './components/public/form/EditableObject/DefaultView';
 import VerticalTimeline from './components/public/VerticalTimeline';
 import VerticalTimelineItem from './components/public/VerticalTimeline/VerticalTimelineItem';
 import RichText from './components/public/Connectors/Connector/Fields/RichText';
+import Table from './components/public/Table';
+import TableRow from './components/public/Table/TableRow';
+import TableCell from './components/public/Table/TableCell';
 
 const styles = theme => {
 
@@ -289,6 +292,9 @@ class FrontEditor extends Component {
       TextField,
       VerticalTimeline,
       VerticalTimelineItem,
+      Table,
+      TableRow,
+      TableCell,
     ],
     CustomComponents: [],
     className: "fullheight",

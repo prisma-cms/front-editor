@@ -1,5 +1,9 @@
+1.20.0
 =================================
 - Fix components renderPanelView()
+- Added Component::renderBadgeTitle()
+- Breaking change: Remove Grid from ListView::renderChildrenView()
+- Added Table, TableRow, TableCell
 
 1.19.10
 =================================

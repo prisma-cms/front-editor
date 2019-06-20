@@ -195,29 +195,31 @@ class ListView extends EditorComponent {
         }
         else {
 
-          output = <Grid
+          output = items.length ? items.map((n, index) => {
+
+            const {
+              id,
+            } = n;
+
+            return <ObjectContext.Provider
+              key={id || index}
+              value={{
+                object: n,
+                ...otherData,
+              }}
+            >
+              {children}
+            </ObjectContext.Provider>
+          }) : children;
+
+          {/* output = <Grid
             container
             {...other}
           >
 
-            {items.length ? items.map((n, index) => {
+            {}
 
-              const {
-                id,
-              } = n;
-
-              return <ObjectContext.Provider
-                key={id || index}
-                value={{
-                  object: n,
-                  ...otherData,
-                }}
-              >
-                {children}
-              </ObjectContext.Provider>
-            }) : children}
-
-          </Grid>;
+          </Grid>; */}
         }
 
         return output;

@@ -51,6 +51,42 @@ class NamedField extends EditorComponent {
   }
 
 
+  renderBadgeTitle(title) {
+
+    const {
+      Grid,
+    } = this.context;
+
+    const {
+      name,
+    } = this.getComponentProps(this);
+
+
+    return <Grid
+      container
+      spacing={8}
+      alignItems="center"
+      style={{
+        flexWrap: "nowrap",
+      }}
+    >
+      <Grid
+        item
+      >
+        {super.renderBadgeTitle(title)}
+      </Grid>
+      {name
+        ? <Grid
+          item
+        >
+          <b>{name}</b>
+        </Grid>
+        : null
+      }
+    </Grid>;
+  }
+
+
   getComponentProps(component) {
 
     const {
