@@ -14,16 +14,18 @@ class Login extends EditorComponent {
 
   static Name = "Login"
 
-  renderPanelView() {
+  renderPanelView(content) {
 
     const {
       classes,
     } = this.getEditorContext();
 
-    return super.renderPanelView(<div
-      className={classes.panelButton}
-    >
-      Login
+    return super.renderPanelView(
+      content ||
+      <div
+        className={classes.panelButton}
+      >
+        Login
     </div>);
   }
 

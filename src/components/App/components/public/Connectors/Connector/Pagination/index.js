@@ -11,16 +11,18 @@ class Pagination extends EditorComponent {
   static Name = "Pagination"
 
 
-  renderPanelView() {
+  renderPanelView(content) {
 
     const {
       classes,
     } = this.getEditorContext();
 
-    return super.renderPanelView(<div
-      className={classes.panelButton}
-    >
-      <PaginationIcon /> Pagination
+    return super.renderPanelView(
+      content ||
+      <div
+        className={classes.panelButton}
+      >
+        <PaginationIcon /> Pagination
     </div>);
   }
 

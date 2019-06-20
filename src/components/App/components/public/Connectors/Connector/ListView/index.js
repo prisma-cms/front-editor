@@ -22,17 +22,19 @@ class ListView extends EditorComponent {
   static help_url = "https://front-editor.prisma-cms.com/topics/list-view.html";
 
 
-  renderPanelView() {
+  renderPanelView(content) {
 
     const {
       classes,
     } = this.getEditorContext();
 
 
-    return super.renderPanelView(<div
-      className={classes.panelButton}
-    >
-      <ViewIcon /> List View
+    return super.renderPanelView(
+      content ||
+      <div
+        className={classes.panelButton}
+      >
+        <ViewIcon /> List View
     </div>);
   }
 

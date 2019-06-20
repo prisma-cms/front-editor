@@ -25,16 +25,18 @@ class NamedField extends EditorComponent {
   static Name = "NamedField"
 
 
-  renderPanelView() {
+  renderPanelView(content) {
 
     const {
       classes,
     } = this.getEditorContext();
 
-    return super.renderPanelView(<div
-      className={classes.panelButton}
-    >
-      <Icon /> Object field
+    return super.renderPanelView(
+      content ||
+      <div
+        className={classes.panelButton}
+      >
+        <Icon /> Object field
     </div>);
   }
 

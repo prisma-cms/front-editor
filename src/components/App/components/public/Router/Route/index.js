@@ -28,16 +28,18 @@ class EditorRoute extends EditorComponent {
   }
 
 
-  renderPanelView() {
+  renderPanelView(content) {
 
     const {
       classes,
     } = this.getEditorContext();
 
-    return super.renderPanelView(<div
-      className={classes.panelButton}
-    >
-      Router
+    return super.renderPanelView(
+      content ||
+      <div
+        className={classes.panelButton}
+      >
+        Router
     </div>);
   }
 

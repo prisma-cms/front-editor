@@ -50,18 +50,20 @@ class ObjectView extends EditorComponent {
   }
 
 
-  renderPanelView() {
+  renderPanelView(content) {
 
     const {
       classes,
     } = this.getEditorContext();
 
 
-    return super.renderPanelView(<div
-      className={classes.panelButton}
-    >
-      {/* <ViewIcon />  */}
-      Object View
+    return super.renderPanelView(
+      content ||
+      <div
+        className={classes.panelButton}
+      >
+        {/* <ViewIcon />  */}
+        Object View
     </div>);
   }
 

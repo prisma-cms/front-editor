@@ -25,16 +25,18 @@ class DefaultView extends EditorComponent {
   }
 
 
-  renderPanelView() {
+  renderPanelView(content) {
 
     const {
       classes,
     } = this.getEditorContext();
 
-    return super.renderPanelView(<div
-      className={classes.panelDefaultView}
-    >
-      DefaultView
+    return super.renderPanelView(
+      content ||
+      <div
+        className={classes.panelDefaultView}
+      >
+        DefaultView
     </div>);
   }
 

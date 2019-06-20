@@ -31,16 +31,18 @@ class TextField extends EditorComponent {
   }
 
 
-  renderPanelView() {
+  renderPanelView(content) {
 
     const {
       classes,
     } = this.getEditorContext();
 
-    return super.renderPanelView(<div
-      className={classes.panelTextField}
-    >
-      TextField
+    return super.renderPanelView(
+      content ||
+      <div
+        className={classes.panelTextField}
+      >
+        TextField
     </div>);
   }
 
@@ -96,7 +98,7 @@ class TextField extends EditorComponent {
 
         // return getEditor ? getEditor
 
-        {/* console.log("EditableObjectContext context", context); */}
+        {/* console.log("EditableObjectContext context", context); */ }
 
         return getEditor ? getEditor({
           ...this.getComponentProps(this),

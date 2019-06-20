@@ -12,16 +12,18 @@ class UsersGrid extends EditorComponent {
 
   static Name = "UsersGrid"
 
-  renderPanelView() {
+  renderPanelView(content) {
 
     const {
       classes,
     } = this.getEditorContext();
 
-    return super.renderPanelView(<div
-      className={classes.panelButton}
-    >
-      <PeopleIcon /> Users Grid
+    return super.renderPanelView(
+      content ||
+      <div
+        className={classes.panelButton}
+      >
+        <PeopleIcon /> Users Grid
     </div>);
   }
 

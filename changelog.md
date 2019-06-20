@@ -1,3 +1,6 @@
+=================================
+- Fix components renderPanelView()
+
 1.19.10
 =================================
 - Added RichText

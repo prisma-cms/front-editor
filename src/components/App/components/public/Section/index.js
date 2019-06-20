@@ -16,16 +16,18 @@ class Section extends EditorComponent {
 
   static Name = "Section"
 
-  renderPanelView() {
+  renderPanelView(content) {
 
     const {
       classes,
     } = this.getEditorContext();
 
-    return super.renderPanelView(<div
-      className={classes.panelButton}
-    >
-      <Icon /> Section
+    return super.renderPanelView(
+      content ||
+      <div
+        className={classes.panelButton}
+      >
+        <Icon /> Section
     </div>);
   }
 

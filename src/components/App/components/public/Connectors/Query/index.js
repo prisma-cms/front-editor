@@ -16,16 +16,18 @@ class Query extends EditorComponent {
   static Name = "Query"
   static help_url = "https://front-editor.prisma-cms.com/topics/query.html";
 
-  renderPanelView() {
+  renderPanelView(content) {
 
     const {
       classes,
     } = this.getEditorContext();
 
-    return super.renderPanelView(<div
-      className={classes.panelButton}
-    >
-      <Icon /> Query
+    return super.renderPanelView(
+      content ||
+      <div
+        className={classes.panelButton}
+      >
+        <Icon /> Query
     </div>);
   }
 

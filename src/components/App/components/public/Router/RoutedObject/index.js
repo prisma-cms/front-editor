@@ -21,16 +21,18 @@ class RoutedObject extends EditorComponent {
   // }
 
 
-  renderPanelView() {
+  renderPanelView(content) {
 
     const {
       classes,
     } = this.getEditorContext();
 
-    return super.renderPanelView(<div
-      className={classes.panelButton}
-    >
-      Routed Object
+    return super.renderPanelView(
+      content ||
+      <div
+        className={classes.panelButton}
+      >
+        Routed Object
     </div>);
   }
 

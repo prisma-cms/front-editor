@@ -11,16 +11,18 @@ class UserLink extends EditorComponent {
 
   static Name = "UserLink"
 
-  renderPanelView() {
+  renderPanelView(content) {
 
     const {
       classes,
     } = this.getEditorContext();
 
-    return super.renderPanelView(<div
-      className={classes.panelButton}
-    >
-      <UserIcon /> User link
+    return super.renderPanelView(
+      content ||
+      <div
+        className={classes.panelButton}
+      >
+        <UserIcon /> User link
     </div>);
   }
 

@@ -75,22 +75,24 @@ class Tag extends EditorComponent {
   /**
    * Не выводим кнопки, так как иначе сбивается редактирование текста
    */
-  renderAddButtons(content){
+  renderAddButtons(content) {
 
     return null;
   }
 
 
-  renderPanelView() {
+  renderPanelView(content) {
 
     const {
       classes,
     } = this.getEditorContext();
 
-    return super.renderPanelView(<div
-      className={classes.panelButton}
-    >
-      <Icon /> HTML Tag
+    return super.renderPanelView(
+      content ||
+      <div
+        className={classes.panelButton}
+      >
+        <Icon /> HTML Tag
     </div>);
   }
 

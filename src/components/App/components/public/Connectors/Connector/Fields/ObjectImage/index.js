@@ -22,16 +22,18 @@ class ObjectImage extends EditorComponent {
 
   static Name = "ObjectImage"
 
-  renderPanelView() {
+  renderPanelView(content) {
 
     const {
       classes,
     } = this.getEditorContext();
 
-    return super.renderPanelView(<div
-      className={classes.panelButton}
-    >
-      <Icon /> Object Image
+    return super.renderPanelView(
+      content ||
+      <div
+        className={classes.panelButton}
+      >
+        <Icon /> Object Image
     </div>);
   }
 

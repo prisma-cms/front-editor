@@ -24,16 +24,18 @@ class TextArea extends EditorComponent {
   //   return false;
   // }
 
-  renderPanelView() {
+  renderPanelView(content) {
 
     const {
       classes,
     } = this.getEditorContext();
 
-    return super.renderPanelView(<div
-      className={classes.panelButton}
-    >
-      <TextIcon /> TextArea
+    return super.renderPanelView(
+      content ||
+      <div
+        className={classes.panelButton}
+      >
+        <TextIcon /> TextArea
     </div>);
   }
 
@@ -60,53 +62,53 @@ class TextArea extends EditorComponent {
 
 
 
-    let options ;
+    let options;
 
-    if(inEditMode) {
+    if (inEditMode) {
 
       options = {
-        contentEditable:true,
+        contentEditable: true,
         suppressContentEditableWarning: true,
         onInput: event => {
-  
+
           // const {
           //   nativeEvent: {
           //     inputType,
           //   },
           // } = event;
-  
-  
+
+
           const node = event.target;
-  
-  
+
+
           const content = this.makeNewContent(node);
-  
-  
-  
+
+
+
           let newState = {
             newContent: content,
           };
-  
-  
+
+
           // Object.assign(newState, {
           //   // content,
           // });
-  
+
           Object.assign(this.state, newState);
-  
-  
+
+
           // onChange(content);
-  
+
           this.updateComponentProps({
             content,
           });
-  
-  
+
+
           // setTimeout(() => {
           //   this.forceUpdate();
           // }, 1000);
-  
-  
+
+
         },
       }
 

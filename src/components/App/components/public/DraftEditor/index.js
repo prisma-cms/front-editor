@@ -18,17 +18,19 @@ class DraftEditor extends EditorComponent {
   static Name = "DraftEditor"
 
 
-  renderPanelView() {
+  renderPanelView(content) {
 
     const {
       classes,
     } = this.getEditorContext();
 
-    return super.renderPanelView(<div
-      className={classes.panelButton}
-    >
-      {/* <Icon />  */}
-      DraftEditor
+    return super.renderPanelView(
+      content ||
+      <div
+        className={classes.panelButton}
+      >
+        {/* <Icon />  */}
+        DraftEditor
     </div>);
   }
 

@@ -12,13 +12,15 @@ class CreatedBy extends EditorComponent {
 
   static Name = "CreatedBy"
 
-  renderPanelView() {
+  renderPanelView(content) {
 
     const {
       classes,
     } = this.getEditorContext();
 
-    return super.renderPanelView(<div
+    return super.renderPanelView(
+      content ||
+      <div
       className={classes.panelButton}
     >
       <UserIcon /> CreatedBy

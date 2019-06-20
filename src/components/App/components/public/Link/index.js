@@ -18,16 +18,18 @@ class Link extends EditorComponent {
 
   static Name = "Link"
 
-  renderPanelView() {
+  renderPanelView(content) {
 
     const {
       classes,
     } = this.getEditorContext();
 
-    return super.renderPanelView(<div
-      className={classes.panelButton}
-    >
-      <Icon /> Link
+    return super.renderPanelView(
+      content ||
+      <div
+        className={classes.panelButton}
+      >
+        <Icon /> Link
     </div>);
   }
 
@@ -40,19 +42,19 @@ class Link extends EditorComponent {
   }
 
 
-  prepareDragItemComponents() {
+  // prepareDragItemComponents() {
 
-    return super.prepareDragItemComponents().concat([
-      {
-        name: "Tag",
-        component: "Tag",
-        props: {
-          tag: "span",
-        },
-        components: [],
-      }
-    ]);
-  }
+  //   return super.prepareDragItemComponents().concat([
+  //     {
+  //       name: "Tag",
+  //       component: "Tag",
+  //       props: {
+  //         tag: "span",
+  //       },
+  //       components: [],
+  //     }
+  //   ]);
+  // }
 
 
   // getRenderProps() {

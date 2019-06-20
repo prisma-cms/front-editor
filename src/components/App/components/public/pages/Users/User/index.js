@@ -23,17 +23,19 @@ class UserPage extends EditorComponent {
     UserPageClass: PrismaCmsUserPage,
   }
 
-  renderPanelView() {
+  renderPanelView(content) {
 
     const {
       classes,
     } = this.getEditorContext();
 
-    return super.renderPanelView(<div
-      className={classes.panelButton}
-    >
-      {/* <Icon />  */}
-      User page
+    return super.renderPanelView(
+      content ||
+      <div
+        className={classes.panelButton}
+      >
+        {/* <Icon />  */}
+        User page
     </div>);
   }
 

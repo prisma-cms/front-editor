@@ -85,16 +85,18 @@ class EditorSwitch extends EditorComponent {
 
 
 
-  renderPanelView() {
+  renderPanelView(content) {
 
     const {
       classes,
     } = this.getEditorContext();
 
-    return super.renderPanelView(<div
-      className={classes.panelButton}
-    >
-      Router Switch
+    return super.renderPanelView(
+      content ||
+      <div
+        className={classes.panelButton}
+      >
+        Router Switch
     </div>);
   }
 

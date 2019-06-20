@@ -105,16 +105,18 @@ class VerticalTimelineItem extends EditorComponent {
   // }
 
 
-  renderPanelView() {
+  renderPanelView(content) {
 
     const {
       classes,
     } = this.getEditorContext();
 
-    return super.renderPanelView(<div
-      className={classes.panelVerticalTimelineItem}
-    >
-      VerticalTimelineItem
+    return super.renderPanelView(
+      content ||
+      <div
+        className={classes.panelVerticalTimelineItem}
+      >
+        VerticalTimelineItem
     </div>);
   }
 

@@ -41,18 +41,20 @@ class Connector extends EditorComponent {
   // }
 
 
-  renderPanelView() {
+  renderPanelView(content) {
 
     const {
       classes,
     } = this.getEditorContext();
 
 
-    return super.renderPanelView(<div
-      className={classes.panelButton}
-    >
-      <ConnectorIcon
-      /> Connector
+    return super.renderPanelView(
+      content ||
+      <div
+        className={classes.panelButton}
+      >
+        <ConnectorIcon
+        /> Connector
     </div>);
   }
 
@@ -856,7 +858,7 @@ class Connector extends EditorComponent {
       >
         Query props required
       </Typography> : null;
-      
+
     }
 
     // const {

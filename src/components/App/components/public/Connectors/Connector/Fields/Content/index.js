@@ -17,13 +17,15 @@ class Content extends EditorComponent {
   static Name = "Content"
 
 
-  renderPanelView() {
+  renderPanelView(content) {
 
     const {
       classes,
     } = this.getEditorContext();
 
-    return super.renderPanelView(<div
+    return super.renderPanelView(
+      content ||
+      <div
       className={classes.panelButton}
     >
       <Icon /> Content

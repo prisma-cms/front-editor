@@ -104,16 +104,18 @@ class EditableObject extends EditorComponent {
   }
 
 
-  renderPanelView() {
+  renderPanelView(content) {
 
     const {
       classes,
     } = this.getEditorContext();
 
-    return super.renderPanelView(<div
-      className={classes.panelEditableObject}
-    >
-      EditableObject
+    return super.renderPanelView(
+      content ||
+      <div
+        className={classes.panelEditableObject}
+      >
+        EditableObject
     </div>);
   }
 

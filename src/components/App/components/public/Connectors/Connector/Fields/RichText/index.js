@@ -10,13 +10,14 @@ export class RichText extends EditorComponent {
   }
 
 
-  renderPanelView() {
+  renderPanelView(content) {
 
     const {
       classes,
     } = this.getEditorContext();
 
     return super.renderPanelView(
+      content ||
       <div
         className={classes.panelButton}
       >

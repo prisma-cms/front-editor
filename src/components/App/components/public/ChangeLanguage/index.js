@@ -14,13 +14,15 @@ class ChangeLanguage extends EditorComponent {
   static Name = "ChangeLanguage"
   
 
-  renderPanelView() {
+  renderPanelView(content) {
 
     const {
       classes,
     } = this.getEditorContext();
 
-    return super.renderPanelView(<div
+    return super.renderPanelView(
+      content ||
+      <div
       className={classes.panelButton}
     >
       Change Language

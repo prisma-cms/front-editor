@@ -17,7 +17,7 @@ class EditableView extends EditorComponent {
   onBeforeDrop = () => {
 
   }
-  
+
 
   canBeParent(parent) {
 
@@ -25,16 +25,18 @@ class EditableView extends EditorComponent {
   }
 
 
-  renderPanelView() {
+  renderPanelView(content) {
 
     const {
       classes,
     } = this.getEditorContext();
 
-    return super.renderPanelView(<div
-      className={classes.panelEditableView}
-    >
-      EditableView
+    return super.renderPanelView(
+      content ||
+      <div
+        className={classes.panelEditableView}
+      >
+        EditableView
     </div>);
   }
 

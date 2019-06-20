@@ -13,16 +13,18 @@ class AppBar extends EditorComponent {
 
   static Name = "AppBar"
 
-  renderPanelView() {
+  renderPanelView(content) {
 
     const {
       classes,
     } = this.getEditorContext();
 
-    return super.renderPanelView(<div
-      className={classes.panelButton}
-    >
-      AppBar
+    return super.renderPanelView(
+      content ||
+      <div
+        className={classes.panelButton}
+      >
+        AppBar
     </div>);
   }
 
