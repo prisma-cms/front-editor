@@ -258,8 +258,7 @@ class EditableObject extends EditorComponent {
         >
           {children}
         </Editable>;
-      }
-      }
+      }}
     </ObjectContext.Consumer >
 
   }

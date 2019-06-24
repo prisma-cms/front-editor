@@ -48,10 +48,10 @@ class ObjectConnector extends EditorComponent {
     return super.renderPanelView(
       content ||
       <div
-      className={classes.panelButton}
-    >
-      <ConnectorIcon
-      /> Object Connector
+        className={classes.panelButton}
+      >
+        <ConnectorIcon
+        /> Object Connector
     </div>);
   }
 
@@ -460,7 +460,7 @@ class ObjectConnector extends EditorComponent {
   }
 
 
-  
+
   canBeChild(child) {
 
     let can = false;
@@ -622,7 +622,19 @@ class ObjectConnector extends EditorComponent {
           } = match || {};
 
           if (params) {
-            where = params;
+            where = {};
+
+            /**
+             * Получаем только те значения, у которых ключ - строка.
+             */
+            Object.keys(params).map(key => {
+
+              if (key && typeof key === "string" && isNaN(parseInt(key))) {
+                where[key] = params[key];
+              }
+
+            });
+
           }
 
         }

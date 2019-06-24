@@ -1,3 +1,8 @@
+1.20.2
+=================================
+- Added RouteContext
+- Fix ObjectConnector::where
+
 1.20.1
 =================================
 - Fix Table

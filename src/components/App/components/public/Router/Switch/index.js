@@ -10,6 +10,7 @@ import {
 } from "react-router-dom";
 import { Typography } from 'material-ui';
 import EditorRoute from '../Route';
+import { RouteContext } from '../../../../context';
 
 class EditorSwitch extends EditorComponent {
 
@@ -192,26 +193,30 @@ class EditorSwitch extends EditorComponent {
             render={(routerProps) => {
               // return element;
 
-              return <Component
-                // key={id || index}
-                mode="main"
-                // component={n}
-                parent={this}
-                props={props}
-                data={{
-                  object: n,
-                }}
-                exact={exact}
-                path={path}
-                routername={routername}
-                // _dirty={n}
-                showRoutes={showRoutes}
-                createTemplate={createTemplate}
-                updateTemplate={updateTemplate}
-                {...other}
-                {...props}
-                {...routerProps}
-              />
+              return <RouteContext.Provider
+                value={routerProps}
+              >
+                <Component
+                  // key={id || index}
+                  mode="main"
+                  // component={n}
+                  parent={this}
+                  props={props}
+                  data={{
+                    object: n,
+                  }}
+                  exact={exact}
+                  path={path}
+                  routername={routername}
+                  // _dirty={n}
+                  showRoutes={showRoutes}
+                  createTemplate={createTemplate}
+                  updateTemplate={updateTemplate}
+                  {...other}
+                  {...props}
+                  {...routerProps}
+                />
+              </RouteContext.Provider>
             }}
           />
 
