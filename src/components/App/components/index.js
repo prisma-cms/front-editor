@@ -52,7 +52,7 @@ class EditorComponent extends ObjectEditable {
 
   static propTypes = {
     ...ObjectEditable.propTypes,
-    mode: PropTypes.oneOf(["main", "panel", "settings"]).isRequired,
+    mode: PropTypes.oneOf(["main", "panel", "settings", "add_child"]).isRequired,
 
     /**
      * Родительский инстанс компонента.
@@ -2802,7 +2802,10 @@ class EditorComponent extends ObjectEditable {
         </Grid>);
 
         if (addBlocks) {
-          inner.push(addBlocks);
+          // inner.push(addBlocks);
+
+          inner.push(this.renderActionPanel(addBlocks));
+
         }
 
 
@@ -2858,6 +2861,26 @@ class EditorComponent extends ObjectEditable {
   renderAddButtons(content) {
 
     return content;
+  }
+
+
+  renderActionPanel(content) {
+
+    const {
+      actionPanel,
+    } = this.getEditorContext();
+
+    // console.log("renderActionPanel actionPanel", { ...context });
+
+    // console.log("renderActionPanel actionPanel getActionPanel", context.getActionPanel());
+
+    if (actionPanel) {
+      return ReactDOM.createPortal(content, actionPanel);
+    }
+    else {
+      return content;
+    }
+
   }
 
 

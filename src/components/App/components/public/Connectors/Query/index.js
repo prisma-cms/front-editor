@@ -3,8 +3,12 @@ import PropTypes from 'prop-types';
 import EditorComponent from '../../../';
 
 import Icon from "material-ui-icons/SwapHoriz";
+import CloseIcon from "material-ui-icons/Close";
 
 import QueryBuilder from "@prisma-cms/query-builder";
+import { Drawer } from 'material-ui';
+import { Button } from 'material-ui';
+import { IconButton } from 'material-ui';
 
 
 class Query extends EditorComponent {
@@ -47,18 +51,64 @@ class Query extends EditorComponent {
 
 
     if (activeItem && activeItem === this) {
-      output = <div
+      // output = <div
+      //   style={{
+      //     height: "80vh",
+      //   }}
+      // >
+      //   <QueryBuilder
+      //     query={query || ""}
+      //     onEditQuery={query => {
+      //       this.updateComponentProperty("query", query)
+      //     }}
+      //   />
+      // </div>;
+
+
+      output = <Drawer
+        anchor="top"
+        open={true}
+        onClose={this.close}
+        // ModalProps={{
+
+        // }}
         style={{
-          height: "80vh",
+          // height: "100%",
+          zIndex: 3000,
+        }}
+        PaperProps={{
+          style: {
+            height: "100%",
+          },
         }}
       >
+        {/* <div
+          style={{
+            height: "80vh",
+          }}
+        > */}
+
+        <div
+          style={{
+            textAlign: "right",
+          }}
+        >
+          <Button
+            onClick={this.close}
+          >
+            <CloseIcon />
+          </Button>
+        </div>
+
         <QueryBuilder
           query={query || ""}
           onEditQuery={query => {
             this.updateComponentProperty("query", query)
           }}
         />
-      </div>;
+        {/* </div> */}
+      </Drawer>
+
     }
     else {
       output = super.renderChildren();
@@ -66,6 +116,19 @@ class Query extends EditorComponent {
 
     return output;
 
+  }
+
+
+  close = event => {
+
+    event.preventDefault();
+    event.stopPropagation();
+
+    const {
+      setActiveItem,
+    } = this.getEditorContext();
+
+    setActiveItem(null);
   }
 
 }

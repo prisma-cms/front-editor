@@ -227,6 +227,9 @@ const styles = theme => {
       color: "inherit",
       marginLeft: 3,
     },
+    actionPanel: {
+      borderTop: "1px solid #ddd",
+    },
   }
 }
 
@@ -1355,6 +1358,10 @@ class FrontEditor extends Component {
 
           },
           TemplateRenderer: this.TemplateRenderer,
+          actionPanel: this.actionPanel,
+          // getActionPanel: () => {
+          //   return this.actionPanel;
+          // }
         }}
       >
         {inEditMode
@@ -1375,8 +1382,31 @@ class FrontEditor extends Component {
               {this.renderTemplates()}
               <div
                 className={[classes.editor, classes.bordered].join(" ")}
+                style={{
+                  height: "100%",
+                  display: "flex",
+                  flexDirection: "column",
+                }}
               >
-                {items}
+
+                <div
+                  style={{
+                    flex: 1,
+                    overflow: "auto",
+                  }}
+                >
+                  {items}
+                </div>
+
+                <div
+                  ref={el => {
+                    if (el && !this.actionPanel) {
+                      this.actionPanel = el;
+                    }
+                  }}
+                  className={[classes.actionPanel, "front-editor--action-panel"].join(" ")}
+                >
+                </div>
 
               </div>
               <div

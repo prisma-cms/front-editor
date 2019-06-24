@@ -1,3 +1,8 @@
+1.21.0
+=================================
+- Show QueryBuilder in Modal
+- Added actionPanel
+
 1.20.2
 =================================
 - Added RouteContext
