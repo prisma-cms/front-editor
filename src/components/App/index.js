@@ -11,7 +11,7 @@ import Context from "@prisma-cms/context";
 import Page from './components/public/Page';
 import Grid from './components/public/Grid';
 // import TextArea from './components/public/TextArea';
-import UsersGrid from './components/public/UsersGrid';
+// import UsersGrid from './components/public/UsersGrid';
 import Connector from './components/public/Connectors/Connector';
 import ObjectConnector from './components/public/Connectors/ObjectConnector';
 import ListView from './components/public/Connectors/Connector/ListView';
@@ -28,7 +28,7 @@ import Switch from './components/public/Router/Switch';
 import Route from './components/public/Router/Route';
 import PageHeader from './components/public/PageHeader';
 // import ParralaxTest from './components/public/Parallax/Test';
-import RoutedObject from './components/public/Router/RoutedObject';
+// import RoutedObject from './components/public/Router/RoutedObject';
 import Link from './components/public/Link';
 import { EditorContext } from './context';
 // import DraftEditor from './components/public/DraftEditor';
@@ -43,10 +43,10 @@ import Button from './components/public/Button';
 import Query from './components/public/Connectors/Query';
 import Slider from './components/public/Slider';
 import Iterable from './components/public/Connectors/Connector/ListView/Iterable';
-import UserPage from './components/public/pages/Users/User';
+// import UserPage from './components/public/pages/Users/User';
 import AppBar from './components/public/AppBar';
 import Login from './components/public/Login';
-import ChangeLanguage from './components/public/ChangeLanguage';
+// import ChangeLanguage from './components/public/ChangeLanguage';
 import LanguageRouter from './components/public/LanguageRouter';
 import TextField from './components/public/form/TextField';
 import EditableObject from './components/public/form/EditableObject';
@@ -279,12 +279,12 @@ class FrontEditor extends Component {
       PageHeader,
       AppBar,
       Login,
-      ChangeLanguage,
+      // ChangeLanguage,
       LanguageRouter,
       Slider,
 
-      UsersGrid,
-      UserPage,
+      // UsersGrid,
+      // UserPage,
       // RoutedObject,
       // ParralaxTest,
       // DraftEditor,

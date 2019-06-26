@@ -1,6 +1,6 @@
 {
   "name": "@prisma-cms/front-editor",
-  "version": "1.21.0",
+  "version": "1.22.0",
   "private": false,
   "main": "lib/App.js",
   "scripts": {
@@ -10,6 +10,7 @@
     "build-less": "node-less-chokidar src/styles/less",
     "get-api-schema": "graphql get-schema -o src/schema/generated/api.graphql",
     "build-api-fragments": "node --experimental-modules src/server/scripts/deploy/build-api-fragments",
+    "analyze": "source-map-explorer 'build/static/js/*.js'",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
@@ -29,7 +30,8 @@
     "graphql-cli": "2.17.0",
     "node-less-chokidar": "^0.3.1",
     "nwb": "^0.23.0",
-    "react-scripts": "2.1.2"
+    "react-scripts": "2.1.2",
+    "source-map-explorer": "^2.0.1"
   },
   "resolutions": {
     "graphql": "14.0.2",

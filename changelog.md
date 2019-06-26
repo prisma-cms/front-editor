@@ -1,3 +1,7 @@
+1.22.0
+=================================
+- Remove @prisma-cms/front from prod
+
 1.21.0
 =================================
 - Show QueryBuilder in Modal

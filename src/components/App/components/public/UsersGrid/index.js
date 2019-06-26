@@ -5,7 +5,7 @@ import EditorComponent from '../..';
 
 import PeopleIcon from "material-ui-icons/People";
 
-import UsersPage from "@prisma-cms/front/lib/components/pages/UsersPage";
+// import UsersPage from "@prisma-cms/front/lib/components/pages/UsersPage";
 
 class UsersGrid extends EditorComponent {
 

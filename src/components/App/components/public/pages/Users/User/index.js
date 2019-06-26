@@ -7,7 +7,7 @@ import EditorComponent from "../../../../";
 
 // import CustomUserPage from "../../../../../UsersPage/UserPage";
 
-import PrismaCmsUserPage from "@prisma-cms/front/lib/components/pages/UsersPage/UserPage";
+// import PrismaCmsUserPage from "@prisma-cms/front/lib/components/pages/UsersPage/UserPage";
 
 class UserPage extends EditorComponent {
 

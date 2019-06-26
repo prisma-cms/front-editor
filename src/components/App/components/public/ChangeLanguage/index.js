@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import EditorComponent from '../..';
 
 // import Icon from "material-ui-icons/SettingsOverscan";
-import Language from "@prisma-cms/front/lib/components/Language";
+// import Language from "@prisma-cms/front/lib/components/Language";
 
 class ChangeLanguage extends EditorComponent {
 
