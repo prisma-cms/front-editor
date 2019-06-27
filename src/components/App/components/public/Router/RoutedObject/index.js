@@ -5,7 +5,7 @@ import EditorComponent from '../../..';
 import Icon from "material-ui-icons/SettingsOverscan";
 
 import { Route as RouterRoute } from "react-router-dom";
-import { Typography } from 'material-ui';
+import Typography from 'material-ui/Typography';
 
 class RoutedObject extends EditorComponent {
 

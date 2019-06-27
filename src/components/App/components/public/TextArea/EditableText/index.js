@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 
 import CSSTransform from "./transform";
-import { withStyles } from 'material-ui';
+import withStyles from 'material-ui/styles/withStyles';
 
 class EditableText extends Component {
 

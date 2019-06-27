@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-import { Tabs } from 'material-ui';
-import { Tab } from 'material-ui';
+import Tabs from 'material-ui/Tabs';
+import Tab from 'material-ui/Tabs/Tab';
 
 
 import PrismaCmsComponent from "@prisma-cms/component";

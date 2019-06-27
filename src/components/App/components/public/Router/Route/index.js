@@ -1,11 +1,6 @@
-import React, { Component, Fragment } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import EditorComponent from '../../..';
-
-import Icon from "material-ui-icons/SettingsOverscan";
-
-import { Route as RouterRoute } from "react-router-dom";
-import { Typography } from 'material-ui';
 import EditorSwitch from '../Switch';
 
 class EditorRoute extends EditorComponent {

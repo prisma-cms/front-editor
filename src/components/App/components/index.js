@@ -7,13 +7,13 @@
  * прекращается индикатор загрузки. Пришлось хакнуть принудительным обновлением через 2 сек.
  */
 
-import React, { Component, createContext, Fragment } from 'react';
+import React, { Fragment } from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 
-import Context from "@prisma-cms/context";
-import * as Module from "@prisma-cms/context";
-import { Button, IconButton, TextField } from 'material-ui';
+import Button from 'material-ui/Button';
+import IconButton from 'material-ui/IconButton';
+import TextField from 'material-ui/TextField';
 
 import DeleteIcon from "material-ui-icons/Delete";
 import CloseIcon from "material-ui-icons/Close";
@@ -24,8 +24,8 @@ import ArrowDownIcon from "material-ui-icons/ArrowDownward";
 import LinkIcon from "material-ui-icons/Link";
 import HelpIcon from "material-ui-icons/HelpOutline";
 
-import { FormControlLabel } from 'material-ui';
-import { Switch } from 'material-ui';
+import FormControlLabel from 'material-ui/Form/FormControlLabel';
+import Switch from 'material-ui/Switch';
 
 
 
@@ -37,9 +37,7 @@ import gql from 'graphql-tag';
 import { EditorContext } from '../context';
 
 // import SingleUploader from "@prisma-cms/uploader/lib/components/SingleUploader";
-import Uploader, {
-  FileInput,
-} from "@prisma-cms/uploader";
+import Uploader from "@prisma-cms/uploader";
 
 const emptyMutate = async () => { };
 

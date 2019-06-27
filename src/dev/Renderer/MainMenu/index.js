@@ -11,7 +11,7 @@ import Typography from 'material-ui/Typography';
 import { Link } from 'react-router-dom';
 
 import UserItem from './User';
-import { withStyles } from 'material-ui/styles';
+import withStyles from 'material-ui/styles/withStyles';
 
 
 

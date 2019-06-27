@@ -3,11 +3,11 @@ import PropTypes from 'prop-types';
 
 
 import FrontEditor from "../../../../App";
-import { Paper } from 'material-ui';
-import { Typography } from 'material-ui';
+import Paper from 'material-ui/Paper';
+import Typography from 'material-ui/Typography';
+import Button from 'material-ui/Button';
 
 import PrismaCmsComponent from "@prisma-cms/component";
-import { Button } from 'material-ui';
 
 export class TemplateView extends PrismaCmsComponent {
 

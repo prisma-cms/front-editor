@@ -8,7 +8,7 @@ import {
   Switch as RouterSwitch,
   Route,
 } from "react-router-dom";
-import { Typography } from 'material-ui';
+import Typography from 'material-ui/Typography';
 import EditorRoute from '../Route';
 import { RouteContext } from '../../../../context';
 

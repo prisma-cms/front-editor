@@ -1,15 +1,12 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React from 'react';
 import EditorComponent from '../../../';
 
 import Icon from "material-ui-icons/SwapHoriz";
 import CloseIcon from "material-ui-icons/Close";
 
 import QueryBuilder from "@prisma-cms/query-builder";
-import { Drawer } from 'material-ui';
-import { Button } from 'material-ui';
-import { IconButton } from 'material-ui';
-
+import Drawer from 'material-ui/Drawer';
+import Button from 'material-ui/Button';
 
 class Query extends EditorComponent {
 

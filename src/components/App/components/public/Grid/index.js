@@ -1,10 +1,9 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React from 'react';
 
 import EditorComponent from '../..';
 
 import GridIcon from "material-ui-icons/GridOn";
-import { Button } from 'material-ui';
+import Button from 'material-ui/Button';
 
 
 class Grid extends EditorComponent {

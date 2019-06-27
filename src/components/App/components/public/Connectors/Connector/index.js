@@ -1,18 +1,18 @@
-import React, { Component, Fragment } from 'react';
-import PropTypes from 'prop-types';
-
-import ConnectorIcon from "material-ui-icons/SwapHoriz";
-import { Select } from 'material-ui';
-import { FormControl } from 'material-ui';
-import { InputLabel } from 'material-ui';
-import { MenuItem } from 'material-ui';
-
+import React from 'react';
+// import PropTypes from 'prop-types';
 import {
   createContext,
 } from 'react';
 
+import ConnectorIcon from "material-ui-icons/SwapHoriz";
+import Select from 'material-ui/Select';
+import FormControl from 'material-ui/Form/FormControl';
+import InputLabel from 'material-ui/Input/InputLabel';
+import MenuItem from 'material-ui/Menu/MenuItem';
+import Typography from 'material-ui/Typography';
+
+
 import EditorComponent from '../../..';
-import { Typography } from 'material-ui';
 import { ObjectsView } from '../Viewer';
 
 export const ConnectorContext = createContext({});

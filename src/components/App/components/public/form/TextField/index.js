@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import EditorComponent from '../../..';
 
-import { TextField as MaterialUiTextField } from 'material-ui';
+import MaterialUiTextField from 'material-ui/TextField';
 import { EditableObjectContext } from '../../../../context';
 
 

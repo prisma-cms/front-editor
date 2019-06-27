@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import EditorComponent from '../..';
 
 // import Icon from "material-ui-icons/SettingsOverscan";
-import { Typography } from 'material-ui';
-import { Button } from 'material-ui';
+import Typography from 'material-ui/Typography';
+import Button from 'material-ui/Button';
 
 class Login extends EditorComponent {
 

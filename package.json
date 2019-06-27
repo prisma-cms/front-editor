@@ -1,6 +1,6 @@
 {
   "name": "@prisma-cms/front-editor",
-  "version": "1.22.0",
+  "version": "1.22.1",
   "private": false,
   "main": "lib/App.js",
   "scripts": {
@@ -8,25 +8,26 @@
     "build": "yarn build-less && nwb build --copy-files",
     "build-app": "react-scripts build",
     "build-less": "node-less-chokidar src/styles/less",
-    "get-api-schema": "graphql get-schema -o src/schema/generated/api.graphql",
-    "build-api-fragments": "node --experimental-modules src/server/scripts/deploy/build-api-fragments",
     "analyze": "source-map-explorer 'build/static/js/*.js'",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
   "dependencies": {
     "@prisma-cms/context": "latest",
+    "@prisma-cms/filters": "^1.6.1",
+    "@prisma-cms/front": "latest",
     "@prisma-cms/query-builder": "latest",
+    "@prisma-cms/uploader": "^1.0.0",
+    "apollo-cms": "latest",
     "css": "^2.2.4",
     "graphql": "14.0.2",
+    "moment": "^2.24.0",
     "path-to-regexp": "^3.0.0",
     "react-slick": "^0.24.0",
     "slick-carousel": "^1.8.1",
     "vertical-timeline-component-for-react": "^1.0.6"
   },
   "devDependencies": {
-    "@prisma-cms/front": "latest",
-    "@prisma-cms/server": "latest",
     "graphql-cli": "2.17.0",
     "node-less-chokidar": "^0.3.1",
     "nwb": "^0.23.0",

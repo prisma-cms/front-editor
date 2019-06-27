@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import EditorComponent from '../../..';
-import { withStyles } from 'material-ui';
+import withStyles from 'material-ui/styles/withStyles';
  
 import Parallax from "./parallax";
 

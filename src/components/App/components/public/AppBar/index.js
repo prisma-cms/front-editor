@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import EditorComponent from '../..';
 
-import { AppBar as MuiAppBar } from 'material-ui';
+import MuiAppBar from 'material-ui/AppBar';
 
 class AppBar extends EditorComponent {
 

@@ -1,8 +1,6 @@
-import React, { Component, Fragment } from 'react';
-import PropTypes from 'prop-types';
+import React from 'react';
 
 import EditorComponent from '../..';
-import { Button } from 'material-ui';
 
 
 class Page extends EditorComponent {
@@ -35,7 +33,7 @@ class Page extends EditorComponent {
     return null;
   }
 
-  renderAddButton(){
+  renderAddButton() {
 
     return null;
   }

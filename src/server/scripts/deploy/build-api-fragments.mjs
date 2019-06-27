@@ -1,9 +1,0 @@
-
- 
-
-import {
-  buildApiFragments,
-} from "./";
- 
-
-buildApiFragments();

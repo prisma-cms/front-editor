@@ -8,7 +8,7 @@ import { ConnectorContext } from '../..';
 
 import NumberFormat from "react-number-format";
 import moment from "moment";
-import { Typography } from 'material-ui';
+import Typography from 'material-ui/Typography';
 
 class NamedField extends EditorComponent {
 

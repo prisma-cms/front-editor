@@ -1,3 +1,7 @@
+1.22.1
+=================================
+- Cleanup material-ui
+
 1.22.0
 =================================
 - Remove @prisma-cms/front from prod

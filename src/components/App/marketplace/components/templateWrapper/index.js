@@ -1,15 +1,14 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React from 'react';
 import EditorComponent from '../../../components';
-import { Paper } from 'material-ui';
+import Paper from 'material-ui/Paper';
 import { ObjectContext } from '../../../components/public/Connectors/Connector/ListView';
-import { IconButton } from 'material-ui';
+import IconButton from 'material-ui/IconButton';
 
 import CloneIcon from 'material-ui-icons/ContentCopy';
 import DeleteIcon from 'material-ui-icons/Delete';
 import LinkIcon from "material-ui-icons/Link";
 import gql from 'graphql-tag';
-import { Typography } from 'material-ui';
+import Typography from 'material-ui/Typography';
 
 
 class TemplateWrapper extends EditorComponent {

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import EditorComponent from '../..';
 
-import { Button as MaterialUiButton } from 'material-ui';
+import MaterialUiButton from 'material-ui/Button';
 
 
 class Button extends EditorComponent {

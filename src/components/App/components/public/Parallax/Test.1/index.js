@@ -4,7 +4,7 @@ import { ParallaxProvider, Parallax } from 'react-scroll-parallax';
 import PropTypes from 'prop-types';
 
 import EditorComponent from '../../..';
-import { withStyles } from 'material-ui';
+import withStyles from 'material-ui/styles/withStyles';
 
 import "./sass/root.scss";
 

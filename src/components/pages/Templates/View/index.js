@@ -2,13 +2,10 @@ import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 
 
-import { withStyles } from 'material-ui/styles';
+import withStyles from 'material-ui/styles/withStyles';
 
 import PrismaCmsComponent from "@prisma-cms/component";
-// import { Paper } from 'material-ui';
-// import { Typography } from 'material-ui';
 
-// import FrontEditor from "../../../App";
 import TemplateView from '../Template/View';
 
 

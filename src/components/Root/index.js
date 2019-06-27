@@ -7,7 +7,7 @@ import FrontEditor from "../App";
 
 import { compose, graphql } from 'react-apollo';
 import gql from 'graphql-tag';
-import { Button } from 'material-ui';
+import Button from 'material-ui/Button';
 
 
 
@@ -381,14 +381,14 @@ export class RootConnector extends Component {
 
     if(currentProjectOnly) {
 
-      const domain = uri.hostname();
+      const domain = uri.hostname() || "localhost";
       
 
-      if(!domain) {
+      // if(!domain) {
 
-        console.error("Can not get domain");
-        return null;
-      }
+      //   console.error("Can not get domain");
+      //   return null;
+      // }
 
       Object.assign(where, {
         PrismaProject: {

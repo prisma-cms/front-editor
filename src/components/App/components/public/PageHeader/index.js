@@ -6,9 +6,9 @@ import EditorComponent from '../..';
 
 // import MainMenu from "@prisma-cms/front/lib/components/App/Renderer/MainMenu";
 // import Language from "@prisma-cms/front/lib/components/Language";
-import { AppBar } from 'material-ui';
-import { Typography } from 'material-ui';
-import { Button } from 'material-ui';
+import AppBar from 'material-ui/AppBar';
+import Typography from 'material-ui/Typography';
+import Button from 'material-ui/Button';
 
 class PageHeader extends EditorComponent {
 

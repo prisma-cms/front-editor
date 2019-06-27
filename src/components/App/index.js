@@ -1,6 +1,6 @@
 import React, { Component, Fragment, createContext } from 'react';
 import PropTypes from 'prop-types';
-import { withStyles } from 'material-ui';
+import withStyles from 'material-ui/styles/withStyles';
 
 import CloseIcon from 'material-ui-icons/Close';
 import OpenTemplatesIcon from 'material-ui-icons/ArrowForward';
@@ -34,7 +34,7 @@ import { EditorContext } from './context';
 // import DraftEditor from './components/public/DraftEditor';
 // import TextArea from './components/public/TextArea';
 import Tag from './components/public/Tag';
-import { IconButton } from 'material-ui';
+import IconButton from 'material-ui/IconButton';
 import ObjectImage from './components/public/Connectors/Connector/Fields/ObjectImage';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';

@@ -59,206 +59,228 @@ class ContextProvider extends Component {
   prepareQuery() {
 
     return {
-      ...this.prepareUserQuery(),
+      // ...this.prepareUserQuery(),
       ...this.prepareTemplateQuery(),
     }
   }
 
-  prepareUserQuery() {
+  // prepareUserQuery() {
 
 
-    const {
-      queryFragments,
-    } = this.context;
+  //   const {
+  //     queryFragments,
+  //   } = this.context;
 
 
-    const {
-      UserNoNestingFragment,
-      BatchPayloadNoNestingFragment,
-    } = queryFragments;
-
-
-
-    const usersConnection = `
-      query usersConnection (
-        $where: UserWhereInput
-        $orderBy: UserOrderByInput
-        $skip: Int
-        $after: String
-        $before: String
-        $first: Int
-        $last: Int
-      ){
-        objectsConnection: usersConnection (
-          where: $where
-          orderBy: $orderBy
-          skip: $skip
-          after: $after
-          before: $before
-          first: $first
-          last: $last
-        ){
-          aggregate{
-            count
-          }
-          edges{
-            node{
-              ...UserNoNesting
-            }
-          }
-        }
-      }
-
-      ${UserNoNestingFragment}
-    `;
-
-
-    const users = `
-      query users (
-        $where: UserWhereInput
-        $orderBy: UserOrderByInput
-        $skip: Int
-        $after: String
-        $before: String
-        $first: Int
-        $last: Int
-      ){
-        objects: users (
-          where: $where
-          orderBy: $orderBy
-          skip: $skip
-          after: $after
-          before: $before
-          first: $first
-          last: $last
-        ){
-          ...UserNoNesting
-        }
-      }
-
-      ${UserNoNestingFragment}
-    `;
-
-
-    const user = `
-      query user (
-        $where: UserWhereUniqueInput!
-      ){
-        object: user (
-          where: $where
-        ){
-          ...UserNoNesting
-        }
-      }
-
-      ${UserNoNestingFragment}
-    `;
-
-
-    const createUserProcessor = `
-      mutation createUserProcessor(
-        $data: UserCreateInput!
-      ) {
-        response: createUserProcessor(
-          data: $data
-        ){
-          success
-          message
-          errors{
-            key
-            message
-          }
-          data{
-            ...UserNoNesting
-          }
-        }
-      }
-
-      ${UserNoNestingFragment}
-    `;
-
-
-    const updateUserProcessor = `
-      mutation updateUserProcessor(
-        $data: UserUpdateInput!
-        $where: UserWhereUniqueInput!
-      ) {
-        response: updateUserProcessor(
-          data: $data
-          where: $where
-        ){
-          success
-          message
-          errors{
-            key
-            message
-          }
-          data{
-            ...UserNoNesting
-          }
-        }
-      }
-
-      ${UserNoNestingFragment}
-    `;
+  //   const {
+  //     UserNoNestingFragment,
+  //     BatchPayloadNoNestingFragment,
+  //   } = queryFragments;
 
 
 
-    const deleteUser = `
-      mutation deleteUser (
-        $where: UserWhereUniqueInput!
-      ){
-        deleteUser(
-          where: $where
-        ){
-          ...UserNoNesting
-        }
-      }
-      ${UserNoNestingFragment}
-    `;
+  //   const usersConnection = `
+  //     query usersConnection (
+  //       $where: UserWhereInput
+  //       $orderBy: UserOrderByInput
+  //       $skip: Int
+  //       $after: String
+  //       $before: String
+  //       $first: Int
+  //       $last: Int
+  //     ){
+  //       objectsConnection: usersConnection (
+  //         where: $where
+  //         orderBy: $orderBy
+  //         skip: $skip
+  //         after: $after
+  //         before: $before
+  //         first: $first
+  //         last: $last
+  //       ){
+  //         aggregate{
+  //           count
+  //         }
+  //         edges{
+  //           node{
+  //             ...UserNoNesting
+  //           }
+  //         }
+  //       }
+  //     }
+
+  //     ${UserNoNestingFragment}
+  //   `;
 
 
-    const deleteManyUsers = `
-      mutation deleteManyUsers (
-        $where: UserWhereInput
-      ){
-        deleteManyUsers(
-          where: $where
-        ){
-          ...BatchPayloadNoNesting
-        }
-      }
-      ${BatchPayloadNoNestingFragment}
-    `;
+  //   const users = `
+  //     query users (
+  //       $where: UserWhereInput
+  //       $orderBy: UserOrderByInput
+  //       $skip: Int
+  //       $after: String
+  //       $before: String
+  //       $first: Int
+  //       $last: Int
+  //     ){
+  //       objects: users (
+  //         where: $where
+  //         orderBy: $orderBy
+  //         skip: $skip
+  //         after: $after
+  //         before: $before
+  //         first: $first
+  //         last: $last
+  //       ){
+  //         ...UserNoNesting
+  //       }
+  //     }
+
+  //     ${UserNoNestingFragment}
+  //   `;
 
 
-    return {
-      usersConnection,
-      users,
-      user,
-      createUserProcessor,
-      updateUserProcessor,
-      deleteUser,
-      deleteManyUsers,
-    }
+  //   const user = `
+  //     query user (
+  //       $where: UserWhereUniqueInput!
+  //     ){
+  //       object: user (
+  //         where: $where
+  //       ){
+  //         ...UserNoNesting
+  //       }
+  //     }
 
-  }
+  //     ${UserNoNestingFragment}
+  //   `;
+
+
+  //   const createUserProcessor = `
+  //     mutation createUserProcessor(
+  //       $data: UserCreateInput!
+  //     ) {
+  //       response: createUserProcessor(
+  //         data: $data
+  //       ){
+  //         success
+  //         message
+  //         errors{
+  //           key
+  //           message
+  //         }
+  //         data{
+  //           ...UserNoNesting
+  //         }
+  //       }
+  //     }
+
+  //     ${UserNoNestingFragment}
+  //   `;
+
+
+  //   const updateUserProcessor = `
+  //     mutation updateUserProcessor(
+  //       $data: UserUpdateInput!
+  //       $where: UserWhereUniqueInput!
+  //     ) {
+  //       response: updateUserProcessor(
+  //         data: $data
+  //         where: $where
+  //       ){
+  //         success
+  //         message
+  //         errors{
+  //           key
+  //           message
+  //         }
+  //         data{
+  //           ...UserNoNesting
+  //         }
+  //       }
+  //     }
+
+  //     ${UserNoNestingFragment}
+  //   `;
+
+
+
+  //   const deleteUser = `
+  //     mutation deleteUser (
+  //       $where: UserWhereUniqueInput!
+  //     ){
+  //       deleteUser(
+  //         where: $where
+  //       ){
+  //         ...UserNoNesting
+  //       }
+  //     }
+  //     ${UserNoNestingFragment}
+  //   `;
+
+
+  //   const deleteManyUsers = `
+  //     mutation deleteManyUsers (
+  //       $where: UserWhereInput
+  //     ){
+  //       deleteManyUsers(
+  //         where: $where
+  //       ){
+  //         ...BatchPayloadNoNesting
+  //       }
+  //     }
+  //     ${BatchPayloadNoNestingFragment}
+  //   `;
+
+
+  //   return {
+  //     usersConnection,
+  //     users,
+  //     user,
+  //     createUserProcessor,
+  //     updateUserProcessor,
+  //     deleteUser,
+  //     deleteManyUsers,
+  //   }
+
+  // }
 
 
   prepareTemplateQuery() {
 
+    const TemplateNoNestingFragment = `fragment TemplateNoNesting on Template {
+      id
+      createdAt
+      updatedAt
+      externalKey
+      name
+      description
+      component
+      props
+      components
+      rank
+    }
+    `
+    const UserNoNestingFragment = `fragment UserNoNesting on User {
+      id
+      username
+      email
+      phone
+      fullname
+      image
+      address
+    }
+    `
 
-    const {
-      queryFragments,
-    } = this.context;
-
-
-    const {
-      TemplateNoNestingFragment,
-      UserNoNestingFragment,
-      BatchPayloadNoNestingFragment,
-      ProjectNoNestingFragment,
-    } = queryFragments;
+    const ProjectNoNestingFragment = `fragment ProjectNoNesting on Project {
+      id
+      createdAt
+      updatedAt
+      name
+      description
+      url
+      domain
+    }
+    `
 
 
     const TemplateFragment = `
@@ -424,10 +446,9 @@ class ContextProvider extends Component {
         deleteManyTemplates(
           where: $where
         ){
-          ...BatchPayloadNoNesting
+          count
         }
       }
-      ${BatchPayloadNoNestingFragment}
     `;
 
 
