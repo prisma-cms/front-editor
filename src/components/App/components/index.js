@@ -38,6 +38,7 @@ import { EditorContext } from '../context';
 
 // import SingleUploader from "@prisma-cms/uploader/lib/components/SingleUploader";
 import Uploader from "@prisma-cms/uploader";
+import Typography from 'material-ui/Typography';
 
 const emptyMutate = async () => { };
 
@@ -139,10 +140,10 @@ class EditorComponent extends ObjectEditable {
    * Пока что имеются коллизии с обновляемыми объектами, взятыми из кеша,
    * так что пока кеш отключаем
    */
-  getCacheKey() {
+  // getCacheKey() {
 
-    return null;
-  }
+  //   return null;
+  // }
 
 
   componentWillUnmount() {
@@ -207,19 +208,89 @@ class EditorComponent extends ObjectEditable {
 
 
 
+  /**
+   * Обновление данных объекта.
+   * Так как компоненты рендерятся на основании передаваемых свойств,
+   * надо обновить данные абсолютного родителя, а не просто текущего элемента
+   */
   updateObject(data) {
 
-    super.updateObject(data);
+    console.log("updateObject data", { ...data });
 
-    const {
-      forceUpdate,
-    } = this.getEditorContext();
+    const object = this.getObjectWithMutations();
+
+    console.log("updateObject object", { ...object });
+
+    // super.updateObject(data);
+
+    // const {
+    //   forceUpdate,
+    // } = this.getEditorContext();
+
+
+    // /**
+    //  * Обновляем рутовый компонент, чтобы применить изменения ко всем элементам
+    //  */
+    // forceUpdate();
+
+    const activeParent = this.getActiveParent();
+
+    console.log("activeParent", { ...activeParent }, activeParent === this);
 
 
     /**
-     * Обновляем рутовый компонент, чтобы применить изменения ко всем элементам
+     * Если это текущий компонент, обновляем его
      */
-    forceUpdate();
+    if (activeParent === this) {
+      return super.updateObject(data);
+    }
+    else {
+
+      /**
+       * Иначе находим свои данные в родительском компоненте и обновляем их
+       */
+
+      const {
+        parent,
+      } = this.props;
+
+      const parentData = parent.getObjectWithMutations();
+
+      console.log("activeParent object", { ...parentData });
+
+      const {
+        components,
+      } = parentData;
+
+      const current = components.find(n => n === object);
+
+      console.log("activeParent current", current);
+
+      if (current) {
+
+        const index = components.indexOf(current);
+
+        console.log("activeParent components", components);
+
+        let newComponents = components.slice(0);
+
+        console.log("activeParent newComponents", newComponents);
+
+        newComponents[index] = Object.assign({ ...current }, data);
+
+        console.log("activeParent newComponents 2", newComponents);
+
+
+        parent.updateObject({
+          components: newComponents,
+        });
+
+      }
+      else {
+        console.error("Can not get current element data in parent");
+      }
+
+    }
 
   }
 
@@ -1866,42 +1937,6 @@ class EditorComponent extends ObjectEditable {
         : null
       }
 
-      {/* <Grid
-        item
-        xs={12}
-      >
-        <Template
-          activeItem={activeItem}
-          data={{
-            object: component,
-          }}
-          // mutate={async () => { }}
-          _dirty={!component.id ? {
-            ...component,
-          } : undefined}
-          onSave={result => {
-
-
-
-            const {
-              data,
-            } = result.data.response || {};
-
-            const {
-              id,
-            } = data || {};
-
-            if (id && !component.id) {
-              this.updateComponent(component, {
-                id,
-              });
-            }
-
-          }}
-        />
-      </Grid> */}
-
-
       <Grid
         item
         xs={12}
@@ -2000,29 +2035,6 @@ class EditorComponent extends ObjectEditable {
     switch (name) {
 
       case "backgroundImage":
-
-
-        // secondary = <Uploader
-        //   onUpload={response => {
-
-        //     const {
-        //       path,
-        //     } = response.data.singleUpload || {};
-
-
-        //     if (path) {
-
-        //       const {
-        //         style,
-        //       } = this.props.props || {};
-
-        //       this.updateComponentProperty(name, `url(/images/big/${path})`, style || {
-        //       });
-
-        //     }
-        //   }}
-        // >
-        // </Uploader>
 
         secondary = this.renderUploader(name);
 
@@ -2178,11 +2190,7 @@ class EditorComponent extends ObjectEditable {
 
         if (path) {
 
-
           onUpload(path);
-
-          // this.updateComponentProperty(name, `url(/images/big/${path})`, style || {
-          // });
 
         }
       }}
@@ -2266,53 +2274,6 @@ class EditorComponent extends ObjectEditable {
     }
 
   }
-
-
-  // updateComponentProps(data) {
-
-  //   const activeItem = this.getActiveItem();
-
-
-
-
-
-  //   const {
-  //     props: oldProps,
-  //   } = activeItem.getObjectWithMutations();
-
-  //   let props = {
-  //     ...oldProps,
-  //   };
-
-  //   if (data) {
-
-  //     const keys = Object.keys(data);
-
-  //     keys.map(name => {
-
-  //       const value = data[name];
-
-  //       if (value === undefined) {
-  //         delete props[name];
-  //       }
-  //       else {
-  //         props[name] = value;
-  //       }
-
-  //     });
-
-  //   }
-
-
-
-  //   // return this.updateComponent(component, {
-  //   //   props,
-  //   // });
-
-  //   return this.updateComponent({
-  //     props,
-  //   });
-  // }
 
 
   /**
@@ -2482,43 +2443,14 @@ class EditorComponent extends ObjectEditable {
     return component;
   }
 
-  // updateComponent(component, data) {
   updateComponent(data) {
 
     const activeItem = this.getActiveItem();
-
-    // let {
-    //   components,
-    //   updateObject,
-    // } = this.context;
 
     activeItem.updateObject(data);
 
   }
 
-
-  // removeProps(name) {
-
-  //   const activeItem = this.getActiveItem();
-
-  //   const {
-  //     components,
-  //     updateObject,
-  //   } = this.context;
-
-  //   let {
-  //     props: {
-  //       component,
-  //     },
-  //   } = activeItem;
-
-  //   delete component.props[name];
-
-  //   updateObject({
-  //     components,
-  //   })
-
-  // }
 
   removeProps(name) {
 
@@ -2552,7 +2484,7 @@ class EditorComponent extends ObjectEditable {
   }
 
 
-  renderMainView(renderProps) {
+  renderMainView__(renderProps) {
 
     const {
       Grid,
@@ -2734,10 +2666,6 @@ class EditorComponent extends ObjectEditable {
               draggable={true}
               onDragStart={event => {
 
-
-
-                // event.dataTransfer.setData("text/plain", "ev.target.id");
-
                 this.onDragStart(event, this);
               }}
               onDragEnd={event => this.onDragEnd(event)}
@@ -2841,6 +2769,279 @@ class EditorComponent extends ObjectEditable {
   }
 
 
+  renderMainView(renderProps) {
+
+    const {
+      Grid,
+    } = this.context;
+
+    const object = this.getObjectWithMutations();
+
+    if (!object) {
+      return null;
+    }
+
+
+    const {
+      props,
+      components,
+      ...other
+    } = object;
+
+
+
+    const {
+      activeItem,
+      dragTarget,
+      hoveredItem,
+      settingsViewContainer,
+      inEditMode,
+      classes,
+      onDragStart,
+      Components,
+    } = this.getEditorContext();
+
+
+    const RootElement = this.getRootElement();
+
+    let settingsView;
+
+    /**
+     * Заголовок блока, чтобы можно было перетаскивать и т.п.
+     */
+    let badge;
+
+
+    /**
+     * Для тегов типа img непозволительны дочерние элементы.
+     * Если в такие элементы пытаться выводить дочерние,
+     * будет возникать ошибка "must neither have `children`"
+     */
+    let inner = [];
+
+
+    const childs = this.renderChildren();
+
+    if (childs) {
+      inner.push(childs);
+    }
+
+
+    if (inEditMode) {
+
+      const isActive = activeItem === this ? true : false;
+      const isDragOvered = dragTarget === this ? true : false;
+      const isHovered = hoveredItem === this ? true : false;
+      const deletable = this.isDeletable();
+
+
+      if (isActive && settingsViewContainer) {
+
+        /**
+         * Важно по наследованию событий в порталы
+         * https://github.com/facebook/react/issues/11387
+         */
+        settingsView = ReactDOM.createPortal(this.renderSettingsView(), settingsViewContainer);
+
+
+
+      }
+
+      if (isActive || isDragOvered || isHovered) {
+
+        badge = <div
+          key="badge"
+          className={classes.blockBadge}
+          contentEditable={false}
+        >
+          <Grid
+            container
+            alignItems="center"
+            style={{
+              flexWrap: "nowrap",
+            }}
+          >
+
+            <Grid
+              item
+              xs
+            >
+              {/* {this.renderBadgeTitle(component)} */}
+            </Grid>
+
+            <Grid
+              item
+            >
+              <IconButton
+                onClick={event => {
+                  event.preventDefault();
+                  event.stopPropagation();
+
+
+                  this.moveBlockUp();
+                }}
+                className={classes.badgeButton}
+              >
+                <ArrowUpIcon
+
+                />
+              </IconButton>
+            </Grid>
+
+            <Grid
+              item
+            >
+              <IconButton
+                onClick={event => {
+                  event.preventDefault();
+                  event.stopPropagation();
+
+
+                  this.moveBlockDown();
+                }}
+                className={classes.badgeButton}
+              >
+                <ArrowDownIcon
+
+                />
+              </IconButton>
+            </Grid>
+
+            {deletable && activeItem && activeItem === this ?
+              <Grid
+                item
+              >
+                <IconButton
+                  title="Удалить элемент"
+                  onClick={event => {
+                    event.preventDefault();
+                    event.stopPropagation();
+
+                    this.deleteItem(this);
+                  }}
+                  className={classes.badgeButton}
+                >
+                  <DeleteIcon
+
+                  />
+                </IconButton>
+              </Grid>
+              : null
+            }
+
+            <Grid
+              item
+              style={{
+                cursor: "pointer",
+              }}
+              draggable={true}
+              onDragStart={event => {
+
+                this.onDragStart(event, this);
+              }}
+              onDragEnd={event => this.onDragEnd(event)}
+              onClick={event => {
+                event.preventDefault();
+                event.stopPropagation();
+
+              }}
+            >
+              <DragIcon
+              />
+            </Grid>
+
+          </Grid>
+        </div>
+
+      }
+
+      {/* 
+                Для блоков с contentEditable (например Tag), если текст отсутствует,
+                то фокус уходит в бадж и текст не доступен для редактирования.
+                Пока как временный хак скрываем бадж в режиме фокуса.
+              */}
+      const badgeView = this.renderBadge(badge);
+
+
+      if (badgeView) {
+        inner.push(badgeView);
+      }
+
+
+      if (isActive && !this.isVoidElement()) {
+
+        let addBlocks;
+
+        // console.log("Components", Components);
+
+        // const components = Components.filter(n => n.canBeParent(this));
+
+        // console.log("components", components);
+
+        addBlocks = this.renderAddButtons(<Grid
+          key="add_buttons"
+          container
+          spacing={8}
+        >
+
+          {Components.map((Component, index) => {
+
+            const name = Component.Name;
+
+            return <Component
+              key={`${name}-${index}`}
+              mode="add_child"
+              className={"add_child"}
+              parent={this}
+            />
+          })}
+
+        </Grid>);
+
+        if (addBlocks) {
+          // inner.push(addBlocks);
+
+          inner.push(this.renderActionPanel(addBlocks));
+
+        }
+
+
+      }
+
+    }
+
+
+
+
+
+    // if (!inner.length) {
+    //   inner = undefined;
+    // }
+
+    return <Fragment>
+
+      <RootElement
+        {...this.getRenderProps()}
+        // {...objectProps}
+        // {...other}
+        // {...props}
+        // {...renderProps}
+        {...this.prepareRootElementProps({
+          // ...objectProps,
+          props,
+          components,
+          ...other,
+          ...renderProps,
+        })}
+      >
+        {inner && inner.length ? inner : null}
+      </RootElement>
+
+      {settingsView}
+    </Fragment>
+  }
+
+
   renderBadgeTitle(title) {
     return title;
   }
@@ -2868,9 +3069,8 @@ class EditorComponent extends ObjectEditable {
       actionPanel,
     } = this.getEditorContext();
 
-    // console.log("renderActionPanel actionPanel", { ...context });
-
-    // console.log("renderActionPanel actionPanel getActionPanel", context.getActionPanel());
+    // console.log("renderActionPanel actionPanel", actionPanel);
+    // console.log("renderActionPanel context", { ...this.getEditorContext() });
 
     if (actionPanel) {
       return ReactDOM.createPortal(content, actionPanel);
@@ -3011,6 +3211,7 @@ class EditorComponent extends ObjectEditable {
     const {
       Components,
       TemplateRenderer,
+      inEditMode,
     } = this.getEditorContext();
 
     const {
@@ -3054,11 +3255,6 @@ class EditorComponent extends ObjectEditable {
           Component={Component}
           mode="main"
           parent={this}
-          // props={props}
-          // data={{
-          //   object: n,
-          // }}
-          // _dirty={n}
           {...other}
           where={{
             id: templateId,
@@ -3096,6 +3292,19 @@ class EditorComponent extends ObjectEditable {
 
       }
 
+
+    }
+    else {
+
+      if (inEditMode) {
+        return <Typography
+          // size="small"
+          // variant="raised"
+          color="error"
+        >
+          Missed component {component}
+        </Typography>
+      }
 
     }
 

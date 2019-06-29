@@ -58,6 +58,7 @@ import RichText from './components/public/Connectors/Connector/Fields/RichText';
 import Table from './components/public/Table';
 import TableRow from './components/public/Table/TableRow';
 import TableCell from './components/public/Table/TableCell';
+import Test from './components/public/Test';
 
 const styles = theme => {
 
@@ -253,51 +254,52 @@ class FrontEditor extends Component {
   static defaultProps = {
     debug: false,
     Components: [
-      Grid,
-      Typography,
-      Tag,
-      // TextArea,
-      Query,
-      Connector,
-      ObjectConnector,
-      ListView,
-      Iterable,
-      ObjectView,
-      Pagination,
-      NamedField,
-      RichText,
-      ObjectImage,
-      UserLink,
-      Filters,
-      CreatedBy,
-      Content,
-      Link,
-      Button,
-      Section,
-      Switch,
-      Route,
-      PageHeader,
-      AppBar,
-      Login,
-      // ChangeLanguage,
-      LanguageRouter,
-      Slider,
+      Test,
+      // Grid,
+      // Typography,
+      // Tag,
+      // // TextArea,
+      // Query,
+      // Connector,
+      // ObjectConnector,
+      // ListView,
+      // Iterable,
+      // ObjectView,
+      // Pagination,
+      // NamedField,
+      // RichText,
+      // ObjectImage,
+      // UserLink,
+      // Filters,
+      // CreatedBy,
+      // Content,
+      // Link,
+      // Button,
+      // Section,
+      // Switch,
+      // Route,
+      // PageHeader,
+      // AppBar,
+      // Login,
+      // // ChangeLanguage,
+      // LanguageRouter,
+      // Slider,
 
-      // UsersGrid,
-      // UserPage,
-      // RoutedObject,
-      // ParralaxTest,
-      // DraftEditor,
+      // // UsersGrid,
+      // // UserPage,
+      // // RoutedObject,
+      // // ParralaxTest,
+      // // DraftEditor,
 
-      EditableObject,
-      EditableView,
-      DefaultView,
-      TextField,
-      VerticalTimeline,
-      VerticalTimelineItem,
-      Table,
-      TableRow,
-      TableCell,
+      // EditableObject,
+      // EditableView,
+      // DefaultView,
+      // TextField,
+      // VerticalTimeline,
+      // VerticalTimelineItem,
+      // Table,
+      // TableRow,
+      // TableCell,
     ],
     CustomComponents: [],
     className: "fullheight",
@@ -1364,6 +1366,7 @@ class FrontEditor extends Component {
           // }
         }}
       >
+        111
         {inEditMode
           ? <Fragment>
             <div
@@ -1400,9 +1403,7 @@ class FrontEditor extends Component {
 
                 <div
                   ref={el => {
-                    if (el && !this.actionPanel) {
-                      this.actionPanel = el;
-                    }
+                    this.actionPanel = el;
                   }}
                   className={[classes.actionPanel, "front-editor--action-panel"].join(" ")}
                 >

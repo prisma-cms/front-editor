@@ -258,6 +258,7 @@ class ContextProvider extends Component {
       props
       components
       rank
+      data
     }
     `
     const UserNoNestingFragment = `fragment UserNoNesting on User {
