@@ -514,30 +514,53 @@ class EditorComponent extends ObjectEditable {
    */
   moveBlockUp() {
 
+    const {
+      parent,
+    } = this.props;
+
+    if (!parent) {
+
+      console.error("Can not get parent");
+
+      return;
+    }
 
     const component = this.getComponentInParent();
 
     if (component) {
 
-      let {
-        // components,
-        data: {
-          object: {
-            components,
-          },
-        },
-      } = this.props.parent.props;
+      // let {
+      //   // components,
+      //   data: {
+      //     object: {
+      //       components,
+      //     },
+      //   },
+      // } = this.props.parent.props;
+
+      const {
+        components,
+      } = parent.getObjectWithMutations();
 
       const index = components.indexOf(component);
 
       /**
        * Если элемент не на первом месте, двигаем его
        */
-      if (index > 0) {
+      if (index === -1) {
+        console.error("Can not find component in parent");
+      }
+      else if (index > 0) {
 
-        components.splice(index - 1, 0, components.splice(index, 1)[0]);
+        let newComponents = components.slice(0);
 
-        this.updateParentComponents();
+        newComponents.splice(index - 1, 0, newComponents.splice(index, 1)[0]);
+
+        parent.updateObject({
+          components: newComponents,
+        });
+
+        // this.updateParentComponents();
 
       }
 
@@ -550,19 +573,34 @@ class EditorComponent extends ObjectEditable {
    */
   moveBlockDown() {
 
+    const {
+      parent,
+    } = this.props;
+
+    if (!parent) {
+
+      console.error("Can not get parent");
+
+      return;
+    }
+
 
     const component = this.getComponentInParent();
 
     if (component) {
 
-      let {
-        // components,
-        data: {
-          object: {
-            components,
-          },
-        },
-      } = this.props.parent.props;
+      // let {
+      //   // components,
+      //   data: {
+      //     object: {
+      //       components,
+      //     },
+      //   },
+      // } = this.props.parent.props;
+
+      const {
+        components,
+      } = parent.getObjectWithMutations();
 
       const index = components.indexOf(component);
 
@@ -573,9 +611,18 @@ class EditorComponent extends ObjectEditable {
        */
       if (index !== -1 && components.length > index + 1) {
 
-        components.splice(index + 1, 0, components.splice(index, 1)[0]);
+        // components.splice(index + 1, 0, components.splice(index, 1)[0]);
 
-        this.updateParentComponents();
+        // this.updateParentComponents();
+
+
+        let newComponents = components.slice(0);
+
+        newComponents.splice(index + 1, 0, newComponents.splice(index, 1)[0]);
+
+        parent.updateObject({
+          components: newComponents,
+        });
 
       }
 
@@ -2660,13 +2707,11 @@ class EditorComponent extends ObjectEditable {
     // const activeItem = this;
 
     const {
-      data: {
-        object,
-      },
+      // data: {
+      //   object,
+      // },
       parent,
     } = this.props;
-
-
 
 
     // let {
@@ -2678,14 +2723,22 @@ class EditorComponent extends ObjectEditable {
       return;
     }
 
-    let {
-      // components,
-      data: {
-        object: {
-          components,
-        },
-      },
-    } = this.props.parent.props;
+
+    const object = this.getObjectWithMutations();
+
+
+    // let {
+    //   // components,
+    //   data: {
+    //     object: {
+    //       components,
+    //     },
+    //   },
+    // } = this.props.parent.props;
+
+    const {
+      components,
+    } = parent.getObjectWithMutations();
 
 
     if (!components) {
