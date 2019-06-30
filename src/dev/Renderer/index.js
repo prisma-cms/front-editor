@@ -95,7 +95,10 @@ class DevRenderer extends PrismaCmsRenderer {
       {
         exact: false,
         path: "/",
-        component: RootPage,
+        // component: RootPage,
+        render: props => <RootPage
+          inEditMode={true}
+        />
       },
       // {
       //   exact: true,

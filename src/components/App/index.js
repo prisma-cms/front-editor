@@ -257,7 +257,7 @@ class FrontEditor extends Component {
       Test,
       // Grid,
       // Typography,
-      // Tag,
+      Tag,
       // // TextArea,
       // Query,
       // Connector,
@@ -341,6 +341,201 @@ class FrontEditor extends Component {
       templatesOpened: false,
     }
 
+
+
+  }
+
+
+  initContext() {
+
+    /**
+     * Этот массив используется для быстрого поиска всех отрендеренных компонентов
+     */
+    this.mountedComponents = [];
+
+    // const {
+    //   inEditMode = true,
+    // } = this.state;
+
+    const {
+      classes,
+      inEditMode,
+    } = this.props;
+
+    const Components = this.getComponents();
+
+    const editorContext = {
+      inEditMode,
+      classes,
+      // components,
+      updateObject: data => this.updateObject(data),
+      // dragItem,
+      getDragItem: () => {
+
+        const {
+          dragItem,
+        } = this.state;
+
+        return dragItem;
+
+      },
+      // dragTarget,
+      getDragTarget: () => {
+
+        const {
+          dragTarget,
+        } = this.state;
+
+        return dragTarget;
+
+      },
+      // activeItem,
+      getActiveItem: () => {
+
+        const {
+          activeItem,
+        } = this.state;
+
+        return activeItem;
+
+      },
+      // hoveredItem,
+      getHoveredItem: () => {
+
+        const {
+          hoveredItem,
+        } = this.state;
+
+        return hoveredItem;
+
+      },
+      // settingsViewContainer,
+      getSettingsViewContainer: () => {
+
+        return this.settingsViewContainer;
+      },
+      onDragStart: (event, item) => {
+
+        this.setState({
+          dragItem: item,
+        });
+
+      },
+      onDragEnd: item => {
+
+        this.setState({
+          dragItem: null,
+          dragTarget: null,
+          activeItem: null,
+          hoveredItem: null,
+        });
+      },
+      setDragTarget: component => {
+        this.setState({
+          dragTarget: component,
+        });
+      },
+      setActiveItem: component => {
+
+
+        // this.setState({
+        //   activeItem: component,
+        // });
+
+        if (component) {
+          component.setState({
+            active: true,
+          });
+        }
+
+        const components = this.mountedComponents.filter(n => n.state.active && (!component || n !== component));
+
+
+        components.map(n => n.setState({
+          active: false,
+        }));
+
+        // this.forceUpdate();
+
+      },
+      setHoveredItem: component => {
+
+
+        // this.setState({
+        //   activeItem: component,
+        // });
+
+        if (component) {
+          component.setState({
+            hovered: true,
+          });
+        }
+
+        const components = this.mountedComponents.filter(n => n.state.hovered && (!component || n !== component));
+
+
+        components.map(n => n.setState({
+          hovered: false,
+        }))
+
+      },
+      // setHoveredItem: component => {
+
+      //   // this.setState({
+      //   //   hoveredItem: component,
+      //   // });
+
+      //   this.setState({
+      //     hoveredItem: component,
+      //   });
+      // },
+      Components,
+      forceUpdate: () => {
+
+        this.forceUpdate()
+
+      },
+      TemplateRenderer: this.TemplateRenderer,
+      // actionPanel: this.actionPanel,
+      getActionPanel: () => {
+        return this.actionPanel;
+      },
+
+      registerMountedComponent: component => {
+
+        const {
+          inEditMode,
+        } = this.props;
+
+        if (inEditMode) {
+
+          const {
+            mode,
+          } = component.props;
+
+          if (mode === "main") {
+
+            this.mountedComponents.push(component);
+
+          }
+
+        }
+
+      },
+
+      unregisterMountedComponent: component => {
+
+        const index = this.mountedComponents.indexOf(component);
+
+        if (index !== -1) {
+          this.mountedComponents.splice(index, 1);
+        }
+
+      },
+    }
+
+    this.state.editorContext = editorContext;
+
   }
 
 
@@ -353,10 +548,7 @@ class FrontEditor extends Component {
     } = this.context;
 
 
-
     this.TemplateRenderer = graphql(gql(template))(options => {
-
-
 
       const {
         Component,
@@ -364,11 +556,12 @@ class FrontEditor extends Component {
         ...other
       } = options;
 
-      const {
-        data: {
-          object,
-        },
+      let {
+        object,
+        data,
       } = other;
+
+      object = object !== undefined ? object : (data && data.object) || null;
 
       if (!object) {
         return null;
@@ -381,6 +574,7 @@ class FrontEditor extends Component {
       } = object;
 
 
+
       return <Component
         key={templateId}
         // mode="main"
@@ -391,13 +585,44 @@ class FrontEditor extends Component {
         //   object: n,
         // }}
         // // _dirty={n}
+        object={object}
         props={props}
         components={components}
         {...other}
       />;
     });
 
+
+    this.initContext();
+
     super.componentWillMount && super.componentWillMount();
+  }
+
+
+  componentDidUpdate(prevProps, prevState) {
+
+    const {
+      inEditMode,
+    } = this.props;
+
+
+    if (inEditMode !== undefined && inEditMode !== prevProps.inEditMode) {
+
+      const {
+        editorContext,
+      } = this.state;
+
+      this.setState({
+        editorContext: {
+          ...editorContext,
+          inEditMode,
+        }
+      });
+
+    }
+
+
+    super.componentDidUpdate && super.componentDidUpdate(prevProps, prevState);
   }
 
 
@@ -1201,10 +1426,12 @@ class FrontEditor extends Component {
       ...other
     } = this.props;
 
+    const object = data.object || {};
+
     const {
       name,
       component,
-    } = data.object || {};
+    } = object || {};
 
     if (!component) {
       return null;
@@ -1228,7 +1455,8 @@ class FrontEditor extends Component {
       // data={{
       //   object,
       // }}
-      data={data}
+      // data={data}
+      object={object}
       // _dirty={_dirty}
       // onSave={onSave}
       {...other}
@@ -1296,77 +1524,23 @@ class FrontEditor extends Component {
       dragTarget,
       activeItem,
       hoveredItem,
+      editorContext,
     } = this.state;
 
     const {
       settingsViewContainer,
     } = this;
 
-    const Components = this.getComponents();
+    // const Components = this.getComponents();
 
     let items = this.renderItems();
 
 
 
-
     return (
       <EditorContext.Provider
-        value={{
-          inEditMode,
-          classes,
-          components,
-          updateObject: data => this.updateObject(data),
-          dragItem,
-          dragTarget,
-          activeItem,
-          hoveredItem,
-          settingsViewContainer,
-          onDragStart: (event, item) => {
-
-            this.setState({
-              dragItem: item,
-            });
-
-          },
-          onDragEnd: item => {
-
-            this.setState({
-              dragItem: null,
-              dragTarget: null,
-              activeItem: null,
-              hoveredItem: null,
-            });
-          },
-          setDragTarget: component => {
-            this.setState({
-              dragTarget: component,
-            });
-          },
-          setActiveItem: component => {
-
-            this.setState({
-              activeItem: component,
-            });
-          },
-          setHoveredItem: component => {
-            this.setState({
-              hoveredItem: component,
-            });
-          },
-          Components,
-          forceUpdate: () => {
-
-            this.forceUpdate()
-
-          },
-          TemplateRenderer: this.TemplateRenderer,
-          actionPanel: this.actionPanel,
-          // getActionPanel: () => {
-          //   return this.actionPanel;
-          // }
-        }}
+        value={editorContext}
       >
-        111
         {inEditMode
           ? <Fragment>
             <div

@@ -32,13 +32,14 @@ import Switch from 'material-ui/Switch';
 
 // ComponentContext = createContext();
 
-import ObjectEditable from "apollo-cms/lib/DataView/Object/Editable";
+// import ObjectEditable from "apollo-cms/lib/DataView/Object/Editable";
 import gql from 'graphql-tag';
 import { EditorContext } from '../context';
 
 // import SingleUploader from "@prisma-cms/uploader/lib/components/SingleUploader";
 import Uploader from "@prisma-cms/uploader";
 import Typography from 'material-ui/Typography';
+import ObjectEditable from './Editable';
 
 const emptyMutate = async () => { };
 
@@ -66,7 +67,7 @@ class EditorComponent extends ObjectEditable {
     ...ObjectEditable.defaultProps,
     deletable: true,
     mutate: emptyMutate,
-    data: {},
+    // data: {},
     style: {
       position: undefined,
       display: undefined,
@@ -131,6 +132,8 @@ class EditorComponent extends ObjectEditable {
     this.state = {
       ...this.state,
       maxStructureLengthView,
+      hovered: false,
+      active: false,
     }
 
   }
@@ -146,6 +149,21 @@ class EditorComponent extends ObjectEditable {
   // }
 
 
+  componentDidMount() {
+
+    const {
+      registerMountedComponent,
+    } = this.getEditorContext()
+
+    // console.log("componentDidMount registerMountedComponent", registerMountedComponent);
+
+    registerMountedComponent(this);
+
+    super.componentDidMount && super.componentDidMount();
+
+  }
+
+
   componentWillUnmount() {
 
     const {
@@ -156,6 +174,16 @@ class EditorComponent extends ObjectEditable {
     if (activeItem && activeItem === this) {
       setActiveItem(null);
     }
+
+
+    const {
+      unregisterMountedComponent,
+    } = this.getEditorContext()
+
+    // console.log("componentDidMount registerMountedComponent", registerMountedComponent);
+
+    unregisterMountedComponent(this);
+
 
     super.componentWillUnmount && super.componentWillUnmount();
   }
@@ -215,11 +243,11 @@ class EditorComponent extends ObjectEditable {
    */
   updateObject(data) {
 
-    console.log("updateObject data", { ...data });
+    // console.log("updateObject data", { ...data });
 
     const object = this.getObjectWithMutations();
 
-    console.log("updateObject object", { ...object });
+    // console.log("updateObject object", { ...object });
 
     // super.updateObject(data);
 
@@ -235,7 +263,7 @@ class EditorComponent extends ObjectEditable {
 
     const activeParent = this.getActiveParent();
 
-    console.log("activeParent", { ...activeParent }, activeParent === this);
+    // console.log("activeParent", { ...activeParent }, activeParent === this);
 
 
     /**
@@ -256,7 +284,7 @@ class EditorComponent extends ObjectEditable {
 
       const parentData = parent.getObjectWithMutations();
 
-      console.log("activeParent object", { ...parentData });
+      // console.log("activeParent object", { ...parentData });
 
       const {
         components,
@@ -264,21 +292,21 @@ class EditorComponent extends ObjectEditable {
 
       const current = components.find(n => n === object);
 
-      console.log("activeParent current", current);
+      // console.log("activeParent current", current);
 
       if (current) {
 
         const index = components.indexOf(current);
 
-        console.log("activeParent components", components);
+        // console.log("activeParent components", components);
 
         let newComponents = components.slice(0);
 
-        console.log("activeParent newComponents", newComponents);
+        // console.log("activeParent newComponents", newComponents);
 
         newComponents[index] = Object.assign({ ...current }, data);
 
-        console.log("activeParent newComponents 2", newComponents);
+        // console.log("activeParent newComponents 2", newComponents);
 
 
         parent.updateObject({
@@ -473,7 +501,10 @@ class EditorComponent extends ObjectEditable {
     } = item;
 
 
-    return newItem;
+    return {
+      ...newItem,
+      component: componentProto.constructor.Name,
+    };
 
   }
 
@@ -557,17 +588,56 @@ class EditorComponent extends ObjectEditable {
    * Обновить мы должны текущий элемент или предка
    */
 
+  // addComponent(newItem) {
+
+
+  //   let {
+  //     data: {
+  //       object,
+  //     },
+  //   } = this.props;
+
+
+  //   let components = object.components || [];
+
+  //   const {
+  //     name,
+  //     component,
+  //   } = newItem;
+
+  //   if (!component) {
+  //     Object.assign(newItem, {
+  //       component: name,
+  //     });
+  //   }
+
+  //   if (components) {
+  //     components.push(newItem);
+  //   }
+
+  //   this.updateParentComponents();
+
+  // }
+
   addComponent(newItem) {
 
 
-    let {
-      data: {
-        object,
-      },
-    } = this.props;
+    // console.log("addComponent newItem", newItem);
+
+    // return;
+
+    // let {
+    //   data: {
+    //     object,
+    //   },
+    // } = this.props;
 
 
-    let components = object.components || [];
+    // let components = object.components || [];
+
+    const {
+      components,
+    } = this.getObjectWithMutations();
 
     const {
       name,
@@ -580,11 +650,19 @@ class EditorComponent extends ObjectEditable {
       });
     }
 
-    if (components) {
-      components.push(newItem);
-    }
+    // if (components) {
+    //   components.push(newItem);
+    // }
 
-    this.updateParentComponents();
+    // this.updateParentComponents();
+
+    let newComponents = (components || []).slice(0);
+
+    newComponents.push(newItem);
+
+    this.updateObject({
+      components: newComponents,
+    });
 
   }
 
@@ -595,17 +673,21 @@ class EditorComponent extends ObjectEditable {
   setComponents(components) {
 
 
-    let {
-      data: {
-        object,
-      },
-    } = this.props;
+    // let {
+    //   data: {
+    //     object,
+    //   },
+    // } = this.props;
 
-    Object.assign(object, {
+    // Object.assign(object, {
+    //   components,
+    // });
+
+    // this.updateParentComponents();
+
+    this.updateObject({
       components,
     });
-
-    this.updateParentComponents();
 
   }
 
@@ -615,7 +697,7 @@ class EditorComponent extends ObjectEditable {
    * Если это корневой элемент, удаляем его.
    * Если нет, то удаляем из родительского
    */
-  deleteItem(activeItem) {
+  delete() {
 
     const {
       setActiveItem,
@@ -623,48 +705,95 @@ class EditorComponent extends ObjectEditable {
 
     // const activeItem = this.getActiveItem();
 
-    const activeParent = activeItem.getActiveParent();
+    const {
+      parent,
+      delete_component,
+    } = this.props;
+
+    // console.log("delete this", this);
+    // console.log("delete parent", parent);
+
+    // const activeParent = activeItem.getActiveParent();
+
+    if (!parent) {
+
+      console.error("Can not get parent");
+
+      return false;
+    }
+
+    const {
+      components,
+    } = parent.getObjectWithMutations();
+
+    const object = this.getObjectWithMutations();
+
+    const index = components.indexOf(object);
 
 
+    // console.log("delete index", index);
 
+    if (delete_component) {
 
+      delete_component();
 
-    if (activeItem === activeParent && !activeItem.props.parent) {
-
-      this.addError("Can not delete root item");
       return;
     }
-    else {
 
+    if (index === -1) {
 
-      let {
-        data: {
-          object,
-        },
-        parent: {
-          props: {
-            data: {
-              object: {
-                components,
-              },
-            },
-          },
-        },
-      } = activeItem.props;
+      console.error("Can not find component in parent");
 
-
-      const index = components.indexOf(object);
-
-      components.splice(index, 1);
-
-
-      // if (components) {
-      //   components.push(newItem);
-      // }
-
-      activeItem.props.parent.updateParentComponents();
+      return false;
 
     }
+
+    let newComponents = components.slice(0);
+
+    newComponents.splice(index, 1);
+
+    parent.updateObject({
+      components: newComponents,
+    });
+
+
+
+    // if (activeItem === activeParent && !activeItem.props.parent) {
+
+    //   this.addError("Can not delete root item");
+    //   return;
+    // }
+    // else {
+
+
+    //   let {
+    //     data: {
+    //       object,
+    //     },
+    //     parent: {
+    //       props: {
+    //         data: {
+    //           object: {
+    //             components,
+    //           },
+    //         },
+    //       },
+    //     },
+    //   } = activeItem.props;
+
+
+    //   const index = components.indexOf(object);
+
+    //   components.splice(index, 1);
+
+
+    //   // if (components) {
+    //   //   components.push(newItem);
+    //   // }
+
+    //   activeItem.props.parent.updateParentComponents();
+
+    // }
 
     // return;
 
@@ -756,10 +885,12 @@ class EditorComponent extends ObjectEditable {
 
     const {
       parent,
-      data: {
-        object,
-      },
+      // data: {
+      //   object,
+      // },
     } = this.props;
+
+    const object = this.getObjectWithMutations();
 
     if (object && object.id) {
       return this;
@@ -784,13 +915,41 @@ class EditorComponent extends ObjectEditable {
     event.preventDefault();
     event.stopPropagation();
 
+    // const {
+    //   setActiveItem,
+    // } = this.getEditorContext();
+
+    // setActiveItem(this);
+
+    // }
+
+    this.setActiveItem(this);
+
+  }
+
+
+  setActiveItem = (component) => {
+
     const {
       setActiveItem,
     } = this.getEditorContext();
 
-    setActiveItem(this);
+    setActiveItem(component);
 
-    // }
+    // this.setState({
+    //   active: true,
+    // });
+
+  }
+
+
+  isActive = () => {
+
+    const {
+      active,
+    } = this.state;
+
+    return active ? true : false;
 
   }
 
@@ -815,6 +974,22 @@ class EditorComponent extends ObjectEditable {
   }
 
 
+  // onMouseOver(event) {
+
+  //   if (event.target === event.currentTarget) {
+
+  //     event.preventDefault();
+  //     event.stopPropagation();
+
+  //     this.setState({
+  //       hovered: true,
+  //     });
+
+  //   }
+
+  // }
+
+
   onMouseLeave(event) {
 
     if (event.target === event.currentTarget) {
@@ -824,16 +999,57 @@ class EditorComponent extends ObjectEditable {
 
       const {
         setHoveredItem,
-        hoveredItem,
+        // hoveredItem,
       } = this.getEditorContext();
 
-      if (hoveredItem && hoveredItem === this) {
+      // if (hoveredItem && hoveredItem === this) {
+
+      //   setHoveredItem(null);
+
+      // }
+
+      if (this.isHovered()) {
 
         setHoveredItem(null);
+
+        // this.setState({
+        //   hovered: false,
+        // });
 
       }
 
     }
+
+  }
+
+
+  // onMouseLeave(event) {
+
+  //   if (event.target === event.currentTarget) {
+
+  //     event.preventDefault();
+  //     event.stopPropagation();
+
+  //     if (this.isHovered()) {
+
+  //       this.setState({
+  //         hovered: false,
+  //       });
+
+  //     }
+
+  //   }
+
+  // }
+
+
+  isHovered() {
+
+    const {
+      hovered,
+    } = this.state;
+
+    return hovered ? true : false;
 
   }
 
@@ -1142,15 +1358,16 @@ class EditorComponent extends ObjectEditable {
     } = this.getEditorContext();
 
 
-    const {
+    let {
       className: defaultClassName,
       mode,
       deletable,
       component,
       mutate,
-      data: {
-        object,
-      },
+      // data: {
+      //   object,
+      // },
+      data,
       errorDelay,
       SaveIcon,
       ResetIcon,
@@ -1159,6 +1376,9 @@ class EditorComponent extends ObjectEditable {
       style,
       ...other
     } = this.props;
+
+
+    const object = this.getObjectWithMutations();
 
     const {
       props: {
@@ -1219,8 +1439,10 @@ class EditorComponent extends ObjectEditable {
       else {
         // if (!dragItem || (!dragItem.component || dragItem.component.canBeParent(this))) {
         const isDragOvered = dragTarget === this ? true : false;
-        const isActive = activeItem === this ? true : false;
-        const isHovered = hoveredItem === this ? true : false;
+        // const isActive = activeItem === this ? true : false;
+        const isActive = this.isActive();
+        // const isHovered = hoveredItem === this ? true : false;
+        const isHovered = this.isHovered();
         const isDirty = this.isDirty();
 
         classNames = classNames.concat([
@@ -1605,7 +1827,8 @@ class EditorComponent extends ObjectEditable {
           name,
           label: name,
           value,
-          deletable: this.props.data.object.props && this.props.data.object.props[name] !== undefined ? true : false,
+          // deletable: this.props.data.object.props && this.props.data.object.props[name] !== undefined ? true : false,
+          deletable: this.isDeletable(),
         });
 
         if (field) {
@@ -1732,6 +1955,37 @@ class EditorComponent extends ObjectEditable {
 
               }
 
+
+              const {
+                parent,
+              } = this.props;
+
+
+              if (!parent) {
+
+                console.error("Can not get parent");
+
+                return false;
+              }
+
+              const {
+                components,
+              } = parent.getObjectWithMutations();
+
+
+              // console.log("Save new template parent components", components);
+
+              const index = components.indexOf(object);
+
+              if (index === -1) {
+                console.error("Can not find current component in parent");
+              }
+
+              // console.log("Save new template current index", index);
+
+
+              // return;
+
               await this.mutate({
                 mutation: gql(createTemplateProcessor),
                 variables: {
@@ -1754,18 +2008,36 @@ class EditorComponent extends ObjectEditable {
 
                     const {
                       id: newTemplateId,
+                      name,
+                      component,
                     } = data;
 
-                    let component = this.getComponentInParent();
+                    const newComponents = components.slice(0);
 
-                    Object.assign(component, {
+                    newComponents[index] = {
                       id: newTemplateId,
+                      name,
+                      component,
                       props: {},
                       components: [],
+                    };
+
+                    parent.updateObject({
+                      components: newComponents,
                     });
 
+                    // return;
 
-                    activeParent.updateParentComponents();
+                    // let component = this.getComponentInParent();
+
+                    // Object.assign(component, {
+                    //   id: newTemplateId,
+                    //   props: {},
+                    //   components: [],
+                    // });
+
+
+                    // activeParent.updateParentComponents();
 
                   }
 
@@ -1789,11 +2061,15 @@ class EditorComponent extends ObjectEditable {
             title="Удалить элемент"
             onClick={event => {
 
-              const activeItem = this.getActiveItem();
+              // console.log("Удалить элемент this", { ...this });
 
-              if (activeItem) {
-                this.deleteItem(activeItem);
-              }
+              this.delete();
+
+              // const activeItem = this.getActiveItem();
+
+              // if (activeItem) {
+              //   this.delete(activeItem);
+              // }
 
             }}
           >
@@ -2511,12 +2787,15 @@ class EditorComponent extends ObjectEditable {
       activeItem,
       dragTarget,
       hoveredItem,
-      settingsViewContainer,
+      // settingsViewContainer,
+      getSettingsViewContainer,
       inEditMode,
       classes,
       onDragStart,
       Components,
     } = this.getEditorContext();
+
+    const settingsViewContainer = getSettingsViewContainer();
 
     // return this.renderChildren();
 
@@ -2646,7 +2925,7 @@ class EditorComponent extends ObjectEditable {
                     event.preventDefault();
                     event.stopPropagation();
 
-                    this.deleteItem(this);
+                    this.delete();
                   }}
                   className={classes.badgeButton}
                 >
@@ -2777,6 +3056,8 @@ class EditorComponent extends ObjectEditable {
 
     const object = this.getObjectWithMutations();
 
+    // console.log("renderMainView object", this, object);
+
     if (!object) {
       return null;
     }
@@ -2791,15 +3072,18 @@ class EditorComponent extends ObjectEditable {
 
 
     const {
-      activeItem,
+      // activeItem,
       dragTarget,
       hoveredItem,
-      settingsViewContainer,
+      // settingsViewContainer,
+      getSettingsViewContainer,
       inEditMode,
       classes,
       onDragStart,
       Components,
     } = this.getEditorContext();
+
+    const settingsViewContainer = getSettingsViewContainer();
 
 
     const RootElement = this.getRootElement();
@@ -2822,6 +3106,8 @@ class EditorComponent extends ObjectEditable {
 
     const childs = this.renderChildren();
 
+    // console.log("childs", childs);
+
     if (childs) {
       inner.push(childs);
     }
@@ -2829,9 +3115,11 @@ class EditorComponent extends ObjectEditable {
 
     if (inEditMode) {
 
-      const isActive = activeItem === this ? true : false;
+      // const isActive = activeItem === this ? true : false;
+      const isActive = this.isActive();
       const isDragOvered = dragTarget === this ? true : false;
-      const isHovered = hoveredItem === this ? true : false;
+      // const isHovered = hoveredItem === this ? true : false;
+      const isHovered = this.isHovered();
       const deletable = this.isDeletable();
 
 
@@ -2907,7 +3195,8 @@ class EditorComponent extends ObjectEditable {
               </IconButton>
             </Grid>
 
-            {deletable && activeItem && activeItem === this ?
+            {/* {deletable && activeItem && activeItem === this ? */}
+            {deletable && isActive ?
               <Grid
                 item
               >
@@ -2917,7 +3206,7 @@ class EditorComponent extends ObjectEditable {
                     event.preventDefault();
                     event.stopPropagation();
 
-                    this.deleteItem(this);
+                    this.delete();
                   }}
                   className={classes.badgeButton}
                 >
@@ -3066,14 +3355,19 @@ class EditorComponent extends ObjectEditable {
   renderActionPanel(content) {
 
     const {
-      actionPanel,
+      // actionPanel,
+      getActionPanel,
     } = this.getEditorContext();
 
+    const actionPanel = getActionPanel();
+
     // console.log("renderActionPanel actionPanel", actionPanel);
+    // console.log("renderActionPanel content", content);
     // console.log("renderActionPanel context", { ...this.getEditorContext() });
 
     if (actionPanel) {
       return ReactDOM.createPortal(content, actionPanel);
+      // return ReactDOM.createPortal(<div>dfsdfsdf</div>, actionPanel);
     }
     else {
       return content;
@@ -3172,7 +3466,7 @@ class EditorComponent extends ObjectEditable {
     const object = this.getObjectWithMutations();
 
 
-
+    // console.log("object", { ...object });
 
     const {
       // props,
@@ -3236,6 +3530,8 @@ class EditorComponent extends ObjectEditable {
 
     // }
 
+    // console.log("renderComponent n", { ...n });
+
 
     let Component = Components.find(n => n.Name === component);
 
@@ -3248,7 +3544,9 @@ class EditorComponent extends ObjectEditable {
       if (templateId) {
 
 
+        // console.log("TemplateRenderer", TemplateRenderer);
 
+        // return null;
 
         return <TemplateRenderer
           key={`${templateId}--${index}`}
@@ -3262,6 +3560,39 @@ class EditorComponent extends ObjectEditable {
           mutate={updateTemplate}
           createTemplate={createTemplate}
           updateTemplate={updateTemplate}
+          delete_component={event => {
+
+            // console.log("delete", { ...n });
+
+            const {
+              components,
+            } = this.getObjectWithMutations();
+
+            const index = components.indexOf(n);
+
+
+            // console.log("delete index", index);
+
+            if (index === -1) {
+
+              // console.error("Can not find component");
+
+              return;
+            }
+            else {
+
+              let newComponents = components.slice(0);
+
+              newComponents.splice(index, 1);
+
+              this.updateObject({
+                components: newComponents,
+              });
+
+            }
+
+
+          }}
         // mutate={async (options) => {
 
 
@@ -3280,9 +3611,10 @@ class EditorComponent extends ObjectEditable {
           parent={this}
           props={props}
           components={components}
-          data={{
-            object: n,
-          }}
+          // data={{
+          //   object: n,
+          // }}
+          object={n}
           // _dirty={n}
           mutate={createTemplate}
           createTemplate={createTemplate}
@@ -3419,6 +3751,11 @@ class EditorComponent extends ObjectEditable {
         // return "Sdfdsf";
 
 
+        {/* console.log("render this", this);
+
+        console.log("render this object", this.getObjectWithMutations()); */}
+
+
 
         switch (mode) {
 
@@ -3445,10 +3782,19 @@ class EditorComponent extends ObjectEditable {
 
           case "add_child":
 
-            const activeItem = this.getActiveItem();
 
-            if (activeItem && this.canBeParent(activeItem)) {
-              content = this.renderAddButton();
+            {
+
+              {/* const activeItem = this.getActiveItem(); */ }
+
+              const {
+                parent: activeItem,
+              } = this.props;
+
+              if (activeItem && this.canBeParent(activeItem)) {
+                content = this.renderAddButton();
+              }
+
             }
 
             break;

@@ -30,16 +30,20 @@ class Tag extends EditorComponent {
 
     const {
       // content,
-      data: {
-        object,
-      },
+      // data: {
+      //   object,
+      // },
     } = props;
 
 
+    // const {
+    //   // props: objectProps,
+    //   components,
+    // } = object || {};
+
     const {
-      // props: objectProps,
       components,
-    } = object || {};
+    } = this.getObjectWithMutations() || {};
 
     // const {
     // } = objectProps || {};
@@ -213,7 +217,8 @@ class Tag extends EditorComponent {
 
         options = {
           // contentEditable: true,
-          contentEditable: activeItem === this,
+          // contentEditable: activeItem === this,
+          contentEditable: this.isActive(),
           suppressContentEditableWarning: true,
           style,
           onInput: event => {
@@ -238,11 +243,17 @@ class Tag extends EditorComponent {
 
 
 
-            const {
-              activeItem,
-            } = this.getEditorContext();
+            // const {
+            //   activeItem,
+            // } = this.getEditorContext();
 
-            if (activeItem && activeItem === this) {
+            // if (activeItem && activeItem === this) {
+            //   this.setState({
+            //     focused: true,
+            //   });
+            // }
+
+            if (this.isActive()) {
               this.setState({
                 focused: true,
               });
@@ -253,12 +264,13 @@ class Tag extends EditorComponent {
 
 
 
-            const {
-              activeItem,
-            } = this.getEditorContext();
+            // const {
+            //   activeItem,
+            // } = this.getEditorContext();
 
 
-            if (activeItem === this) {
+            // if (activeItem === this) {
+            if (this.isActive()) {
 
               const {
                 newContent,
