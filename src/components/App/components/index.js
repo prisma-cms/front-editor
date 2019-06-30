@@ -61,6 +61,7 @@ class EditorComponent extends ObjectEditable {
      */
     parent: PropTypes.object,
     deletable: PropTypes.bool.isRequired,
+    data: PropTypes.object,
   };
 
 
@@ -187,6 +188,34 @@ class EditorComponent extends ObjectEditable {
 
 
     super.componentWillUnmount && super.componentWillUnmount();
+  }
+
+
+  componentDidUpdate(prevProps, prevState) {
+
+    // console.log("Test componentDidUpdate", prevProps);
+
+    // const keys = Object.keys(prevProps);
+
+    // keys.map(key => {
+
+    //   const prev = prevProps[key];
+    //   const current = this.props[key];
+
+    //   if (prev !== current) {
+
+    //     console.log("componentDidUpdate this", this);
+    //     // console.log("componentDidUpdate prev", key, prev);
+    //     // console.log("componentDidUpdate current", key, current);
+    //     console.log("componentDidUpdate prev", key, { ...prev });
+    //     console.log("componentDidUpdate current", key, { ...current });
+
+    //   }
+
+    // });
+
+    super.componentDidUpdate && super.componentDidUpdate(prevProps, prevState);
+
   }
 
 
@@ -756,6 +785,7 @@ class EditorComponent extends ObjectEditable {
     const {
       parent,
       delete_component,
+      index,
     } = this.props;
 
     // console.log("delete this", this);
@@ -770,39 +800,45 @@ class EditorComponent extends ObjectEditable {
       return false;
     }
 
-    const {
-      components,
-    } = parent.getObjectWithMutations();
-
-    const object = this.getObjectWithMutations();
-
-    const index = components.indexOf(object);
 
 
     // console.log("delete index", index);
 
     if (delete_component) {
 
-      delete_component();
+      delete_component(index);
 
-      return;
+      // return;
     }
 
-    if (index === -1) {
+    else {
 
-      console.error("Can not find component in parent");
+      const {
+        components,
+      } = parent.getObjectWithMutations();
 
-      return false;
+      const object = this.getObjectWithMutations();
+
+      const index = components.indexOf(object);
+
+      if (index === -1) {
+
+        console.error("Can not find component in parent");
+
+        return false;
+
+      }
+
+      let newComponents = components.slice(0);
+
+      newComponents.splice(index, 1);
+
+      parent.updateObject({
+        components: newComponents,
+      });
 
     }
 
-    let newComponents = components.slice(0);
-
-    newComponents.splice(index, 1);
-
-    parent.updateObject({
-      components: newComponents,
-    });
 
 
 
@@ -1422,7 +1458,7 @@ class EditorComponent extends ObjectEditable {
       ResetIcon,
       EditIcon,
       cacheKeyPrefix,
-      style,
+      // style,
       ...other
     } = this.props;
 
@@ -2682,7 +2718,7 @@ class EditorComponent extends ObjectEditable {
       return null;
     }
 
-    console.log("updateActiveComponentProps data", data);
+    // console.log("updateActiveComponentProps data", data);
 
     const {
       props,
@@ -3187,7 +3223,7 @@ class EditorComponent extends ObjectEditable {
   }
 
 
-  renderMainView(renderProps) {
+  renderMainView(renderProps = {}) {
 
     const {
       Grid,
@@ -3203,7 +3239,10 @@ class EditorComponent extends ObjectEditable {
 
 
     const {
-      props,
+      props: {
+        style: objectStyle,
+        ...objectProps
+      },
       components,
       component,
       ...other
@@ -3447,17 +3486,32 @@ class EditorComponent extends ObjectEditable {
     //   inner = undefined;
     // }
 
+    const {
+      style: renderStyles,
+    } = renderProps || {};
+
+    const {
+      style: otherRenderStyles,
+      ...otherRenderProps
+    } = this.getRenderProps();
+
     return <Fragment>
 
       <RootElement
-        {...this.getRenderProps()}
         // {...objectProps}
         // {...other}
         // {...props}
         // {...renderProps}
         {...this.prepareRootElementProps({
-          // ...objectProps,
-          props,
+          ...renderProps,
+          ...otherRenderProps,
+          ...objectProps,
+          style: {
+            ...renderStyles,
+            ...otherRenderStyles,
+            ...objectStyle,
+          },
+          // props,
           components,
           ...other,
           ...renderProps,
@@ -3701,39 +3755,8 @@ class EditorComponent extends ObjectEditable {
           mutate={updateTemplate}
           createTemplate={createTemplate}
           updateTemplate={updateTemplate}
-          delete_component={event => {
-
-            // console.log("delete", { ...n });
-
-            const {
-              components,
-            } = this.getObjectWithMutations();
-
-            const index = components.indexOf(n);
-
-
-            // console.log("delete index", index);
-
-            if (index === -1) {
-
-              // console.error("Can not find component");
-
-              return;
-            }
-            else {
-
-              let newComponents = components.slice(0);
-
-              newComponents.splice(index, 1);
-
-              this.updateObject({
-                components: newComponents,
-              });
-
-            }
-
-
-          }}
+          index={index}
+          delete_component={this.deleteComponentByIndex}
         // mutate={async (options) => {
 
 
@@ -3778,6 +3801,40 @@ class EditorComponent extends ObjectEditable {
           Missed component {component}
         </Typography>
       }
+
+    }
+
+  }
+
+
+  deleteComponentByIndex = index => {
+
+    // console.log("delete", { ...n });
+
+    const {
+      components,
+    } = this.getObjectWithMutations();
+
+    // const index = components.indexOf(n);
+
+
+    // console.log("delete index", index);
+
+    if (index === -1) {
+
+      // console.error("Can not find component");
+
+      return;
+    }
+    else {
+
+      let newComponents = components.slice(0);
+
+      newComponents.splice(index, 1);
+
+      this.updateObject({
+        components: newComponents,
+      });
 
     }
 

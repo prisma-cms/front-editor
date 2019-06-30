@@ -1,3 +1,8 @@
+2.0.1
+=================================
+- Fix RichText
+- Added @prisma-cms/editor
+
 2.0.0
 =================================
 - Code refactoring

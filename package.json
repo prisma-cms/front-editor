@@ -1,6 +1,6 @@
 {
   "name": "@prisma-cms/front-editor",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "private": false,
   "main": "lib/App.js",
   "scripts": {
@@ -14,10 +14,11 @@
   },
   "dependencies": {
     "@prisma-cms/context": "latest",
-    "@prisma-cms/filters": "^1.6.1",
+    "@prisma-cms/editor": "latest",
+    "@prisma-cms/filters": "latest",
     "@prisma-cms/front": "latest",
     "@prisma-cms/query-builder": "latest",
-    "@prisma-cms/uploader": "^1.0.0",
+    "@prisma-cms/uploader": "latest",
     "apollo-cms": "latest",
     "css": "^2.2.4",
     "graphql": "14.0.2",

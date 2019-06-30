@@ -193,6 +193,8 @@ class EditorSwitch extends EditorComponent {
             render={(routerProps) => {
               // return element;
 
+              // console.log("routerProps", routerProps);
+
               return <RouteContext.Provider
                 value={routerProps}
               >
@@ -202,9 +204,10 @@ class EditorSwitch extends EditorComponent {
                   // component={n}
                   parent={this}
                   props={props}
-                  data={{
-                    object: n,
-                  }}
+                  // data={{
+                  //   object: n,
+                  // }}
+                  object={n}
                   exact={exact}
                   path={path}
                   routername={routername}
@@ -214,7 +217,7 @@ class EditorSwitch extends EditorComponent {
                   updateTemplate={updateTemplate}
                   {...other}
                   {...props}
-                  {...routerProps}
+                  // {...routerProps}
                 />
               </RouteContext.Provider>
             }}
