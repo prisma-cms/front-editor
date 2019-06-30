@@ -455,6 +455,11 @@ class FrontEditor extends Component {
           active: false,
         }));
 
+
+        this.updateContext({
+          activeItem: component,
+        });
+
         // this.forceUpdate();
 
       },
@@ -535,6 +540,22 @@ class FrontEditor extends Component {
     }
 
     this.state.editorContext = editorContext;
+
+  }
+
+
+  updateContext(data) {
+
+    const {
+      editorContext,
+    } = this.state;
+
+    this.setState({
+      editorContext: {
+        ...editorContext,
+        ...data,
+      },
+    });
 
   }
 
