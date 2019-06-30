@@ -145,6 +145,7 @@ class EditableObject extends EditorComponent {
       cache_key,
       cache_key_prefix,
       new_object_cache_key,
+      object,
       ...other
     } = this.getComponentProps(this);
 
@@ -160,6 +161,7 @@ class EditableObject extends EditorComponent {
           loading,
         } = context;
 
+        {/* console.log("ObjectContext context", { ...context }); */ }
 
         /**
         Если объекта нет и еще выполняется загрузка,
@@ -180,9 +182,10 @@ class EditableObject extends EditorComponent {
 
 
         return <Editable
-          data={{
-            object: object || {},
-          }}
+          // data={{
+          //   object: object || {},
+          // }}
+          object={object || {}}
           _dirty={!object ? {} : undefined}
           mutate={async props => {
 

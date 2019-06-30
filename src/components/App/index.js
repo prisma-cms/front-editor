@@ -58,7 +58,6 @@ import RichText from './components/public/Connectors/Connector/Fields/RichText';
 import Table from './components/public/Table';
 import TableRow from './components/public/Table/TableRow';
 import TableCell from './components/public/Table/TableCell';
-import Test from './components/public/Test';
 
 const styles = theme => {
 
@@ -116,7 +115,7 @@ const styles = theme => {
       [desktop]: {
         width: "min-content",
         height: "100%",
-        // overflow: "auto",
+        overflow: "auto",
         position: "relative",
         transition: "width 0.5s",
 
@@ -254,7 +253,6 @@ class FrontEditor extends Component {
   static defaultProps = {
     debug: false,
     Components: [
-      Test,
       Grid,
       Typography,
       Tag,
@@ -416,14 +414,26 @@ class FrontEditor extends Component {
       },
       onDragStart: (event, item) => {
 
-        this.setState({
+        // this.setState({
+        //   dragItem: item,
+        // });
+
+
+        this.updateContext({
           dragItem: item,
         });
 
       },
       onDragEnd: item => {
 
-        this.setState({
+        // this.setState({
+        //   dragItem: null,
+        //   dragTarget: null,
+        //   activeItem: null,
+        //   hoveredItem: null,
+        // });
+
+        this.updateContext({
           dragItem: null,
           dragTarget: null,
           activeItem: null,
@@ -434,6 +444,12 @@ class FrontEditor extends Component {
         this.setState({
           dragTarget: component,
         });
+
+
+        this.updateContext({
+          dragTarget: component,
+        });
+
       },
       setActiveItem: component => {
 
@@ -556,6 +572,17 @@ class FrontEditor extends Component {
         ...data,
       },
     });
+
+  }
+
+
+  getContextValue(name) {
+
+    const {
+      [name]: value,
+    } = this.state.editorContext;
+
+    return value;
 
   }
 
@@ -727,11 +754,12 @@ class FrontEditor extends Component {
     } = this.context;
 
     const {
-      activeItem,
+      // activeItem,
       templatesGroup,
       templatesOpened,
     } = this.state;
 
+    const activeItem = this.getContextValue("activeItem");
 
 
     const {

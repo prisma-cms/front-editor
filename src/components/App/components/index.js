@@ -32,14 +32,15 @@ import Switch from 'material-ui/Switch';
 
 // ComponentContext = createContext();
 
-// import ObjectEditable from "apollo-cms/lib/DataView/Object/Editable";
+import ObjectEditable from "apollo-cms/lib/DataView/Object/Editable";
+// import ObjectEditable from './Editable';
+
 import gql from 'graphql-tag';
 import { EditorContext } from '../context';
 
 // import SingleUploader from "@prisma-cms/uploader/lib/components/SingleUploader";
 import Uploader from "@prisma-cms/uploader";
 import Typography from 'material-ui/Typography';
-import ObjectEditable from './Editable';
 
 const emptyMutate = async () => { };
 
@@ -1414,6 +1415,7 @@ class EditorComponent extends ObjectEditable {
       // data: {
       //   object,
       // },
+      object: objectNull,
       data,
       errorDelay,
       SaveIcon,
@@ -3203,6 +3205,7 @@ class EditorComponent extends ObjectEditable {
     const {
       props,
       components,
+      component,
       ...other
     } = object;
 
@@ -3291,7 +3294,7 @@ class EditorComponent extends ObjectEditable {
               item
               xs
             >
-              {/* {this.renderBadgeTitle(component)} */}
+              {this.renderBadgeTitle(component)}
             </Grid>
 
             <Grid
@@ -3469,6 +3472,7 @@ class EditorComponent extends ObjectEditable {
 
 
   renderBadgeTitle(title) {
+
     return title;
   }
 
@@ -3911,7 +3915,7 @@ class EditorComponent extends ObjectEditable {
               content = this.renderPanelView();
             } */}
 
-              if (!activeItem || this.isActive()) {
+              if (!activeItem || (activeItem && activeItem instanceof this.constructor)) {
                 content = this.renderPanelView();
               }
             }

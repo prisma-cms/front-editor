@@ -500,9 +500,16 @@ class ObjectConnector extends EditorComponent {
 
       if (parent) {
 
+        // const {
+        //   query,
+        // } = parent.props.data.object.props;
+
+
         const {
-          query,
-        } = parent.props.data.object.props;
+          props: {
+            query,
+          },
+        } = parent.getObjectWithMutations();
 
         if (query) {
           parentQuery = query;
@@ -567,9 +574,16 @@ class ObjectConnector extends EditorComponent {
 
     if (offsetParent) {
 
+      // const {
+      //   query,
+      // } = offsetParent.props.data.object.props;
+
       const {
-        query,
-      } = offsetParent.props.data.object.props;
+        props: {
+          query,
+        },
+      } = offsetParent.getObjectWithMutations();
+
 
       if (query) {
         parentQuery = query;

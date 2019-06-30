@@ -770,14 +770,20 @@ class Connector extends EditorComponent {
     if (super.canBeChild(child)) {
 
 
-      const {
-        props: componentProps,
-      } = this.getComponentProps(this);
+      // const {
+      //   props: componentProps,
+      // } = this.getComponentProps(this);
 
 
+      // const {
+      //   query,
+      // } = componentProps || {};
+
       const {
-        query,
-      } = componentProps || {};
+        props: {
+          query,
+        },
+      } = this.getObjectWithMutations();
 
 
       let parentQuery;
@@ -788,9 +794,15 @@ class Connector extends EditorComponent {
 
       if (parent) {
 
+        // const {
+        //   query,
+        // } = parent.props.data.object.props;
+
         const {
-          query,
-        } = parent.props.data.object.props;
+          props: {
+            query,
+          },
+        } = parent.getObjectWithMutations();
 
         if (query) {
           parentQuery = query;
@@ -856,9 +868,15 @@ class Connector extends EditorComponent {
 
     if (parent) {
 
+      // const {
+      //   query,
+      // } = parent.props.data.object.props;
+
       const {
-        query,
-      } = parent.props.data.object.props;
+        props: {
+          query,
+        },
+      } = parent.getObjectWithMutations();
 
       if (query) {
         parentQuery = query;
