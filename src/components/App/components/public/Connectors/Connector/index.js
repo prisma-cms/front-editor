@@ -375,14 +375,19 @@ class Connector extends EditorComponent {
 
   updateComponentProperty(name, value) {
 
-    const activeItem = this.getActiveItem();
+    // const activeItem = this.getActiveItem();
+    const activeItem = this;
 
 
     let newProps = {};
 
+    // const {
+    //   props,
+    // } = activeItem;
+
     const {
       props,
-    } = activeItem;
+    } = activeItem.getObjectWithMutations();
 
     switch (name) {
 
@@ -682,7 +687,10 @@ class Connector extends EditorComponent {
       return this.setUrlFilters(filters);
     }
     else {
-      return this.updateActiveComponentProps(this, {
+      // return this.updateActiveComponentProps(this, {
+      //   where: filters,
+      // });
+      return this.updateComponentProps({
         where: filters,
       });
     }

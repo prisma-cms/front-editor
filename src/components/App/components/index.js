@@ -892,35 +892,35 @@ class EditorComponent extends ObjectEditable {
 
   /**
    * Надо обновить components, чтобы в объекте было актуальное свойство
-   */
-  updateParentComponents() {
+  //  */
+  // updateParentComponents() {
 
-    const {
-      forceUpdate,
-    } = this.getEditorContext();
+  //   const {
+  //     forceUpdate,
+  //   } = this.getEditorContext();
 
-    const activeParent = this.getActiveParent();
-
-
-
-    if (!activeParent) {
-      // throw new Error("Can not get absParent");
-
-      console.error("Can not get absParent");
-
-      return;
-    }
-
-    activeParent.updateObject({
-      components: activeParent.props.data.object.components.slice(0),
-    });
+  //   const activeParent = this.getActiveParent();
 
 
-    // forceUpdate();
 
-    return;
+  //   if (!activeParent) {
+  //     // throw new Error("Can not get absParent");
 
-  }
+  //     console.error("Can not get absParent");
+
+  //     return;
+  //   }
+
+  //   activeParent.updateObject({
+  //     components: activeParent.props.data.object.components.slice(0),
+  //   });
+
+
+  //   // forceUpdate();
+
+  //   return;
+
+  // }
 
 
   /**
@@ -2580,7 +2580,20 @@ class EditorComponent extends ObjectEditable {
 
   updateComponentProperty(name, value, style) {
 
+    // console.log("updateComponentProperty name", name);
+    // console.log("updateComponentProperty value", value);
+    // console.log("updateComponentProperty style", style);
 
+    // const {
+    //   props,
+    // } = this.getObjectWithMutations();
+
+    // this.updateObject({
+    //   props: {
+    //     ...props,
+    //     [name]: value,
+    //   },
+    // });
 
     if (style) {
       return this.updateComponentProps({
@@ -2606,9 +2619,41 @@ class EditorComponent extends ObjectEditable {
    */
   updateComponentProps(data) {
 
-    const activeItem = this.getActiveItem();
+    // const activeItem = this.getActiveItem();
 
-    return this.updateActiveComponentProps(activeItem, data);
+    // return this.updateActiveComponentProps(this, data);
+
+
+    let {
+      props: {
+        ...props
+      },
+    } = this.getObjectWithMutations();
+
+
+    if (data) {
+
+      const keys = Object.keys(data);
+
+      keys.map(name => {
+
+        const value = data[name];
+
+        if (value === undefined) {
+          delete props[name];
+        }
+        else {
+          props[name] = value;
+        }
+
+      });
+
+    }
+
+
+    this.updateObject({
+      props,
+    });
 
   }
 
@@ -2619,7 +2664,7 @@ class EditorComponent extends ObjectEditable {
    * поэтому перенес функционал в этот отдельный метод.
    * В дальнейшем надо будет все переосмыслить
    */
-  updateActiveComponentProps(activeItem, data) {
+  updateActiveComponentProps__(activeItem, data) {
 
     /**
      * this - Дополнительный объект в панели управления
@@ -2628,14 +2673,53 @@ class EditorComponent extends ObjectEditable {
 
 
 
-    if (!activeItem) {
+    if (activeItem !== this) {
+
+      console.error("activeItem !== this");
+
       return null;
     }
+
+    console.log("updateActiveComponentProps data", data);
+
+    const {
+      props,
+    } = this.getObjectWithMutations();
+
+
+    // if (data) {
+
+    //   const keys = Object.keys(data);
+
+    //   keys.map(name => {
+
+    //     const value = data[name];
+
+    //     if (value === undefined) {
+    //       delete props[name];
+    //     }
+    //     else {
+    //       props[name] = value;
+    //     }
+
+    //   });
+
+    // }
+
+
+    this.updateObject({
+      props: {
+        ...props,
+        ...data,
+      },
+    });
+
+    return;
 
     const activeParent = activeItem.getActiveParent();
 
     // let props = activeItem.props.props || {};
-    let props = { ...activeItem.props.props } || {};
+    let props__ = { ...activeItem.props.props } || {};
 
 
     if (data) {
@@ -2677,7 +2761,7 @@ class EditorComponent extends ObjectEditable {
 
         // activeItem.props.props = props;
 
-        activeParent.updateParentComponents();
+        // activeParent.updateParentComponents();
 
       }
 
@@ -2772,7 +2856,7 @@ class EditorComponent extends ObjectEditable {
     return component;
   }
 
-  updateComponent(data) {
+  updateComponent__(data) {
 
     const activeItem = this.getActiveItem();
 

@@ -286,14 +286,23 @@ class ObjectConnector extends EditorComponent {
 
   updateComponentProperty(name, value) {
 
-    const activeItem = this.getActiveItem();
+    // const activeItem = this.getActiveItem();
 
+    const activeItem = this;
+
+    // console.log("activeItem this", this);
+
+    // return;
 
     let newProps = {};
 
+    // const {
+    //   props,
+    // } = activeItem;
+
     const {
       props,
-    } = activeItem;
+    } = activeItem.getObjectWithMutations();
 
     switch (name) {
 
@@ -454,7 +463,11 @@ class ObjectConnector extends EditorComponent {
     // activeItem.updateComponentProperty("where", filters)
     // this.updateComponentProperty("test", "filters")
 
-    return this.updateActiveComponentProps(this, {
+    // return this.updateActiveComponentProps(this, {
+    //   where: filters,
+    // });
+
+    return this.updateComponentProps({
       where: filters,
     });
 
