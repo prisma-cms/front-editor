@@ -195,6 +195,11 @@ class EditorSwitch extends EditorComponent {
 
               // console.log("routerProps", routerProps);
 
+              /**
+              ToDo: Удалить routerProps, потому что передает каждый раз новый объект
+              и Роуты перерендериваются
+               */
+
               return <RouteContext.Provider
                 value={routerProps}
               >
@@ -217,7 +222,7 @@ class EditorSwitch extends EditorComponent {
                   updateTemplate={updateTemplate}
                   {...other}
                   {...props}
-                  // {...routerProps}
+                  {...routerProps}
                 />
               </RouteContext.Provider>
             }}
