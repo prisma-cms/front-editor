@@ -524,23 +524,23 @@ class FrontEditor extends Component {
 
       registerMountedComponent: component => {
 
+        // const {
+        //   inEditMode,
+        // } = this.props;
+
+        // if (inEditMode) {
+
         const {
-          inEditMode,
-        } = this.props;
+          mode,
+        } = component.props;
 
-        if (inEditMode) {
+        if (mode === "main") {
 
-          const {
-            mode,
-          } = component.props;
-
-          if (mode === "main") {
-
-            this.mountedComponents.push(component);
-
-          }
+          this.mountedComponents.push(component);
 
         }
+
+        // }
 
       },
 
