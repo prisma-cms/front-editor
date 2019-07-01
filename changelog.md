@@ -1,3 +1,7 @@
+2.0.4
+=================================
+- Fix components movement
+
 2.0.3
 =================================
 - Fix Editor::registerMountedComponent()

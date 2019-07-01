@@ -423,6 +423,8 @@ class EditorComponent extends ObjectEditable {
       event.preventDefault();
       event.stopPropagation();
 
+      // console.log("onDrop dragItem", dragItem);
+      // console.log("onDrop dragTarget", dragTarget);
 
       /**
        * Здесь надо учитывать добавление или перетаскивание элемента.
@@ -432,8 +434,9 @@ class EditorComponent extends ObjectEditable {
 
       if (dragItem instanceof EditorComponent) {
 
-        const {
+        let {
           parent: dragItemParent,
+          index,
         } = dragItem.props;
 
 
@@ -458,35 +461,60 @@ class EditorComponent extends ObjectEditable {
          */
         else {
 
-          const component = dragItem.getComponentInParent();
+          const dragItemActiveParent = dragItem.getActiveParent();
+          const dragTargetActiveParent = dragTarget.getActiveParent();
 
 
-
-          if (component) {
-
-            let {
-              // components,
-              data: {
-                object: {
-                  components,
-                },
-              },
-            } = dragItem.props.parent.props;
-
-            const index = components.indexOf(component);
+          const {
+            // components,
+            // data: {
+            //   object: {
+            //     components,
+            //   },
+            // },
+            components,
+          } = dragItemParent.getObjectWithMutations();
 
 
+          if (index === undefined) {
+
+            const object = dragItem.getObject();
+
+            index = components.indexOf(object);
+          }
+
+
+          // console.log("onDrop index", index);
+
+          /**
+           * Если компонент найден, то исключаем его из массива
+           */
+          if (index !== -1) {
+
+            let newComponents = components;
 
             /**
-             * Если компонент найден, то исключаем его из массива
+             * Если абсолютный родители у обоих элементов одни,
+             * то нельзя дважды обновить массив компонентов, иначе
+             * второй элемент не найдет родителя.
+             * По этой причине нам надо менять массив напрямую. 
+             * Здесь проблема возникает в том, что при отмене редактирования исключенный элемент 
+             * не будет восстановлен, так как редактирование происходит в исходной массиве
              */
-            if (index !== -1) {
-
-              const movingComponent = components.splice(index, 1)[0];
-
-              this.addComponent(movingComponent);
-
+            if (dragItemActiveParent !== dragTargetActiveParent) {
+              newComponents = newComponents.slice(0);
             }
+
+            const movingComponent = newComponents.splice(index, 1)[0];
+
+
+            if (dragItemActiveParent !== dragTargetActiveParent) {
+              dragItemParent.updateObject({
+                components: newComponents,
+              });
+            }
+
+            this.addComponent(movingComponent);
 
           }
 
