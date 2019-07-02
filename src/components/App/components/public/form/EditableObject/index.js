@@ -204,14 +204,14 @@ class EditableObject extends EditorComponent {
 
                 const {
                   type,
-                  props: {
-                    props: {
-                      query,
-                    },
-                  },
+                  props,
                 } = n;
 
                 if (type === Query) {
+
+                  const {
+                    query,
+                  } = props && props.props || {};
 
                   if (query) {
 

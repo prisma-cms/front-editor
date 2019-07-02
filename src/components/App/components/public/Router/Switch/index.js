@@ -116,6 +116,10 @@ class EditorSwitch extends EditorComponent {
   renderChildren() {
 
     const {
+      Grid,
+    } = this.context;
+
+    const {
       inEditMode,
     } = this.getEditorContext();
 
@@ -158,11 +162,15 @@ class EditorSwitch extends EditorComponent {
 
     let output = [];
 
+    let header;
+
 
     const routesShowed = inEditMode && showRoutes;
 
 
     if (itemComponents && itemComponents.length) {
+
+      let menuItems = []
 
       itemComponents.map((n, index) => {
 
@@ -234,24 +242,38 @@ class EditorSwitch extends EditorComponent {
           // if (inEditMode && showRoutes) {
           if (routesShowed) {
 
-            component = <Fragment
-              key={id || index}
-            >
-              <Typography>
-                {routername} <Typography
-                  component="span"
-                  variant="caption"
-                  style={{
-                    display: "inline-block",
-                  }}
-                >
-                  {path}{!exact ? "*" : ""}
-                </Typography>
+            const key = `${id}-${index}`;
+
+            const title = <Typography>
+              {routername} <Typography
+                component="span"
+                variant="caption"
+                style={{
+                  display: "inline-block",
+                }}
+              >
+                {path}{!exact ? "*" : ""}
               </Typography>
+            </Typography>;
+
+            component = <Fragment
+              key={key}
+            >
+              {title}
 
               {route}
 
             </Fragment>
+
+
+
+
+            menuItems.push(<Grid
+              key={key}
+              item
+            >
+              {title}
+            </Grid>);
 
           }
           else {
@@ -274,12 +296,23 @@ class EditorSwitch extends EditorComponent {
 
         }
 
-      })
+      });
+
+
+      header = <Grid
+        container
+        spacing={16}
+      >
+        {menuItems}
+      </Grid>
 
     }
 
     if (routesShowed) {
-      return output;
+      return <Fragment>
+        {header}
+        {output}
+      </Fragment>;
     }
     else {
       return <RouterSwitch>
