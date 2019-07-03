@@ -528,6 +528,9 @@ class EditableObject extends EditorComponent {
     if (kind === "SCALAR") {
       return true;
     }
+    else if (kind === "ENUM") {
+      return true;
+    }
     else if ((kind === "NON_NULL" || kind === "LIST") && ofType) {
       return this.isScalar({
         type: ofType,
