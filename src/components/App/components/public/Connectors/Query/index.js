@@ -17,6 +17,19 @@ class Query extends EditorComponent {
   static Name = "Query"
   static help_url = "https://front-editor.prisma-cms.com/topics/query.html";
 
+
+  constructor(props){
+
+    super(props);
+
+    this.state = {
+      ...this.state,
+      expanded: false,
+    }
+
+  }
+
+
   renderPanelView(content) {
 
     const {
@@ -30,6 +43,28 @@ class Query extends EditorComponent {
       >
         <Icon /> Query
     </div>);
+  }
+
+
+  onClick(event) {
+
+    if (event.target === event.currentTarget) {
+
+      const {
+        active,
+        expanded,
+      } = this.state;
+
+      if (active && !expanded) {
+        this.setState({
+          expanded: true,
+        });
+      }
+
+    }
+
+    return super.onClick(event);
+
   }
 
 
@@ -47,7 +82,12 @@ class Query extends EditorComponent {
     } = this.getComponentProps(this);
 
 
-    if (activeItem && activeItem === this) {
+    const {
+      expanded,
+    } = this.state;
+
+
+    if (activeItem && activeItem === this && expanded) {
       // output = <div
       //   style={{
       //     height: "80vh",
@@ -121,11 +161,16 @@ class Query extends EditorComponent {
     event.preventDefault();
     event.stopPropagation();
 
-    const {
-      setActiveItem,
-    } = this.getEditorContext();
+    // const {
+    //   setActiveItem,
+    // } = this.getEditorContext();
 
-    setActiveItem(null);
+    // setActiveItem(null);
+
+    this.setState({
+      expanded: false,
+    });
+
   }
 
 }
