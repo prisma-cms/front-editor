@@ -103,9 +103,13 @@ class Tag extends EditorComponent {
 
   prepareDragItemProps() {
 
+    const {
+      tag,
+    } = this.props;
+
     return {
       ...super.prepareDragItemProps(),
-      tag: "div",
+      tag,
     }
 
   }

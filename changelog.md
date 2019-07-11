@@ -1,5 +1,8 @@
+2.1.0
 =================================
 - Fix Query expanded
+- Added Component::saveable
+- Added Tabs, Tab
 
 2.0.7
 =================================

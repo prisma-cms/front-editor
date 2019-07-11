@@ -58,6 +58,8 @@ import RichText from './components/public/RichText';
 import Table from './components/public/Table';
 import TableRow from './components/public/Table/TableRow';
 import TableCell from './components/public/Table/TableCell';
+import Tabs from './components/public/Tabs';
+import Tab from './components/public/Tabs/Tab';
 
 const styles = theme => {
 
@@ -298,6 +300,8 @@ class FrontEditor extends Component {
       Table,
       TableRow,
       TableCell,
+      Tabs,
+      Tab,
     ],
     CustomComponents: [],
     className: "fullheight",

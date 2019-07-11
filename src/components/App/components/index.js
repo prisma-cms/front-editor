@@ -56,6 +56,8 @@ class EditorComponent extends ObjectEditable {
 
   // static contextType = Context;
 
+  static saveable = true;
+
   static propTypes = {
     ...ObjectEditable.propTypes,
     mode: PropTypes.oneOf(["main", "panel", "settings", "add_child"]).isRequired,
@@ -1799,6 +1801,7 @@ class EditorComponent extends ObjectEditable {
       },
     } = this;
 
+    const saveable = this.constructor.saveable;
 
     const activeParent = this.getActiveParent();
 
@@ -2018,7 +2021,7 @@ class EditorComponent extends ObjectEditable {
         </Grid>
         : null
       }
-      {!isRoot && !objectId && activeParent ?
+      {!isRoot && !objectId && activeParent && saveable ?
         <Grid
           item
         >
@@ -2033,135 +2036,7 @@ class EditorComponent extends ObjectEditable {
               event.preventDefault();
               event.stopPropagation();
 
-
-
-
-
-              const {
-                query: {
-                  createTemplateProcessor,
-                },
-              } = this.context;
-
-
-              // const {
-              //   props: {
-              //     name,
-              //     description,
-              //     props,
-              //     components,
-              //   },
-              // } = this;
-
-
-              const {
-                createdAt,
-                updatedAt,
-                __typename,
-                ...template
-              } = this.getObjectWithMutations();
-
-              let Parent;
-
-              if (parentId) {
-
-                Parent = {
-                  connect: {
-                    id: parentId,
-                  },
-                };
-
-              }
-
-
-              const {
-                parent,
-              } = this.props;
-
-
-              if (!parent) {
-
-                console.error("Can not get parent");
-
-                return false;
-              }
-
-              const {
-                components,
-              } = parent.getObjectWithMutations();
-
-
-              // console.log("Save new template parent components", components);
-
-              const index = components.indexOf(object);
-
-              if (index === -1) {
-                console.error("Can not find current component in parent");
-              }
-
-              // console.log("Save new template current index", index);
-
-
-              // return;
-
-              await this.mutate({
-                mutation: gql(createTemplateProcessor),
-                variables: {
-                  data: {
-                    ...template,
-                    Parent,
-                  },
-                },
-              })
-                .then(r => {
-
-
-
-                  const {
-                    success,
-                    data,
-                  } = r.data.response || {};
-
-                  if (success && data) {
-
-                    const {
-                      id: newTemplateId,
-                      name,
-                      component,
-                    } = data;
-
-                    const newComponents = components.slice(0);
-
-                    newComponents[index] = {
-                      id: newTemplateId,
-                      name,
-                      component,
-                      props: {},
-                      components: [],
-                    };
-
-                    parent.updateObject({
-                      components: newComponents,
-                    });
-
-                    // return;
-
-                    // let component = this.getComponentInParent();
-
-                    // Object.assign(component, {
-                    //   id: newTemplateId,
-                    //   props: {},
-                    //   components: [],
-                    // });
-
-
-                    // activeParent.updateParentComponents();
-
-                  }
-
-                })
-                ;
-
+              this.saveSeparatedComponent(parentId);
 
             }}
           >
@@ -2348,6 +2223,150 @@ class EditorComponent extends ObjectEditable {
     </Grid>;
 
     return output;
+  }
+
+
+  /**
+   * Сохраняем в самостоятельный компонент
+   */
+  async saveSeparatedComponent(parentId) {
+
+    const saveable = this.constructor.saveable;
+
+    if (!saveable) {
+      this.addError("This component can not be saved as separated");
+      return;
+    }
+
+    const {
+      query: {
+        createTemplateProcessor,
+      },
+    } = this.context;
+
+
+    const object = this.getObjectWithMutations();
+
+
+    // const {
+    //   props: {
+    //     name,
+    //     description,
+    //     props,
+    //     components,
+    //   },
+    // } = this;
+
+
+    const {
+      createdAt,
+      updatedAt,
+      __typename,
+      ...template
+    } = this.getObjectWithMutations();
+
+    let Parent;
+
+    if (parentId) {
+
+      Parent = {
+        connect: {
+          id: parentId,
+        },
+      };
+
+    }
+
+
+    const {
+      parent,
+    } = this.props;
+
+
+    if (!parent) {
+
+      console.error("Can not get parent");
+
+      return false;
+    }
+
+    const {
+      components,
+    } = parent.getObjectWithMutations();
+
+
+    // console.log("Save new template parent components", components);
+
+    const index = components.indexOf(object);
+
+    if (index === -1) {
+      console.error("Can not find current component in parent");
+    }
+
+    // console.log("Save new template current index", index);
+
+
+    // return;
+
+    await this.mutate({
+      mutation: gql(createTemplateProcessor),
+      variables: {
+        data: {
+          ...template,
+          Parent,
+        },
+      },
+    })
+      .then(r => {
+
+
+
+        const {
+          success,
+          data,
+        } = r.data.response || {};
+
+        if (success && data) {
+
+          const {
+            id: newTemplateId,
+            name,
+            component,
+          } = data;
+
+          const newComponents = components.slice(0);
+
+          newComponents[index] = {
+            id: newTemplateId,
+            name,
+            component,
+            props: {},
+            components: [],
+          };
+
+          parent.updateObject({
+            components: newComponents,
+          });
+
+          // return;
+
+          // let component = this.getComponentInParent();
+
+          // Object.assign(component, {
+          //   id: newTemplateId,
+          //   props: {},
+          //   components: [],
+          // });
+
+
+          // activeParent.updateParentComponents();
+
+        }
+
+      })
+      ;
+
+
   }
 
 

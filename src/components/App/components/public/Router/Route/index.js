@@ -8,6 +8,8 @@ class EditorRoute extends EditorComponent {
 
   static Name = "EditorRoute"
 
+  static saveable = false;
+
   static propTypes = {
     ...EditorComponent.propTypes,
     exact: PropTypes.bool.isRequired,

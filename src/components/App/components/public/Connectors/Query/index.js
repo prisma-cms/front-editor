@@ -18,7 +18,7 @@ class Query extends EditorComponent {
   static help_url = "https://front-editor.prisma-cms.com/topics/query.html";
 
 
-  constructor(props){
+  constructor(props) {
 
     super(props);
 
