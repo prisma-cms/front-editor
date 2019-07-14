@@ -163,8 +163,6 @@ export default class ObjectEditable extends View {
       }
     }
 
-    // console.log("getCacheKey", cacheData);
-
     return cacheData;
   }
 
@@ -216,12 +214,8 @@ export default class ObjectEditable extends View {
           .then(async result => {
 
 
-
-            // console.log("await this.saveObject 2", typeof result, result instanceof Error, result);
-
             if (result instanceof Error) {
 
-              // console.log("await this.saveObject result", result);
 
             }
             else {
@@ -234,8 +228,6 @@ export default class ObjectEditable extends View {
                 response,
               } = resultData || {};
 
-              // console.log("result", result);
-              // console.log("resultData", resultData);
 
               let {
                 success,
@@ -274,9 +266,6 @@ export default class ObjectEditable extends View {
 
                 this.clearCache();
 
-                // await client.resetStore();
-                // await client.cache.reset();
-                // console.log("client.cache.clearStore");
                 await client.clearStore().catch(console.error);
                 await client.reFetchObservableQueries().catch(console.error);
 
@@ -318,16 +307,6 @@ export default class ObjectEditable extends View {
 
   async saveObject(data) {
 
-    // const {
-    //   object,
-    //   saveObject,
-    // } = this.props;
-
-    // if(saveObject){
-    //   return saveObject(data);
-    // }
-
-    // console.log("saveObject data", data);
 
     const {
       mutate,
@@ -345,7 +324,6 @@ export default class ObjectEditable extends View {
       return e;
     });
 
-    // console.log("result 333", result);
 
     return result;
 
@@ -421,49 +399,6 @@ export default class ObjectEditable extends View {
     return this.state._dirty ? true : false;
 
   }
-
-
-  // onChange(event) {
-
-  //   const {
-  //     name,
-  //     value,
-  //   } = event.target;
-
-  //   // console.log("onChange", name, value);
-
-  //   this.updateObject({
-  //     [name]: value,
-  //   });
-
-  // }
-
-
-  // updateObject(data) {
-
-  //   const {
-  //     _dirty = {},
-  //   } = this.state;
-
-  //   const {
-  //     localStorage,
-  //   } = this.context;
-
-  //   const newData = Object.assign({ ..._dirty }, data);
-
-  //   const key = this.getCacheKey();
-
-  //   if (key && newData && localStorage) {
-
-  //     localStorage.setItem(this.getCacheKey(), JSON.stringify(newData));
-  //   }
-
-
-  //   this.setState({
-  //     _dirty: newData,
-  //   });
-
-  // }
 
 
   updateObject(data) {
@@ -823,42 +758,14 @@ export default class ObjectEditable extends View {
 
   closeError(error) {
 
-    // let {
-    //   errors,
-    // } = this.state;
-
     Object.assign(error, {
       open: false,
     });
 
 
-    // console.log("click event 2", error, this.state.notifications);
-
     this.forceUpdate();
 
   }
-
-  // onCloseError(error) {
-
-  //   let {
-  //     notifications,
-  //   } = this.state;
-
-  //   if (!notifications) {
-  //     return;
-  //   }
-
-  //   const index = notifications.indexOf(error);
-
-  //   if (index !== -1) {
-  //     notifications.splice(index, 1);
-
-  //     this.setState({
-  //       notifications,
-  //     });
-  //   }
-
-  // }
 
 
   renderErrors() {
@@ -906,7 +813,6 @@ export default class ObjectEditable extends View {
                 variant="raised"
                 size="small"
                 onClick={event => {
-                  // console.log("click event", event.target);
                   event.stopPropagation();
                   this.closeError(error)
                 }}

@@ -12,6 +12,12 @@ class CreatedBy extends EditorComponent {
 
   static Name = "CreatedBy"
 
+
+  static defaultProps = {
+    ...EditorComponent.defaultProps,
+    hide_wrapper_in_default_mode: true,
+  }
+
   renderPanelView(content) {
 
     const {

@@ -13,6 +13,7 @@ class DraftEditor extends EditorComponent {
     ...EditorComponent.defaultProps,
     readOnly: false,
     value: null,
+    hide_wrapper_in_default_mode: true,
   }
 
   static Name = "DraftEditor"

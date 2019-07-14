@@ -30,6 +30,7 @@ class Connector extends EditorComponent {
     filtersname: "filters",
     first: 10,
     orderBy: undefined,
+    hide_wrapper_in_default_mode: true,
   };
 
 

@@ -1,3 +1,11 @@
+2.2.0
+=================================
+- Added CreateObjectLink
+- Added SudoOnly
+- Added Component::hide_wrapper_in_default_mode
+- Fix warnings
+- Fix EditableObject::save()
+
 2.1.0
 =================================
 - Fix Query expanded

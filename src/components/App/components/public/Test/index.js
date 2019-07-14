@@ -9,36 +9,6 @@ export class Test extends EditorComponent {
 
   static Name = 'Test';
 
-  // static defaultProps = {
-  //   ...EditorComponent.defaultProps,
-  // }
-
-
-  // componentDidUpdate(prevProps, prevState) {
-
-  //   // console.log("Test componentDidUpdate", prevProps);
-
-  //   const keys = Object.keys(prevProps);
-
-  //   keys.map(key => {
-
-  //     const prev = prevProps[key];
-  //     const current = this.props[key];
-
-  //     if (prev !== current) {
-
-  //       console.log("componentDidUpdate this", this);
-  //       // console.log("componentDidUpdate prev", key, prev);
-  //       // console.log("componentDidUpdate current", key, current);
-  //       console.log("componentDidUpdate prev", key, { ...prev });
-  //       console.log("componentDidUpdate current", key, { ...current });
-
-  //     }
-
-  //   })
-
-  // }
-
 
   renderPanelView() {
 
@@ -140,8 +110,6 @@ export class Test extends EditorComponent {
 
   testClick = event => {
 
-    // console.log("testClick", event);
-
     const {
       testOnClick,
     } = this.context;
@@ -179,7 +147,6 @@ export class Test extends EditorComponent {
       text,
     } = vars || {};
 
-    // console.log("Test renderChildren", { ...this });
 
     return <div
     // onClick={this.testClick}

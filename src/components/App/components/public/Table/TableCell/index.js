@@ -17,7 +17,7 @@ export class TableCell extends EditorComponent {
 
   static propTypes = {
     ...EditorComponent.propTypes,
-    tag: PropTypes.oneOf("td", "th").isRequired,
+    tag: PropTypes.oneOf(["td", "th"]).isRequired,
   }
 
 

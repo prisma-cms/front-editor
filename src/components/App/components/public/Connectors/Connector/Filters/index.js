@@ -22,6 +22,7 @@ class Filters extends EditorComponent {
   static defaultProps = {
     ...EditorComponent.defaultProps,
     visible: true,
+    hide_wrapper_in_default_mode: true,
   }
 
 

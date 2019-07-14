@@ -69,6 +69,11 @@ class EditorComponent extends ObjectEditable {
     parent: PropTypes.object,
     deletable: PropTypes.bool.isRequired,
     data: PropTypes.object,
+
+    /**
+     * Не рендерить враппер в основном режиме
+     */
+    hide_wrapper_in_default_mode: PropTypes.bool.isRequired,
   };
 
 
@@ -119,6 +124,7 @@ class EditorComponent extends ObjectEditable {
     contentEditable: false,
     className: undefined,
     lang: undefined,
+    hide_wrapper_in_default_mode: false,
   }
 
 
@@ -164,7 +170,6 @@ class EditorComponent extends ObjectEditable {
       registerMountedComponent,
     } = this.getEditorContext()
 
-    // console.log("componentDidMount registerMountedComponent", registerMountedComponent);
 
     registerMountedComponent(this);
 
@@ -189,8 +194,6 @@ class EditorComponent extends ObjectEditable {
       unregisterMountedComponent,
     } = this.getEditorContext()
 
-    // console.log("componentDidMount registerMountedComponent", registerMountedComponent);
-
     unregisterMountedComponent(this);
 
 
@@ -200,26 +203,6 @@ class EditorComponent extends ObjectEditable {
 
   componentDidUpdate(prevProps, prevState) {
 
-    // console.log("Test componentDidUpdate", prevProps);
-
-    // const keys = Object.keys(prevProps);
-
-    // keys.map(key => {
-
-    //   const prev = prevProps[key];
-    //   const current = this.props[key];
-
-    //   if (prev !== current) {
-
-    //     console.log("componentDidUpdate this", this);
-    //     // console.log("componentDidUpdate prev", key, prev);
-    //     // console.log("componentDidUpdate current", key, current);
-    //     console.log("componentDidUpdate prev", key, { ...prev });
-    //     console.log("componentDidUpdate current", key, { ...current });
-
-    //   }
-
-    // });
 
     super.componentDidUpdate && super.componentDidUpdate(prevProps, prevState);
 
@@ -280,27 +263,10 @@ class EditorComponent extends ObjectEditable {
    */
   updateObject(data) {
 
-    // console.log("updateObject data", { ...data });
-
     const object = this.getObjectWithMutations();
 
-    // console.log("updateObject object", { ...object });
-
-    // super.updateObject(data);
-
-    // const {
-    //   forceUpdate,
-    // } = this.getEditorContext();
-
-
-    // /**
-    //  * Обновляем рутовый компонент, чтобы применить изменения ко всем элементам
-    //  */
-    // forceUpdate();
 
     const activeParent = this.getActiveParent();
-
-    // console.log("activeParent", { ...activeParent }, activeParent === this);
 
 
     /**
@@ -321,7 +287,6 @@ class EditorComponent extends ObjectEditable {
 
       const parentData = parent.getObjectWithMutations();
 
-      // console.log("activeParent object", { ...parentData });
 
       const {
         components,
@@ -329,21 +294,15 @@ class EditorComponent extends ObjectEditable {
 
       const current = components.find(n => n === object);
 
-      // console.log("activeParent current", current);
-
       if (current) {
 
         const index = components.indexOf(current);
 
-        // console.log("activeParent components", components);
 
         let newComponents = components.slice(0);
 
-        // console.log("activeParent newComponents", newComponents);
 
         newComponents[index] = Object.assign({ ...current }, data);
-
-        // console.log("activeParent newComponents 2", newComponents);
 
 
         parent.updateObject({
@@ -420,18 +379,10 @@ class EditorComponent extends ObjectEditable {
 
 
 
-
-
-
-
-
     if (dragItem && dragTarget && dragTarget === this) {
 
       event.preventDefault();
       event.stopPropagation();
-
-      // console.log("onDrop dragItem", dragItem);
-      // console.log("onDrop dragTarget", dragTarget);
 
       /**
        * Здесь надо учитывать добавление или перетаскивание элемента.
@@ -490,8 +441,6 @@ class EditorComponent extends ObjectEditable {
             index = components.indexOf(object);
           }
 
-
-          // console.log("onDrop index", index);
 
           /**
            * Если компонент найден, то исключаем его из массива
@@ -700,52 +649,8 @@ class EditorComponent extends ObjectEditable {
    * Обновить мы должны текущий элемент или предка
    */
 
-  // addComponent(newItem) {
-
-
-  //   let {
-  //     data: {
-  //       object,
-  //     },
-  //   } = this.props;
-
-
-  //   let components = object.components || [];
-
-  //   const {
-  //     name,
-  //     component,
-  //   } = newItem;
-
-  //   if (!component) {
-  //     Object.assign(newItem, {
-  //       component: name,
-  //     });
-  //   }
-
-  //   if (components) {
-  //     components.push(newItem);
-  //   }
-
-  //   this.updateParentComponents();
-
-  // }
-
   addComponent(newItem) {
 
-
-    // console.log("addComponent newItem", newItem);
-
-    // return;
-
-    // let {
-    //   data: {
-    //     object,
-    //   },
-    // } = this.props;
-
-
-    // let components = object.components || [];
 
     const {
       components,
@@ -762,11 +667,6 @@ class EditorComponent extends ObjectEditable {
       });
     }
 
-    // if (components) {
-    //   components.push(newItem);
-    // }
-
-    // this.updateParentComponents();
 
     let newComponents = (components || []).slice(0);
 
@@ -823,10 +723,6 @@ class EditorComponent extends ObjectEditable {
       index,
     } = this.props;
 
-    // console.log("delete this", this);
-    // console.log("delete parent", parent);
-
-    // const activeParent = activeItem.getActiveParent();
 
     if (!parent) {
 
@@ -835,9 +731,6 @@ class EditorComponent extends ObjectEditable {
       return false;
     }
 
-
-
-    // console.log("delete index", index);
 
     if (delete_component) {
 
@@ -1493,6 +1386,7 @@ class EditorComponent extends ObjectEditable {
       ResetIcon,
       EditIcon,
       cacheKeyPrefix,
+      hide_wrapper_in_default_mode,
       // style,
       ...other
     } = this.props;
@@ -1660,6 +1554,7 @@ class EditorComponent extends ObjectEditable {
 
     const {
       className,
+      style,
       ...other
     } = this.props;
 
@@ -1694,55 +1589,22 @@ class EditorComponent extends ObjectEditable {
           if (parent) {
 
 
-
-
-            // if (newItem) {
-
-            //   parent.addComponent(newItem);
-
-            //   // return;
-
-            // }
-
-
-
             const newItem = parent.prepareNewItem(this.prepareDragItem());
-            // const newItem = parent.prepareDragItem();
-            // const newItem = parent.prepareNewItem(this);
-
-            // console.log("newItem", newItem);
-
-
-
-
-            // const newItem = this.prepareNewItem(dragItem);
 
 
             if (newItem) {
 
               parent.addComponent(newItem);
 
-              // setActiveItem(null);
-
-              // return;
 
             }
 
           }
 
 
-
-
-          // if (newItem) {
-
-          //   this.addComponent(newItem);
-
-          //   // return;
-
-          // }
-
         }}
-        {...other}
+        style={style}
+      // {...other}
       >
         {content || this.constructor.Name} {help_url ? <a
           href={help_url}
@@ -1754,13 +1616,6 @@ class EditorComponent extends ObjectEditable {
       </div>
     </Grid>
   }
-
-
-  // addChildOnClick() {
-
-  //   console.log("onClick prepareDragItem", this.prepareDragItem());
-
-  // }
 
 
 
@@ -2054,15 +1909,7 @@ class EditorComponent extends ObjectEditable {
             title="Удалить элемент"
             onClick={event => {
 
-              // console.log("Удалить элемент this", { ...this });
-
               this.delete();
-
-              // const activeItem = this.getActiveItem();
-
-              // if (activeItem) {
-              //   this.delete(activeItem);
-              // }
 
             }}
           >
@@ -2295,15 +2142,11 @@ class EditorComponent extends ObjectEditable {
     } = parent.getObjectWithMutations();
 
 
-    // console.log("Save new template parent components", components);
-
     const index = components.indexOf(object);
 
     if (index === -1) {
       console.error("Can not find current component in parent");
     }
-
-    // console.log("Save new template current index", index);
 
 
     // return;
@@ -2654,36 +2497,8 @@ class EditorComponent extends ObjectEditable {
   }
 
 
-  // getActiveComponent() {
-
-  //   const activeItem = this.getActiveItem();
-
-  //   let {
-  //     props: {
-  //       component,
-  //     },
-  //   } = activeItem;
-
-  //   return component;
-  // }
-
-
   updateComponentProperty(name, value, style) {
 
-    // console.log("updateComponentProperty name", name);
-    // console.log("updateComponentProperty value", value);
-    // console.log("updateComponentProperty style", style);
-
-    // const {
-    //   props,
-    // } = this.getObjectWithMutations();
-
-    // this.updateObject({
-    //   props: {
-    //     ...props,
-    //     [name]: value,
-    //   },
-    // });
 
     if (style) {
       return this.updateComponentProps({
@@ -2708,10 +2523,6 @@ class EditorComponent extends ObjectEditable {
    * а когда родительский (с плавающей вложенностью)
    */
   updateComponentProps(data) {
-
-    // const activeItem = this.getActiveItem();
-
-    // return this.updateActiveComponentProps(this, data);
 
 
     let {
@@ -2745,129 +2556,6 @@ class EditorComponent extends ObjectEditable {
       props,
     });
 
-  }
-
-
-  /**
-   * Временный хак. 
-   * Я не предусмотрел обновление произвольного компонента (а это надо),
-   * поэтому перенес функционал в этот отдельный метод.
-   * В дальнейшем надо будет все переосмыслить
-   */
-  updateActiveComponentProps__(activeItem, data) {
-
-    /**
-     * this - Дополнительный объект в панели управления
-     * getActiveItem - Элемент из основной части редактора.
-     */
-
-
-
-    if (activeItem !== this) {
-
-      console.error("activeItem !== this");
-
-      return null;
-    }
-
-    // console.log("updateActiveComponentProps data", data);
-
-    const {
-      props,
-    } = this.getObjectWithMutations();
-
-
-    // if (data) {
-
-    //   const keys = Object.keys(data);
-
-    //   keys.map(name => {
-
-    //     const value = data[name];
-
-    //     if (value === undefined) {
-    //       delete props[name];
-    //     }
-    //     else {
-    //       props[name] = value;
-    //     }
-
-    //   });
-
-    // }
-
-
-    this.updateObject({
-      props: {
-        ...props,
-        ...data,
-      },
-    });
-
-    return;
-
-    const activeParent = activeItem.getActiveParent();
-
-    // let props = activeItem.props.props || {};
-    let props__ = { ...activeItem.props.props } || {};
-
-
-    if (data) {
-
-      const keys = Object.keys(data);
-
-      keys.map(name => {
-
-        const value = data[name];
-
-        if (value === undefined) {
-          delete props[name];
-        }
-        else {
-          props[name] = value;
-        }
-
-      });
-
-    }
-
-
-    if (activeParent === activeItem) {
-      activeParent.updateObject({
-        props,
-      });
-    }
-    else {
-
-
-      const component = activeItem.getComponentInParent();
-
-
-      if (component) {
-
-        Object.assign(component, {
-          props,
-        });
-
-        // activeItem.props.props = props;
-
-        // activeParent.updateParentComponents();
-
-      }
-
-    }
-
-
-
-    // return this.updateComponent(component, {
-    //   props,
-    // });
-
-    return;
-
-    // return this.updateComponent({
-    //   props,
-    // });
   }
 
 
@@ -3207,12 +2895,6 @@ class EditorComponent extends ObjectEditable {
 
         let addBlocks;
 
-        // console.log("Components", Components);
-
-        // const components = Components.filter(n => n.canBeParent(this));
-
-        // console.log("components", components);
-
         addBlocks = this.renderAddButtons(<Grid
           key="add_buttons"
           container
@@ -3246,13 +2928,6 @@ class EditorComponent extends ObjectEditable {
     }
 
 
-
-
-
-    // if (!inner.length) {
-    //   inner = undefined;
-    // }
-
     return <Fragment>
 
       <RootElement
@@ -3283,14 +2958,13 @@ class EditorComponent extends ObjectEditable {
 
     const object = this.getObjectWithMutations();
 
-    // console.log("renderMainView object", this, object);
-
     if (!object) {
       return null;
     }
 
 
     const {
+      id: objectId,
       props: {
         style: objectStyle,
         ...objectProps
@@ -3313,6 +2987,16 @@ class EditorComponent extends ObjectEditable {
       onDragStart,
       Components,
     } = this.getEditorContext();
+
+    const {
+      hide_wrapper_in_default_mode,
+    } = this.props;
+
+
+    if (hide_wrapper_in_default_mode && !inEditMode) {
+      return this.renderChildren();
+    }
+
 
     const settingsViewContainer = getSettingsViewContainer();
 
@@ -3337,8 +3021,6 @@ class EditorComponent extends ObjectEditable {
 
     const childs = this.renderChildren();
 
-    // console.log("childs", childs);
-
     if (childs) {
       inner.push(childs);
     }
@@ -3346,10 +3028,8 @@ class EditorComponent extends ObjectEditable {
 
     if (inEditMode) {
 
-      // const isActive = activeItem === this ? true : false;
       const isActive = this.isActive();
       const isDragOvered = dragTarget === this ? true : false;
-      // const isHovered = hoveredItem === this ? true : false;
       const isHovered = this.isHovered();
       const deletable = this.isDeletable();
 
@@ -3492,12 +3172,6 @@ class EditorComponent extends ObjectEditable {
 
         let addBlocks;
 
-        // console.log("Components", Components);
-
-        // const components = Components.filter(n => n.canBeParent(this));
-
-        // console.log("components", components);
-
         addBlocks = this.renderAddButtons(<Grid
           key="add_buttons"
           container
@@ -3608,9 +3282,6 @@ class EditorComponent extends ObjectEditable {
 
     const actionPanel = getActionPanel();
 
-    // console.log("renderActionPanel actionPanel", actionPanel);
-    // console.log("renderActionPanel content", content);
-    // console.log("renderActionPanel context", { ...this.getEditorContext() });
 
     if (actionPanel) {
       return ReactDOM.createPortal(content, actionPanel);
@@ -3652,6 +3323,14 @@ class EditorComponent extends ObjectEditable {
       // ToDo render bool props as string
       visible,
       staticContext,
+      hide_wrapper_in_default_mode,
+      createTemplateResult,
+      updateTemplateResult,
+      PrismaProject,
+      component,
+      query,
+      components,
+      parent,
       ...other
     } = props;
 
@@ -3713,14 +3392,10 @@ class EditorComponent extends ObjectEditable {
     const object = this.getObjectWithMutations();
 
 
-    // console.log("object", { ...object });
-
     const {
       // props,
       components: itemComponents,
     } = object;
-
-    // components = components || itemComponents;
 
 
     let output = [];
@@ -3772,28 +3447,13 @@ class EditorComponent extends ObjectEditable {
     } = n;
 
 
-    // if (templateId) {
-
-
-    // }
-
-    // console.log("renderComponent n", { ...n });
-
-
     let Component = Components.find(n => n.Name === component);
 
     if (Component) {
 
 
-
-
-
       if (templateId) {
 
-
-        // console.log("TemplateRenderer", TemplateRenderer);
-
-        // return null;
 
         return <TemplateRenderer
           key={`${templateId}--${index}`}
@@ -3809,12 +3469,6 @@ class EditorComponent extends ObjectEditable {
           updateTemplate={updateTemplate}
           index={index}
           delete_component={this.deleteComponentByIndex}
-        // mutate={async (options) => {
-
-
-
-        //   return mutate(options);
-        // }}
         />;
 
       }
@@ -3861,20 +3515,12 @@ class EditorComponent extends ObjectEditable {
 
   deleteComponentByIndex = index => {
 
-    // console.log("delete", { ...n });
-
     const {
       components,
     } = this.getObjectWithMutations();
 
-    // const index = components.indexOf(n);
-
-
-    // console.log("delete index", index);
 
     if (index === -1) {
-
-      // console.error("Can not find component");
 
       return;
     }
@@ -3899,18 +3545,6 @@ class EditorComponent extends ObjectEditable {
       return null;
     }
 
-    // const {
-    //   mode,
-    // } = this.props;
-
-    // if(mode !== "settings") {
-    //   return null;
-    // }
-
-    // if(mode === "main") {
-    //   return null;
-    // }
-
     return super.renderHeader();
 
   }
@@ -3924,34 +3558,6 @@ class EditorComponent extends ObjectEditable {
 
     return !name && !component ? "" : name === component ? name : `${name} (${component})`;
   }
-
-
-  // getButtons (){
-
-  //   let buttons = super.getButtons();
-
-  //   const canEdit = this.canEdit();
-
-  //   if(canEdit) {
-  //     buttons.push(<IconButton>
-  //       <CloneIcon>
-
-  //       </CloneIcon>
-  //     </IconButton>);
-  //   }
-
-  //   return buttons;
-  // }
-
-
-  // getComponents = () => {
-
-  //   const {
-  //     Components,
-  //   } = this;
-
-  //   return Components;
-  // }
 
   renderEmpty() {
 
@@ -3996,15 +3602,6 @@ class EditorComponent extends ObjectEditable {
         } = this.props;
 
         let content = null;
-
-
-        // return "Sdfdsf";
-
-
-        {/* console.log("render this", this);
-
-        console.log("render this object", this.getObjectWithMutations()); */}
-
 
 
         switch (mode) {

@@ -12,6 +12,7 @@ class Query extends EditorComponent {
 
   static defaultProps = {
     ...EditorComponent.defaultProps,
+    hide_wrapper_in_default_mode: true,
   }
 
   static Name = "Query"

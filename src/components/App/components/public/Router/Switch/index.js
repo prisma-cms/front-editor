@@ -199,9 +199,6 @@ class EditorSwitch extends EditorComponent {
             exact={exact === undefined ? false : exact}
             path={path}
             render={(routerProps) => {
-              // return element;
-
-              // console.log("routerProps", routerProps);
 
               /**
               ToDo: Удалить routerProps, потому что передает каждый раз новый объект

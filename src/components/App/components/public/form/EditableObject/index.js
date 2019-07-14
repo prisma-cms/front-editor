@@ -161,8 +161,6 @@ class EditableObject extends EditorComponent {
           loading,
         } = context;
 
-        {/* console.log("ObjectContext context", { ...context }); */ }
-
         /**
         Если объекта нет и еще выполняется загрузка,
         прерываем рендерер.
@@ -244,12 +242,14 @@ class EditableObject extends EditorComponent {
               })
                 .catch(error => {
                   console.error(error);
+                  return error;
                 })
                 ;
 
             }
             catch (error) {
               console.error(error);
+              return error;
             }
 
 

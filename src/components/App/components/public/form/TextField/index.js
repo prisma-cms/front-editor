@@ -17,6 +17,7 @@ class TextField extends EditorComponent {
     fullWidth: false,
     multiline: false,
     type: "text",
+    hide_wrapper_in_default_mode: true,
   }
 
   static Name = "TextField"
@@ -47,46 +48,6 @@ class TextField extends EditorComponent {
   }
 
 
-
-  // getRootElement() {
-
-  //   return MaterialUiTextField;
-  // }
-
-
-  // renderMainView(renderProps) {
-
-  //   return <EditableObjectContext.Consumer>
-  //     {context => {
-
-  //       const {
-  //         getEditor,
-  //       } = context;
-
-  //       // return getEditor ? getEditor
-
-  //       console.log("EditableObjectContext context", context);
-  //       {/* 
-  //       return getEditor ? getEditor({
-  //         Editor: TextField,
-  //       }) : super.renderMainView(renderProps); */}
-
-  //       {/* return getEditor ? getEditor({
-  //         Editor: super.renderMainView,
-  //         // Editor: renderProps => "Sdfsdfsdf",
-  //       }) : super.renderMainView(renderProps); */}
-
-  //       return super.renderMainView(renderProps)
-
-  //     }}
-  //   </EditableObjectContext.Consumer>
-
-  //   // return super.renderMainView({
-  //   //   label: "FDSgdsf",
-  //   // });
-  // }
-
-
   renderChildren() {
 
     return <EditableObjectContext.Consumer>
@@ -96,9 +57,6 @@ class TextField extends EditorComponent {
           getEditor,
         } = context;
 
-        // return getEditor ? getEditor
-
-        {/* console.log("EditableObjectContext context", context); */ }
 
         return getEditor ? getEditor({
           ...this.getComponentProps(this),

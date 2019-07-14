@@ -60,6 +60,8 @@ import TableRow from './components/public/Table/TableRow';
 import TableCell from './components/public/Table/TableCell';
 import Tabs from './components/public/Tabs';
 import Tab from './components/public/Tabs/Tab';
+import CreateObjectLink from './components/public/Button/CreateObjectLink';
+import SudoOnly from './components/public/SudoOnly';
 
 const styles = theme => {
 
@@ -271,6 +273,8 @@ class FrontEditor extends Component {
       ObjectImage,
       UserLink,
       Filters,
+      CreateObjectLink,
+      SudoOnly,
       CreatedBy,
       Content,
       Link,

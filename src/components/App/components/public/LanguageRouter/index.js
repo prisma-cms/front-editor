@@ -9,6 +9,7 @@ class LanguageRouter extends EditorComponent {
   static defaultProps = {
     ...EditorComponent.defaultProps,
     tag: "div",
+    hide_wrapper_in_default_mode: true,
   }
 
   static Name = "LanguageRouter"
@@ -59,7 +60,6 @@ class LanguageRouter extends EditorComponent {
 
     let children = super.renderChildren();
 
-    // console.log("lang children", children);
 
     if (children) {
 

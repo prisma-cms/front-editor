@@ -11,6 +11,13 @@ class UserLink extends EditorComponent {
 
   static Name = "UserLink"
 
+
+  static defaultProps = {
+    ...EditorComponent.defaultProps,
+    hide_wrapper_in_default_mode: true,
+  }
+  
+
   renderPanelView(content) {
 
     const {

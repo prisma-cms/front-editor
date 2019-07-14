@@ -18,6 +18,7 @@ class ObjectImage extends EditorComponent {
       ...EditorComponent.defaultProps.style,
       maxWidth: "100%",
     },
+    hide_wrapper_in_default_mode: true,
   }
 
   static Name = "ObjectImage"

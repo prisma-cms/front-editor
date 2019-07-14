@@ -10,6 +10,11 @@ class Pagination extends EditorComponent {
 
   static Name = "Pagination"
 
+  static defaultProps = {
+    ...EditorComponent.defaultProps,
+    hide_wrapper_in_default_mode: true,
+  }
+
 
   renderPanelView(content) {
 

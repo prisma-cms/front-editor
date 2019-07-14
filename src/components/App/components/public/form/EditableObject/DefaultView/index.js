@@ -7,9 +7,11 @@ import EditableObject from '..';
 class DefaultView extends EditorComponent {
 
 
-  // static defaultProps = {
-  //   ...EditorComponent.defaultProps,
-  // }
+  static defaultProps = {
+    ...EditorComponent.defaultProps,
+    hide_wrapper_in_default_mode: true,
+  }
+
 
   static Name = "DefaultView"
   static help_url = "https://front-editor.prisma-cms.com/topics/editableobject.html";

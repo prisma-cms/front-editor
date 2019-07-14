@@ -10,8 +10,9 @@ class VerticalTimeline extends Iterable {
   static Name = "VerticalTimeline"
   static help_url = "https://front-editor.prisma-cms.com/topics/verticaltimeline.html";
 
-  static propTypes = {
-    ...Iterable.propTypes,
+  static defaultProps = {
+    ...Iterable.defaultProps,
+    hide_wrapper_in_default_mode: true,
   }
 
 

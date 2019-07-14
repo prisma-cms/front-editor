@@ -17,6 +17,7 @@ export class Table extends EditorComponent {
       borderCollapse: "collapse",
       width: "100%",
     },
+    hide_wrapper_in_default_mode: true,
   }
 
 
@@ -49,17 +50,6 @@ export class Table extends EditorComponent {
       || child instanceof ListView
       || child instanceof Iterable
       ;
-
-  }
-
-
-  renderMainView() {
-
-    const {
-      inEditMode,
-    } = this.getEditorContext();
-
-    return inEditMode ? super.renderMainView() : this.renderChildren();
 
   }
 

@@ -19,7 +19,7 @@ export class Tabs extends EditorComponent {
     scrollable: false,
     scrollButtons: "auto",
     textColor: "inherit",
-    content_node_class: undefined,
+    hide_wrapper_in_default_mode: true,
   }
 
 
@@ -78,7 +78,13 @@ export class Tabs extends EditorComponent {
     } = this.getEditorContext();
 
     const {
-      content_node_class,
+      centered,
+      fullWidth,
+      indicatorColor,
+      scrollable,
+      scrollButtons,
+      textColor,
+      hide_wrapper_in_default_mode,
       ...other
     } = this.getComponentProps(this);
 
@@ -90,15 +96,6 @@ export class Tabs extends EditorComponent {
     const {
       components,
     } = this.getObjectWithMutations();
-
-    // console.log("Tabs props", this.props);
-
-    // console.log("Tabs components", components);
-
-
-    // const children = super.renderChildren();
-
-    // console.log("Tabs children", children);
 
 
     let tabs = [];
@@ -120,11 +117,6 @@ export class Tabs extends EditorComponent {
           },
         } = n;
 
-        // const label = props
-
-        // if(!label) {
-        //   return;
-        // }
 
         tabs.push(<MuiTab
           key={index}
@@ -142,10 +134,17 @@ export class Tabs extends EditorComponent {
     }
 
 
-    return <Fragment>
+    return <div
+      {...other}
+    >
 
       <MuiTabs
-        {...other}
+        centered={centered}
+        fullWidth={fullWidth}
+        indicatorColor={indicatorColor}
+        scrollable={scrollable}
+        scrollButtons={scrollButtons}
+        textColor={textColor}
         value={tabIndex}
         onChange={(item, tabIndex) => {
           this.setState({
@@ -156,15 +155,9 @@ export class Tabs extends EditorComponent {
         {tabs}
       </MuiTabs>
 
-      {content ?
-        <div
-          className={content}
-        >
-          {content}
-        </div> : null
-      }
+      {content}
 
-    </Fragment>;
+    </div>;
   }
 
 }

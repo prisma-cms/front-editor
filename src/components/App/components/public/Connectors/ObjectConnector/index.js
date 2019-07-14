@@ -28,6 +28,7 @@ class ObjectConnector extends EditorComponent {
     // pagevariable: "page",
     filtersname: "filters",
     // first: 10,
+    hide_wrapper_in_default_mode: true,
   };
 
 
@@ -286,19 +287,9 @@ class ObjectConnector extends EditorComponent {
 
   updateComponentProperty(name, value) {
 
-    // const activeItem = this.getActiveItem();
-
     const activeItem = this;
 
-    // console.log("activeItem this", this);
-
-    // return;
-
     let newProps = {};
-
-    // const {
-    //   props,
-    // } = activeItem;
 
     const {
       props,

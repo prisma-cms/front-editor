@@ -155,32 +155,6 @@ class ListView extends EditorComponent {
 
           let child = children[0];
 
-
-
-          {/* 
-          
-          console.log("child", child);
-          console.log("child type", child.type);
-          console.log("Iterable", Iterable);
-
-          console.log("child === Iterable", child, child.type === Iterable);
-
-          console.log("child === Iterable 2", child.__proto__.isPrototypeOf(Iterable));
-          console.log("child === Iterable 3", Iterable.isPrototypeOf(child.type));
-          console.log("child === Iterable 4", child.type.isPrototypeOf(Iterable));
-          console.log("child === Iterable 5", child.type === Iterable);
-
-          console.log("child === TestIterable", child, child.type === TestIterable);
-
-          console.log("child === TestIterable constructor", child.type.constructor === TestIterable.constructor);
-          console.log("child === Iterable constructor", child.type.constructor === Iterable.constructor);
-
-          console.log("child === Instance", child.type instanceof Iterable);
-          console.log("child === Instance 2", child instanceof Iterable);
-          console.log("child === Instance 3", child.type.prototype === Iterable);
-
-          */}
-
           const {
             type: Type,
             props,

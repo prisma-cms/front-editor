@@ -14,7 +14,7 @@ class PageHeader extends EditorComponent {
 
   static defaultProps = {
     ...EditorComponent.defaultProps,
-    position: "relative",
+    position: "static",
   }
 
   static Name = "PageHeader"

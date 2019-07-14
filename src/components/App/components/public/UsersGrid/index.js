@@ -10,6 +10,11 @@ import PeopleIcon from "material-ui-icons/People";
 class UsersGrid extends EditorComponent {
 
 
+  static defaultProps = {
+    ...EditorComponent.defaultProps,
+    hide_wrapper_in_default_mode: true,
+  }
+
   static Name = "UsersGrid"
 
   renderPanelView(content) {
