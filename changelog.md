@@ -1,3 +1,7 @@
+2.3.0
+=================================
+- Can edit any components JSON code directly
+
 2.2.0
 =================================
 - Added CreateObjectLink

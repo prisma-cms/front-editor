@@ -214,7 +214,7 @@ class EditorComponent extends ObjectEditable {
    * 1. Если нет родителя и нет id
    * 2. Если есть ID и пользователь является владельцем
    */
-  canEdit() {
+  canEdit__() {
 
     const {
       id: objectId,
@@ -1717,9 +1717,9 @@ class EditorComponent extends ObjectEditable {
     }
     else {
       structureView = <div
-        contentEditable={isRoot ? true : false}
+        contentEditable={canEdit ? true : false}
         suppressContentEditableWarning={true}
-        style={isRoot ? {
+        style={canEdit ? {
           border: "1px dashed #ddd",
           padding: 3,
         } : undefined}
