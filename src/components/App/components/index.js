@@ -2967,6 +2967,7 @@ class EditorComponent extends ObjectEditable {
       id: objectId,
       props: {
         style: objectStyle,
+        className,
         ...objectProps
       },
       components,
