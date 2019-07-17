@@ -5,6 +5,7 @@ import TableCell from '../TableCell';
 import EditorComponent from '../../..';
 import ListView from '../../Connectors/Connector/ListView';
 import Iterable from '../../Connectors/Connector/ListView/Iterable';
+import EditableObject from '../../form/EditableObject';
 
 export class TableRow extends EditorComponent {
 
@@ -43,6 +44,7 @@ export class TableRow extends EditorComponent {
     return parent instanceof Table
       || parent instanceof ListView
       || parent instanceof Iterable
+      || parent instanceof EditableObject
       ;
   }
 

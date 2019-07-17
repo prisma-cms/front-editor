@@ -62,6 +62,8 @@ import Tabs from './components/public/Tabs';
 import Tab from './components/public/Tabs/Tab';
 import CreateObjectLink from './components/public/Button/CreateObjectLink';
 import SudoOnly from './components/public/SudoOnly';
+import EditableObjectButtons from './components/public/form/EditableObject/EditableObjectButtons';
+import ResetObjectContext from './components/public/ResetObjectContext';
 
 const styles = theme => {
 
@@ -298,6 +300,8 @@ class FrontEditor extends Component {
       EditableObject,
       EditableView,
       DefaultView,
+      EditableObjectButtons,
+      ResetObjectContext,
       TextField,
       VerticalTimeline,
       VerticalTimelineItem,

@@ -20,6 +20,17 @@ import DefaultView from './DefaultView';
 export class Editable extends ApolloEditableObject {
 
 
+  static propTypes = {
+    ...ApolloEditableObject.propTypes,
+    show_header: PropTypes.bool.isRequired,
+  }
+
+  static defaultProps = {
+    ...ApolloEditableObject.defaultProps,
+    show_header: true,
+  };
+
+
   renderEditableView() {
 
     const {
@@ -48,6 +59,21 @@ export class Editable extends ApolloEditableObject {
 
   // }
 
+  renderHeader() {
+
+    const {
+      show_header,
+    } = this.props;
+
+    return show_header ? super.renderHeader() : null;
+  }
+
+
+  bindGetButtons = () => () => {
+
+    return this.getButtons();
+  }
+
 
   render() {
 
@@ -59,6 +85,7 @@ export class Editable extends ApolloEditableObject {
         canEdit: this.canEdit(),
         getObjectWithMutations: () => this.getObjectWithMutations(),
         // getCacheKey: this.getCacheKey,
+        getButtons: this.bindGetButtons(),
         ...this.props,
       }}
     >
@@ -86,6 +113,10 @@ class EditableObject extends EditorComponent {
 
   static defaultProps = {
     ...EditorComponent.defaultProps,
+    style: {
+      ...EditorComponent.defaultProps.style,
+      flexBasis: "100%",
+    },
 
     /**
      * УРЛ, куда редиректить при создании нового объекта
@@ -94,6 +125,8 @@ class EditableObject extends EditorComponent {
     cache_key: undefined,
     cache_key_prefix: undefined,
     new_object_cache_key: undefined,
+    show_header: true,
+    hide_wrapper_in_default_mode: true,
   }
 
   static Name = "EditableObject"

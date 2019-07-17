@@ -1,3 +1,7 @@
+=================================
+- Added EditableObjectButtons
+- Added ResetObjectContext
+
 2.3.0
 =================================
 - Can edit any components JSON code directly
