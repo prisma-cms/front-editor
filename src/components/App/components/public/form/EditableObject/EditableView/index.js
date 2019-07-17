@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import EditorComponent from '../../../..';
 import EditableObject from '..';
+import { EditableObjectContext } from '../../../../../context';
 
 class EditableView extends EditorComponent {
 
@@ -20,10 +21,10 @@ class EditableView extends EditorComponent {
   }
 
 
-  canBeParent(parent) {
+  // canBeParent(parent) {
 
-    return parent instanceof EditableObject && super.canBeParent(parent);
-  }
+  //   return parent instanceof EditableObject && super.canBeParent(parent);
+  // }
 
 
   renderPanelView(content) {
@@ -39,6 +40,24 @@ class EditableView extends EditorComponent {
       >
         EditableView
     </div>);
+  }
+
+
+  renderMainView() {
+
+    return <EditableObjectContext.Consumer>
+      {editableObjectContext => {
+
+        const {
+          inEditMode: objectInEditMode,
+        } = editableObjectContext;
+
+
+        return !objectInEditMode ? null : super.renderMainView();
+
+      }}
+    </EditableObjectContext.Consumer>
+
   }
 
 

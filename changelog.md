@@ -1,6 +1,9 @@
+2.4.0
 =================================
 - Added EditableObjectButtons
 - Added ResetObjectContext
+- DefaultView and EditableView refactoring. Now can be used in any level of EditableObject children
+- TableRow now can be placed into EditableObject
 
 2.3.0
 =================================
