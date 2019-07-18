@@ -187,7 +187,7 @@ class ListView extends EditorComponent {
             >
               {children}
             </ObjectContext.Provider>
-          }) : children;
+          }) : null;
 
           {/* output = <Grid
             container
