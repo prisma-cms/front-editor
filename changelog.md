@@ -1,3 +1,7 @@
+2.4.4
+=================================
+- Fix EditableObject render Editable
+
 2.4.3
 =================================
 - Fix EditableObject::mutate()

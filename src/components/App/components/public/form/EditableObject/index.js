@@ -23,12 +23,127 @@ export class Editable extends ApolloEditableObject {
   static propTypes = {
     ...ApolloEditableObject.propTypes,
     show_header: PropTypes.bool.isRequired,
+    extendQuery: PropTypes.func.isRequired,
+    getQueryNameFromQuery: PropTypes.func.isRequired,
+    query_components: PropTypes.array.isRequired,
   }
 
   static defaultProps = {
     ...ApolloEditableObject.defaultProps,
     show_header: true,
   };
+
+
+  // componentDidUpdate(prevProps, prevState) {
+
+  //   const keys = Object.keys(this.props);
+
+  //   keys.map(key => {
+
+  //     const value = this.props[key];
+
+  //     const prevValue = prevProps[key];
+
+  //     if (value !== undefined && prevValue !== undefined && value !== prevValue) {
+
+  //       console.log("Editable componentDidUpdate value !== prevValue / ", key, value, prevValue);
+
+  //     }
+
+  //   });
+
+  //   super.componentDidUpdate && super.componentDidUpdate(prevProps, prevState);
+
+  // }
+
+
+
+  async mutate(props) {
+
+    /**
+        Prepare Mutation
+         */
+
+    const {
+      query_components: children,
+      getQueryNameFromQuery,
+      extendQuery,
+    } = this.props;
+
+    let queries = {
+
+    }
+
+    const {
+      id: objectId,
+    } = this.getObject() || {}
+
+    children && children.length && children.filter(n => n).map(n => {
+
+      const {
+        type,
+        props,
+      } = n;
+
+      if (type === Query) {
+
+        const {
+          query,
+        } = props && props.props || {};
+
+        if (query) {
+
+          const queryName = getQueryNameFromQuery(query);
+
+          if (queryName) {
+            queries[queryName] = query;
+          }
+
+        }
+      }
+
+    });
+
+
+    let mutation = objectId ? queries.update : queries.create;
+
+
+    if (!mutation) {
+
+      const error = new Error("Can not get mutation");
+
+      return this.addError(error);
+
+    }
+
+    {/* const extendedQuery = this.extendQuery(mutation); */ }
+
+    /**
+    Eof Prepare Mutation
+     */
+
+    try {
+
+      const extendedQuery = extendQuery(mutation);
+
+      // console.log("mutation", mutation);
+      // console.log("mutation extendQuery", extendedQuery);
+      // console.log("props", props);
+
+      mutation = gql(extendedQuery);
+
+    }
+    catch (error) {
+      console.error(error);
+    }
+
+    return super.mutate({
+      ...props,
+      mutation,
+      // mutation: extendedQuery(mutation),
+    });
+
+  }
 
 
   renderEditableView() {
@@ -41,6 +156,7 @@ export class Editable extends ApolloEditableObject {
 
     return children;
   }
+
 
   renderDefaultView() {
 
@@ -136,6 +252,18 @@ class EditableObject extends EditorComponent {
   static Name = "EditableObject"
   static help_url = "https://front-editor.prisma-cms.com/topics/editableobject.html";
 
+
+
+  constructor(props) {
+
+    super(props);
+
+    this.onCreateObject = this.onCreateObject.bind(this);
+
+  }
+
+
+
   onBeforeDrop = () => {
 
   }
@@ -222,76 +350,86 @@ class EditableObject extends EditorComponent {
           // }}
           object={object || {}}
           _dirty={!object ? {} : undefined}
-          mutate={async props => {
-
-            try {
-
-              let queries = {
-
-              }
-
-              children && children.length && children.filter(n => n).map(n => {
-
-                const {
-                  type,
-                  props,
-                } = n;
-
-                if (type === Query) {
-
-                  const {
-                    query,
-                  } = props && props.props || {};
-
-                  if (query) {
-
-                    const queryName = this.getQueryNameFromQuery(query);
-
-                    if (queryName) {
-                      queries[queryName] = query;
-                    }
-
-                  }
-                }
-
-              });
 
 
-              let mutation = objectId ? queries.update : queries.create;
+          extendQuery={this.extendQueryBind}
+          // extendQuery={(query) => this.extendQuery(query)}
+          getQueryNameFromQuery={this.getQueryNameFromQuery}
+          query_components={children}
+          // mutation={gql(extendedQuery)}
 
-              if (!mutation) {
+          // mutate__={async props => {
 
-                // this.addError("Can not get mutation");
+          //   try {
 
-                const error = new Error("Can not get mutation");
+          //     let queries = {
 
-                this.addError(error);
+          //     }
 
-                return error;
+          //     children && children.length && children.filter(n => n).map(n => {
 
-              }
+          //       const {
+          //         type,
+          //         props,
+          //       } = n;
 
-              const extendedQuery = this.extendQuery(mutation);
+          //       if (type === Query) {
 
-              return await this.mutate({
-                mutation: gql(extendedQuery),
-                ...props,
-              })
-                .catch(error => {
-                  console.error(error);
-                  return error;
-                })
-                ;
+          //         const {
+          //           query,
+          //         } = props && props.props || {};
 
-            }
-            catch (error) {
-              console.error(error);
-              return error;
-            }
+          //         if (query) {
+
+          //           const queryName = this.getQueryNameFromQuery(query);
+
+          //           if (queryName) {
+          //             queries[queryName] = query;
+          //           }
+
+          //         }
+          //       }
+
+          //     });
 
 
-          }}
-          onSave={this.prepareOnSave(object)}
+          //     let mutation = objectId ? queries.update : queries.create;
+
+          //     if (!mutation) {
+
+          //       // this.addError("Can not get mutation");
+
+          //       const error = new Error("Can not get mutation");
+
+          //       this.addError(error);
+
+          //       return error;
+
+          //     }
+
+          //     const extendedQuery = this.extendQuery(mutation);
+
+          //     return await this.mutate({
+          //       mutation: gql(extendedQuery),
+          //       ...props,
+          //     })
+          //       .catch(error => {
+          //         console.error(error);
+          //         return error;
+          //       })
+          //       ;
+
+          //   }
+          //   catch (error) {
+          //     console.error(error);
+          //     return error;
+          //   }
+
+
+          // }}
+          // onSave={this.prepareOnSave(object)}
+          // onSave={this.onCreateObjectBind}
+          onSave={!objectId ? this.onCreateObject : null}
           cacheKey={cacheKey}
           cacheKeyPrefix={cacheKeyPrefix}
           {...other}
@@ -304,24 +442,27 @@ class EditableObject extends EditorComponent {
   }
 
 
-  prepareOnSave(object) {
+  // prepareOnSave = (object) => {
 
-    const {
-      id: objectId,
-    } = object || {};
+  //   const {
+  //     id: objectId,
+  //   } = object || {};
 
-    if (!objectId) {
+  //   if (!objectId) {
 
-      return result => this.onCreateObject(result)
+  //     return result => this.onCreateObject(result)
 
-    }
-    else {
+  //   }
+  //   else {
 
-      return result => this.onUpdateObject(result)
+  //     return result => this.onUpdateObject(result)
 
-    }
+  //   }
 
-  }
+  // }
+
+
+  // onCreateObjectBind = () => this.onCreateObject();
 
 
   onCreateObject(result) {
@@ -330,6 +471,9 @@ class EditableObject extends EditorComponent {
     const {
       on_create_redirect_url,
     } = this.getComponentProps(this);
+
+
+    // console.log("onCreateObject on_create_redirect_url", on_create_redirect_url);
 
 
     if (on_create_redirect_url) {
@@ -342,6 +486,10 @@ class EditableObject extends EditorComponent {
       const {
         data: object,
       } = response || {}
+
+      // console.log("onCreateObject object", { ...object });
+      // console.log("onCreateObject result", { ...result });
+
 
       if (object) {
 
@@ -375,20 +523,23 @@ class EditableObject extends EditorComponent {
 
     }
 
-    return result;
+    return;
   }
 
 
-  onUpdateObject(result) {
+  // onUpdateObject(result) {
 
-    return result;
-  }
+  //   return result;
+  // }
 
 
 
   /**
    * Расширяем запрос
    */
+
+  extendQueryBind = (Query) => this.extendQuery(Query);
+
   extendQuery(Query) {
 
     if (Query) {
