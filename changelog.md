@@ -1,3 +1,7 @@
+2.4.5
+=================================
+- Pass Editable::mutate into EditableObjectContext
+
 2.4.4
 =================================
 - Fix EditableObject render Editable

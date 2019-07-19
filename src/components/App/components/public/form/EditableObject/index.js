@@ -34,6 +34,14 @@ export class Editable extends ApolloEditableObject {
   };
 
 
+  constructor(props) {
+
+    super(props);
+
+    this.mutate = this.mutate.bind(this);
+
+  }
+
   // componentDidUpdate(prevProps, prevState) {
 
   //   const keys = Object.keys(this.props);
@@ -206,6 +214,7 @@ export class Editable extends ApolloEditableObject {
         getObjectWithMutations: () => this.getObjectWithMutations(),
         // getCacheKey: this.getCacheKey,
         getButtons: this.bindGetButtons(),
+        mutate: this.mutate,
         ...this.props,
       }}
     >
