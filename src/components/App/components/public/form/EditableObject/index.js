@@ -225,11 +225,6 @@ class EditableObject extends EditorComponent {
           mutate={async props => {
 
             try {
-              const {
-                client,
-              } = this.context;
-
-
 
               let queries = {
 
@@ -266,14 +261,19 @@ class EditableObject extends EditorComponent {
 
               if (!mutation) {
 
-                console.error("Can not get mutation");
+                // this.addError("Can not get mutation");
 
-                return false;
+                const error = new Error("Can not get mutation");
+
+                this.addError(error);
+
+                return error;
+
               }
 
               const extendedQuery = this.extendQuery(mutation);
 
-              return await client.mutate({
+              return await this.mutate({
                 mutation: gql(extendedQuery),
                 ...props,
               })
@@ -299,7 +299,7 @@ class EditableObject extends EditorComponent {
           {children}
         </Editable>;
       }}
-    </ObjectContext.Consumer >
+    </ObjectContext.Consumer>
 
   }
 

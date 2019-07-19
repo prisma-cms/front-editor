@@ -260,6 +260,7 @@ class FrontEditor extends Component {
     debug: false,
     Components: [
       Grid,
+      Section,
       Typography,
       Tag,
       // TextArea,
@@ -281,7 +282,6 @@ class FrontEditor extends Component {
       Content,
       Link,
       Button,
-      Section,
       Switch,
       Route,
       PageHeader,
