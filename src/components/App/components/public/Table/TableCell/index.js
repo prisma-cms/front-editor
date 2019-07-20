@@ -10,8 +10,8 @@ export class TableCell extends EditorComponent {
 
   static defaultProps = {
     ...EditorComponent.defaultProps,
-    rowspan: undefined,
-    colspan: undefined,
+    rowSpan: undefined,
+    colSpan: undefined,
     tag: "td",
   }
 

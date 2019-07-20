@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import EditorComponent from '../../..';
 
-import Icon from "material-ui-icons/SettingsOverscan";
+// import Icon from "material-ui-icons/SettingsOverscan";
 
 import {
   Switch as RouterSwitch,
@@ -11,6 +11,8 @@ import {
 import Typography from 'material-ui/Typography';
 import EditorRoute from '../Route';
 import { RouteContext } from '../../../../context';
+
+import PrismaCmsPerformanceTester from "@prisma-cms/performance";
 
 class EditorSwitch extends EditorComponent {
 
@@ -305,17 +307,33 @@ class EditorSwitch extends EditorComponent {
 
     }
 
+    let result = null;
+
     if (routesShowed) {
-      return <Fragment>
+      result = <Fragment>
         {header}
         {output}
       </Fragment>;
     }
     else {
-      return <RouterSwitch>
+      result = <RouterSwitch>
         {output}
       </RouterSwitch>;
     }
+
+    return <Fragment>
+      <PrismaCmsPerformanceTester
+        props={this.props}
+        state={this.state}
+        context={this.context}
+        prefix="switch_performance"
+      />
+
+      {result}
+
+    </Fragment>
+
+    return result;
 
   }
 

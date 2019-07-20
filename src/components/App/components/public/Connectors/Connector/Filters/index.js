@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import PropTypes, { bool } from 'prop-types';
 
 import Connector, { ConnectorContext } from '..';
@@ -9,6 +9,8 @@ import EditorComponent from '../../../..';
 
 import PrismaCmsFilters from "@prisma-cms/filters";
 import ObjectConnector from '../../ObjectConnector';
+
+import PrismaCmsPerformanceTester from "@prisma-cms/performance";
 
 class Filters extends EditorComponent {
 
@@ -109,6 +111,21 @@ class Filters extends EditorComponent {
           return null;
         }
 
+        return <Fragment>
+          <PrismaCmsPerformanceTester
+            props={this.props}
+            state={this.state}
+            context={this.context}
+            prefix="filters_performance"
+          />
+          
+          <PrismaCmsFilters
+            queryName={queryName}
+            filters={filters}
+            setFilters={setFilters}
+          />
+
+        </Fragment>
 
         return <PrismaCmsFilters
           queryName={queryName}
