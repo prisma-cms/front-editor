@@ -10,7 +10,7 @@ import EditorComponent from '../../../..';
 import PrismaCmsFilters from "@prisma-cms/filters";
 import ObjectConnector from '../../ObjectConnector';
 
-import PrismaCmsPerformanceTester from "@prisma-cms/performance";
+// import PrismaCmsPerformanceTester from "@prisma-cms/performance";
 
 class Filters extends EditorComponent {
 
@@ -111,7 +111,7 @@ class Filters extends EditorComponent {
           return null;
         }
 
-        return <Fragment>
+        {/* return <Fragment>
           <PrismaCmsPerformanceTester
             props={this.props}
             state={this.state}
@@ -125,7 +125,7 @@ class Filters extends EditorComponent {
             setFilters={setFilters}
           />
 
-        </Fragment>
+        </Fragment> */}
 
         return <PrismaCmsFilters
           queryName={queryName}

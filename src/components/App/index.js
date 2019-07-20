@@ -1655,7 +1655,7 @@ class FrontEditor extends Component {
           : items
         }
 
-        {children}
+        {/* {children} */}
 
       </EditorContext.Provider>
     );

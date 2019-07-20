@@ -5,6 +5,9 @@ import Page from "../layout";
 import DevApp from '../../../App';
 
 
+import RootPage from "../../../../components/pages/Root";
+
+
 class DevMainPage extends Page {
 
   render() {
@@ -35,11 +38,14 @@ class DevMainPage extends Page {
         <div
           id="content"
         >
-          <DevApp
-            children={children || "Main page"}
+          <RootPage
+            // children={children || "Main page"}
             {...other}
           >
-          </DevApp>
+          </RootPage>
+
+          {children}
+
         </div>
 
       </div>

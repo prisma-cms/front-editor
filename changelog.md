@@ -1,3 +1,8 @@
+2.5.0
+=================================
+- Upgrade boilerplate
+- Improved performance
+
 2.4.5
 =================================
 - Pass Editable::mutate into EditableObjectContext

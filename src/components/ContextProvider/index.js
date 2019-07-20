@@ -12,13 +12,33 @@ class ContextProvider extends Component {
   static contextType = Context;
 
 
-  componentWillMount() {
+  // componentWillMount() {
+
+  //   const {
+  //     query,
+  //     ...other
+  //   } = this.context;
+
+  //   this.newContext = {
+  //     query: {
+  //       ...query,
+  //       ...this.prepareQuery(),
+  //     },
+  //     ...other
+  //   }
+
+  // }
+
+
+  render() {
 
     const {
-      query,
-      ...other
-    } = this.context;
+      children,
+    } = this.props;
 
+    let {
+      query,
+    } = this.context;
 
     Object.assign(this.context, {
       query: {
@@ -28,34 +48,11 @@ class ContextProvider extends Component {
       ...UI,
     });
 
-  }
-
-
-  render() {
-
-    const {
-      children,
-    } = this.props;
-
-    return children || null;
-
-    // let {
-    //   query,
-    // } = this.context;
-
-    // Object.assign(this.context, {
-    //   query: {
-    //     ...query,
-    //     ...this.prepareQuery(),
-    //   },
-    //   ...UI,
-    // });
-
-    // return <Context.Provider
-    //   value={this.context}
-    // >
-    //   {children || null}
-    // </Context.Provider>;
+    return <Context.Provider
+      value={this.context}
+    >
+      {children || null}
+    </Context.Provider>;
 
   }
 

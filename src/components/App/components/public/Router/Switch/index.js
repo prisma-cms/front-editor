@@ -12,7 +12,7 @@ import Typography from 'material-ui/Typography';
 import EditorRoute from '../Route';
 import { RouteContext } from '../../../../context';
 
-import PrismaCmsPerformanceTester from "@prisma-cms/performance";
+// import PrismaCmsPerformanceTester from "@prisma-cms/performance";
 
 class EditorSwitch extends EditorComponent {
 
@@ -321,17 +321,17 @@ class EditorSwitch extends EditorComponent {
       </RouterSwitch>;
     }
 
-    return <Fragment>
-      <PrismaCmsPerformanceTester
-        props={this.props}
-        state={this.state}
-        context={this.context}
-        prefix="switch_performance"
-      />
+    // return <Fragment>
+    //   <PrismaCmsPerformanceTester
+    //     props={this.props}
+    //     state={this.state}
+    //     context={this.context}
+    //     prefix="switch_performance"
+    //   />
 
-      {result}
+    //   {result}
 
-    </Fragment>
+    // </Fragment>
 
     return result;
 
