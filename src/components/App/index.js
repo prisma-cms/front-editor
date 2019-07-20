@@ -1487,7 +1487,7 @@ class FrontEditor extends Component {
       ...other
     } = this.props;
 
-    const object = data.object || {};
+    const object = data && data.object || {};
 
     const {
       name,
@@ -1654,6 +1654,9 @@ class FrontEditor extends Component {
           </Fragment>
           : items
         }
+
+        {children}
+
       </EditorContext.Provider>
     );
 

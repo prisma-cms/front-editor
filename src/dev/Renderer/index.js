@@ -9,13 +9,9 @@ import App, {
 import { Renderer as PrismaCmsRenderer } from '@prisma-cms/front'
 
 import MainMenu from './MainMenu';
-import withStyles from 'material-ui/styles/withStyles';
-// import DevMainPage from '../../components/pages/MainPage';
-import TemplatesPage from '../../components/pages/Templates';
-import TemplatePage from '../../components/pages/Templates/Template';
-import TemplateCreatePage from '../../components/pages/Templates/Template/Create';
+import { withStyles } from 'material-ui';
+import DevMainPage from './pages/MainPage';
 
-import RootPage from "../../components/pages/Root";
 
 export const styles = {
 
@@ -54,73 +50,40 @@ class DevRenderer extends PrismaCmsRenderer {
 
     let routes = super.getRoutes();
 
-    return routes.concat([
-      // {
-      //   exact: true,
-      //   path: "/",
-      //   component: DevMainPage,
-      // },
+    return [
       {
         exact: true,
-        path: "/templates",
-        component: TemplatesPage,
-      },
-      {
-        exact: true,
-        path: "/templates/create",
-        component: TemplateCreatePage,
-      },
-      {
-        exact: true,
-        path: "/templates/:id",
-        render: props => {
-
-          const {
-            match: {
-              params: {
-                id,
-              },
-            },
-          } = props;
-
-          return <TemplatePage
-            key={id}
-            where={{
-              id,
-            }}
-            {...props}
-          />
-        },
-      },
-      {
-        exact: false,
         path: "/",
-        // component: RootPage,
-        render: props => <RootPage
-        // inEditMode={true}
-        />
+        component: DevMainPage,
+        // render: props => {
+        //   // console.log("props", { ...props });
+        //   return <DevMainPage
+        //     {...props}
+        //   >
+        //     <div>
+        //     Test
+        //     </div>
+        //   </DevMainPage>;
+        // }
+        // render: props => {
+        //   console.log("props", { ...props });
+        //   return null;
+        // }
       },
-      // {
-      //   exact: true,
-      //   path: "/",
-      //   component: TemplatesPage,
-      // },
       // {
       //   path: "*",
       //   render: props => this.renderOtherPages(props),
       // },
-    ])
-    // .concat(routes);
+    ].concat(routes);
 
   }
 
 
 
-  // renderMenu() {
+  renderMenu() {
 
-  //   return <MainMenu />
-  //   // return null;
-  // }
+    return <MainMenu />
+  }
 
 
   renderWrapper() {
@@ -151,26 +114,14 @@ class DevRenderer extends PrismaCmsRenderer {
         <style
           dangerouslySetInnerHTML={{
             __html: `
-            /* 
             body, html, #root{
               height: 100%;
-            }
-            */
-            #root {
-              position: relative;
-              overflow: auto;
             }
           `,
           }}
         />
         {super.render()}
       </div>;
-
-    // return pure ? <App
-    //   {...other}
-    // />
-    //   :
-    // super.render();
 
   }
 

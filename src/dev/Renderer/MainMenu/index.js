@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 
 import Context from "@prisma-cms/context";
@@ -43,7 +43,7 @@ export const styles = theme => {
   }
 }
 
-export class MainMenu extends Component {
+export class MainMenu extends PureComponent {
 
   static propTypes = {
     classes: PropTypes.object.isRequired,

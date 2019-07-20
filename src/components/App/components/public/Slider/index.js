@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 // import EditorComponent from '../..';
 
-import SlickSlider from "react-slick";
+// import SlickSlider from "react-slick";
 
 // import "slick-carousel/slick/slick.css";
 // import "slick-carousel/slick/slick-theme.css";
@@ -155,6 +155,8 @@ class Slider extends Iterable {
     if (!childs) {
       return childs;
     }
+
+    const SlickSlider = require("react-slick");
 
     return <SlickSlider
       {...this.getSliderProps()}

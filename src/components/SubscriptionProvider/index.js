@@ -1,12 +1,12 @@
 
-import React, { Component } from 'react'
+import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 
 import gql from "graphql-tag";
 
 import Context from '@prisma-cms/context';
 
-export default class SubscriptionProvider extends Component {
+export default class SubscriptionProvider extends PureComponent {
 
 
   static contextType = Context;
@@ -141,10 +141,12 @@ export default class SubscriptionProvider extends Component {
       ...other
     } = this.props;
 
-    return children ? <children.type
-      {...children.props}
-      {...other}
-    /> : null;
+    return children;
+
+    // return children ? <children.type
+    //   {...children.props}
+    //   {...other}
+    // /> : null;
 
   }
 

@@ -1,31 +1,30 @@
-import React, { Component } from 'react';
+import React, { PureComponent, Fragment } from 'react';
+import PropTypes from 'prop-types';
 
-import PrismaCmsApp from '@prisma-cms/front'
+import App from '../App';
 
-import DevRenderer from "./Renderer";
+import PrismaCmsPerformanceTester from "@prisma-cms/performance";
 
+export default class DevApp extends App {
 
-export default class DevApp extends Component {
-
-  static propTypes = {
-  }
-
-  static defaultProps = {
-  }
 
   render() {
 
-    const {
-      ...other
-    } = this.props;
+    return <Fragment>
+      <div
+        id="prisma-cms-performance-tester"
+      >
+        <PrismaCmsPerformanceTester
+          // test={{}}
+          props={this.props}
+          state={this.state}
+          context={this.context}
+          prefix="dev_app"
+        />
+      </div>
 
-    return <PrismaCmsApp
-      Renderer={DevRenderer}
-      // pure={true}
-      apolloOptions={{
-      }}
-      {...other}
-    />
+      {super.render()}
+    </Fragment>
   }
-}
 
+}
