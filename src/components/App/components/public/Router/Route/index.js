@@ -22,6 +22,7 @@ class EditorRoute extends EditorComponent {
     exact: false,
     path: "",
     routername: "",
+    hide_wrapper_in_default_mode: true,
   }
 
 
@@ -57,15 +58,15 @@ class EditorRoute extends EditorComponent {
 
 
 
-  renderMainView() {
+  // renderMainView() {
 
-    const {
-      inEditMode,
-    } = this.getEditorContext();
+  //   const {
+  //     inEditMode,
+  //   } = this.getEditorContext();
 
-    return inEditMode ? super.renderMainView() : this.renderChildren();
+  //   return inEditMode ? super.renderMainView() : this.renderChildren();
 
-  }
+  // }
 
 
 

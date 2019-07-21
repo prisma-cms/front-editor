@@ -314,6 +314,24 @@ class Grid extends EditorComponent {
   //   </MaterialUiGrid>;
   // }
 
+
+  prepareRootElementProps(props) {
+
+    let {
+      container,
+      spacing,
+      ...other
+    } = super.prepareRootElementProps(props);
+
+    if (container) {
+      Object.assign(other, {
+        spacing,
+      });
+    }
+
+    return other;
+  }
+
 }
 
 export default Grid;

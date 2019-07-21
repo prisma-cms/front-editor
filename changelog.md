@@ -1,3 +1,7 @@
+=================================
+- Fix Slider
+- Fix RouterSwitch
+
 2.5.0
 =================================
 - Upgrade boilerplate

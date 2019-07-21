@@ -156,7 +156,7 @@ class Slider extends Iterable {
       return childs;
     }
 
-    const SlickSlider = require("react-slick");
+    const SlickSlider = require("react-slick").default;
 
     return <SlickSlider
       {...this.getSliderProps()}

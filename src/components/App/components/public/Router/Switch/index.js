@@ -29,6 +29,7 @@ class EditorSwitch extends EditorComponent {
   static defaultProps = {
     ...EditorComponent.defaultProps,
     showRoutes: true,
+    hide_wrapper_in_default_mode: true,
   }
 
 
@@ -104,15 +105,15 @@ class EditorSwitch extends EditorComponent {
   }
 
 
-  renderMainView() {
+  // renderMainView() {
 
-    const {
-      inEditMode,
-    } = this.getEditorContext();
+  //   const {
+  //     inEditMode,
+  //   } = this.getEditorContext();
 
-    return inEditMode ? super.renderMainView() : this.renderChildren();
+  //   return inEditMode ? super.renderMainView() : this.renderChildren();
 
-  }
+  // }
 
 
   renderChildren() {
