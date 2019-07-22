@@ -47,7 +47,7 @@ class DevApp extends PrismaCmsApp {
 
     return <Fragment>
 
-      111{super.render()}222
+      {super.render()}
 
     </Fragment>;
   }
@@ -342,7 +342,6 @@ class Server {
           <StaticRouter location={req.url} context={context}>
             <div>
 
-              ghhhhhhhh
             <DevApp
                 sheetsManager={new Map()}
                 uri={uri}

@@ -1704,7 +1704,6 @@ class FrontEditor extends Component {
         }
 
         {/* {children} */}
-        dfgfdg
 
       </EditorContext.Provider>
     );

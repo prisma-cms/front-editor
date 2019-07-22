@@ -41,10 +41,13 @@ class ContextProvider extends Component {
     } = this.context;
 
     Object.assign(this.context, {
-      query: {
-        ...query,
+      query: query ? Object.assign(query, {
         ...this.prepareQuery(),
-      },
+      }) : query,
+      // query: {
+      //   ...query,
+      //   ...this.prepareQuery(),
+      // },
       ...UI,
     });
 
