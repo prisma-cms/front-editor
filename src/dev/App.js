@@ -27,4 +27,11 @@ export default class DevApp extends App {
   //   </Fragment>
   // }
 
+  // render() {
+
+  //   console.log("this.props", this.props);
+
+  //   return super.render();
+  // }
+
 }

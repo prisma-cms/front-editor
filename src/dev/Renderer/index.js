@@ -89,7 +89,7 @@ class DevRenderer extends PrismaCmsRenderer {
       queryFragments,
     } = this.props;
 
-    console.log("queryFragments", queryFragments);
+    // console.log("queryFragments", queryFragments);
 
     // return "Sdfsdf";
 

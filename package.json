@@ -1,6 +1,6 @@
 {
   "name": "@prisma-cms/front-editor",
-  "version": "2.5.2",
+  "version": "2.6.0",
   "private": false,
   "main": "lib/App.js",
   "scripts": {
@@ -8,6 +8,8 @@
     "build": "yarn build-less && nwb build --copy-files",
     "build-app": "react-scripts build",
     "build-less": "node-less-chokidar src/styles/less",
+    "start-ssr": "NODE_ENV=production node src/ssr",
+    "start-ssr-dev": "NODE_ENV=production PRISMA_CMS_TIMELOG=false nodemon src/ssr",
     "analyze": "source-map-explorer 'build/static/js/*.js'",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
@@ -29,7 +31,13 @@
     "vertical-timeline-component-for-react": "^1.0.6"
   },
   "devDependencies": {
+    "@babel/core": "7.1.2",
+    "@babel/polyfill": "^7.0.0",
+    "@babel/preset-env": "^7.2.3",
+    "@babel/preset-react": "^7.0.0",
+    "@babel/register": "^7.0.0",
     "@prisma-cms/performance": "latest",
+    "cheerio": "^1.0.0-rc.3",
     "graphql-cli": "2.17.0",
     "node-less-chokidar": "^0.3.1",
     "nwb": "^0.23.0",

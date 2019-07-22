@@ -3453,6 +3453,7 @@ class EditorComponent extends ObjectEditable {
 
       if (templateId) {
 
+        // console.log("renderComponent templateId", templateId, n);
 
         return <TemplateRenderer
           key={`${templateId}--${index}`}

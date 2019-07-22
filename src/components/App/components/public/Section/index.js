@@ -101,6 +101,23 @@ class Section extends EditorComponent {
   //   </div>;
   // }
 
+  // renderMainView() {
+
+
+  //   const {
+  //     object,
+  //     ...other
+  //   } = this.props;
+
+  //   // const {
+
+  //   // } = this.getObject();
+
+  //   console.log("Section this.props object", object);
+
+  //   return super.renderMainView()
+  // }
+
 }
 
 export default Section;

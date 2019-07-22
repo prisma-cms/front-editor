@@ -105,12 +105,15 @@ class Viewer extends Component {
    */
   extendQuery(Query) {
 
-    if (Query) {
+    const {
+      schema,
+    } = this.context;
+
+    // console.log("Viewer extendQuery schema", schema);
+    
+    if (Query && schema) {
 
 
-      const {
-        schema,
-      } = this.context;
 
       /**
        * Проходим запрос на предмет директив в фрагментах
