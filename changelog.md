@@ -1,3 +1,4 @@
+2.5.1
 =================================
 - Fix Slider
 - Fix RouterSwitch
