@@ -2086,10 +2086,8 @@ class EditorComponent extends ObjectEditable {
     }
 
     const {
-      query: {
-        createTemplateProcessor,
-      },
-    } = this.context;
+      createTemplateProcessor,
+    } = this.context.query || {};
 
 
     const object = this.getObjectWithMutations();

@@ -602,10 +602,55 @@ class FrontEditor extends Component {
   componentWillMount() {
 
     const {
-      query: {
-        template,
-      },
-    } = this.context;
+      template = `
+        query templates($where: TemplateWhereInput, $orderBy: TemplateOrderByInput, $skip: Int, $after: String, $before: String, $first: Int, $last: Int) {
+          objects: templates(where: $where, orderBy: $orderBy, skip: $skip, after: $after, before: $before, first: $first, last: $last) {
+            ...Template
+          }
+        }
+        
+        fragment Template on Template {
+          ...TemplateNoNesting
+          CreatedBy {
+            ...UserNoNesting
+          }
+          PrismaProject {
+            ...ProjectNoNesting
+          }
+        }
+        
+        fragment TemplateNoNesting on Template {
+          id
+          createdAt
+          updatedAt
+          externalKey
+          name
+          description
+          component
+          props
+          components
+          rank
+          vars
+        }
+        
+        fragment UserNoNesting on User {
+          id
+          username
+          fullname
+          image
+        }
+        
+        fragment ProjectNoNesting on Project {
+          id
+          createdAt
+          updatedAt
+          name
+          description
+          url
+          domain
+        }
+      `,
+    } = this.context.query;
 
 
     this.TemplateRenderer = graphql(gql(template))(options => {
