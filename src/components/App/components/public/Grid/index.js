@@ -317,19 +317,13 @@ class Grid extends EditorComponent {
 
   prepareRootElementProps(props) {
 
-    let {
-      container,
-      spacing,
-      ...other
-    } = super.prepareRootElementProps(props);
+    props = super.prepareRootElementProps(props);
 
-    if (container) {
-      Object.assign(other, {
-        spacing,
-      });
+    if (props.spacing && !props.container) {
+      delete props.spacing;
     }
 
-    return other;
+    return props;
   }
 
 }

@@ -7,6 +7,7 @@ import App, {
 } from "../../App";
 
 import { Renderer as PrismaCmsRenderer } from '@prisma-cms/front'
+import Context from "@prisma-cms/context";
 
 import MainMenu from './MainMenu';
 import { withStyles } from 'material-ui';
@@ -84,11 +85,29 @@ class DevRenderer extends PrismaCmsRenderer {
 
   renderWrapper() {
 
-    return <ContextProvider>
-      <SubscriptionProvider>
-        {super.renderWrapper()}
-      </SubscriptionProvider>
-    </ContextProvider>;
+    const {
+      queryFragments,
+    } = this.props;
+
+    console.log("queryFragments", queryFragments);
+
+    // return "Sdfsdf";
+
+    return <Context.Consumer>
+      {context => <Context.Provider
+        value={Object.assign(context, this.context, {
+          queryFragments,
+        })}
+      >
+        <ContextProvider>
+          <SubscriptionProvider>
+            {super.renderWrapper()}
+          </SubscriptionProvider>
+        </ContextProvider>;
+      </Context.Provider>
+      }
+    </Context.Consumer>
+
 
   }
 
