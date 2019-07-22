@@ -1,6 +1,7 @@
 =================================
 - Fix Slider
 - Fix RouterSwitch
+- Fix RichText Editor
 
 2.5.0
 =================================

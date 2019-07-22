@@ -11,6 +11,15 @@ export class RichText extends EditorComponent {
   }
 
 
+  constructor(props) {
+
+    super(props);
+
+    this.onChangeEditor = this.onChangeEditor.bind(this);
+
+  }
+
+
   renderPanelView(content) {
 
     const {
@@ -34,6 +43,43 @@ export class RichText extends EditorComponent {
   }
 
 
+  onChangeEditor(value) {
+
+    // const {
+    //   inEditMode,
+    // } = this.getEditorContext();
+
+    this.updateComponentProps({
+      content: value,
+    });
+
+  }
+
+
+  isEditorReadOnly() {
+
+    let {
+      props: {
+        readOnly,
+      },
+    } = this.getObjectWithMutations();
+
+
+    if (readOnly === undefined) {
+
+      const {
+        inEditMode,
+      } = this.getEditorContext();
+
+
+      readOnly = !inEditMode;
+
+    }
+
+    return readOnly;
+  }
+
+
   renderChildren() {
 
     const {
@@ -45,26 +91,19 @@ export class RichText extends EditorComponent {
     } = this.getComponentProps(this);
 
 
-    const {
-      activeItem,
-      inEditMode,
-    } = this.getEditorContext();
+    // const {
+    //   activeItem,
+    //   inEditMode,
+    // } = this.getEditorContext();
 
 
-    const isActive = activeItem === this;
 
-    const readOnly = !inEditMode || !isActive ? true : false;
+    const readOnly = this.isEditorReadOnly();
 
     return <Editor
       value={content}
       readOnly={readOnly}
-      onChange={!readOnly ? value => {
-
-        this.updateComponentProps({
-          content: value,
-        });
-
-      } : undefined}
+      onChange={this.onChangeEditor}
     />
 
   }

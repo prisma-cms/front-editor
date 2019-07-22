@@ -7,6 +7,7 @@ import DevApp from '../../../App';
 
 import RootPage from "../../../../components/pages/Root";
 
+import PrismaCmsPerformanceTester from "@prisma-cms/performance";
 
 class DevMainPage extends Page {
 
@@ -25,6 +26,18 @@ class DevMainPage extends Page {
 
     return super.render(
       <div>
+        <div
+          id="prisma-cms-performance-tester"
+        >
+          <PrismaCmsPerformanceTester
+            // test={{}}
+            props={this.props}
+            state={this.state}
+            context={this.context}
+            prefix="dev_main_page"
+          />
+        </div>
+
         <div
           id="buttons"
         >
