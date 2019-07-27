@@ -29,7 +29,7 @@ class DevMainPage extends Page {
     } = this.context;
 
 
-    console.log("query", query);
+    // console.log("query", query);
 
     if(!query) {
       return null;

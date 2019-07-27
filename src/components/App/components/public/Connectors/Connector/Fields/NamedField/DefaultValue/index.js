@@ -3,6 +3,7 @@ import EditorComponent from '../../../../../..';
 import NamedField from '..';
 import ObjectView from '../../../../ObjectConnector/ObjectView';
 import ListView from '../../../ListView';
+import CurrentUser from '../../../../../CurrentUser';
 
 export class DefaultValue extends EditorComponent {
 
@@ -42,6 +43,7 @@ export class DefaultValue extends EditorComponent {
     return parent instanceof NamedField
       || parent instanceof ObjectView
       || parent instanceof ListView
+      || parent instanceof CurrentUser
   }
 
 

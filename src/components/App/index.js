@@ -65,6 +65,7 @@ import SudoOnly from './components/public/SudoOnly';
 import EditableObjectButtons from './components/public/form/EditableObject/EditableObjectButtons';
 import ResetObjectContext from './components/public/ResetObjectContext';
 import DefaultValue from './components/public/Connectors/Connector/Fields/NamedField/DefaultValue';
+import CurrentUser from './components/public/CurrentUser';
 
 const styles = theme => {
 
@@ -277,6 +278,7 @@ class FrontEditor extends Component {
       RichText,
       ObjectImage,
       UserLink,
+      CurrentUser,
       Filters,
       CreateObjectLink,
       SudoOnly,

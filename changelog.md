@@ -1,6 +1,8 @@
+2.7.0
 =================================
 - Fix dev rendering
 - Added DefaultValue Component
+- Added CurrentUser Component
 
 2.6.1
 =================================

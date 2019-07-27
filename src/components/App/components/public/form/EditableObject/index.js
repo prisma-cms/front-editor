@@ -556,7 +556,7 @@ class EditableObject extends EditorComponent {
       schema,
     } = this.context;
 
-    console.log("Viewer EditableObject schema", schema);
+    // console.log("Viewer EditableObject schema", schema);
     
     if (Query && schema) {
 

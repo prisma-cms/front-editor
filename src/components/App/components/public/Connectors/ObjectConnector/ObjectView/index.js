@@ -111,27 +111,28 @@ class ObjectView extends EditorComponent {
           return null;
         }
 
-        console.log("data", { ...data });
+        // console.log("data", { ...data });
 
         const {
           object,
           loading,
         } = data;
 
-        if (object !== undefined) {
 
-          if (!object) {
+        if (!object) {
 
-            if (loading) {
-              return null;
-            }
-            else {
-              children = children.filter(n => n && n.type === DefaultValue);
-            }
-
+          if (loading) {
+            return null;
+          }
+          else {
+            children = children.filter(n => n && n.type === DefaultValue);
           }
 
         }
+        else {
+          children = children.filter(n => n && n.type !== DefaultValue);
+        }
+
 
         return <ObjectContext.Provider
           value={data}
