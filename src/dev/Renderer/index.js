@@ -103,7 +103,7 @@ class DevRenderer extends PrismaCmsRenderer {
           <SubscriptionProvider>
             {super.renderWrapper()}
           </SubscriptionProvider>
-        </ContextProvider>;
+        </ContextProvider>
       </Context.Provider>
       }
     </Context.Consumer>

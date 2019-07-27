@@ -9,6 +9,7 @@ import EditorComponent from '../../../..';
 import { ObjectContext } from '../../Connector/ListView';
 import ObjectConnector from '..';
 import NamedField from '../../Connector/Fields/NamedField';
+import DefaultValue from '../../Connector/Fields/NamedField/DefaultValue';
 
 class ObjectView extends EditorComponent {
 
@@ -16,6 +17,7 @@ class ObjectView extends EditorComponent {
   static defaultProps = {
     ...EditorComponent.defaultProps,
     spacing: 8,
+    hide_wrapper_in_default_mode: true,
   };
 
   static Name = "ObjectView"
@@ -95,7 +97,7 @@ class ObjectView extends EditorComponent {
 
 
 
-    let children = super.renderChildren();
+    let children = super.renderChildren() || [];
 
     return <ConnectorContext.Consumer>
       {context => {
@@ -105,15 +107,31 @@ class ObjectView extends EditorComponent {
         } = context;
 
 
-
         if (!data) {
           return null;
         }
 
-        {/* 
+        console.log("data", { ...data });
+
         const {
           object,
-        } = data; */}
+          loading,
+        } = data;
+
+        if (object !== undefined) {
+
+          if (!object) {
+
+            if (loading) {
+              return null;
+            }
+            else {
+              children = children.filter(n => n && n.type === DefaultValue);
+            }
+
+          }
+
+        }
 
         return <ObjectContext.Provider
           value={data}

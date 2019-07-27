@@ -9,6 +9,7 @@ import { ConnectorContext } from '../..';
 import NumberFormat from "react-number-format";
 import moment from "moment";
 import Typography from 'material-ui/Typography';
+import DefaultValue from './DefaultValue';
 
 class NamedField extends EditorComponent {
 
@@ -195,6 +196,8 @@ class NamedField extends EditorComponent {
           } = object;
 
 
+          let children = super.renderChildren() || [];
+
           /**
           Так как без опеределения типа данных мы можем уйти не в тот контекст, возвращаем ничего,
           если значение отсутствует или null
@@ -202,6 +205,7 @@ class NamedField extends EditorComponent {
           if (value !== undefined || true) {
 
             if (typeof value === "object" && value !== null) {
+
 
               if (Array.isArray(value)) {
                 /**
@@ -216,21 +220,30 @@ class NamedField extends EditorComponent {
                     },
                   }}
                 >
-                  {super.renderChildren()}
+                  {value.length ? children.filter(n => n && n.type !== DefaultValue) : children.filter(n => n && n.type === DefaultValue)}
                 </ConnectorContext.Provider>
 
               }
               else {
+
+                children = children.filter(n => n && n.type !== DefaultValue);
 
                 return <ObjectContext.Provider
                   value={{
                     object: value,
                   }}
                 >
-                  {super.renderChildren()}
+                  {value ? children.filter(n => n && n.type !== DefaultValue) : children.filter(n => n && n.type === DefaultValue)}
                 </ObjectContext.Provider>
 
               }
+
+            }
+            else if (!value) {
+
+              children = children.filter(n => n && n.type === DefaultValue);
+
+              output = children;
 
             }
             else {

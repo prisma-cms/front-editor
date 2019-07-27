@@ -212,6 +212,7 @@ export class Editable extends ApolloEditableObject {
         inEditMode: this.isInEditMode(),
         canEdit: this.canEdit(),
         getObjectWithMutations: () => this.getObjectWithMutations(),
+        getObject: () => this.getObject(),
         // getCacheKey: this.getCacheKey,
         getButtons: this.bindGetButtons(),
         mutate: this.mutate,

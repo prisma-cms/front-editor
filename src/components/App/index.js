@@ -64,6 +64,7 @@ import CreateObjectLink from './components/public/Button/CreateObjectLink';
 import SudoOnly from './components/public/SudoOnly';
 import EditableObjectButtons from './components/public/form/EditableObject/EditableObjectButtons';
 import ResetObjectContext from './components/public/ResetObjectContext';
+import DefaultValue from './components/public/Connectors/Connector/Fields/NamedField/DefaultValue';
 
 const styles = theme => {
 
@@ -272,6 +273,7 @@ class FrontEditor extends Component {
       ObjectView,
       Pagination,
       NamedField,
+      DefaultValue,
       RichText,
       ObjectImage,
       UserLink,

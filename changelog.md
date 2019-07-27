@@ -1,3 +1,7 @@
+=================================
+- Fix dev rendering
+- Added DefaultValue Component
+
 2.6.1
 =================================
 - Fix context

@@ -24,6 +24,17 @@ class DevMainPage extends Page {
       ...other
     } = this.props;
 
+    const {
+      query,
+    } = this.context;
+
+
+    console.log("query", query);
+
+    if(!query) {
+      return null;
+    }
+
     return super.render(
       <div>
         <div

@@ -40,22 +40,38 @@ class ContextProvider extends Component {
       query,
     } = this.context;
 
-    Object.assign(this.context, {
-      query: query ? Object.assign(query, {
-        ...this.prepareQuery(),
-      }) : query,
-      // query: {
-      //   ...query,
-      //   ...this.prepareQuery(),
-      // },
-      ...UI,
-    });
+    // Object.assign(this.context, {
+    //   query: query ? Object.assign(query, {
+    //     ...this.prepareQuery(),
+    //   }) : query,
+    //   // query: {
+    //   //   ...query,
+    //   //   ...this.prepareQuery(),
+    //   // },
+    //   ...UI,
+    // });
 
-    return <Context.Provider
-      value={this.context}
-    >
-      {children || null}
-    </Context.Provider>;
+    return <Context.Consumer>
+      {context => {
+
+        const {
+          query,
+        } = context;
+
+        return <Context.Provider
+          value={{
+            ...context,
+            query: {
+              ...query,
+              ...this.prepareQuery(),
+            },
+            ...UI,
+          }}
+        >
+          {children || null}
+        </Context.Provider>
+      }}
+    </Context.Consumer>
 
   }
 
