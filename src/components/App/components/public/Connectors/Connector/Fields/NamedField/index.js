@@ -246,63 +246,91 @@ class NamedField extends EditorComponent {
               output = children;
 
             }
+
+            /**
+            Если есть скалярное значение
+             */
             else {
 
-              switch (type) {
+              /**
+              Если есть дочерние элементы, то выводим их.
+               */
+              if (children.length) {
 
-                case "number":
+                /**
+                Даже если за вычетом дефолтных элементов не останется дочерних элементов,
+                все равно выводим остаточный пустой массив, а не само значение,
+                так как логика может быть заложена именно на проверку значения,
+                чтобы ничего не выводить, если значение есть.
+                 */
+                children = children.filter(n => n && n.type !== DefaultValue);
 
-                  {
-                    const {
-                      defaultValue,
-                    } = other;
+                output = children;
 
-                    output = <NumberFormat
-                      value={value || defaultValue || ""}
-                      {...other}
-                    />;
-                  }
+              }
+              /**
+              Иначе выводим просто скалярное значение
+               */
+              else {
 
-                  break;
+                switch (type) {
 
-                case "date":
+                  case "number":
 
-                  if (value) {
+                    {
+                      const {
+                        defaultValue,
+                      } = other;
 
-
-                    const {
-                      format,
-                    } = other;
-
-                    let date = moment(value);
-
-                    if (date.isValid()) {
-
-
-                      if (format) {
-                        date = date.format(format)
-                      }
-
-
-                      output = date.toString();
-
+                      output = <NumberFormat
+                        value={value || defaultValue || ""}
+                        {...other}
+                      />;
                     }
-                    else {
 
-                      output = <Typography
-                        color="error"
-                      >
-                        Invalid date
+                    break;
+
+                  case "date":
+
+                    if (value) {
+
+
+                      const {
+                        format,
+                      } = other;
+
+                      let date = moment(value);
+
+                      if (date.isValid()) {
+
+
+                        if (format) {
+                          date = date.format(format)
+                        }
+
+
+                        output = date.toString();
+
+                      }
+                      else {
+
+                        output = <Typography
+                          color="error"
+                        >
+                          Invalid date
                         </Typography>
 
+                      }
+
                     }
 
-                  }
+                    break;
 
-                  break;
+                  default: output = value;
+                }
 
-                default: output = value;
               }
+
 
 
             }

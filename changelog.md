@@ -1,3 +1,7 @@
+2.7.1
+=================================
+- Render NamedField::children for scalar values if children exists
+
 2.7.0
 =================================
 - Fix dev rendering
