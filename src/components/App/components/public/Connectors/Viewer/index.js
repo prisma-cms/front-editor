@@ -14,6 +14,13 @@ class Viewer extends Component {
     query: PropTypes.string,
     parentQuery: PropTypes.string,
     ConnectorContext: PropTypes.object.isRequired,
+    fetchPolicy: PropTypes.oneOf([
+      "cache-first",
+      "cache-and-network",
+      "network-only",
+      "cache-only",
+      "no-cache",
+    ]),
   }
 
   static contextType = Context;
@@ -24,11 +31,13 @@ class Viewer extends Component {
 
   componentWillMount() {
 
+    // console.log("Viewer this", this);
 
     const {
       query,
       parentQuery,
       ConnectorContext,
+      fetchPolicy,
     } = this.props;
 
 
@@ -69,7 +78,11 @@ class Viewer extends Component {
 
       Query = this.extendQuery(Query);
 
-      this.Renderer = graphql(gql(Query))(props => {
+      this.Renderer = graphql(gql(Query), {
+        options: {
+          fetchPolicy,
+        },
+      })(props => {
 
 
         const {
@@ -110,7 +123,7 @@ class Viewer extends Component {
     } = this.context;
 
     // console.log("Viewer extendQuery schema", schema);
-    
+
     if (Query && schema) {
 
 

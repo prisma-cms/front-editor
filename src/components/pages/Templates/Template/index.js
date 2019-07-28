@@ -10,7 +10,7 @@ import View from "./View";
 import Page from "../../layout";
 
 
-class Template extends Page {
+class TemplatePage extends Page {
 
 
   static propTypes = {
@@ -94,4 +94,4 @@ class Template extends Page {
 }
 
 
-export default Template; 
+export default TemplatePage; 

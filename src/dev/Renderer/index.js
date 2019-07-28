@@ -12,6 +12,8 @@ import Context from "@prisma-cms/context";
 import MainMenu from './MainMenu';
 import { withStyles } from 'material-ui';
 import DevMainPage from './pages/MainPage';
+import TemplatesPage from '../../components/pages/Templates';
+import TemplatePage from '../../components/pages/Templates/Template';
 
 
 export const styles = {
@@ -52,6 +54,38 @@ class DevRenderer extends PrismaCmsRenderer {
     let routes = super.getRoutes();
 
     return [
+      {
+        exact: true,
+        path: "/templates",
+        component: TemplatesPage,
+      },
+      // {
+      //   exact: true,
+      //   path: "/templates/create",
+      //   component: TemplateCreatePage,
+      // },
+      {
+        exact: true,
+        path: "/templates/:id",
+        render: props => {
+
+          const {
+            match: {
+              params: {
+                id,
+              },
+            },
+          } = props;
+
+          return <TemplatePage
+            key={id}
+            where={{
+              id,
+            }}
+            {...props}
+          />
+        },
+      },
       {
         exact: false,
         path: "/",

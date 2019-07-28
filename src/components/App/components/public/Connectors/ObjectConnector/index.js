@@ -29,6 +29,9 @@ class ObjectConnector extends EditorComponent {
     filtersname: "filters",
     // first: 10,
     hide_wrapper_in_default_mode: true,
+
+    // https://www.apollographql.com/docs/react/api/react-apollo/#optionsfetchpolicy
+    fetchPolicy: undefined,
   };
 
 
@@ -57,6 +60,16 @@ class ObjectConnector extends EditorComponent {
     </div>);
   }
 
+
+  prepareRootElementProps(props) {
+
+    const {
+      fetchPolicy,
+      ...other
+    } = super.prepareRootElementProps(props);
+
+    return other;
+  }
 
 
   prepareDragItemProps() {

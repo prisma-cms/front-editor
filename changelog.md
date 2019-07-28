@@ -1,3 +1,7 @@
+2.7.3
+=================================
+- Added Connectors::fetchPolicy
+
 2.7.2
 =================================
 - Added EditableObject::prepareObject()

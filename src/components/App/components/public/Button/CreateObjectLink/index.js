@@ -35,20 +35,8 @@ class CreateObjectLink extends EditorComponent {
   renderChildren() {
 
     const {
-      user: currentUser,
-    } = this.context;
-
-    const {
       inEditMode,
     } = this.getEditorContext();
-
-    const {
-      sudo,
-    } = currentUser || {};
-
-    if (!sudo) {
-      return null;
-    }
 
     const {
       to,

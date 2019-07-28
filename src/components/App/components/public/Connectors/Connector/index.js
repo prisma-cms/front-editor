@@ -31,6 +31,9 @@ class Connector extends EditorComponent {
     first: 10,
     orderBy: undefined,
     hide_wrapper_in_default_mode: true,
+
+    // https://www.apollographql.com/docs/react/api/react-apollo/#optionsfetchpolicy
+    fetchPolicy: undefined,
   };
 
 
@@ -40,6 +43,17 @@ class Connector extends EditorComponent {
 
   //   return dragItem && dragItem instanceof ConnectorView ? true : false;
   // }
+
+
+  prepareRootElementProps(props) {
+
+    const {
+      fetchPolicy,
+      ...other
+    } = super.prepareRootElementProps(props);
+
+    return other;
+  }
 
 
   renderPanelView(content) {
