@@ -241,6 +241,12 @@ class NamedField extends EditorComponent {
             }
             else if (!value) {
 
+              /**
+              Есть предположение, что надо перетирать контекст, даже если нет объекта.
+              Но это сейчас больше неудобств добавить.
+              Вероятнее всего надо добавлять сущность новую Child для предполагаемого дочернего объекта 
+              и Children для предполагаемого массива дочерних объектов
+               */
               children = children.filter(n => n && n.type === DefaultValue);
 
               output = children;

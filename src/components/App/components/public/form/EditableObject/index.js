@@ -321,6 +321,7 @@ class EditableObject extends EditorComponent {
       cache_key_prefix,
       new_object_cache_key,
       object,
+      // _dirty,
       ...other
     } = this.getComponentProps(this);
 
@@ -353,13 +354,11 @@ class EditableObject extends EditorComponent {
         const cacheKey = cache_key ? cache_key : new_object_cache_key && !objectId ? new_object_cache_key : undefined;
         const cacheKeyPrefix = cache_key_prefix;
 
-
         return <Editable
           // data={{
           //   object: object || {},
           // }}
           object={object || {}}
-          _dirty={!object ? {} : undefined}
 
 
           extendQuery={this.extendQueryBind}
@@ -442,12 +441,34 @@ class EditableObject extends EditorComponent {
           onSave={!objectId ? this.onCreateObject : null}
           cacheKey={cacheKey}
           cacheKeyPrefix={cacheKeyPrefix}
+          {...this.prepareObject(context)}
           {...other}
         >
           {children}
         </Editable>;
       }}
     </ObjectContext.Consumer>
+
+  }
+
+
+  prepareObject(context) {
+
+    return {
+      _dirty: this.getDirty(context),
+    }
+  }
+
+
+  getDirty(context) {
+
+    const {
+      object,
+      _dirty,
+    } = context;
+
+    // return _dirty ? _dirty : !object ? {} : undefined;
+    return _dirty;
 
   }
 
@@ -557,7 +578,7 @@ class EditableObject extends EditorComponent {
     } = this.context;
 
     // console.log("Viewer EditableObject schema", schema);
-    
+
     if (Query && schema) {
 
 

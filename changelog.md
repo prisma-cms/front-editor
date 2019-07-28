@@ -1,3 +1,7 @@
+2.7.2
+=================================
+- Added EditableObject::prepareObject()
+
 2.7.1
 =================================
 - Render NamedField::children for scalar values if children exists
