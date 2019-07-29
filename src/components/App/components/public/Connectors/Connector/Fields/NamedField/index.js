@@ -13,6 +13,18 @@ import DefaultValue from './DefaultValue';
 
 class NamedField extends EditorComponent {
 
+  static Name = "NamedField"
+
+  static propTypes = {
+    ...EditorComponent.propTypes,
+
+    /**
+     * Если нет, то контекст родителя не будет перетерт.
+     * Это удобно для того, чтобы просто проверять на наличие значения.
+     */
+    override_context: PropTypes.bool.isRequired,
+  }
+
 
   static defaultProps = {
     ...EditorComponent.defaultProps,
@@ -20,10 +32,8 @@ class NamedField extends EditorComponent {
     tag: "span",
     type: undefined,
     format: undefined,
+    override_context: true,
   }
-
-
-  static Name = "NamedField"
 
 
   renderPanelView(content) {
@@ -151,6 +161,7 @@ class NamedField extends EditorComponent {
       // },
       name,
       type,
+      override_context,
       ...other
     } = this.getComponentProps(this);
 
@@ -213,28 +224,40 @@ class NamedField extends EditorComponent {
                 Если объект, то передаем как объект
                  */
 
-                output = <ConnectorContext.Provider
-                  value={{
-                    data: {
-                      objects: value,
-                    },
-                  }}
-                >
-                  {value.length ? children.filter(n => n && n.type !== DefaultValue) : children.filter(n => n && n.type === DefaultValue)}
-                </ConnectorContext.Provider>
+                output = value.length ? children.filter(n => n && n.type !== DefaultValue) : children.filter(n => n && n.type === DefaultValue);
+
+                if (override_context) {
+
+                  output = <ConnectorContext.Provider
+                    value={{
+                      data: {
+                        objects: value,
+                      },
+                    }}
+                  >
+                    {output}
+                  </ConnectorContext.Provider>
+
+                }
 
               }
               else {
 
                 children = children.filter(n => n && n.type !== DefaultValue);
 
-                return <ObjectContext.Provider
-                  value={{
-                    object: value,
-                  }}
-                >
-                  {value ? children.filter(n => n && n.type !== DefaultValue) : children.filter(n => n && n.type === DefaultValue)}
-                </ObjectContext.Provider>
+                output = value ? children.filter(n => n && n.type !== DefaultValue) : children.filter(n => n && n.type === DefaultValue);
+
+                if (override_context) {
+
+                  output = <ObjectContext.Provider
+                    value={{
+                      object: value,
+                    }}
+                  >
+                    {output}
+                  </ObjectContext.Provider>
+
+                }
 
               }
 

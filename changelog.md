@@ -1,3 +1,7 @@
+2.7.4
+=================================
+- Added NamedField::override_context
+
 2.7.3
 =================================
 - Added Connectors::fetchPolicy
