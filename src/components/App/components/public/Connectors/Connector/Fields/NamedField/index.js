@@ -202,7 +202,8 @@ class NamedField extends EditorComponent {
 
 
         if (name) {
-          const {
+          
+          let {
             [name]: value,
           } = object;
 
@@ -302,6 +303,8 @@ class NamedField extends EditorComponent {
                */
               else {
 
+                value = this.prepareScalarValue(value, context);
+
                 switch (type) {
 
                   case "number":
@@ -378,6 +381,12 @@ class NamedField extends EditorComponent {
 
       }}
     </ObjectContext.Consumer>;
+  }
+
+
+  prepareScalarValue(value, context) {
+
+    return value;
   }
 
 }

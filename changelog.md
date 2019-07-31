@@ -1,3 +1,7 @@
+2.7.5
+=================================
+- Added NamedField::prepareScalarValue()
+
 2.7.4
 =================================
 - Added NamedField::override_context
