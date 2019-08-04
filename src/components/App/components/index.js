@@ -2422,7 +2422,7 @@ class EditorComponent extends ObjectEditable {
   renderUploader(name, props = {}) {
 
     const {
-      onUpload = path => {
+      onUpload = ({ path }) => {
 
         const {
           style,
@@ -2438,15 +2438,20 @@ class EditorComponent extends ObjectEditable {
     return <Uploader
       onUpload={response => {
 
+        // const {
+        //   path,
+        // } = response.data.singleUpload || {};
+
         const {
-          path,
-        } = response.data.singleUpload || {};
+          singleUpload: result,
+        } = response.data;
 
-        if (path) {
-
-          onUpload(path);
-
+        if (!result) {
+          throw new Error("Error whilte uploading");
         }
+
+        onUpload(result);
+
       }}
       {...other}
     >

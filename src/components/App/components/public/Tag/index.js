@@ -524,7 +524,7 @@ class Tag extends EditorComponent {
 
         <div>
           {this.renderUploader(name, {
-            onUpload: path => {
+            onUpload: ({path}) => {
               this.updateComponentProperty(name, `/images/big/${path}`);
             },
           })}

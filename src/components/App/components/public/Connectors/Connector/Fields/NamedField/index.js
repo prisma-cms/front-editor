@@ -33,6 +33,7 @@ class NamedField extends EditorComponent {
     type: undefined,
     format: undefined,
     override_context: true,
+    hide_wrapper_in_default_mode: true,
   }
 
 

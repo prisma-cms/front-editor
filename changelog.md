@@ -1,3 +1,7 @@
+2.7.6
+=================================
+- Fix renderUploader() response
+
 2.7.5
 =================================
 - Added NamedField::prepareScalarValue()
