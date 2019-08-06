@@ -203,13 +203,14 @@ class NamedField extends EditorComponent {
 
 
         if (name) {
-          
+
           let {
             [name]: value,
           } = object;
 
 
           let children = super.renderChildren() || [];
+          const childrenWithoutDefaultValue = children.filter(n => n && n.type !== DefaultValue);
 
           /**
           Так как без опеределения типа данных мы можем уйти не в тот контекст, возвращаем ничего,
@@ -245,9 +246,10 @@ class NamedField extends EditorComponent {
               }
               else {
 
-                children = children.filter(n => n && n.type !== DefaultValue);
+                // children = children.filter(n => n && n.type !== DefaultValue);
+                // output = value ? children.filter(n => n && n.type !== DefaultValue) : children.filter(n => n && n.type === DefaultValue);
 
-                output = value ? children.filter(n => n && n.type !== DefaultValue) : children.filter(n => n && n.type === DefaultValue);
+                output = value ? childrenWithoutDefaultValue : children.filter(n => n && n.type === DefaultValue);
 
                 if (override_context) {
 
@@ -286,7 +288,7 @@ class NamedField extends EditorComponent {
               /**
               Если есть дочерние элементы, то выводим их.
                */
-              if (children.length) {
+              if (childrenWithoutDefaultValue.length) {
 
                 /**
                 Даже если за вычетом дефолтных элементов не останется дочерних элементов,
@@ -294,9 +296,9 @@ class NamedField extends EditorComponent {
                 так как логика может быть заложена именно на проверку значения,
                 чтобы ничего не выводить, если значение есть.
                  */
-                children = children.filter(n => n && n.type !== DefaultValue);
+                // children = children.filter(n => n && n.type !== DefaultValue);
 
-                output = children;
+                output = childrenWithoutDefaultValue;
 
               }
               /**
