@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 
 import EditorComponent from '../../../../..';
 import ListView from '..';
+import DefaultValue from '../../Fields/NamedField/DefaultValue';
 
 
 
@@ -62,7 +63,7 @@ class Iterable extends EditorComponent {
     const {
       items,
       ObjectContext,
-      children = null,
+      // children = null,
     } = this.props;
 
 
@@ -72,8 +73,13 @@ class Iterable extends EditorComponent {
      * Так сделано, потому что этот компонент может быть вставлен как в тело запроса (и выводить результаты из базы данных),
      * так и просто выводить дочерние элементы
      */
+
+    const children = super.renderChildren();
+    const childrenWithoutDefault = children.filter(n => n && n.type !== DefaultValue);
+
     if (items === undefined || !ObjectContext) {
-      return super.renderChildren();
+      // return children;
+      return null;
     }
 
     else if (!items) {
@@ -82,22 +88,39 @@ class Iterable extends EditorComponent {
 
     // else
 
-    return items.length ? items.map((n, index) => {
+    return items.length ? this.renderItems(items, childrenWithoutDefault) : children.filter(n => n && n.type === DefaultValue);
 
-      const {
-        id,
-      } = n;
+  }
 
-      return <ObjectContext.Provider
-        key={id || index}
-        value={{
-          object: n,
-        }}
-      >
-        {super.renderChildren()}
-      </ObjectContext.Provider>
-    }) : children
 
+  renderItems(items, children) {
+
+    return items.map((n, index) => {
+
+      return this.renderItem(n, index, children);
+    });
+
+  }
+
+
+  renderItem(item, key, children) {
+
+    const {
+      ObjectContext,
+    } = this.props;
+
+    const {
+      id,
+    } = item;
+
+    return <ObjectContext.Provider
+      key={id || key}
+      value={{
+        object: item,
+      }}
+    >
+      {children}
+    </ObjectContext.Provider>
   }
 
 
