@@ -116,6 +116,146 @@ class EditorSwitch extends EditorComponent {
   // }
 
 
+  renderItems({
+    itemComponents,
+    menuItems,
+    output,
+    Components,
+    showRoutes,
+    createTemplate,
+    updateTemplate,
+    routesShowed,
+  }) {
+
+    const {
+      Grid,
+    } = this.context;
+
+    itemComponents.map((n, index) => {
+
+      const {
+        id,
+        name,
+        props,
+        ...other
+      } = n;
+
+      const {
+        exact,
+        path,
+        routername,
+      } = props;
+
+      let Component = Components.find(n => n.Name === name);
+
+      if (Component) {
+
+        let component;
+
+
+        let route = <Route
+          key={id || index}
+          exact={exact === undefined ? false : exact}
+          path={path}
+          render={(routerProps) => {
+
+            /**
+            ToDo: Удалить routerProps, потому что передает каждый раз новый объект
+            и Роуты перерендериваются
+             */
+
+            return <RouteContext.Provider
+              value={routerProps}
+            >
+              <Component
+                // key={id || index}
+                mode="main"
+                // component={n}
+                parent={this}
+                props={props}
+                // data={{
+                //   object: n,
+                // }}
+                object={n}
+                exact={exact}
+                path={path}
+                routername={routername}
+                // _dirty={n}
+                showRoutes={showRoutes}
+                createTemplate={createTemplate}
+                updateTemplate={updateTemplate}
+                {...other}
+                {...props}
+                {...routerProps}
+              />
+            </RouteContext.Provider>
+          }}
+        />
+
+        /**
+         * Если в режиме редактирования и показывать роутеры, то выводим данные
+         */
+        // if (inEditMode && showRoutes) {
+        if (routesShowed) {
+
+          const key = `${id}-${index}`;
+
+          const title = <Typography>
+            {routername} <Typography
+              component="span"
+              variant="caption"
+              style={{
+                display: "inline-block",
+              }}
+            >
+              {path}{!exact ? "*" : ""}
+            </Typography>
+          </Typography>;
+
+          component = <Fragment
+            key={key}
+          >
+            {title}
+
+            {route}
+
+          </Fragment>
+
+
+
+
+          menuItems.push(<Grid
+            key={key}
+            item
+          >
+            {title}
+          </Grid>);
+
+        }
+        else {
+
+          // component = <Route
+          //   key={id || index}
+          //   exact={exact === undefined ? true : exact}
+          //   path={path}
+          //   render={() => {
+          //     return element;
+          //   }}
+          // />
+
+          component = route;
+
+        }
+
+
+        output.push(component);
+
+      }
+
+    });
+
+  }
+
   renderChildren() {
 
     const {
@@ -171,131 +311,20 @@ class EditorSwitch extends EditorComponent {
     const routesShowed = inEditMode && showRoutes;
 
 
-    if (itemComponents && itemComponents.length) {
+    if (itemComponents) {
 
       let menuItems = []
 
-      itemComponents.map((n, index) => {
 
-        const {
-          id,
-          name,
-          props,
-          ...other
-        } = n;
-
-        const {
-          exact,
-          path,
-          routername,
-        } = props;
-
-        let Component = Components.find(n => n.Name === name);
-
-        if (Component) {
-
-          let component;
-
-
-          let route = <Route
-            key={id || index}
-            exact={exact === undefined ? false : exact}
-            path={path}
-            render={(routerProps) => {
-
-              /**
-              ToDo: Удалить routerProps, потому что передает каждый раз новый объект
-              и Роуты перерендериваются
-               */
-
-              return <RouteContext.Provider
-                value={routerProps}
-              >
-                <Component
-                  // key={id || index}
-                  mode="main"
-                  // component={n}
-                  parent={this}
-                  props={props}
-                  // data={{
-                  //   object: n,
-                  // }}
-                  object={n}
-                  exact={exact}
-                  path={path}
-                  routername={routername}
-                  // _dirty={n}
-                  showRoutes={showRoutes}
-                  createTemplate={createTemplate}
-                  updateTemplate={updateTemplate}
-                  {...other}
-                  {...props}
-                  {...routerProps}
-                />
-              </RouteContext.Provider>
-            }}
-          />
-
-          /**
-           * Если в режиме редактирования и показывать роутеры, то выводим данные
-           */
-          // if (inEditMode && showRoutes) {
-          if (routesShowed) {
-
-            const key = `${id}-${index}`;
-
-            const title = <Typography>
-              {routername} <Typography
-                component="span"
-                variant="caption"
-                style={{
-                  display: "inline-block",
-                }}
-              >
-                {path}{!exact ? "*" : ""}
-              </Typography>
-            </Typography>;
-
-            component = <Fragment
-              key={key}
-            >
-              {title}
-
-              {route}
-
-            </Fragment>
-
-
-
-
-            menuItems.push(<Grid
-              key={key}
-              item
-            >
-              {title}
-            </Grid>);
-
-          }
-          else {
-
-            // component = <Route
-            //   key={id || index}
-            //   exact={exact === undefined ? true : exact}
-            //   path={path}
-            //   render={() => {
-            //     return element;
-            //   }}
-            // />
-
-            component = route;
-
-          }
-
-
-          output.push(component);
-
-        }
-
+      this.renderItems({
+        itemComponents,
+        menuItems,
+        output,
+        Components,
+        showRoutes,
+        createTemplate,
+        updateTemplate,
+        routesShowed,
       });
 
 

@@ -81,7 +81,11 @@ class EditorComponent extends ObjectEditable {
     ...ObjectEditable.defaultProps,
     deletable: true,
     mutate: emptyMutate,
-    // data: {},
+    data: {},
+    object: {
+      props: {},
+      components: [],
+    },
     style: {
       position: undefined,
       display: undefined,

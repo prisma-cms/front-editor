@@ -237,6 +237,8 @@ const styles = theme => {
     },
     actionPanel: {
       borderTop: "1px solid #ddd",
+      maxHeight: 250,
+      overflow: "auto",
     },
   }
 }
