@@ -1,3 +1,7 @@
+2.8.0
+=================================
+- Added FileUploader
+
 2.7.9
 =================================
 - Added EditorSwitch::renderItems()

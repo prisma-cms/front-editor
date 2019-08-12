@@ -66,6 +66,7 @@ import EditableObjectButtons from './components/public/form/EditableObject/Edita
 import ResetObjectContext from './components/public/ResetObjectContext';
 import DefaultValue from './components/public/Connectors/Connector/Fields/NamedField/DefaultValue';
 import CurrentUser from './components/public/CurrentUser';
+import FileUploader from './components/public/FileUploader';
 
 const styles = theme => {
 
@@ -279,6 +280,7 @@ class FrontEditor extends Component {
       DefaultValue,
       RichText,
       ObjectImage,
+      FileUploader,
       UserLink,
       CurrentUser,
       Filters,
