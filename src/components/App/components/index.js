@@ -1,3 +1,4 @@
+/* eslint-disable no-lone-blocks */
 
 /**
  * ToDo
@@ -59,6 +60,7 @@ class EditorComponent extends ObjectEditable {
   static saveable = true;
 
   static propTypes = {
+    // eslint-disable-next-line react/forbid-foreign-prop-types
     ...ObjectEditable.propTypes,
     mode: PropTypes.oneOf(["main", "panel", "settings", "add_child"]).isRequired,
 
@@ -1331,8 +1333,8 @@ class EditorComponent extends ObjectEditable {
     } = component.props;
 
     const {
-      name,
-      components,
+      // name,
+      // components,
       props: objectProps,
 
     } = component.getObjectWithMutations();
@@ -1426,8 +1428,8 @@ class EditorComponent extends ObjectEditable {
       const {
         dragItem,
         dragTarget,
-        activeItem,
-        hoveredItem,
+        // activeItem,
+        // hoveredItem,
       } = this.getEditorContext();
 
 
@@ -1531,6 +1533,7 @@ class EditorComponent extends ObjectEditable {
         {content || this.constructor.Name} {help_url ? <a
           href={help_url}
           target="_blank"
+          rel="noopener noreferrer"
           className={classes.helpLink}
         >
           <HelpIcon />
@@ -1548,7 +1551,7 @@ class EditorComponent extends ObjectEditable {
 
     const {
       classes,
-      setActiveItem,
+      // setActiveItem,
     } = this.getEditorContext();
 
 
@@ -1559,7 +1562,7 @@ class EditorComponent extends ObjectEditable {
     const {
       className,
       style,
-      ...other
+      // ...other
     } = this.props;
 
 
@@ -1613,6 +1616,7 @@ class EditorComponent extends ObjectEditable {
         {content || this.constructor.Name} {help_url ? <a
           href={help_url}
           target="_blank"
+          rel="noopener noreferrer"
           className={classes.helpLink}
         >
           <HelpIcon />
@@ -1653,12 +1657,12 @@ class EditorComponent extends ObjectEditable {
     } = this.getEditorContext();
 
 
-    let {
-      props: {
-        props,
-        ...other
-      },
-    } = this;
+    // let {
+    //   props: {
+    //     props,
+    //     ...other
+    //   },
+    // } = this;
 
     const saveable = this.constructor.saveable;
 
@@ -1704,7 +1708,7 @@ class EditorComponent extends ObjectEditable {
     }
 
 
-    const structureViewLength = structureView && structureView.length || 0;
+    const structureViewLength = structureView ? structureView.length : 0;
 
     if (maxStructureLengthView && structureViewLength > maxStructureLengthView) {
 
@@ -1815,6 +1819,7 @@ class EditorComponent extends ObjectEditable {
           settings.push(field);
         }
 
+        return null;
       })
 
     }
@@ -1846,6 +1851,7 @@ class EditorComponent extends ObjectEditable {
           settings.push(field);
         }
 
+        return null;
       })
 
     }
@@ -2298,6 +2304,8 @@ class EditorComponent extends ObjectEditable {
 
         break;
 
+      default: ;
+
     }
 
 
@@ -2414,6 +2422,8 @@ class EditorComponent extends ObjectEditable {
         </Grid>
           ;
 
+        break;
+
       default: ;
     }
 
@@ -2495,6 +2505,8 @@ class EditorComponent extends ObjectEditable {
 
         break;
 
+      default: ;
+
     }
 
 
@@ -2554,6 +2566,7 @@ class EditorComponent extends ObjectEditable {
           props[name] = value;
         }
 
+        return null;
       });
 
     }
@@ -2682,281 +2695,6 @@ class EditorComponent extends ObjectEditable {
   }
 
 
-  renderMainView__(renderProps) {
-
-    const {
-      Grid,
-    } = this.context;
-
-    const object = this.getObjectWithMutations();
-
-    if (!object) {
-      return null;
-    }
-
-
-    const {
-      props: objectProps,
-      name,
-    } = object;
-
-
-    const {
-    } = this.props;
-
-
-    const {
-      activeItem,
-      dragTarget,
-      hoveredItem,
-      // settingsViewContainer,
-      getSettingsViewContainer,
-      inEditMode,
-      classes,
-      onDragStart,
-      Components,
-    } = this.getEditorContext();
-
-    const settingsViewContainer = getSettingsViewContainer();
-
-    // return this.renderChildren();
-
-    const RootElement = this.getRootElement();
-
-    const {
-      props,
-
-      /**
-       * component исключаем, так как некоторые компоненты (типа Grid)
-       * принимают его как параметр
-       */
-      component,
-      ...other
-    } = this.getRenderProps();
-
-    let settingsView;
-
-    /**
-     * Заголовок блока, чтобы можно было перетаскивать и т.п.
-     */
-    let badge;
-
-
-    /**
-     * Для тегов типа img непозволительны дочерние элементы.
-     * Если в такие элементы пытаться выводить дочерние,
-     * будет возникать ошибка "must neither have `children`"
-     */
-    let inner = [];
-
-
-    const childs = this.renderChildren();
-
-    if (childs) {
-      inner.push(childs);
-    }
-
-
-    if (inEditMode) {
-
-      const isActive = activeItem === this ? true : false;
-      const isDragOvered = dragTarget === this ? true : false;
-      const isHovered = hoveredItem === this ? true : false;
-      const deletable = this.isDeletable();
-
-
-      if (isActive && settingsViewContainer) {
-
-        /**
-         * Важно по наследованию событий в порталы
-         * https://github.com/facebook/react/issues/11387
-         */
-        settingsView = ReactDOM.createPortal(this.renderSettingsView(), settingsViewContainer);
-
-
-
-      }
-
-      if (isActive || isDragOvered || isHovered) {
-
-        badge = <div
-          key="badge"
-          className={classes.blockBadge}
-          contentEditable={false}
-        >
-          <Grid
-            container
-            alignItems="center"
-            style={{
-              flexWrap: "nowrap",
-            }}
-          >
-
-            <Grid
-              item
-              xs
-            >
-              {this.renderBadgeTitle(component)}
-            </Grid>
-
-            <Grid
-              item
-            >
-              <IconButton
-                onClick={event => {
-                  event.preventDefault();
-                  event.stopPropagation();
-
-
-                  this.moveBlockUp();
-                }}
-                className={classes.badgeButton}
-              >
-                <ArrowUpIcon
-
-                />
-              </IconButton>
-            </Grid>
-
-            <Grid
-              item
-            >
-              <IconButton
-                onClick={event => {
-                  event.preventDefault();
-                  event.stopPropagation();
-
-
-                  this.moveBlockDown();
-                }}
-                className={classes.badgeButton}
-              >
-                <ArrowDownIcon
-
-                />
-              </IconButton>
-            </Grid>
-
-            {deletable && activeItem && activeItem === this ?
-              <Grid
-                item
-              >
-                <IconButton
-                  title="Удалить элемент"
-                  onClick={event => {
-                    event.preventDefault();
-                    event.stopPropagation();
-
-                    this.delete();
-                  }}
-                  className={classes.badgeButton}
-                >
-                  <DeleteIcon
-
-                  />
-                </IconButton>
-              </Grid>
-              : null
-            }
-
-            <Grid
-              item
-              style={{
-                cursor: "pointer",
-              }}
-              draggable={true}
-              onDragStart={event => {
-
-                this.onDragStart(event, this);
-              }}
-              onDragEnd={event => this.onDragEnd(event)}
-              onClick={event => {
-                event.preventDefault();
-                event.stopPropagation();
-
-              }}
-            >
-              <DragIcon
-              />
-            </Grid>
-
-          </Grid>
-        </div>
-
-      }
-
-      {/* 
-                Для блоков с contentEditable (например Tag), если текст отсутствует,
-                то фокус уходит в бадж и текст не доступен для редактирования.
-                Пока как временный хак скрываем бадж в режиме фокуса.
-              */}
-      const badgeView = this.renderBadge(badge);
-
-
-      if (badgeView) {
-        inner.push(badgeView);
-      }
-
-
-      if (isActive && !this.isVoidElement()) {
-
-        let addBlocks;
-
-        addBlocks = this.renderAddButtons(<Grid
-          key="add_buttons"
-          container
-          spacing={8}
-        >
-
-          {Components.map((Component, index) => {
-
-            const name = Component.Name;
-
-            return <Component
-              key={`${name}-${index}`}
-              mode="add_child"
-              className={"add_child"}
-              parent={this}
-            />
-          })}
-
-        </Grid>);
-
-        if (addBlocks) {
-          // inner.push(addBlocks);
-
-          inner.push(this.renderActionPanel(addBlocks));
-
-        }
-
-
-      }
-
-    }
-
-
-    return <Fragment>
-
-      <RootElement
-        // {...this.getRenderProps()}
-        // {...objectProps}
-        // {...other}
-        // {...props}
-        // {...renderProps}
-        {...this.prepareRootElementProps({
-          ...objectProps,
-          ...other,
-          ...renderProps,
-        })}
-      >
-        {inner && inner.length ? inner : null}
-      </RootElement>
-
-      {settingsView}
-    </Fragment>
-  }
-
-
   renderMainView(renderProps = {}) {
 
     const {
@@ -2987,12 +2725,12 @@ class EditorComponent extends ObjectEditable {
     const {
       // activeItem,
       dragTarget,
-      hoveredItem,
+      // hoveredItem,
       // settingsViewContainer,
       getSettingsViewContainer,
       inEditMode,
       classes,
-      onDragStart,
+      // onDragStart,
       Components,
     } = this.getEditorContext();
 
@@ -3356,6 +3094,7 @@ class EditorComponent extends ObjectEditable {
           delete style[name];
         }
 
+        return null;
       })
 
       // if (this.isActive()) {
@@ -3416,6 +3155,7 @@ class EditorComponent extends ObjectEditable {
 
         output.push(this.renderComponent(n, index));
 
+        return null;
       })
 
     }
@@ -3603,11 +3343,11 @@ class EditorComponent extends ObjectEditable {
         });
 
         const {
-          id: objectId,
+          // id: objectId,
           mode,
-          props,
-          children,
-          ...other
+          // props,
+          // children,
+          // ...other
         } = this.props;
 
         let content = null;
@@ -3617,7 +3357,6 @@ class EditorComponent extends ObjectEditable {
 
           case "main":
 
-            {/* content = this.renderMainView(); */ }
             content = super.render();
 
             break;
@@ -3625,10 +3364,6 @@ class EditorComponent extends ObjectEditable {
           case "panel":
             {
               const activeItem = this.getActiveItem();
-              {/* 
-            if (!activeItem || (activeItem && activeItem.canBeChild(this)) || this.isActive()) {
-              content = this.renderPanelView();
-            } */}
 
               if (!activeItem || (activeItem && activeItem instanceof this.constructor)) {
                 content = this.renderPanelView();
@@ -3641,7 +3376,6 @@ class EditorComponent extends ObjectEditable {
 
             {
 
-              {/* const activeItem = this.getActiveItem(); */ }
 
               const {
                 parent: activeItem,
@@ -3655,10 +3389,8 @@ class EditorComponent extends ObjectEditable {
 
             break;
 
-            {/* case "settings":
 
-            content = this.renderSettingsView();
-            break; */}
+          default: ;
         }
 
         if (!content) {

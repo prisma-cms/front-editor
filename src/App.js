@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+// import React, { Component } from 'react';
+// import PropTypes from 'prop-types';
 
 import "./styles/less/styles.css";
 
-import Context from '@prisma-cms/context';
+// import Context from '@prisma-cms/context';
 
 import App from "./components/App";
 import FrontEditorRoot from "./components/Root";
