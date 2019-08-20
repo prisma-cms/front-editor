@@ -88,6 +88,15 @@ export class RichText extends EditorComponent {
 
     const {
       content,
+      components,
+      contentEditable,
+      data,
+      hide_wrapper_in_default_mode,
+      lang,
+      object,
+      props,
+      // style,
+      ...other
     } = this.getComponentProps(this);
 
 
@@ -104,6 +113,7 @@ export class RichText extends EditorComponent {
       value={content}
       readOnly={readOnly}
       onChange={this.onChangeEditor}
+      {...other}
     />
 
   }

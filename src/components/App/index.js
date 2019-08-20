@@ -1,4 +1,4 @@
-import React, { Component, Fragment, createContext } from 'react';
+import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import withStyles from 'material-ui/styles/withStyles';
 
@@ -77,7 +77,7 @@ const styles = theme => {
     palette: {
       background: {
         default: bgDefault,
-        paper: bgPaper,
+        // paper: bgPaper,
       },
       text: {
         primary: textPrimary,
@@ -575,6 +575,7 @@ class FrontEditor extends Component {
       },
     }
 
+    // eslint-disable-next-line react/no-direct-mutation-state
     this.state.editorContext = editorContext;
 
   }
@@ -817,13 +818,13 @@ class FrontEditor extends Component {
   renderTemplates() {
 
 
-    const {
-      Grid,
-    } = this.context;
+    // const {
+    //   Grid,
+    // } = this.context;
 
     const {
       // activeItem,
-      templatesGroup,
+      // templatesGroup,
       templatesOpened,
     } = this.state;
 
@@ -831,10 +832,10 @@ class FrontEditor extends Component {
 
 
     const {
-      data,
-      _dirty,
+      // data,
+      // _dirty,
       classes,
-      ...other
+      // ...other
     } = this.props;
 
     let content;
@@ -1543,10 +1544,10 @@ class FrontEditor extends Component {
       ...other
     } = this.props;
 
-    const object = data && data.object || {};
+    const object = (data && data.object) || {};
 
     const {
-      name,
+      // name,
       component,
     } = object || {};
 
@@ -1627,26 +1628,26 @@ class FrontEditor extends Component {
 
     const {
       classes,
-      children,
-      components,
-      updateObject,
+      // children,
+      // components,
+      // updateObject,
       // Components,
       inEditMode,
-      debug,
+      // debug,
       className,
     } = this.props;
 
     const {
-      dragItem,
-      dragTarget,
-      activeItem,
-      hoveredItem,
+      // dragItem,
+      // dragTarget,
+      // activeItem,
+      // hoveredItem,
       editorContext,
     } = this.state;
 
-    const {
-      settingsViewContainer,
-    } = this;
+    // const {
+    //   settingsViewContainer,
+    // } = this;
 
     // const Components = this.getComponents();
 

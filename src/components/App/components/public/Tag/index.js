@@ -1,5 +1,5 @@
-import React, { Component, Fragment } from 'react';
-import PropTypes from 'prop-types';
+import React from 'react';
+// import PropTypes from 'prop-types';
 import EditorComponent from '../..';
 
 import Icon from "material-ui-icons/Title";
@@ -28,12 +28,12 @@ class Tag extends EditorComponent {
 
     super(props);
 
-    const {
-      // content,
-      // data: {
-      //   object,
-      // },
-    } = props;
+    // const {
+    //   // content,
+    //   // data: {
+    //   //   object,
+    //   // },
+    // } = props;
 
 
     // const {
@@ -141,7 +141,7 @@ class Tag extends EditorComponent {
 
     const {
       inEditMode,
-      activeItem,
+      // activeItem,
     } = this.getEditorContext();
 
     const object = this.getObjectWithMutations();
@@ -170,18 +170,17 @@ class Tag extends EditorComponent {
 
           return null;
 
-          break;
-
+          default:;
       }
 
       if (inEditMode) {
 
 
-        const {
-          components,
-          newContent,
-          focused,
-        } = this.state;
+        // const {
+        //   components,
+        //   newContent,
+        //   focused,
+        // } = this.state;
 
 
         const {
@@ -215,6 +214,8 @@ class Tag extends EditorComponent {
             });
 
             break;
+
+          default:;
         }
 
 
@@ -470,6 +471,7 @@ class Tag extends EditorComponent {
           [name]: value,
         });
 
+        return null;
       })
 
       let components = [];
@@ -502,9 +504,7 @@ class Tag extends EditorComponent {
   getEditorField(props) {
 
     const {
-      key,
       name,
-      value,
     } = props;
 
     let field = super.getEditorField(props);
