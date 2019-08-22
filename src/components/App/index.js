@@ -67,6 +67,7 @@ import ResetObjectContext from './components/public/ResetObjectContext';
 import DefaultValue from './components/public/Connectors/Connector/Fields/NamedField/DefaultValue';
 import CurrentUser from './components/public/CurrentUser';
 import FileUploader from './components/public/FileUploader';
+import Select from './components/public/form/Select';
 
 const styles = theme => {
 
@@ -311,6 +312,7 @@ class FrontEditor extends Component {
       EditableObjectButtons,
       ResetObjectContext,
       TextField,
+      Select,
       VerticalTimeline,
       VerticalTimelineItem,
       Table,
