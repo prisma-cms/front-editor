@@ -130,6 +130,7 @@ class EditorComponent extends ObjectEditable {
     contentEditable: false,
     className: undefined,
     lang: undefined,
+    tag: undefined,
     hide_wrapper_in_default_mode: false,
   }
 
@@ -2734,14 +2735,14 @@ class EditorComponent extends ObjectEditable {
       Components,
     } = this.getEditorContext();
 
-    const {
-      hide_wrapper_in_default_mode,
-    } = this.props;
+    // const {
+    //   hide_wrapper_in_default_mode,
+    // } = this.props;
 
 
-    if (hide_wrapper_in_default_mode && !inEditMode) {
-      return this.renderChildren();
-    }
+    // if (hide_wrapper_in_default_mode && !inEditMode) {
+    //   return this.renderChildren();
+    // }
 
 
     const settingsViewContainer = getSettingsViewContainer();
@@ -2964,8 +2965,13 @@ class EditorComponent extends ObjectEditable {
 
     const {
       style: otherRenderStyles,
+      hide_wrapper_in_default_mode,
       ...otherRenderProps
     } = this.getRenderProps();
+
+    if (hide_wrapper_in_default_mode && !inEditMode) {
+      return this.renderChildren();
+    }
 
     return <Fragment>
 
@@ -3110,8 +3116,14 @@ class EditorComponent extends ObjectEditable {
 
   }
 
+
   getRootElement() {
-    return "div";
+
+    const {
+      tag,
+    } = this.getComponentProps(this);
+
+    return tag || "div";
   }
 
 

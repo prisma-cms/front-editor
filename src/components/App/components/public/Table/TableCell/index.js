@@ -16,6 +16,7 @@ export class TableCell extends EditorComponent {
   }
 
   static propTypes = {
+    // eslint-disable-next-line react/forbid-foreign-prop-types
     ...EditorComponent.propTypes,
     tag: PropTypes.oneOf(["td", "th"]).isRequired,
   }
@@ -87,20 +88,20 @@ export class TableCell extends EditorComponent {
   }
 
 
-  renderChildren() {
+  // renderChildren() {
 
-    const {
-    } = this.context;
+  //   const {
+  //   } = this.context;
 
-    const {
-    } = this.getEditorContext();
+  //   const {
+  //   } = this.getEditorContext();
 
-    const {
-      ...other
-    } = this.getComponentProps(this);
+  //   const {
+  //     ...other
+  //   } = this.getComponentProps(this);
 
-    return super.renderChildren();
-  }
+  //   return super.renderChildren();
+  // }
 
 }
 

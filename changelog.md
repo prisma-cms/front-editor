@@ -1,3 +1,8 @@
+2.8.3
+=================================
+- Fix hide_wrapper_in_default_mode
+- Added getRootElement() 
+
 2.8.2
 =================================
 - Added Select component
