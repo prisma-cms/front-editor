@@ -1271,6 +1271,21 @@ class EditorComponent extends ObjectEditable {
   }
 
 
+  findInParent(parent, condition) {
+
+    if (!parent) {
+      return false;
+    }
+
+    if (condition(parent)) {
+      return true;
+    }
+
+    // else 
+    return parent.props.parent ? this.findInParent(parent.props.parent, condition) : false;
+  }
+  
+
   onDragOver(event) {
 
     const {

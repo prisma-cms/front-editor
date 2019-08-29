@@ -1,3 +1,7 @@
+2.8.4
+=================================
+- Added Component::findInParent()
+
 2.8.3
 =================================
 - Fix hide_wrapper_in_default_mode
