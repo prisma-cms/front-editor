@@ -184,7 +184,7 @@ class Connector extends EditorComponent {
       type,
       name,
       value,
-      ...other
+      // ...other
     } = props;
 
 
@@ -241,6 +241,8 @@ class Connector extends EditorComponent {
         //   type = "number";
 
         //   break;
+
+        default: ;
       }
 
     }
@@ -350,9 +352,13 @@ class Connector extends EditorComponent {
                       type = "number";
                       break;
 
+                    default: ;
+
                   }
 
                   break;
+
+                default: ;
 
               }
 
@@ -429,7 +435,7 @@ class Connector extends EditorComponent {
                 type: {
                   kind: typeKind,
                   name: typeName,
-                  ofType,
+                  // ofType,
                 },
               } = n;
 
@@ -456,6 +462,8 @@ class Connector extends EditorComponent {
 
                       break;
 
+                    default: ;
+
                   }
 
                   break;
@@ -467,6 +475,8 @@ class Connector extends EditorComponent {
 
                   break;
 
+                default: ;
+
               }
 
 
@@ -477,6 +487,7 @@ class Connector extends EditorComponent {
               }
 
 
+              return null;
             });
 
           }
@@ -491,7 +502,9 @@ class Connector extends EditorComponent {
           [name]: value,
         });
 
-        break;
+      // break;
+
+      default: ;
 
     }
 
@@ -513,7 +526,7 @@ class Connector extends EditorComponent {
       queryType: {
         name: queryTypeName,
       },
-      types,
+      // types,
     } = schema;
 
     const query = schema.types.find(n => n.kind === "OBJECT" && n.name === queryTypeName);
@@ -573,7 +586,7 @@ class Connector extends EditorComponent {
 
 
 
-      filters = filters && JSON.parse(filters) || null;
+      filters = (filters && JSON.parse(filters)) || null;
 
       if (filters === "{}") {
         filters = undefined;
@@ -863,7 +876,7 @@ class Connector extends EditorComponent {
     const {
       props: componentProps,
       where: propsWhere,
-      ...other
+      // ...other
     } = this.getComponentProps(this);
 
 
@@ -959,6 +972,7 @@ class Connector extends EditorComponent {
       query={query}
       parentQuery={parentQuery}
       setFilters={filters => this.setFilters(filters)}
+      getFilters={() => this.getFilters()}
       filters={filters || []}
       {...otherProps}
       {...this.getComponentProps(this)}

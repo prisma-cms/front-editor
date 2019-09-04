@@ -1,3 +1,8 @@
+2.8.5
+=================================
+- Cleanup Connector
+- Select::getValue() return .id, if value is instanceOf Object.
+
 2.8.4
 =================================
 - Added Component::findInParent()
