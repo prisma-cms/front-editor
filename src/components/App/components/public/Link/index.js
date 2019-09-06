@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React from 'react';
+// import PropTypes from 'prop-types';
 import EditorComponent from '../..';
 
 import Icon from "material-ui-icons/Link";
@@ -80,7 +80,7 @@ class Link extends EditorComponent {
 
   renderMainView() {
 
-    const object = this.getObjectWithMutations();
+    // const object = this.getObjectWithMutations();
 
 
     // const {
@@ -88,8 +88,8 @@ class Link extends EditorComponent {
 
     let {
       to,
-      native,
-      ...props
+      // native,
+      // ...props
     } = this.getComponentProps(this);
 
 
@@ -123,7 +123,7 @@ class Link extends EditorComponent {
               to = segments.map(n => {
 
                 if (n && n.startsWith(":")) {
-                  n = object[n.replace(/^\:/, '')];
+                  n = object[n.replace(/^:/, '')];
                 }
 
                 return n;

@@ -1,3 +1,7 @@
+2.9.0
+=================================
+- Added ObjectConnector::injectWhereFromObject()
+
 2.8.7
 =================================
 - Fix ObjectImage

@@ -1,5 +1,4 @@
-import React, { Component, Fragment } from 'react';
-import PropTypes from 'prop-types';
+import React from 'react';
 
 import ConnectorIcon from "material-ui-icons/SwapHoriz";
 
@@ -12,7 +11,9 @@ import Typography from 'material-ui/Typography';
 import EditorComponent from '../../..';
 import { ConnectorContext } from '../Connector';
 import { ObjectView } from '../Viewer';
+import { ObjectContext } from '../Connector/ListView';
 
+import pathToRegexp from 'path-to-regexp';
 
 // export const ConnectorContext = createContext({});
 
@@ -110,7 +111,7 @@ class ObjectConnector extends EditorComponent {
       type,
       name,
       value,
-      ...other
+      // ...other
     } = props;
 
 
@@ -160,6 +161,8 @@ class ObjectConnector extends EditorComponent {
           </FormControl>;
           break;
 
+
+        default: ;
         // case "skip":
         // case "last":
 
@@ -269,9 +272,12 @@ class ObjectConnector extends EditorComponent {
                       type = "number";
                       break;
 
+                    default: ;
                   }
 
                   break;
+
+                default: ;
 
               }
 
@@ -333,7 +339,7 @@ class ObjectConnector extends EditorComponent {
                 type: {
                   kind: typeKind,
                   name: typeName,
-                  ofType,
+                  // ofType,
                 },
               } = n;
 
@@ -360,6 +366,8 @@ class ObjectConnector extends EditorComponent {
 
                       break;
 
+                    default: ;
+
                   }
 
                   break;
@@ -371,6 +379,8 @@ class ObjectConnector extends EditorComponent {
 
                   break;
 
+                default: ;
+
               }
 
 
@@ -381,6 +391,7 @@ class ObjectConnector extends EditorComponent {
               }
 
 
+              return null;
             });
 
           }
@@ -395,8 +406,7 @@ class ObjectConnector extends EditorComponent {
           [name]: value,
         });
 
-        break;
-
+      default: ;
     }
 
 
@@ -415,7 +425,7 @@ class ObjectConnector extends EditorComponent {
       queryType: {
         name: queryTypeName,
       },
-      types,
+      // types,
     } = schema;
 
     const query = schema.types.find(n => n.kind === "OBJECT" && n.name === queryTypeName);
@@ -548,145 +558,231 @@ class ObjectConnector extends EditorComponent {
       return null;
     }
 
-    const {
-      inEditMode,
-    } = this.getEditorContext();
-
-    const {
-      parent: offsetParent,
-    } = this.props;
-
-
-    const {
-      props: {
-        orderBy,
-        query,
-        ...otherProps
-      },
-      where: propsWhere,
-      parent,
-      ...other
-    } = this.getRenderProps();
-
-
-
-    /**
-     * Если есть родитель и у родителя имеется свойство query, то используем его
-     */
-
-    let parentQuery;
-
-    if (offsetParent) {
-
-      // const {
-      //   query,
-      // } = offsetParent.props.data.object.props;
-
-      const {
-        props: {
-          query,
-        },
-      } = offsetParent.getObjectWithMutations();
-
-
-      if (query) {
-        parentQuery = query;
-      }
-
-    }
-
-
-
-    if (!query && !parentQuery) {
-      return inEditMode ? <Typography
-        color="error"
-      >
-        Query props required
-      </Typography> : null;
-    }
-
-    // const {
-    // } = this.getComponentProps(this);
-
-    const filters = this.getFilters();
-
-
-    let where = filters;
-
-
-
-
-    if (!where || !Object.keys(where).length) {
-
-
-
-      /**
-       * Если элемент находится в роутере, пытаемся получить параметры из УРЛ.
-       * Так как у нас добавился еще объект Query, который может возникнуть между 
-       * коннектором и роутером. то роутинг смотрим и в прародителе
-       */
-      // let matchParams;
-
-
-      if (parent) {
+    return <ObjectContext.Consumer>
+      {objectContext => {
 
         const {
-          match,
-          parent: grandParent,
-        } = parent.props;
+          object,
+        } = objectContext;
 
         const {
-          params,
-        } = match || {};
+          inEditMode,
+        } = this.getEditorContext();
+
+        const {
+          parent: offsetParent,
+        } = this.props;
 
 
-        if (params) {
-          where = params;
+        const {
+          props: {
+            orderBy,
+            query,
+            ...otherProps
+          },
+          // eslint-disable-next-line no-unused-vars
+          where: propsWhere,
+          parent,
+          // ...other
+        } = this.getRenderProps();
+
+
+
+        /**
+         * Если есть родитель и у родителя имеется свойство query, то используем его
+         */
+
+        let parentQuery;
+
+        if (offsetParent) {
+
+          // const {
+          //   query,
+          // } = offsetParent.props.data.object.props;
+
+          const {
+            props: {
+              query,
+            },
+          } = offsetParent.getObjectWithMutations();
+
+
+          if (query) {
+            parentQuery = query;
+          }
+
         }
-        else if (grandParent) {
 
-          const {
-            match,
-          } = grandParent.props;
 
-          const {
-            params,
-          } = match || {};
 
-          if (params) {
-            where = {};
+        if (!query && !parentQuery) {
+          return inEditMode ? <Typography
+            color="error"
+          >
+            Query props required
+          </Typography> : null;
+        }
 
-            /**
-             * Получаем только те значения, у которых ключ - строка.
-             */
-            Object.keys(params).map(key => {
+        // const {
+        // } = this.getComponentProps(this);
 
-              if (key && typeof key === "string" && isNaN(parseInt(key))) {
-                where[key] = params[key];
+        const filters = this.getFilters();
+
+
+        let where = filters ? { ...filters } : null;
+
+
+
+
+        if (!where || !Object.keys(where).length) {
+
+
+
+          /**
+           * Если элемент находится в роутере, пытаемся получить параметры из УРЛ.
+           * Так как у нас добавился еще объект Query, который может возникнуть между 
+           * коннектором и роутером. то роутинг смотрим и в прародителе
+           */
+          // let matchParams;
+
+
+          if (parent) {
+
+            const {
+              match,
+              parent: grandParent,
+            } = parent.props;
+
+            const {
+              params,
+            } = match || {};
+
+
+            if (params) {
+              where = { ...params };
+            }
+            else if (grandParent) {
+
+              const {
+                match,
+              } = grandParent.props;
+
+              const {
+                params,
+              } = match || {};
+
+              if (params) {
+                where = {};
+
+                /**
+                 * Получаем только те значения, у которых ключ - строка.
+                 */
+                Object.keys(params).map(key => {
+
+                  if (key && typeof key === "string" && isNaN(parseInt(key))) {
+                    where[key] = params[key];
+                  }
+
+                  return null;
+
+                });
+
               }
-
-            });
+            }
 
           }
 
         }
+        
+
+        /**
+          Если есть объект where, пытаемся найти в нем условия для выборки 
+          от родительского объекта
+         */
+
+        if (where && object) {
+
+          this.injectWhereFromObject(where, object);
+
+        }
+
+
+        return <ObjectView
+          {...otherProps}
+          {...this.getComponentProps(this)}
+          key={query}
+          query={query}
+          parentQuery={parentQuery}
+          setFilters={filters => this.setFilters(filters)}
+          filters={filters || []}
+          where={where}
+          ConnectorContext={ConnectorContext}
+        >
+          {super.renderChildren()}
+        </ObjectView>
+      }}
+    </ObjectContext.Consumer>
+  }
+
+
+  /**
+   * Заменяем плейсхолдеры в условиях запроса
+   */
+  injectWhereFromObject(where, object) {
+
+    for (var i in where) {
+
+      let value = where[i];
+
+      if (value) {
+
+        if (Array.isArray(value)) {
+
+          value.map(n => this.injectWhereFromObject(n, object));
+
+        }
+        else if (typeof value === "object") {
+          this.injectWhereFromObject(value, object)
+        }
+        else if (typeof value === "string" && value.startsWith(":")) {
+
+          const toPath = pathToRegexp.compile(value);
+
+          try {
+
+            const newValue = toPath(object, { noValidate: true });
+
+            if (newValue) {
+              where[i] = newValue;
+            }
+
+
+            // console.log("url", i, newValue, value);
+
+            // if (url) {
+
+            //   const {
+            //     router: {
+            //       history,
+            //     },
+            //   } = this.context;
+
+            //   history.push(decodeURIComponent(url));
+
+            // }
+
+          }
+          catch (error) {
+            console.error(error)
+          }
+
+        }
+
       }
 
     }
 
-    return <ObjectView
-      {...otherProps}
-      {...this.getComponentProps(this)}
-      key={query}
-      query={query}
-      parentQuery={parentQuery}
-      setFilters={filters => this.setFilters(filters)}
-      filters={filters || []}
-      where={where}
-      ConnectorContext={ConnectorContext}
-    >
-      {super.renderChildren()}
-    </ObjectView>
+
   }
 
 

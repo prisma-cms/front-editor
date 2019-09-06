@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
 import EditorComponent from '../../..';
@@ -14,13 +14,14 @@ import gql from 'graphql-tag';
 import { parse } from 'graphql';
 
 import pathToRegexp from 'path-to-regexp';
-import EditableView from './EditableView';
-import DefaultView from './DefaultView';
+// import EditableView from './EditableView';
+// import DefaultView from './DefaultView';
 
 export class Editable extends ApolloEditableObject {
 
 
   static propTypes = {
+    // eslint-disable-next-line react/forbid-foreign-prop-types
     ...ApolloEditableObject.propTypes,
     show_header: PropTypes.bool.isRequired,
     extendQuery: PropTypes.func.isRequired,
@@ -97,7 +98,7 @@ export class Editable extends ApolloEditableObject {
 
         const {
           query,
-        } = props && props.props || {};
+        } = (props && props.props) || {};
 
         if (query) {
 
@@ -110,6 +111,7 @@ export class Editable extends ApolloEditableObject {
         }
       }
 
+      return null;
     });
 
 
@@ -123,8 +125,6 @@ export class Editable extends ApolloEditableObject {
       return this.addError(error);
 
     }
-
-    {/* const extendedQuery = this.extendQuery(mutation); */ }
 
     /**
     Eof Prepare Mutation
@@ -463,7 +463,7 @@ class EditableObject extends EditorComponent {
   getDirty(context) {
 
     const {
-      object,
+      // object,
       _dirty,
     } = context;
 
@@ -618,11 +618,11 @@ class EditableObject extends EditorComponent {
               // },
               selectionSet: {
                 loc: {
-                  start,
+                  // start,
                   end,
-                  source: {
-                    body,
-                  },
+                  // source: {
+                  //   body,
+                  // },
                 },
               },
               typeCondition,
@@ -636,7 +636,7 @@ class EditableObject extends EditorComponent {
               if (needAutoloadFields) {
 
                 const {
-                  kind,
+                  // kind,
                   name: {
                     value: type,
                   },
@@ -658,7 +658,7 @@ class EditableObject extends EditorComponent {
 
 
 
-                const fragmentSource = body.slice(start, end);
+                // const fragmentSource = body.slice(start, end);
 
 
 

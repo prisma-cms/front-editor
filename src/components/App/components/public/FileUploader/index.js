@@ -109,7 +109,16 @@ export class FileUploader extends EditorComponent {
 
 
         if (!updateObject) {
-          return null;
+          if (inEditMode) {
+            return <Typography
+              color="error"
+            >
+              updateObject method required
+            </Typography>
+          }
+          else {
+            return null;
+          }
         }
 
         return getEditor ? getEditor({
