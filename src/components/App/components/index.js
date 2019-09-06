@@ -1284,7 +1284,7 @@ class EditorComponent extends ObjectEditable {
     // else 
     return parent.props.parent ? this.findInParent(parent.props.parent, condition) : false;
   }
-  
+
 
   onDragOver(event) {
 
@@ -2316,7 +2316,18 @@ class EditorComponent extends ObjectEditable {
 
       case "backgroundImage":
 
-        secondary = this.renderUploader(name);
+        secondary = this.renderUploader({
+          onUpload: ({ path }) => {
+
+            const {
+              style,
+            } = this.props.props || {};
+
+            this.updateComponentProperty(name, `url(/images/big/${path})`, style || {
+            });
+
+          },
+        });
 
         break;
 
@@ -2449,38 +2460,30 @@ class EditorComponent extends ObjectEditable {
   }
 
 
-  renderUploader(name, props = {}) {
+  renderUploader(props = {}) {
 
     const {
-      onUpload = ({ path }) => {
-
-        const {
-          style,
-        } = this.props.props || {};
-
-        this.updateComponentProperty(name, `url(/images/big/${path})`, style || {
-        });
-
-      },
+      onUpload,
       ...other
     } = props;
 
     return <Uploader
       onUpload={response => {
 
-        // const {
-        //   path,
-        // } = response.data.singleUpload || {};
+        let result;
 
         const {
-          singleUpload: result,
+          singleUpload,
+          multipleUpload,
         } = response.data;
 
+        result = multipleUpload || singleUpload;
+
         if (!result) {
-          throw new Error("Error whilte uploading");
+          throw new Error("Error while uploading");
         }
 
-        onUpload(result);
+        return onUpload ? onUpload(result) : onUpload;
 
       }}
       {...other}

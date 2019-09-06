@@ -170,7 +170,7 @@ class Tag extends EditorComponent {
 
           return null;
 
-          default:;
+        default: ;
       }
 
       if (inEditMode) {
@@ -215,7 +215,7 @@ class Tag extends EditorComponent {
 
             break;
 
-          default:;
+          default: ;
         }
 
 
@@ -523,8 +523,8 @@ class Tag extends EditorComponent {
         </div>
 
         <div>
-          {this.renderUploader(name, {
-            onUpload: ({path}) => {
+          {this.renderUploader({
+            onUpload: ({ path }) => {
               this.updateComponentProperty(name, `/images/big/${path}`);
             },
           })}

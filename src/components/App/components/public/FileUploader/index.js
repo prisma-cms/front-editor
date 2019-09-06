@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-  
+
 import Typography from 'material-ui/Typography';
 import EditorComponent from '../..';
 import { EditableObjectContext } from '../../../context';
@@ -12,9 +12,12 @@ export class FileUploader extends EditorComponent {
 
   static defaultProps = {
     ...EditorComponent.defaultProps,
+    label: undefined,
+    helperText: undefined,
     directory: undefined,
     filename_as_name: false,
     accept: undefined,
+    multiple: false,
   }
 
 
@@ -72,6 +75,7 @@ export class FileUploader extends EditorComponent {
       accept,
       directory,
       filename_as_name,
+      multiple,
       ...other
     } = this.getComponentProps(this);
 
@@ -116,7 +120,7 @@ export class FileUploader extends EditorComponent {
               label,
               error,
               // errors,
-              helperText,
+              // helperText,
               // onChange,
             } = props;
 
@@ -132,34 +136,61 @@ export class FileUploader extends EditorComponent {
                 : null
               }
 
-              {this.renderUploader(name, {
+              {this.renderUploader({
                 accept,
                 directory,
-                onUpload: ({
-                  id,
-                  filename,
-                }) => {
+                multiple,
+                onUpload: (result) => {
 
-                  let data = {
-                    [name]: {
-                      connect: {
-                        id,
-                      },
-                    },
-                  };
-
-                  if (filename_as_name) {
-                    Object.assign(data, {
-                      name: filename,
-                    });
+                  if (!result) {
+                    return;
                   }
 
+                  let data;
+
+                  if (Array.isArray(result)) {
+
+                    data = {
+                      [name]: {
+                        connect: result.map(n => ({
+                          id: n.id,
+                        })),
+                      },
+                    };
+
+                  }
+                  else {
+
+                    const {
+                      id,
+                      path,
+                    } = result;
+
+                    if (filename_as_name) {
+                      data = {
+                        [name]: path,
+                      };
+                    }
+                    else {
+                      data = {
+                        [name]: {
+                          connect: {
+                            id,
+                          },
+                        },
+                      };
+                    }
+
+                  }
+
+
                   updateObject(data);
- 
+
                 },
+                ...other,
               })}
 
-              {helperText ?
+              {/* {helperText ?
                 <Typography
                   variant="caption"
                   color={error ? "error" : undefined}
@@ -167,7 +198,7 @@ export class FileUploader extends EditorComponent {
                   {helperText}
                 </Typography>
                 : null
-              }
+              } */}
 
             </Fragment>
 
