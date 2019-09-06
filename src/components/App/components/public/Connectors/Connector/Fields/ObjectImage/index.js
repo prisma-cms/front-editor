@@ -1,5 +1,4 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React from 'react';
 
 import Icon from "material-ui-icons/Image";
 import EditorComponent from '../../../../..';
@@ -12,7 +11,7 @@ class ObjectImage extends EditorComponent {
 
   static defaultProps = {
     ...EditorComponent.defaultProps,
-    field_name: "image",
+    name: "image",
     type: 'thumb',
     style: {
       ...EditorComponent.defaultProps.style,
@@ -68,13 +67,25 @@ class ObjectImage extends EditorComponent {
 
     // {...this.getRenderProps()}
 
+    let {
+      name,
+
+      // Deprecated
+      field_name,
+
+      ...other
+    } = this.getComponentProps(this);
+
+    if (name === undefined) {
+      name = field_name;
+    }
+
 
     return <ObjectContext.Consumer>
       {context => {
 
         const {
           object,
-          ...other
         } = context;
 
         if (!object) {
@@ -82,7 +93,7 @@ class ObjectImage extends EditorComponent {
         }
 
         const {
-          image,
+          [name]: image,
         } = object;
 
 
@@ -96,7 +107,7 @@ class ObjectImage extends EditorComponent {
 
 
         return <Image
-          {...this.getComponentProps(this)}
+          {...other}
           src={image}
         >
         </Image>;
