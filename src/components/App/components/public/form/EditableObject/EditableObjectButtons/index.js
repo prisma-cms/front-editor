@@ -1,5 +1,4 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types'; 
+import React from 'react';
 
 import EditorComponent from '../../../..';
 import { EditableObjectContext } from '../../../../../context';
@@ -16,13 +15,13 @@ class EditableObjectButtons extends EditorComponent {
   static Name = "EditableObjectButtons"
   static help_url = "";
 
-  onBeforeDrop = () => {
+  // onBeforeDrop = () => {
 
-  }
+  // }
 
-  canBeDropped = (dragItem) => {
-    return false;
-  }
+  // canBeDropped = (dragItem) => {
+  //   return false;
+  // }
 
 
   renderPanelView(content) {

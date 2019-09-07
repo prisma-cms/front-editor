@@ -1,3 +1,4 @@
+/* eslint-disable react/forbid-foreign-prop-types */
 import React from 'react';
 import PropTypes from 'prop-types';
 
@@ -14,6 +15,10 @@ import gql from 'graphql-tag';
 import { parse } from 'graphql';
 
 import pathToRegexp from 'path-to-regexp';
+import { IconButton, CircularProgress } from 'material-ui';
+
+import DeleteIcon from 'material-ui-icons/Delete';
+
 // import EditableView from './EditableView';
 // import DefaultView from './DefaultView';
 
@@ -27,11 +32,16 @@ export class Editable extends ApolloEditableObject {
     extendQuery: PropTypes.func.isRequired,
     getQueryNameFromQuery: PropTypes.func.isRequired,
     query_components: PropTypes.array.isRequired,
+    DeleteIcon: PropTypes.func.isRequired,
+    deletable_object: PropTypes.bool.isRequired,
+    on_delete_redirect_url: PropTypes.string,
   }
 
   static defaultProps = {
     ...ApolloEditableObject.defaultProps,
     show_header: true,
+    DeleteIcon,
+    deletable_object: false,
   };
 
 
@@ -67,7 +77,7 @@ export class Editable extends ApolloEditableObject {
 
 
 
-  async mutate(props) {
+  async mutate(props, method) {
 
     /**
         Prepare Mutation
@@ -115,8 +125,11 @@ export class Editable extends ApolloEditableObject {
     });
 
 
-    let mutation = objectId ? queries.update : queries.create;
+    if (!method) {
+      method = objectId ? "update" : "create";
+    }
 
+    let mutation = queries && method ? queries[method] : null;
 
     if (!mutation) {
 
@@ -197,9 +210,100 @@ export class Editable extends ApolloEditableObject {
   }
 
 
+  getButtons() {
+
+    const {
+      id: objectId,
+    } = this.getObject() || {};
+
+    let buttons = super.getButtons() || [];
+
+    if (this.isInEditMode() && objectId) {
+      buttons.push(this.renderDeleteButton());
+    }
+
+    return buttons;
+  }
+
+
   bindGetButtons = () => () => {
 
     return this.getButtons();
+  }
+
+
+  renderDeleteButton() {
+
+    const {
+      DeleteIcon,
+      deletable_object,
+    } = this.props;
+
+    const {
+      loading,
+    } = this.state;
+
+
+    return deletable_object ?
+      <IconButton
+        key="delete"
+        onClick={event => {
+          this.delete();
+        }}
+        disabled={loading}
+      >
+        {loading
+          ?
+          <CircularProgress />
+          :
+          <DeleteIcon
+          />
+        }
+      </IconButton>
+      : null;
+  }
+
+
+  delete() {
+
+    const {
+      id: objectId,
+    } = this.getObject() || {};
+
+    if (objectId) {
+
+      if (window.confirm("Удалить данный объект?")) {
+
+        return this.mutate({
+          variables: {
+            where: {
+              id: objectId,
+            },
+          },
+        }, "delete")
+          .then(r => {
+
+            const {
+              on_delete_redirect_url,
+            } = this.props;
+
+            if (on_delete_redirect_url) {
+
+              const {
+                router: {
+                  history,
+                },
+              } = this.context;
+
+              history.push(decodeURIComponent(on_delete_redirect_url));
+
+            }
+
+            return r;
+          });
+      }
+    }
+
   }
 
 
@@ -241,6 +345,11 @@ export class Editable extends ApolloEditableObject {
 class EditableObject extends EditorComponent {
 
 
+  static propTypes = {
+    ...EditorComponent.propTypes,
+    deletable_object: PropTypes.bool.isRequired,
+  }
+
   static defaultProps = {
     ...EditorComponent.defaultProps,
     style: {
@@ -252,11 +361,17 @@ class EditableObject extends EditorComponent {
      * УРЛ, куда редиректить при создании нового объекта
      */
     on_create_redirect_url: undefined,
+
+    /**
+     * Куда редиректить при успешном удалении элемента
+     */
+    on_delete_redirect_url: undefined,
     cache_key: undefined,
     cache_key_prefix: undefined,
     new_object_cache_key: undefined,
     show_header: true,
     hide_wrapper_in_default_mode: true,
+    deletable_object: false,
   }
 
   static Name = "EditableObject"

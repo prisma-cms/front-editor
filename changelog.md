@@ -1,3 +1,7 @@
+2.10.0
+=================================
+- Added EditableObject::delete()
+
 2.9.0
 =================================
 - Added ObjectConnector::injectWhereFromObject()
