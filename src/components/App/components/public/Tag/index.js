@@ -136,7 +136,79 @@ class Tag extends EditorComponent {
   }
 
 
-  renderMainView() {
+  tagOnInput(event) {
+
+    // event.preventDefault();
+    // event.stopPropagation();
+
+    // console.log("TagEvent tagOnInput", event);
+
+    const node = event.target;
+
+    const content = this.makeNewContent(node);
+
+    const {
+      components,
+    } = content;
+
+
+    Object.assign(this.state, {
+      newContent: {
+        components,
+      },
+    });
+
+  }
+
+
+  tagOnFocus(event) {
+
+    // console.log("TagEvent tagOnFocus", event);
+
+    if (this.isActive()) {
+      this.setState({
+        focused: true,
+      });
+    }
+
+  }
+
+
+  tagOnBlur(event) {
+    
+    // console.log("TagEvent tagOnBlur", event);
+
+    // if (activeItem === this) {
+    if (this.isActive()) {
+
+      const {
+        newContent,
+      } = this.state;
+
+      if (newContent) {
+
+        const {
+          components,
+        } = newContent;
+
+        this.setComponents(components);
+
+        this.setState({
+          newContent: null,
+        })
+
+      }
+
+    }
+
+    this.setState({
+      focused: false,
+    });
+
+  }
+
+
+  renderMainView(options = {}) {
 
 
     const {
@@ -158,8 +230,6 @@ class Tag extends EditorComponent {
     }
 
     else {
-
-      let options;
 
       switch (tag.toLowerCase) {
 
@@ -226,84 +296,14 @@ class Tag extends EditorComponent {
           contentEditable: this.isActive(),
           suppressContentEditableWarning: true,
           style,
-          onInput: event => {
-
-            const node = event.target;
-
-            const content = this.makeNewContent(node);
-
-            const {
-              components,
-            } = content;
-
-
-            Object.assign(this.state, {
-              newContent: {
-                components,
-              },
-            });
-
-          },
-          onFocus: event => {
-
-
-
-            // const {
-            //   activeItem,
-            // } = this.getEditorContext();
-
-            // if (activeItem && activeItem === this) {
-            //   this.setState({
-            //     focused: true,
-            //   });
-            // }
-
-            if (this.isActive()) {
-              this.setState({
-                focused: true,
-              });
-            }
-
-          },
-          onBlur: event => {
-
-
-
-            // const {
-            //   activeItem,
-            // } = this.getEditorContext();
-
-
-            // if (activeItem === this) {
-            if (this.isActive()) {
-
-              const {
-                newContent,
-              } = this.state;
-
-              if (newContent) {
-
-                const {
-                  components,
-                } = newContent;
-
-                this.setComponents(components);
-
-                this.setState({
-                  newContent: null,
-                })
-
-              }
-
-            }
-
-            this.setState({
-              focused: false,
-            });
-
-          },
+          onInput: event => this.tagOnInput(event),
+          onFocus: event => this.tagOnFocus(event),
+          onBlur: event => this.tagOnBlur(event),
+          ...options,
         }
       }
+
+      // console.log("options2", options);
 
       return super.renderMainView(options);
     }

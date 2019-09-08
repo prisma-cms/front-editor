@@ -68,6 +68,7 @@ import DefaultValue from './components/public/Connectors/Connector/Fields/NamedF
 import CurrentUser from './components/public/CurrentUser';
 import FileUploader from './components/public/FileUploader';
 import Select from './components/public/form/Select';
+import ContentEditor from './components/public/form/ContentEditor';
 
 const styles = theme => {
 
@@ -289,6 +290,7 @@ class FrontEditor extends Component {
       SudoOnly,
       CreatedBy,
       Content,
+      ContentEditor,
       Link,
       Button,
       Switch,
