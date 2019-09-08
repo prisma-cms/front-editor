@@ -141,9 +141,11 @@ class Tag extends EditorComponent {
     // event.preventDefault();
     // event.stopPropagation();
 
-    // console.log("TagEvent tagOnInput", event);
-
     const node = event.target;
+
+    // console.log("TagEvent tagOnInput", event);
+    // console.log("TagEvent event.target", event.target);
+    // console.log("TagEvent event.currentTarget", event.currentTarget);
 
     const content = this.makeNewContent(node);
 
@@ -152,11 +154,27 @@ class Tag extends EditorComponent {
     } = content;
 
 
+    this.onChangeContent(components);
+
+  }
+
+
+  /**
+   * Измененный контент (конечная JSON-структура)
+   */
+  onChangeContent(components) {
+
     Object.assign(this.state, {
       newContent: {
         components,
       },
     });
+
+    // this.setState({
+    //   newContent: {
+    //     components,
+    //   },
+    // });
 
   }
 
@@ -175,35 +193,45 @@ class Tag extends EditorComponent {
 
 
   tagOnBlur(event) {
-    
+
     // console.log("TagEvent tagOnBlur", event);
 
     // if (activeItem === this) {
     if (this.isActive()) {
 
-      const {
-        newContent,
-      } = this.state;
-
-      if (newContent) {
-
-        const {
-          components,
-        } = newContent;
-
-        this.setComponents(components);
-
-        this.setState({
-          newContent: null,
-        })
-
-      }
+      this.saveChanges();
 
     }
 
     this.setState({
       focused: false,
     });
+
+  }
+
+
+  /**
+   * Сохраняем измененный контент (обновляем родительский объект)
+   */
+  saveChanges() {
+
+    const {
+      newContent,
+    } = this.state;
+
+    if (newContent) {
+
+      const {
+        components,
+      } = newContent;
+
+      this.setComponents(components);
+
+      this.setState({
+        newContent: null,
+      })
+
+    }
 
   }
 
@@ -303,7 +331,7 @@ class Tag extends EditorComponent {
         }
       }
 
-      // console.log("options2", options);
+      // console.log("options", options);
 
       return super.renderMainView(options);
     }

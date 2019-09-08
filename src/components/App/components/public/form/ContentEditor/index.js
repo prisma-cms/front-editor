@@ -28,6 +28,7 @@ import FormatIndentIncreaseIcon from "material-ui-icons/FormatIndentIncrease";
 import FormatIndentDecreaseIcon from "material-ui-icons/FormatIndentDecrease";
 import RedoIcon from "material-ui-icons/Redo";
 import UndoIcon from "material-ui-icons/Undo";
+import SaveIcon from "material-ui-icons/Save";
 
 // const allMethods = [
 //   "backColor",
@@ -205,9 +206,11 @@ class TagEditor extends Tag {
 
   componentDidMount() {
 
+    this.addEventListeners();
+
     if (!this.readOnly()) {
 
-      document.addEventListener("selectionchange", this.onSelectionChange);
+      this.setActiveItem(this);
 
     }
 
@@ -217,11 +220,48 @@ class TagEditor extends Tag {
 
   componentWillUnmount() {
 
-    document.removeEventListener("selectionchange", this.onSelectionChange);
+    this.removeEventListeners();
 
     super.componentWillUnmount && super.componentWillUnmount();
   }
 
+
+  addEventListeners() {
+
+    if (!this.readOnly()) {
+
+      const {
+        container,
+      } = this;
+
+      if (container) {
+        container.addEventListener("DOMSubtreeModified", this.onDOMSubtreeModified);
+      }
+
+      document.addEventListener("selectionchange", this.onSelectionChange);
+
+    }
+
+    super.addEventListeners && super.addEventListeners();
+
+  }
+
+
+  removeEventListeners() {
+
+    const {
+      container,
+    } = this;
+
+    if (container) {
+      container.removeEventListener("DOMSubtreeModified", this.onDOMSubtreeModified);
+    }
+
+    document.removeEventListener("selectionchange", this.onSelectionChange);
+
+    super.removeEventListeners && super.removeEventListeners();
+
+  }
 
   updateObject(data) {
 
@@ -234,6 +274,50 @@ class TagEditor extends Tag {
   }
 
 
+  onDOMSubtreeModified = (event) => {
+
+    const node = event.currentTarget;
+
+    console.log("onDOMSubtreeModified event", event);
+
+    console.log("onDOMSubtreeModified event.target", event.target);
+    console.log("onDOMSubtreeModified event.currentTarget", event.currentTarget);
+    console.log("onDOMSubtreeModified node", node);
+
+    const content = this.makeNewContent(node);
+
+    const {
+      components,
+    } = content;
+
+    console.log("onDOMSubtreeModified node", components);
+
+    this.onChangeContent(components);
+
+  }
+
+
+  onChangeContent(components) {
+
+    this.setState({
+      newContent: {
+        components,
+      },
+    });
+
+  }
+
+
+  /**
+   * Для отлавливания изменений мы используем не событие oninput,
+   * а DOMSubtreeModified,
+   * поэтому перехватываем родительский обработчик
+   */
+  tagOnInput(event) {
+
+    return false;
+  }
+
 
   tagOnKeyDown(event) {
 
@@ -244,9 +328,10 @@ class TagEditor extends Tag {
 
     const {
       hasSelection,
+      newContent,
     } = this.state;
 
-    return [
+    const buttons = [
       {
         key: "bold",
         title: "Жирный текст",
@@ -362,6 +447,22 @@ class TagEditor extends Tag {
 
     ];
 
+    if (newContent) {
+      buttons.push({
+        key: "save",
+        title: "Сохранить изменения",
+        // disabled: hasSelection ? false : true,
+        onClick: event => this.saveChanges(),
+        icon: <SaveIcon
+          style={{
+            color: "red",
+          }}
+        />,
+      });
+    };
+
+    return buttons;
+
   }
 
 
@@ -437,11 +538,20 @@ class TagEditor extends Tag {
         //   border: "1px dotted #ddd",
         //   ...options.style,
         // },
-        onInput: event => this.tagOnInput(event),
+        // onInput: event => this.tagOnInput(event),
         onFocus: event => this.tagOnFocus(event),
         onBlur: event => this.tagOnBlur(event),
         onKeyDown: event => this.tagOnKeyDown(event),
-        ref: el => this.container = el,
+        // onDOMSubtreeModified: event => {
+        //   console.log("DOMSubtreeModified event", event);
+        // },
+        ref: el => {
+          this.container = el;
+
+          // if (el) {
+          //   el.addEventListener("DOMSubtreeModified", a => console.log("DOMSubtreeModified", a));
+          // }
+        },
         ...options,
       }
 
@@ -716,7 +826,7 @@ export class ContentEditor extends EditorComponent {
           key={editable.toString()}
           updateObject={({ components }) => {
 
-            // console.log("components", components);
+            console.log("components", components);
 
             updateObject({
               [name]: components,
