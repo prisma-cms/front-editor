@@ -415,6 +415,8 @@ class Tag extends EditorComponent {
       components,
     });
 
+    console.log("makeNewContent components", components);
+
     return content;
   }
 
@@ -482,7 +484,11 @@ class Tag extends EditorComponent {
 
             try {
 
+              console.log("CSSTransform style", value);
+
               value = value ? CSSTransform(value) : undefined;
+
+              console.log("CSSTransform new style", value);
 
             }
             catch (error) {

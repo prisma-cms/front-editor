@@ -235,7 +235,33 @@ class TagEditor extends Tag {
       } = this;
 
       if (container) {
-        container.addEventListener("DOMSubtreeModified", this.onDOMSubtreeModified);
+        // container.addEventListener("DOMSubtreeModified", this.onDOMSubtreeModified);
+
+        const config = {
+          attributes: true,
+          childList: true,
+          subtree: true,
+          characterData: true,
+        };
+
+
+        // Create an observer instance linked to the callback function
+        // const observer = new MutationObserver(this.onDOMSubtreeModified);
+        const observer = new MutationObserver(() => {
+
+          const content = this.makeNewContent(container);
+
+          const {
+            components,
+          } = content;
+
+          this.onChangeContent(components);
+
+        });
+
+        // Start observing the target node for configured mutations
+        observer.observe(container, config);
+
       }
 
       document.addEventListener("selectionchange", this.onSelectionChange);
@@ -254,7 +280,7 @@ class TagEditor extends Tag {
     } = this;
 
     if (container) {
-      container.removeEventListener("DOMSubtreeModified", this.onDOMSubtreeModified);
+      // container.removeEventListener("DOMSubtreeModified", this.onDOMSubtreeModified);
     }
 
     document.removeEventListener("selectionchange", this.onSelectionChange);
@@ -274,27 +300,27 @@ class TagEditor extends Tag {
   }
 
 
-  onDOMSubtreeModified = (event) => {
+  // onDOMSubtreeModified = (event, observer) => {
 
-    const node = event.currentTarget;
+  //   const node = event.currentTarget;
 
-    console.log("onDOMSubtreeModified event", event);
+  //   // console.log("onDOMSubtreeModified event", event);
 
-    console.log("onDOMSubtreeModified event.target", event.target);
-    console.log("onDOMSubtreeModified event.currentTarget", event.currentTarget);
-    console.log("onDOMSubtreeModified node", node);
+  //   // console.log("onDOMSubtreeModified event.target", event.target);
+  //   // console.log("onDOMSubtreeModified event.currentTarget", event.currentTarget);
+  //   // console.log("onDOMSubtreeModified node", node);
 
-    const content = this.makeNewContent(node);
+  //   const content = this.makeNewContent(node);
 
-    const {
-      components,
-    } = content;
+  //   const {
+  //     components,
+  //   } = content;
 
-    console.log("onDOMSubtreeModified node", components);
+  //   // console.log("onDOMSubtreeModified node", components);
 
-    this.onChangeContent(components);
+  //   this.onChangeContent(components);
 
-  }
+  // }
 
 
   onChangeContent(components) {
@@ -826,7 +852,7 @@ export class ContentEditor extends EditorComponent {
           key={editable.toString()}
           updateObject={({ components }) => {
 
-            console.log("components", components);
+            // console.log("components", components);
 
             updateObject({
               [name]: components,
