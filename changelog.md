@@ -1,5 +1,8 @@
+2.11.0
 =================================
 - Added ContentEditor
+- Tag Component code refactoring
+- Added Component::inEditMode()
 
 2.10.0
 =================================

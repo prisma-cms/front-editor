@@ -2,12 +2,9 @@
 import React, { Component } from 'react';
 import PropTypes from "prop-types";
 
-import Typography from 'material-ui/Typography';
-
 import { HtmlTag } from '../Tag';
 import EditorComponent from '../..';
 import EditableObject from '../form/EditableObject';
-import { EditableObjectContext } from '../../../context';
 
 import withStyles from 'material-ui/styles/withStyles';
 import IconButton from 'material-ui/IconButton';
@@ -31,7 +28,7 @@ import UndoIcon from "material-ui-icons/Undo";
 import SaveIcon from "material-ui-icons/Save";
 
 
-class TagEditor extends HtmlTag {
+export class TagEditor extends HtmlTag {
 
   static propTypes = {
     ...HtmlTag.propTypes,
@@ -589,8 +586,7 @@ export class ContentProxy extends Component {
 
 }
 
-
-const ContentProxyStyled = withStyles({
+export const tagEditorStyles = {
   root: {
     // resize: "vertical",
     // height: 300,
@@ -614,7 +610,10 @@ const ContentProxyStyled = withStyles({
     padding: 3,
     // flex: 1,
   },
-})(ContentProxy);
+}
+
+
+export const ContentProxyStyled = withStyles(tagEditorStyles)(ContentProxy);
 
 
 export class ContentEditor extends EditorComponent {

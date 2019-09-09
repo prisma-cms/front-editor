@@ -607,16 +607,16 @@ export class Tag extends HtmlTag {
     return inEditMode ? true : false;
   }
 
-  updateContent(node,
-    content = {
-      name: "Tag",
-      component: "Tag",
-      props: {},
-      components: [],
-    }) {
+  // updateContent(node,
+  //   content = {
+  //     name: "Tag",
+  //     component: "Tag",
+  //     props: {},
+  //     components: [],
+  //   }) {
 
-    return super.updateContent(node, content);
-  }
+  //   return super.updateContent(node, content);
+  // }
 
 
   prepareRootElementProps(props) {
