@@ -6,9 +6,10 @@ import Icon from "material-ui-icons/Title";
 
 import CSSTransform from "./CSSTransform";
 
-class Tag extends EditorComponent {
 
-  static Name = "Tag"
+export class HtmlTag extends EditorComponent {
+
+  static Name = "HtmlTag"
   static help_url = "https://front-editor.prisma-cms.com/topics/html-tag.html";
 
   static defaultProps = {
@@ -19,6 +20,8 @@ class Tag extends EditorComponent {
     // displayType: "span",
     // display: "inline-block",
     // contentEditable: true,
+    render_badge: false,
+    can_be_edited: false,
   }
 
 
@@ -87,17 +90,10 @@ class Tag extends EditorComponent {
 
   renderPanelView(content) {
 
-    const {
-      classes,
-    } = this.getEditorContext();
-
-    return super.renderPanelView(
-      content ||
-      <div
-        className={classes.panelButton}
-      >
-        <Icon /> HTML Tag
-    </div>);
+    return content ?
+      super.renderPanelView(
+        content) :
+      null;
   }
 
 
@@ -183,11 +179,11 @@ class Tag extends EditorComponent {
 
     // console.log("TagEvent tagOnFocus", event);
 
-    if (this.isActive()) {
-      this.setState({
-        focused: true,
-      });
-    }
+    // if (this.isActive()) {
+    this.setState({
+      focused: true,
+    });
+    // }
 
   }
 
@@ -197,11 +193,11 @@ class Tag extends EditorComponent {
     // console.log("TagEvent tagOnBlur", event);
 
     // if (activeItem === this) {
-    if (this.isActive()) {
+    // if (this.isActive()) {
 
-      this.saveChanges();
+    this.saveChanges();
 
-    }
+    // }
 
     this.setState({
       focused: false,
@@ -236,13 +232,22 @@ class Tag extends EditorComponent {
   }
 
 
+  /**
+   * Этот тег не должен редактироваться во фронт-редакторе
+   */
+  editable() {
+
+    return false;
+  }
+
+
   renderMainView(options = {}) {
 
 
-    const {
-      inEditMode,
-      // activeItem,
-    } = this.getEditorContext();
+    // const {
+    //   inEditMode,
+    //   // activeItem,
+    // } = this.getEditorContext();
 
     const object = this.getObjectWithMutations();
 
@@ -271,15 +276,8 @@ class Tag extends EditorComponent {
         default: ;
       }
 
-      if (inEditMode) {
-
-
-        // const {
-        //   components,
-        //   newContent,
-        //   focused,
-        // } = this.state;
-
+      // if (inEditMode) {
+      if (this.editable()) {
 
         const {
           style: baseStyle,
@@ -292,15 +290,6 @@ class Tag extends EditorComponent {
           // padding: 3,
           ...baseStyle,
         }
-
-
-        // if (focused) {
-
-        //   Object.assign(style, {
-        //     border: "none",
-        //   });
-
-        // }
 
 
         switch (tag) {
@@ -329,9 +318,11 @@ class Tag extends EditorComponent {
           onBlur: event => this.tagOnBlur(event),
           ...options,
         }
+
+        // console.log("options", options);
+
       }
 
-      // console.log("options", options);
 
       return super.renderMainView(options);
     }
@@ -415,21 +406,22 @@ class Tag extends EditorComponent {
       components,
     });
 
-    console.log("makeNewContent components", components);
+    // console.log("makeNewContent components", components);
 
     return content;
   }
 
 
 
-  updateContent(node) {
-
-    let content = {
-      name: "Tag",
-      component: "Tag",
+  updateContent(node,
+    content = {
+      name: "HtmlTag",
+      component: "HtmlTag",
       props: {},
       components: [],
-    };
+    }) {
+
+
 
     const nodes = node.childNodes;
 
@@ -462,6 +454,12 @@ class Tag extends EditorComponent {
 
           //   break;
 
+          case "props":
+          case "object":
+          case "data":
+
+            return null;
+
           case "contenteditable":
 
             name = "contentEditable";
@@ -484,11 +482,11 @@ class Tag extends EditorComponent {
 
             try {
 
-              console.log("CSSTransform style", value);
+              // console.log("CSSTransform style", value);
 
               value = value ? CSSTransform(value) : undefined;
 
-              console.log("CSSTransform new style", value);
+              // console.log("CSSTransform new style", value);
 
             }
             catch (error) {
@@ -512,7 +510,7 @@ class Tag extends EditorComponent {
 
       nodes.forEach(node => {
 
-        components.push(this.updateContent(node, {}));
+        components.push(this.updateContent(node));
 
       });
 
@@ -570,6 +568,68 @@ class Tag extends EditorComponent {
 
 
     return field;
+  }
+
+}
+
+
+export class Tag extends HtmlTag {
+
+  static Name = "Tag";
+
+  static defaultProps = {
+    ...HtmlTag.defaultProps,
+    render_badge: true,
+    can_be_edited: true,
+  }
+
+
+  renderPanelView(content) {
+
+    const {
+      classes,
+    } = this.getEditorContext();
+
+    return super.renderPanelView(
+      content ||
+      <div
+        className={classes.panelButton}
+      >
+        <Icon /> Tag
+    </div>);
+  }
+
+
+  editable() {
+
+    const inEditMode = this.inEditorMode();
+
+    return inEditMode ? true : false;
+  }
+
+  updateContent(node,
+    content = {
+      name: "Tag",
+      component: "Tag",
+      props: {},
+      components: [],
+    }) {
+
+    return super.updateContent(node, content);
+  }
+
+
+  prepareRootElementProps(props) {
+
+    const {
+      initialContent,
+      read_only,
+      updateObject,
+      editable,
+      ...other
+    } = super.prepareRootElementProps(props);
+
+    return other;
   }
 
 }

@@ -76,6 +76,16 @@ class EditorComponent extends ObjectEditable {
      * Не рендерить враппер в основном режиме
      */
     hide_wrapper_in_default_mode: PropTypes.bool.isRequired,
+
+    /**
+     * Рендерить ли бейджик
+     */
+    render_badge: PropTypes.bool.isRequired,
+
+    /**
+     * Может ли быть редактируемым во фронт-редакторе
+     */
+    can_be_edited: PropTypes.bool.isRequired,
   };
 
 
@@ -132,6 +142,8 @@ class EditorComponent extends ObjectEditable {
     lang: undefined,
     tag: undefined,
     hide_wrapper_in_default_mode: false,
+    render_badge: true,
+    can_be_edited: true,
   }
 
 
@@ -1387,9 +1399,12 @@ class EditorComponent extends ObjectEditable {
 
 
     const {
-      inEditMode,
+      // inEditMode,
       classes,
     } = this.getEditorContext();
+
+
+    const inEditMode = this.inEditorMode();
 
 
     let {
@@ -2747,20 +2762,14 @@ class EditorComponent extends ObjectEditable {
       // hoveredItem,
       // settingsViewContainer,
       getSettingsViewContainer,
-      inEditMode,
+      // inEditMode,
       classes,
       // onDragStart,
       Components,
     } = this.getEditorContext();
 
-    // const {
-    //   hide_wrapper_in_default_mode,
-    // } = this.props;
 
-
-    // if (hide_wrapper_in_default_mode && !inEditMode) {
-    //   return this.renderChildren();
-    // }
+    const inEditMode = this.inEditorMode();
 
 
     const settingsViewContainer = getSettingsViewContainer();
@@ -3029,7 +3038,11 @@ class EditorComponent extends ObjectEditable {
 
   renderBadge(badge) {
 
-    if (this.isVoidElement()) {
+    const {
+      render_badge,
+    } = this.props;
+
+    if (this.isVoidElement() || !render_badge) {
       return null;
     }
 
@@ -3205,8 +3218,11 @@ class EditorComponent extends ObjectEditable {
     const {
       Components,
       TemplateRenderer,
-      inEditMode,
+      // inEditMode,
     } = this.getEditorContext();
+
+
+    const inEditMode = this.inEditorMode();
 
     const {
       // mutate,
@@ -3314,6 +3330,21 @@ class EditorComponent extends ObjectEditable {
       });
 
     }
+
+  }
+
+
+  inEditorMode() {
+
+    const {
+      inEditMode,
+    } = this.getEditorContext();
+
+    const {
+      can_be_edited,
+    } = this.props;
+
+    return inEditMode && can_be_edited ? true : false;
 
   }
 

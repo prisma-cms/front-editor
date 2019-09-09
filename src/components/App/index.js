@@ -33,7 +33,7 @@ import Link from './components/public/Link';
 import { EditorContext } from './context';
 // import DraftEditor from './components/public/DraftEditor';
 // import TextArea from './components/public/TextArea';
-import Tag from './components/public/Tag';
+import Tag, { HtmlTag } from './components/public/Tag';
 import IconButton from 'material-ui/IconButton';
 import ObjectImage from './components/public/Connectors/Connector/Fields/ObjectImage';
 import { graphql } from 'react-apollo';
@@ -68,7 +68,7 @@ import DefaultValue from './components/public/Connectors/Connector/Fields/NamedF
 import CurrentUser from './components/public/CurrentUser';
 import FileUploader from './components/public/FileUploader';
 import Select from './components/public/form/Select';
-import ContentEditor from './components/public/form/ContentEditor';
+import ContentEditor from './components/public/ContentEditor';
 
 const styles = theme => {
 
@@ -270,6 +270,7 @@ class FrontEditor extends Component {
       Section,
       Typography,
       Tag,
+      HtmlTag,
       // TextArea,
       Query,
       Connector,
