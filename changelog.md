@@ -1,3 +1,7 @@
+2.11.1
+=================================
+- Make ContentEditor more extensible
+
 2.11.0
 =================================
 - Added ContentEditor

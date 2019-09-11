@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import EditorComponent from '../../../../..';
 import { ObjectContext } from '../../ListView';
@@ -16,6 +16,7 @@ class NamedField extends EditorComponent {
   static Name = "NamedField"
 
   static propTypes = {
+    // eslint-disable-next-line react/forbid-foreign-prop-types
     ...EditorComponent.propTypes,
 
     /**
@@ -138,6 +139,8 @@ class NamedField extends EditorComponent {
 
         break;
 
+      default: ;
+
     }
 
     return {
@@ -172,9 +175,9 @@ class NamedField extends EditorComponent {
     }
 
 
-    const {
-      inEditMode,
-    } = this.getEditorContext();
+    // const {
+    //   inEditMode,
+    // } = this.getEditorContext();
 
 
     /**
@@ -189,7 +192,6 @@ class NamedField extends EditorComponent {
 
         const {
           object,
-          ...otherContext
         } = context;
 
         if (!object) {
@@ -373,8 +375,6 @@ class NamedField extends EditorComponent {
           }
 
         }
-        {/* 
-        } */}
 
 
 

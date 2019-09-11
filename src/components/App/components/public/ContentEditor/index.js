@@ -438,30 +438,44 @@ export class TagEditor extends HtmlTag {
         spacing={8}
       >
 
-        {buttons.map((n, index) => {
-
-          const {
-            key,
-            icon,
-            ...other
-          } = n;
-
-          return <Grid
-            key={key || index}
-            item
-          >
-            <IconButton
-              className={classes.iconButton}
-              {...other}
-            >
-              {icon}
-            </IconButton>
-          </Grid>;
-        })}
+        {this.renderToolbarButtons(buttons)}
 
       </Grid>
     </div>
 
+  }
+
+
+  renderToolbarButtons(buttons) {
+
+    const {
+      classes,
+    } = this.props;
+
+    const {
+      Grid,
+    } = this.context;
+
+    return buttons.map((n, index) => {
+
+      const {
+        key,
+        icon,
+        ...other
+      } = n;
+
+      return <Grid
+        key={key || index}
+        item
+      >
+        <IconButton
+          className={classes.iconButton}
+          {...other}
+        >
+          {icon}
+        </IconButton>
+      </Grid>;
+    });
   }
 
 
@@ -543,6 +557,11 @@ export class ContentProxy extends Component {
     updateObject: PropTypes.func.isRequired,
     editable: PropTypes.bool.isRequired,
     classes: PropTypes.object.isRequired,
+    TagEditor: PropTypes.func.isRequired,
+  }
+
+  static defaultProps = {
+    TagEditor,
   }
 
 
@@ -563,6 +582,7 @@ export class ContentProxy extends Component {
       editable,
       classes,
       initialContent,
+      TagEditor,
       ...other
     } = this.props;
 
@@ -605,7 +625,7 @@ export const tagEditorStyles = {
     resize: "vertical",
     overflow: "auto",
     // height: 300,
-    // minHeight: "1rem",
+    minHeight: "1rem",
     border: "1px solid #ddd",
     padding: 3,
     // flex: 1,
@@ -628,7 +648,8 @@ export class ContentEditor extends EditorComponent {
       component: PropTypes.string.isRequired,
       props: PropTypes.object.isRequired,
       components: PropTypes.array.isRequired,
-    }))
+    })),
+    TagEditor: PropTypes.func.isRequired,
   }
 
   static defaultProps = {
@@ -659,6 +680,8 @@ export class ContentEditor extends EditorComponent {
         "components": []
       }]
     }],
+
+    TagEditor,
   }
 
 
@@ -731,6 +754,7 @@ export class ContentEditor extends EditorComponent {
     const {
       initialContent,
       read_only,
+      TagEditor,
     } = this.getComponentProps(this);
 
 
@@ -753,6 +777,7 @@ export class ContentEditor extends EditorComponent {
       components={components}
       editable={editable}
       initialContent={initialContent}
+      TagEditor={TagEditor}
     />;
   }
 
