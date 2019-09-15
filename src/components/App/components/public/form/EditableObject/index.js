@@ -348,6 +348,23 @@ class EditableObject extends EditorComponent {
   static propTypes = {
     ...EditorComponent.propTypes,
     deletable_object: PropTypes.bool.isRequired,
+
+    /**
+     * Если новый объект создается как дочерний от другого объекта,
+     * то можно указать имя родителя, чтобы сформировать конструкцию [parent_name]: {connect: parent_id}.
+     * Важно! Если выставить это свойство, будет создан именно новый объект, 
+     * даже если это имеющийся уже объект (объект будет перетерт). 
+     */
+    create_as_a_child_of: PropTypes.string,
+
+    /**
+     * При рендеринге создает новый ключ для рендеринга Editable.
+     * Это удобно, когда надо обновить данные 
+     * при сохранении нового объекта без перезагрузки страницы.
+     * Важно! В режиме редактирования шаблонов передача меняемого key
+     * ломает вывод элементов, поэтому этот параметр следует использовать очень осторожно.
+     */
+    random_key: PropTypes.bool,
   }
 
   static defaultProps = {
@@ -372,6 +389,8 @@ class EditableObject extends EditorComponent {
     show_header: true,
     hide_wrapper_in_default_mode: true,
     deletable_object: false,
+    create_as_a_child_of: undefined,
+    random_key: false,
   }
 
   static Name = "EditableObject"
@@ -418,9 +437,9 @@ class EditableObject extends EditorComponent {
 
   renderChildren() {
 
-    // const {
-    //   inEditMode,
-    // } = this.getEditorContext();
+    const {
+      inEditMode,
+    } = this.getEditorContext();
 
     let children = super.renderChildren();
 
@@ -436,6 +455,7 @@ class EditableObject extends EditorComponent {
       cache_key_prefix,
       new_object_cache_key,
       object,
+      random_key,
       // _dirty,
       ...other
     } = this.getComponentProps(this);
@@ -462,18 +482,31 @@ class EditableObject extends EditorComponent {
         }
 
 
+        /**
+         * Здесь есть возможность переопределить объект
+         */
+        const editableObject = this.prepareEditableObject(object);
+
         const {
           id: objectId,
-        } = object || {};
+        } = editableObject || {};
+
 
         const cacheKey = cache_key ? cache_key : new_object_cache_key && !objectId ? new_object_cache_key : undefined;
         const cacheKeyPrefix = cache_key_prefix;
 
+        let key;
+
+        if (!inEditMode && random_key) {
+          key = Math.random();
+        }
+
         return <Editable
+          key={key}
           // data={{
           //   object: object || {},
           // }}
-          object={object || {}}
+          object={editableObject || {}}
 
 
           extendQuery={this.extendQueryBind}
@@ -567,6 +600,25 @@ class EditableObject extends EditorComponent {
   }
 
 
+
+  /**
+   * Позволяет переопределить редактируемый объект, 
+   * например, чтобы создавать новый внутри имеющегося
+   */
+  prepareEditableObject(object) {
+
+    const {
+      create_as_a_child_of,
+    } = this.getComponentProps(this);
+
+    return create_as_a_child_of ? {} : object;
+  }
+
+
+  /**
+   * Этот метод не модифицирует сам редактируемые объект, 
+   * а только формирует параметры для класса Editable
+   */
   prepareObject(context) {
 
     return {
@@ -577,10 +629,39 @@ class EditableObject extends EditorComponent {
 
   getDirty(context) {
 
-    const {
-      // object,
+    let {
+      object,
       _dirty,
     } = context;
+
+
+    const {
+      create_as_a_child_of,
+    } = this.getComponentProps(this);
+
+    const {
+      id: objectId,
+    } = object || {};
+
+    // console.log("getDirty object", object);
+
+    if (create_as_a_child_of) {
+
+      _dirty = _dirty ? {
+        ..._dirty,
+      } : {};
+
+      Object.assign(_dirty, {
+        [create_as_a_child_of]: {
+          connect: {
+            id: objectId,
+          },
+        }
+      });
+
+    }
+
+    // console.log("getDirty _dirty", _dirty);
 
     // return _dirty ? _dirty : !object ? {} : undefined;
     return _dirty;

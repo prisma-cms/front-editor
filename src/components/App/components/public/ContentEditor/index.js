@@ -55,6 +55,8 @@ export class TagEditor extends HtmlTag {
       hasSelection: false,
     }
 
+    this.onSelectionChange = this.onSelectionChange.bind(this);
+
   }
 
 
@@ -89,7 +91,7 @@ export class TagEditor extends HtmlTag {
   // }
 
 
-  onSelectionChange = event => {
+  onSelectionChange(event) {
 
     const {
       container,

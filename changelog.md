@@ -1,3 +1,8 @@
+2.12.0
+=================================
+- Added EditableObject::create_as_a_child_of
+- Added EditableObject::random_key
+
 2.11.1
 =================================
 - Make ContentEditor more extensible
