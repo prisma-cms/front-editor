@@ -4,7 +4,6 @@ import PropTypes from "prop-types";
 
 import { HtmlTag } from '../Tag';
 import EditorComponent from '../..';
-import EditableObject from '../form/EditableObject';
 
 import withStyles from 'material-ui/styles/withStyles';
 import IconButton from 'material-ui/IconButton';
@@ -424,6 +423,7 @@ export class TagEditor extends HtmlTag {
 
     const {
       classes,
+      render_toolbar,
     } = this.props;
 
     const buttons = this.getToolbarButtons();
@@ -432,7 +432,7 @@ export class TagEditor extends HtmlTag {
       return null;
     }
 
-    return <div
+    return render_toolbar ? <div
       className={classes.toolbar}
     >
       <Grid
@@ -443,7 +443,7 @@ export class TagEditor extends HtmlTag {
         {this.renderToolbarButtons(buttons)}
 
       </Grid>
-    </div>
+    </div> : null
 
   }
 
@@ -652,6 +652,7 @@ export class ContentEditor extends EditorComponent {
       components: PropTypes.array.isRequired,
     })),
     TagEditor: PropTypes.func.isRequired,
+    render_toolbar: PropTypes.bool.isRequired,
   }
 
   static defaultProps = {
@@ -684,6 +685,8 @@ export class ContentEditor extends EditorComponent {
     }],
 
     TagEditor,
+    hide_wrapper_in_default_mode: true,
+    render_toolbar: true,
   }
 
 
@@ -719,10 +722,10 @@ export class ContentEditor extends EditorComponent {
   }
 
 
-  canBeParent(parent) {
+  // canBeParent(parent) {
 
-    return super.canBeParent(parent) && this.findInParent(parent, parent => parent instanceof EditableObject);
-  }
+  //   return super.canBeParent(parent) && this.findInParent(parent, parent => parent instanceof EditableObject);
+  // }
 
 
   canBeChild(child) {
@@ -757,6 +760,7 @@ export class ContentEditor extends EditorComponent {
       initialContent,
       read_only,
       TagEditor,
+      render_toolbar,
     } = this.getComponentProps(this);
 
 
@@ -767,20 +771,25 @@ export class ContentEditor extends EditorComponent {
 
     const editable = inEditMode && !read_only ? true : false;
 
-    return <ContentProxyStyled
-      key={editable.toString()}
-      updateObject={(data) => {
+    return editable
+      ?
+      <ContentProxyStyled
+        key={editable.toString()}
+        updateObject={(data) => {
 
-        // console.log("components", components);
+          // console.log("components", components);
 
-        this.updateObject(data);
+          this.updateObject(data);
 
-      }}
-      components={components}
-      editable={editable}
-      initialContent={initialContent}
-      TagEditor={TagEditor}
-    />;
+        }}
+        components={components}
+        editable={editable}
+        initialContent={initialContent}
+        TagEditor={TagEditor}
+        render_toolbar={render_toolbar}
+      />
+      :
+      super.renderChildren();
   }
 
 }

@@ -1,5 +1,5 @@
-import React, { Component, Fragment, createContext, Children } from 'react';
-import PropTypes from 'prop-types';
+import React, { createContext } from 'react';
+// import PropTypes from 'prop-types';
 
 import ViewIcon from "material-ui-icons/ViewModule";
 import Connector, { ConnectorContext } from '..';
@@ -100,17 +100,17 @@ class ListView extends EditorComponent {
 
   renderChildren() {
 
-    const {
-      style,
-      ...other
-      // } = this.getRenderProps();
-    } = this.getComponentProps(this);
+    // const {
+    //   style,
+    //   ...other
+    //   // } = this.getRenderProps();
+    // } = this.getComponentProps(this);
 
 
 
-    const {
-      Grid,
-    } = this.context;
+    // const {
+    //   Grid,
+    // } = this.context;
 
 
 
@@ -146,8 +146,8 @@ class ListView extends EditorComponent {
         Так как в некоторых случаях нам надо вывести полученные данные без лишних оберток,
         проверяем является ли дочерний элемент производным от Iterable.
         Если является таковым, то рендерим в него все полученные объекты
+        if (children.length === 1 && children[0].__proto__.isPrototypeOf(Iterable))
          */
-        {/* if (children.length === 1 && children[0].__proto__.isPrototypeOf(Iterable)) { */ }
         if (children.length === 1 && children[0]
           && (
             Iterable.isPrototypeOf(children[0].type)
@@ -199,15 +199,6 @@ class ListView extends EditorComponent {
             output = children.filter(n => n && n.type === DefaultValue);
           }
 
-
-          {/* output = <Grid
-            container
-            {...other}
-          >
-
-            {}
-
-          </Grid>; */}
         }
 
         return output;

@@ -1,3 +1,7 @@
+2.12.1
+=================================
+- Added ContentEditor::render_toolbar
+
 2.12.0
 =================================
 - Added EditableObject::create_as_a_child_of

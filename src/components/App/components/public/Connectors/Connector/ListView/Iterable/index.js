@@ -1,10 +1,10 @@
-import React, { Component, Fragment, createContext } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
 // import ViewIcon from "material-ui-icons/ViewModule";
 
 import EditorComponent from '../../../../..';
-import ListView from '..';
+// import ListView from '..';
 import DefaultValue from '../../Fields/NamedField/DefaultValue';
 
 
@@ -14,16 +14,17 @@ class Iterable extends EditorComponent {
   static Name = "Iterable"
 
   static propTypes = {
+    // eslint-disable-next-line react/forbid-foreign-prop-types
     ...EditorComponent.propTypes,
     items: PropTypes.array,
     ObjectContext: PropTypes.object,
   }
 
 
-  constructor(props) {
+  // constructor(props) {
 
-    super(props);
-  }
+  //   super(props);
+  // }
 
 
   renderPanelView(content) {
