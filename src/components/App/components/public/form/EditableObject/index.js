@@ -309,6 +309,10 @@ export class Editable extends ApolloEditableObject {
 
   render() {
 
+    const {
+      loading,
+    } = this.state;
+
     return <EditableObjectContext.Provider
       value={{
         updateObject: data => this.updateObject(data),
@@ -319,7 +323,9 @@ export class Editable extends ApolloEditableObject {
         getObject: () => this.getObject(),
         // getCacheKey: this.getCacheKey,
         getButtons: this.bindGetButtons(),
+        save: () => this.save(),
         mutate: this.mutate,
+        loading,
         ...this.props,
       }}
     >

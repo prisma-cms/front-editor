@@ -1,3 +1,7 @@
+2.12.3
+=================================
+- Added EditableObject save and loading context
+
 2.12.2
 =================================
 - Added editor selectors
