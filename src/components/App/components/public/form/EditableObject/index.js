@@ -408,7 +408,13 @@ class EditableObject extends EditorComponent {
 
     super(props);
 
+    this.state = {
+      ...this.state,
+      object_key: Math.random(),
+    }
+
     this.onCreateObject = this.onCreateObject.bind(this);
+    this.onSaveObject = this.onSaveObject.bind(this);
 
   }
 
@@ -440,170 +446,6 @@ class EditableObject extends EditorComponent {
     return Editable;
   }
 
-
-  renderChildren() {
-
-    const {
-      inEditMode,
-    } = this.getEditorContext();
-
-    let children = super.renderChildren();
-
-
-
-    const {
-      on_create_redirect_url,
-      props,
-      data,
-      components,
-      style,
-      cache_key,
-      cache_key_prefix,
-      new_object_cache_key,
-      object,
-      random_key,
-      // _dirty,
-      ...other
-    } = this.getComponentProps(this);
-
-
-    const Editable = this.getEditableClass();
-
-
-    return <ObjectContext.Consumer>
-      {context => {
-
-        const {
-          object,
-          loading,
-        } = context;
-
-        /**
-        Если объекта нет и еще выполняется загрузка,
-        прерываем рендерер.
-        Иначе объект будет инициализирован как новый, то есть в режиме редактирования со свойством _dirty
-         */
-        if (!object && loading) {
-          return null;
-        }
-
-
-        /**
-         * Здесь есть возможность переопределить объект
-         */
-        const editableObject = this.prepareEditableObject(object);
-
-        const {
-          id: objectId,
-        } = editableObject || {};
-
-
-        const cacheKey = cache_key ? cache_key : new_object_cache_key && !objectId ? new_object_cache_key : undefined;
-        const cacheKeyPrefix = cache_key_prefix;
-
-        let key;
-
-        if (!inEditMode && random_key) {
-          key = Math.random();
-        }
-
-        return <Editable
-          key={key}
-          // data={{
-          //   object: object || {},
-          // }}
-          object={editableObject || {}}
-
-
-          extendQuery={this.extendQueryBind}
-          // extendQuery={(query) => this.extendQuery(query)}
-          getQueryNameFromQuery={this.getQueryNameFromQuery}
-          query_components={children}
-          // mutation={gql(extendedQuery)}
-
-          // mutate__={async props => {
-
-          //   try {
-
-          //     let queries = {
-
-          //     }
-
-          //     children && children.length && children.filter(n => n).map(n => {
-
-          //       const {
-          //         type,
-          //         props,
-          //       } = n;
-
-          //       if (type === Query) {
-
-          //         const {
-          //           query,
-          //         } = props && props.props || {};
-
-          //         if (query) {
-
-          //           const queryName = this.getQueryNameFromQuery(query);
-
-          //           if (queryName) {
-          //             queries[queryName] = query;
-          //           }
-
-          //         }
-          //       }
-
-          //     });
-
-
-          //     let mutation = objectId ? queries.update : queries.create;
-
-          //     if (!mutation) {
-
-          //       // this.addError("Can not get mutation");
-
-          //       const error = new Error("Can not get mutation");
-
-          //       this.addError(error);
-
-          //       return error;
-
-          //     }
-
-          //     const extendedQuery = this.extendQuery(mutation);
-
-          //     return await this.mutate({
-          //       mutation: gql(extendedQuery),
-          //       ...props,
-          //     })
-          //       .catch(error => {
-          //         console.error(error);
-          //         return error;
-          //       })
-          //       ;
-
-          //   }
-          //   catch (error) {
-          //     console.error(error);
-          //     return error;
-          //   }
-
-
-          // }}
-          // onSave={this.prepareOnSave(object)}
-          // onSave={this.onCreateObjectBind}
-          onSave={!objectId ? this.onCreateObject : null}
-          cacheKey={cacheKey}
-          cacheKeyPrefix={cacheKeyPrefix}
-          {...this.prepareObject(context)}
-          {...other}
-        >
-          {children}
-        </Editable>;
-      }}
-    </ObjectContext.Consumer>
-
-  }
 
 
 
@@ -759,6 +601,23 @@ class EditableObject extends EditorComponent {
     return;
   }
 
+
+  onSaveObject(result) {
+
+    const {
+      random_key,
+    } = this.getComponentProps(this);
+
+
+    if (random_key) {
+      this.setState({
+        object_key: Math.random(),
+      });
+    }
+
+
+    return this.onCreateObject(result);
+  }
 
   // onUpdateObject(result) {
 
@@ -1007,6 +866,97 @@ class EditableObject extends EditorComponent {
 
   }
 
+
+  renderChildren() {
+
+    // const {
+    //   inEditMode,
+    // } = this.getEditorContext();
+
+    let children = super.renderChildren();
+
+
+
+    const {
+      on_create_redirect_url,
+      props,
+      data,
+      components,
+      style,
+      cache_key,
+      cache_key_prefix,
+      new_object_cache_key,
+      object,
+      random_key,
+      // _dirty,
+      ...other
+    } = this.getComponentProps(this);
+
+    const {
+      object_key,
+    } = this.state;
+
+
+    const Editable = this.getEditableClass();
+
+
+    // console.log("random_key", random_key, object_key);
+
+    return <ObjectContext.Consumer>
+      {context => {
+
+        const {
+          object,
+          loading,
+        } = context;
+
+        /**
+        Если объекта нет и еще выполняется загрузка,
+        прерываем рендерер.
+        Иначе объект будет инициализирован как новый, то есть в режиме редактирования со свойством _dirty
+         */
+        if (!object && loading) {
+          return null;
+        }
+
+
+        /**
+         * Здесь есть возможность переопределить объект
+         */
+        const editableObject = this.prepareEditableObject(object);
+
+        const {
+          id: objectId,
+        } = editableObject || {};
+
+
+        const cacheKey = cache_key ? cache_key : new_object_cache_key && !objectId ? new_object_cache_key : undefined;
+        const cacheKeyPrefix = cache_key_prefix;
+
+        return <Editable
+          key={random_key ? object_key : undefined}
+          // data={{
+          //   object: object || {},
+          // }}
+          object={editableObject || {}}
+
+
+          extendQuery={this.extendQueryBind}
+          // extendQuery={(query) => this.extendQuery(query)}
+          getQueryNameFromQuery={this.getQueryNameFromQuery}
+          query_components={children}
+          onSave={!objectId ? this.onSaveObject : null}
+          cacheKey={cacheKey}
+          cacheKeyPrefix={cacheKeyPrefix}
+          {...this.prepareObject(context)}
+          {...other}
+        >
+          {children}
+        </Editable>;
+      }}
+    </ObjectContext.Consumer>
+
+  }
 
 }
 

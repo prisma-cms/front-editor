@@ -1,3 +1,7 @@
+2.12.4
+=================================
+- Fix EditableObject::object_key
+
 2.12.3
 =================================
 - Added EditableObject save and loading context
