@@ -175,6 +175,9 @@ const styles = theme => {
         cursor: "pointer",
       },
     },
+    items: {
+      position: "relative",
+    },
     item: {
 
     },
@@ -1667,20 +1670,26 @@ class FrontEditor extends Component {
         {inEditMode
           ? <Fragment>
             <div
+              id="prisma-cms-front-editor--toolbar"
               className={[classes.toolbar, classes.bordered].join(" ")}
             >
               {this.renderToolbar()}
             </div>
+
             <div
+              id="prisma-cms-front-editor--wrapper"
               className={[classes.root, className].join(" ")}
             >
+
               {/* <div
                 className={[classes.panel, classes.bordered].join(" ")}
               >
                 {this.renderTemplates()}
               </div> */}
               {this.renderTemplates()}
+
               <div
+                id="prisma-cms-front-editor--content"
                 className={[classes.editor, classes.bordered].join(" ")}
                 style={{
                   height: "100%",
@@ -1690,6 +1699,8 @@ class FrontEditor extends Component {
               >
 
                 <div
+                  id="prisma-cms-front-editor--items"
+                  className={[classes.items].join(" ")}
                   style={{
                     flex: 1,
                     overflow: "auto",
@@ -1707,11 +1718,14 @@ class FrontEditor extends Component {
                 </div>
 
               </div>
+
               <div
+                id="prisma-cms-front-editor--panel"
                 className={[classes.panel, classes.bordered, "opened"].join(" ")}
               >
                 {this.renderPanels()}
               </div>
+
             </div>
           </Fragment>
           : items

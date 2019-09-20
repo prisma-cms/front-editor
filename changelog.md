@@ -1,3 +1,7 @@
+2.12.2
+=================================
+- Added editor selectors
+
 2.12.1
 =================================
 - Added ContentEditor::render_toolbar
