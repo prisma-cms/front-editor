@@ -1,7 +1,7 @@
-import React, { Component, Fragment, createContext } from 'react';
-import PropTypes from 'prop-types';
+import React from 'react';
+// import PropTypes from 'prop-types';
 
-import ViewIcon from "material-ui-icons/ViewModule";
+// import ViewIcon from "material-ui-icons/ViewModule";
 import { ConnectorContext } from '../../Connector';
 import EditorComponent from '../../../..';
 
@@ -89,10 +89,10 @@ class ObjectView extends EditorComponent {
 
   renderChildren() {
 
-    const {
-      ...other
-      // } = this.getRenderProps();
-    } = this.getComponentProps(this);
+    // const {
+    //   ...other
+    //   // } = this.getRenderProps();
+    // } = this.getComponentProps(this);
 
 
 

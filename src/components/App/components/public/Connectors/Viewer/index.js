@@ -182,7 +182,7 @@ class Viewer extends Component {
               if (needAutoloadFields) {
 
                 const {
-                  kind,
+                  // kind,
                   name: {
                     value: type,
                   },
@@ -204,7 +204,7 @@ class Viewer extends Component {
 
 
 
-                const fragmentSource = body.slice(start, end);
+                body.slice(start, end);
 
 
 
