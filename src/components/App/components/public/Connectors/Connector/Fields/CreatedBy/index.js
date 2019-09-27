@@ -1,5 +1,4 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React from 'react';
 
 import UserIcon from "material-ui-icons/SupervisorAccount";
 import EditorComponent from '../../../../..';
@@ -27,9 +26,9 @@ class CreatedBy extends EditorComponent {
     return super.renderPanelView(
       content ||
       <div
-      className={classes.panelButton}
-    >
-      <UserIcon /> CreatedBy
+        className={classes.panelButton}
+      >
+        <UserIcon /> CreatedBy
     </div>);
   }
 
@@ -45,7 +44,9 @@ class CreatedBy extends EditorComponent {
       UserLink,
     } = this.context;
 
-    return <ObjectContext.Consumer>
+    return <ObjectContext.Consumer
+      key="object_context"
+    >
       {context => {
 
         const {

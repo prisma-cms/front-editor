@@ -92,10 +92,10 @@ class Typography extends EditorComponent {
       text,
       // type,
       // style,
-      color,
-      display,
-      displayType,
-      ...otherProps
+      // color,
+      // display,
+      // displayType,
+      // ...otherProps
     } = this.getComponentProps(this);
 
 
@@ -104,29 +104,30 @@ class Typography extends EditorComponent {
 
 
 
-    const {
-      // text,
-      // type,
-      style,
-      // props: {
-      //   display,
-      //   displayType,
-      //   text,
-      //   ...props
-      // },
-      ...other
-    } = this.getRenderProps();
+    // const {
+    //   // text,
+    //   // type,
+    //   style,
+    //   // props: {
+    //   //   display,
+    //   //   displayType,
+    //   //   text,
+    //   //   ...props
+    //   // },
+    //   ...other
+    // } = this.getRenderProps();
 
 
     return <Fragment
-    // {...other}
-    // style={{
-    //   ...style,
-    //   display,
-    // }}
-    // color={color}
-    // component={displayType}
-    // {...otherProps}
+      // {...other}
+      // style={{
+      //   ...style,
+      //   display,
+      // }}
+      // color={color}
+      // component={displayType}
+      // {...otherProps}
+      key="typography"
     >
       {text}{super.renderChildren()}
     </Fragment>;

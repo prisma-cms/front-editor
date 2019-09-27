@@ -793,7 +793,9 @@ export class ContentEditor extends EditorComponent {
     }
 
 
-    return <EditableObjectContext.Consumer>
+    return <EditableObjectContext.Consumer
+      key="editableobject_context"
+    >
       {editableObjectContext => {
 
         const {

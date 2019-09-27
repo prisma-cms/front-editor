@@ -72,6 +72,7 @@ class Pagination extends EditorComponent {
     } = this.context;
 
     return <Fragment
+      key="pagination"
     >
       <ConnectorContext.Consumer>
         {context => {

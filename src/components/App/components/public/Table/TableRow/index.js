@@ -89,8 +89,8 @@ export class TableRow extends EditorComponent {
 
   renderChildren() {
 
-    const {
-    } = this.context;
+    // const {
+    // } = this.context;
 
     const {
       inEditMode,
@@ -123,6 +123,7 @@ export class TableRow extends EditorComponent {
 
 
     return <tr
+      key="tr"
       {...other}
       {...inEditModeProps}
     >

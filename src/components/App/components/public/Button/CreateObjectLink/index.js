@@ -59,6 +59,7 @@ class CreateObjectLink extends EditorComponent {
     const children = super.renderChildren();
 
     return <Link
+      key="link"
       to={to}
     >
       {children && children.length ?

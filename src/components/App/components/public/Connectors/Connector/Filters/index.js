@@ -95,7 +95,9 @@ class Filters extends EditorComponent {
       return null
     }
 
-    return <ConnectorContext.Consumer>
+    return <ConnectorContext.Consumer
+      key="connector_context"
+    >
       {context => {
 
 

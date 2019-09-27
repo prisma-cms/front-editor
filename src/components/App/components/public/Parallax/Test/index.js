@@ -45,9 +45,9 @@ class ParallaxTest extends EditorComponent {
 
   renderChildren() {
 
-    const {
-      classes,
-    } = this.props;
+    // const {
+    //   classes,
+    // } = this.props;
 
     return <Renderer />;
 

@@ -68,21 +68,22 @@ export class ResetObjectContext extends EditorComponent {
 
   renderChildren() {
 
-    const {
-    } = this.context;
+    // const {
+    // } = this.context;
 
-    const {
-    } = this.getEditorContext();
+    // const {
+    // } = this.getEditorContext();
 
-    const {
-      ...other
-    } = this.getComponentProps(this);
+    // const {
+    //   ...other
+    // } = this.getComponentProps(this);
 
     const {
       objectContext,
     } = this.state;
 
     return <ObjectContext.Provider
+      key="object_context"
       value={objectContext}
     >
       <EditableObjectContext.Provider

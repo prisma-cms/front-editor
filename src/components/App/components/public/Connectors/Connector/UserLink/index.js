@@ -46,7 +46,9 @@ class UserLink extends EditorComponent {
       UserLink: PrismaCmsUserLink,
     } = this.context;
 
-    return <ObjectContext.Consumer>
+    return <ObjectContext.Consumer
+      key="object_context"
+    >
       {context => {
 
         const {

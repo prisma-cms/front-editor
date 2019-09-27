@@ -118,63 +118,63 @@ class TextArea extends EditorComponent {
 
 
 
-    return (<div
-      key="content"
-      // className={[classes.root, inEditMode ? classes.editable : ""].join(" ")}
-      style={inEditMode ? {
-        height: "100%",
-        minHeight: "1rem",
-      } : undefined}
-      contentEditable={inEditMode ? true : false}
-      suppressContentEditableWarning
-      onInput={event => {
+    // return (<div
+    //   key="content"
+    //   // className={[classes.root, inEditMode ? classes.editable : ""].join(" ")}
+    //   style={inEditMode ? {
+    //     height: "100%",
+    //     minHeight: "1rem",
+    //   } : undefined}
+    //   contentEditable={inEditMode ? true : false}
+    //   suppressContentEditableWarning
+    //   onInput={event => {
 
-        // const {
-        //   nativeEvent: {
-        //     inputType,
-        //   },
-        // } = event;
-
-
-        const node = event.target;
+    //     // const {
+    //     //   nativeEvent: {
+    //     //     inputType,
+    //     //   },
+    //     // } = event;
 
 
-        const content = this.makeNewContent(node);
+    //     const node = event.target;
+
+
+    //     const content = this.makeNewContent(node);
 
 
 
-        let newState = {
-          newContent: content,
-        };
+    //     let newState = {
+    //       newContent: content,
+    //     };
 
 
-        // Object.assign(newState, {
-        //   // content,
-        // });
+    //     // Object.assign(newState, {
+    //     //   // content,
+    //     // });
 
-        Object.assign(this.state, newState);
-
-
-        // onChange(content);
-
-        this.updateComponentProps({
-          content,
-        });
+    //     Object.assign(this.state, newState);
 
 
-        // setTimeout(() => {
-        //   this.forceUpdate();
-        // }, 1000);
+    //     // onChange(content);
+
+    //     this.updateComponentProps({
+    //       content,
+    //     });
 
 
-      }}
-    >
+    //     // setTimeout(() => {
+    //     //   this.forceUpdate();
+    //     // }, 1000);
 
-      {this.renderContent(content) || ""}
 
-    </div>
+    //   }}
+    // >
 
-    );
+    //   {this.renderContent(content) || ""}
+
+    // </div>
+
+    // );
   }
 
 

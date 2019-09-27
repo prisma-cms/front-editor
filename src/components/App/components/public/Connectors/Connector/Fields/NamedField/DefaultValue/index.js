@@ -32,10 +32,10 @@ export class DefaultValue extends EditorComponent {
   }
 
 
-  getRootElement() {
+  // getRootElement() {
 
-    return super.getRootElement();
-  }
+  //   return super.getRootElement();
+  // }
 
 
   canBeParent(parent) {
@@ -47,26 +47,26 @@ export class DefaultValue extends EditorComponent {
   }
 
 
-  canBeChild(child) {
+  // canBeChild(child) {
 
-    return super.canBeChild(child);
-  }
+  //   return super.canBeChild(child);
+  // }
 
 
-  renderChildren() {
+  // renderChildren() {
 
-    const {
-    } = this.context;
+  //   const {
+  //   } = this.context;
 
-    const {
-    } = this.getEditorContext();
+  //   const {
+  //   } = this.getEditorContext();
 
-    const {
-      ...other
-    } = this.getComponentProps(this);
+  //   const {
+  //     ...other
+  //   } = this.getComponentProps(this);
 
-    return super.renderChildren();
-  }
+  //   return super.renderChildren();
+  // }
 
 }
 

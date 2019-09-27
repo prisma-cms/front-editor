@@ -50,15 +50,15 @@ export class CurrentUser extends EditorComponent {
 
   renderChildren() {
 
-    const {
-    } = this.context;
+    // const {
+    // } = this.context;
 
-    const {
-    } = this.getEditorContext();
+    // const {
+    // } = this.getEditorContext();
 
-    const {
-      ...other
-    } = this.getComponentProps(this);
+    // const {
+    //   ...other
+    // } = this.getComponentProps(this);
 
     const {
       user: currentUser,
@@ -74,6 +74,7 @@ export class CurrentUser extends EditorComponent {
     }
 
     return <ObjectContext.Provider
+      key="object_context"
       value={{
         object: currentUser,
       }}

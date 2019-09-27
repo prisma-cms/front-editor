@@ -49,6 +49,7 @@ class DraftEditor extends EditorComponent {
     } = this.getComponentProps(this);
 
     return <Editor
+      key="editor"
       value={value}
       readOnly={readOnly}
     />

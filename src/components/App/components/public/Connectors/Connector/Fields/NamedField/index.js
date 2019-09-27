@@ -185,7 +185,9 @@ class NamedField extends EditorComponent {
      * иначе есть вероятность, что на нижних уровнях компоненты попадут в контект не того объекта
      */
 
-    return <ObjectContext.Consumer>
+    return <ObjectContext.Consumer
+      key="object_context"
+    >
       {context => {
 
 

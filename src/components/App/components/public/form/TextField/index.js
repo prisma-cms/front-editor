@@ -49,7 +49,9 @@ class TextField extends EditorComponent {
 
   renderChildren() {
 
-    return <EditableObjectContext.Consumer>
+    return <EditableObjectContext.Consumer
+      key="editableobject_context"
+    >
       {context => {
 
         const {

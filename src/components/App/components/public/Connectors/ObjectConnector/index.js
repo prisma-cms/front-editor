@@ -558,7 +558,9 @@ class ObjectConnector extends EditorComponent {
       return null;
     }
 
-    return <ObjectContext.Consumer>
+    return <ObjectContext.Consumer
+      key="object_context"
+    >
       {objectContext => {
 
         const {

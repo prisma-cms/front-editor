@@ -44,6 +44,7 @@ class UsersGrid extends EditorComponent {
 
 
     return <Fragment
+      key="userpage"
     >
       <UsersPage
         {...this.getComponentProps(this)}

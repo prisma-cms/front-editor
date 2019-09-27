@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React from 'react';
+// import PropTypes from 'prop-types';
 
 import EditorComponent from '../../../../..';
 import { ObjectContext } from '../../ListView';
@@ -52,12 +52,14 @@ class Content extends EditorComponent {
       readOnly,
     } = this.props;
 
-    return <ObjectContext.Consumer>
+    return <ObjectContext.Consumer
+      key="object_context"
+    >
       {context => {
 
         const {
           object,
-          ...other
+          // ...other
         } = context;
 
         if (!object) {

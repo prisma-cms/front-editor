@@ -114,7 +114,9 @@ class ListView extends EditorComponent {
 
 
 
-    return <ConnectorContext.Consumer>
+    return <ConnectorContext.Consumer
+      key="connector_context"
+    >
       {context => {
 
         const {

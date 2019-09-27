@@ -56,11 +56,11 @@ export class Table extends EditorComponent {
 
   renderChildren() {
 
-    const {
-    } = this.context;
+    // const {
+    // } = this.context;
 
-    const {
-    } = this.getEditorContext();
+    // const {
+    // } = this.getEditorContext();
 
     const {
       children,
@@ -68,6 +68,7 @@ export class Table extends EditorComponent {
     } = this.getComponentProps(this);
 
     return <table
+      key="table"
       {...other}
     >
       <tbody>

@@ -110,6 +110,7 @@ export class RichText extends EditorComponent {
     const readOnly = this.isEditorReadOnly();
 
     return <Editor
+      key="editor"
       value={content}
       readOnly={readOnly}
       onChange={this.onChangeEditor}

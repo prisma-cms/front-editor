@@ -99,7 +99,9 @@ class ObjectView extends EditorComponent {
 
     let children = super.renderChildren() || [];
 
-    return <ConnectorContext.Consumer>
+    return <ConnectorContext.Consumer
+      key="connector_context"
+    >
       {context => {
 
         const {

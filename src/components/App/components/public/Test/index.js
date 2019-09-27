@@ -149,6 +149,7 @@ export class Test extends EditorComponent {
 
 
     return <div
+      key="test"
     // onClick={this.testClick}
     >
       Test 2

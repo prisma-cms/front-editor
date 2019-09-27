@@ -47,7 +47,9 @@ class EditableObjectButtons extends EditorComponent {
 
   renderChildren() {
 
-    return <EditableObjectContext.Consumer>
+    return <EditableObjectContext.Consumer
+      key="editable_context"
+    >
       {context => {
 
         const {

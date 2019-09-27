@@ -1,5 +1,5 @@
-import React, { Component, Fragment } from 'react';
-import PropTypes from 'prop-types';
+import React from 'react';
+// import PropTypes from 'prop-types';
 import EditorComponent from '../..';
 
 // import Icon from "material-ui-icons/SettingsOverscan";
@@ -48,7 +48,7 @@ class Login extends EditorComponent {
     const {
       user,
       Grid,
-      Link,
+      // Link,
       UserLink,
     } = this.context;
 

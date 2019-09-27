@@ -34,7 +34,10 @@ class VerticalTimeline extends Iterable {
 
   renderChildren() {
 
-    return <Timeline lineColor={'#ddd'}>
+    return <Timeline
+      key="timeline"
+      lineColor={'#ddd'}
+    >
 
       {super.renderChildren()}
 

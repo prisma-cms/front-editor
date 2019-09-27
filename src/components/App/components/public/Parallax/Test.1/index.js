@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { ParallaxProvider, Parallax } from 'react-scroll-parallax';
 
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 
 import EditorComponent from '../../..';
 import withStyles from 'material-ui/styles/withStyles';
@@ -58,18 +58,12 @@ class ParallaxTest extends EditorComponent {
 
   renderChildren() {
 
-    const {
-      classes,
-    } = this.props;
+    // const {
+    //   classes,
+    // } = this.props;
 
     return <Renderer />;
 
-
-    return <div
-    // className={classes.root}
-    >
-      <App />
-    </div>
   }
 
 

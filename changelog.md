@@ -1,3 +1,9 @@
+2.12.5
+=================================
+- Added keys
+- Cleanup code
+- findInParent return object instead true
+
 2.12.4
 =================================
 - Fix EditableObject::object_key

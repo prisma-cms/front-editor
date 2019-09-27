@@ -35,6 +35,7 @@ export class Editable extends ApolloEditableObject {
     DeleteIcon: PropTypes.func.isRequired,
     deletable_object: PropTypes.bool.isRequired,
     on_delete_redirect_url: PropTypes.string,
+    data: PropTypes.object,
   }
 
   static defaultProps = {
@@ -902,7 +903,9 @@ class EditableObject extends EditorComponent {
 
     // console.log("random_key", random_key, object_key);
 
-    return <ObjectContext.Consumer>
+    return <ObjectContext.Consumer
+      key="editable_object"
+    >
       {context => {
 
         const {

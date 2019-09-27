@@ -73,6 +73,7 @@ class UserPage extends EditorComponent {
     }
 
     return <UserPageClass
+      key="user_page"
       where={where}
     />;
   }

@@ -104,6 +104,7 @@ class Query extends EditorComponent {
 
 
       output = <Drawer
+        key="drawer"
         anchor="top"
         open={true}
         onClose={this.close}

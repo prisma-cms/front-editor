@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React from 'react';
+// import PropTypes from 'prop-types';
 import EditorComponent from '../..';
 
 // import Icon from "material-ui-icons/SettingsOverscan";
@@ -24,15 +24,15 @@ class PageHeader extends EditorComponent {
 
     return null;
 
-    const {
-      classes,
-    } = this.getEditorContext();
+    // const {
+    //   classes,
+    // } = this.getEditorContext();
 
-    return super.renderPanelView(<div
-      className={classes.panelButton}
-    >
-      Page Header
-    </div>);
+    // return super.renderPanelView(<div
+    //   className={classes.panelButton}
+    // >
+    //   Page Header
+    // </div>);
   }
 
 
@@ -47,19 +47,19 @@ class PageHeader extends EditorComponent {
     const {
       user,
       Grid,
-      Link,
+      // Link,
       UserLink,
     } = this.context;
 
-    const {
-      // opened,
-    } = this.state;
+    // const {
+    //   // opened,
+    // } = this.state;
+
+    // const {
+    // } = this.props;
 
     const {
-    } = this.props;
-
-    const {
-      id: userId,
+      // id: userId,
       username,
       fullname,
     } = user || {}

@@ -267,7 +267,7 @@ class EditorSwitch extends EditorComponent {
     } = this.getEditorContext();
 
     const {
-      mutate,
+      // mutate,
       createTemplate,
       updateTemplate,
     } = this.props;
@@ -278,9 +278,9 @@ class EditorSwitch extends EditorComponent {
 
 
 
-    const {
+    // const {
 
-    } = this.getRenderProps();
+    // } = this.getRenderProps();
 
     const object = this.getObjectWithMutations();
 
@@ -298,7 +298,7 @@ class EditorSwitch extends EditorComponent {
 
 
     const {
-      props,
+      // props,
       components: itemComponents,
     } = object;
 
@@ -340,13 +340,17 @@ class EditorSwitch extends EditorComponent {
     let result = null;
 
     if (routesShowed) {
-      result = <Fragment>
+      result = <Fragment
+        key="with_header"
+      >
         {header}
         {output}
       </Fragment>;
     }
     else {
-      result = <RouterSwitch>
+      result = <RouterSwitch
+        key="router"
+      >
         {output}
       </RouterSwitch>;
     }

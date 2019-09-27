@@ -81,7 +81,9 @@ class ObjectImage extends EditorComponent {
     }
 
 
-    return <ObjectContext.Consumer>
+    return <ObjectContext.Consumer
+      key="object_context"
+    >
       {context => {
 
         const {

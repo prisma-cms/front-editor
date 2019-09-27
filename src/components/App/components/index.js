@@ -1286,15 +1286,15 @@ class EditorComponent extends ObjectEditable {
   findInParent(parent, condition) {
 
     if (!parent) {
-      return false;
+      return null;
     }
 
     if (condition(parent)) {
-      return true;
+      return parent;
     }
 
     // else 
-    return parent.props.parent ? this.findInParent(parent.props.parent, condition) : false;
+    return parent.props.parent ? this.findInParent(parent.props.parent, condition) : null;
   }
 
 
@@ -3084,6 +3084,17 @@ class EditorComponent extends ObjectEditable {
 
   prepareRootElementProps(props) {
 
+
+    for (var i in props) {
+
+      let value = props[i];
+
+      if (typeof value === "boolean") {
+        props[i] = value.toString();
+      }
+
+    }
+
     const {
       classes,
       createTemplate,
@@ -3114,6 +3125,13 @@ class EditorComponent extends ObjectEditable {
       query,
       components,
       parent,
+      on_create_redirect_url,
+      on_delete_redirect_url,
+      updateObject,
+      TagEditor,
+      fullWidth,
+      // render_badge,
+      // can_be_edited,
       ...other
     } = props;
 
@@ -3142,6 +3160,7 @@ class EditorComponent extends ObjectEditable {
 
     return {
       ...other,
+      // render_badge: render_badge !== undefined ? render_badge.toString() : undefined,
       style,
     };
 

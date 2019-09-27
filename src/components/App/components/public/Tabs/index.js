@@ -71,11 +71,11 @@ export class Tabs extends EditorComponent {
 
   renderChildren() {
 
-    const {
-    } = this.context;
+    // const {
+    // } = this.context;
 
-    const {
-    } = this.getEditorContext();
+    // const {
+    // } = this.getEditorContext();
 
     const {
       centered,
@@ -108,7 +108,7 @@ export class Tabs extends EditorComponent {
       components.map((n, index) => {
 
         if (!n) {
-          return;
+          return null;
         }
 
         const {
@@ -129,12 +129,16 @@ export class Tabs extends EditorComponent {
 
         }
 
+
+        return null;
+
       });
 
     }
 
 
     return <div
+      key="tabs"
       {...other}
     >
 
