@@ -1,3 +1,8 @@
+2.12.6
+=================================
+- Fix prepareRootElementProps()
+- Select render label
+
 2.12.5
 =================================
 - Added keys

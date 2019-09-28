@@ -1298,6 +1298,25 @@ class EditorComponent extends ObjectEditable {
   }
 
 
+  /**
+   * Поиск реакт-объекта в дочерних
+   * this.findReactChild(editableObject._reactInternalFiber.child, stateNode => stateNode instanceof Editable);
+   */
+  findReactChild(child, condition) {
+
+    if (!child) {
+      return null;
+    }
+
+    if (condition(child.stateNode)) {
+      return child.stateNode;
+    }
+
+    // else 
+    return this.findReactChild(child.child, condition);
+  }
+
+
   onDragOver(event) {
 
     const {
@@ -3085,15 +3104,19 @@ class EditorComponent extends ObjectEditable {
   prepareRootElementProps(props) {
 
 
-    for (var i in props) {
+    // for (var i in props) {
 
-      let value = props[i];
+    //   let value = props[i];
 
-      if (typeof value === "boolean") {
-        props[i] = value.toString();
-      }
+    /**
+     * Нельзя вычищать булевы, потому что некоторые компоненты
+     * принимают именно булевы значения, а не строчные
+     */
+    //   if (typeof value === "boolean") {
+    //     props[i] = value.toString();
+    //   }
 
-    }
+    // }
 
     const {
       classes,

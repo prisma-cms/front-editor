@@ -21,7 +21,7 @@ export class Select extends Iterable {
     label: undefined,
     style: {
       ...Iterable.defaultProps.style,
-      minWidth: 150,
+      minWidth: 200,
     },
     fullWidth: false,
   }
@@ -200,12 +200,13 @@ export class Select extends Iterable {
     const {
       id,
       name,
+      label,
     } = item;
 
     return <MenuItem
       value={id}
     >
-      {name}
+      {label || name}
     </MenuItem>
   }
 
