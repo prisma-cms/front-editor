@@ -133,6 +133,11 @@ class Connector extends EditorComponent {
                     "name": "ListView",
                     "component": "ListView",
                     props: {
+                      "style": {
+                        "display": "flex",
+                        "width": "100%",
+                        "flexWrap": "wrap"
+                      }
                     },
                     "components": [
                       {

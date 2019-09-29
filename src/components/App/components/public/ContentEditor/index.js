@@ -722,12 +722,6 @@ export class ContentEditor extends EditorComponent {
   }
 
 
-  // canBeParent(parent) {
-
-  //   return super.canBeParent(parent) && this.findInParent(parent, parent => parent instanceof EditableObject);
-  // }
-
-
   canBeChild(child) {
 
     return false;

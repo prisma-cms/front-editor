@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 import EditorComponent from '../../../../..';
 // import ListView from '..';
 import DefaultValue from '../../Fields/NamedField/DefaultValue';
+import ListView from '..';
 
 
 
@@ -18,6 +19,11 @@ class Iterable extends EditorComponent {
     ...EditorComponent.propTypes,
     items: PropTypes.array,
     ObjectContext: PropTypes.object,
+  }
+
+  static defaultProps = {
+    ...EditorComponent.defaultProps,
+    hide_wrapper_in_default_mode: true,
   }
 
 
@@ -42,21 +48,22 @@ class Iterable extends EditorComponent {
     </div>);
   }
 
-  // canBeParent(parent) {
 
-  //   return parent instanceof ListView && super.canBeParent(parent);
-  // }
+  canBeParent(parent) {
 
-
-  renderMainView() {
-
-    const {
-      inEditMode,
-    } = this.getEditorContext();
-
-    return inEditMode ? super.renderMainView() : this.renderChildren();
-
+    return super.canBeParent(parent) && parent instanceof ListView;
   }
+
+
+  // renderMainView() {
+
+  //   const {
+  //     inEditMode,
+  //   } = this.getEditorContext();
+
+  //   return inEditMode ? super.renderMainView() : this.renderChildren();
+
+  // }
 
 
   renderChildren() {

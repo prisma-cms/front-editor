@@ -1,3 +1,9 @@
+2.12.7
+=================================
+- Fix canBeParent()
+- Fix Iterable::hide_wrapper_in_default_mode
+- Fix ListView::hide_wrapper_in_default_mode
+
 2.12.6
 =================================
 - Fix prepareRootElementProps()

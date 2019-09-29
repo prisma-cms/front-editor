@@ -1283,6 +1283,9 @@ class EditorComponent extends ObjectEditable {
   }
 
 
+  /**
+   * Note: If using in canBeParent, should pass parent instead this
+   */
   findInParent(parent, condition) {
 
     if (!parent) {

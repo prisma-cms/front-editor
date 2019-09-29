@@ -16,7 +16,8 @@ class ListView extends EditorComponent {
 
   static defaultProps = {
     ...EditorComponent.defaultProps,
-    spacing: 8,
+    // spacing: 8,
+    hide_wrapper_in_default_mode: true,
   };
 
   static Name = "ListView"
@@ -40,78 +41,44 @@ class ListView extends EditorComponent {
   }
 
 
-  getRenderProps() {
+  // getRenderProps() {
 
-    const {
-      style,
-      ...props
-    } = super.getRenderProps();
+  //   const {
+  //     style,
+  //     ...props
+  //   } = super.getRenderProps();
 
-    return {
-      style: {
-        ...style,
-        width: "100%",
-        display: "flex",
-        flexDirection: "row",
-        flexWrap: "wrap",
-      },
-      ...props,
-    }
-  }
+  //   return {
+  //     style: {
+  //       ...style,
+  //       width: "100%",
+  //       display: "flex",
+  //       flexDirection: "row",
+  //       flexWrap: "wrap",
+  //     },
+  //     ...props,
+  //   }
+  // }
 
 
   canBeParent(parent) {
 
-
-    let can = false;
-
-    // return false;
-
-    if (super.canBeParent(parent)) {
-
-      while (parent) {
-
-        if (parent instanceof Connector || parent instanceof NamedField) {
-
-          can = true;
-
-          break;
-        }
-
-        parent = parent.props.parent;
-      }
-
-    }
-
-    return can;
+    return super.canBeParent(parent) && this.findInParent(parent, parent => parent instanceof Connector || parent instanceof NamedField);
   }
 
 
-  renderMainView() {
+  // renderMainView() {
 
-    const {
-      inEditMode,
-    } = this.getEditorContext();
+  //   const {
+  //     inEditMode,
+  //   } = this.getEditorContext();
 
-    return inEditMode ? super.renderMainView() : this.renderChildren();
+  //   return inEditMode ? super.renderMainView() : this.renderChildren();
 
-  }
+  // }
 
 
   renderChildren() {
-
-    // const {
-    //   style,
-    //   ...other
-    //   // } = this.getRenderProps();
-    // } = this.getComponentProps(this);
-
-
-
-    // const {
-    //   Grid,
-    // } = this.context;
-
 
 
     return <ConnectorContext.Consumer
@@ -210,77 +177,6 @@ class ListView extends EditorComponent {
 
       ;
   }
-
-  // renderChildren() {
-
-  //   const {
-  //     style,
-  //     ...other
-  //     // } = this.getRenderProps();
-  //   } = this.getComponentProps(this);
-
-
-
-  //   const {
-  //     Grid,
-  //   } = this.context;
-
-  //   let children = super.renderChildren();
-
-  //   return <ConnectorContext.Consumer>
-  //     {context => {
-
-  //       const {
-  //         data,
-  //       } = context;
-
-  //       if (!data) {
-  //         return null;
-  //       }
-
-
-  //       const {
-  //         objects,
-  //         objectsConnection,
-  //       } = data;
-
-  //       let items = objects ? objects : objectsConnection ? objectsConnection.edges.map(n => n.node) : null;
-
-  //       if (!items) {
-  //         return null;
-  //       }
-
-  //       return <Grid
-  //         container
-  //         {...other}
-  //       >
-
-  //         {items.length ?
-  //           items.map((n, index) => {
-
-  //             const {
-  //               id,
-  //             } = n;
-
-  //             return <ObjectContext.Provider
-  //               key={id || index}
-  //               value={{
-  //                 object: n,
-  //               }}
-  //             >
-  //               {children}
-  //             </ObjectContext.Provider>
-  //           })
-  //           :
-  //           children
-  //         }
-
-  //       </Grid>;
-  //     }}
-  //   </ConnectorContext.Consumer>
-
-  //     ;
-  // }
 
 }
 
