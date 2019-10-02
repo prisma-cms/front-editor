@@ -695,7 +695,7 @@ class ObjectConnector extends EditorComponent {
           }
 
         }
-        
+
 
         /**
           Если есть объект where, пытаемся найти в нем условия для выборки 
@@ -716,6 +716,7 @@ class ObjectConnector extends EditorComponent {
           query={query}
           parentQuery={parentQuery}
           setFilters={filters => this.setFilters(filters)}
+          getFilters={() => this.getFilters()}
           filters={filters || []}
           where={where}
           ConnectorContext={ConnectorContext}

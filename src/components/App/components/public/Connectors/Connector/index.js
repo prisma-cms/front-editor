@@ -1024,11 +1024,11 @@ class Connector extends EditorComponent {
           // AND.push({
           //   ...propsWhere,
           // });
-          AND.push(propsWhere);
+          AND.push({ ...propsWhere });
         }
 
         if (filters) {
-          AND.push(filters);
+          AND.push({ ...filters });
         }
 
 

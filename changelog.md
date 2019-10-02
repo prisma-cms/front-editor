@@ -1,3 +1,7 @@
+2.12.9
+=================================
+- Fix Connector::injectWhereFromObject()
+
 2.12.8
 =================================
 - Added Connector::injectWhereFromObject()
