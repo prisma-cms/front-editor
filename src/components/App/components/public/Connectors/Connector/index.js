@@ -14,6 +14,9 @@ import Typography from 'material-ui/Typography';
 
 import EditorComponent from '../../..';
 import { ObjectsView } from '../Viewer';
+import { ObjectContext } from './ListView';
+
+import pathToRegexp from 'path-to-regexp';
 
 export const ConnectorContext = createContext({});
 
@@ -857,6 +860,68 @@ class Connector extends EditorComponent {
   }
 
 
+
+  /**
+   * Заменяем плейсхолдеры в условиях запроса
+   */
+  injectWhereFromObject(where, object) {
+
+    for (var i in where) {
+
+      let value = where[i];
+
+      if (value) {
+
+        if (Array.isArray(value)) {
+
+          value.map(n => this.injectWhereFromObject(n, object));
+
+        }
+        else if (typeof value === "object") {
+          this.injectWhereFromObject(value, object)
+        }
+        else if (typeof value === "string" && value.startsWith(":")) {
+
+          const toPath = pathToRegexp.compile(value);
+
+          try {
+
+            const newValue = toPath(object, { noValidate: true });
+
+            if (newValue) {
+              where[i] = newValue;
+            }
+
+
+            // console.log("url", i, newValue, value);
+
+            // if (url) {
+
+            //   const {
+            //     router: {
+            //       history,
+            //     },
+            //   } = this.context;
+
+            //   history.push(decodeURIComponent(url));
+
+            // }
+
+          }
+          catch (error) {
+            console.error(error)
+          }
+
+        }
+
+      }
+
+    }
+
+
+  }
+
+
   renderChildren() {
 
     const {
@@ -870,122 +935,149 @@ class Connector extends EditorComponent {
       return null;
     }
 
-    const {
-      inEditMode,
-    } = this.getEditorContext();
 
-    const {
-      parent,
-    } = this.props;
-
-    const {
-      props: componentProps,
-      where: propsWhere,
-      // ...other
-    } = this.getComponentProps(this);
-
-
-    const {
-      orderBy,
-      query,
-      ...otherProps
-    } = componentProps || {};
-
-
-
-    /**
-     * Если есть родитель и у родителя имеется свойство query, то используем его
-     */
-
-    let parentQuery;
-
-    if (parent) {
-
-      // const {
-      //   query,
-      // } = parent.props.data.object.props;
-
-      const {
-        props: {
-          query,
-        },
-      } = parent.getObjectWithMutations();
-
-      if (query) {
-        parentQuery = query;
-      }
-
-    }
-
-
-
-
-    if (!query && !parentQuery) {
-
-      return inEditMode ? <Typography
-        color="error"
-      >
-        Query props required
-      </Typography> : null;
-
-    }
-
-    // const {
-    // } = this.getComponentProps(this);
-
-    const filters = this.getFilters();
-
-
-
-
-
-    let where;
-
-    let AND = [];
-
-    if (propsWhere) {
-      // AND.push({
-      //   ...propsWhere,
-      // });
-      AND.push(propsWhere);
-    }
-
-    if (filters) {
-      AND.push(filters);
-    }
-
-
-    if (!AND.length) {
-
-    }
-    else if (AND.length === 1) {
-
-      where = AND[0];
-    }
-    else {
-
-      where = {
-        AND,
-      }
-    }
-
-
-
-
-    return <ObjectsView
-      key={query}
-      query={query}
-      parentQuery={parentQuery}
-      setFilters={filters => this.setFilters(filters)}
-      getFilters={() => this.getFilters()}
-      filters={filters || []}
-      {...otherProps}
-      {...this.getComponentProps(this)}
-      where={where}
-      ConnectorContext={ConnectorContext}
+    return <ObjectContext.Consumer
+      key="object_context"
     >
-      {super.renderChildren()}
-    </ObjectsView>
+
+      {objectContext => {
+
+        const {
+          object,
+        } = objectContext;
+
+
+        const {
+          inEditMode,
+        } = this.getEditorContext();
+
+        const {
+          parent,
+        } = this.props;
+
+        const {
+          props: componentProps,
+          where: propsWhere,
+          // ...other
+        } = this.getComponentProps(this);
+
+
+        const {
+          orderBy,
+          query,
+          ...otherProps
+        } = componentProps || {};
+
+
+
+        /**
+         * Если есть родитель и у родителя имеется свойство query, то используем его
+         */
+
+        let parentQuery;
+
+        if (parent) {
+
+          // const {
+          //   query,
+          // } = parent.props.data.object.props;
+
+          const {
+            props: {
+              query,
+            },
+          } = parent.getObjectWithMutations();
+
+          if (query) {
+            parentQuery = query;
+          }
+
+        }
+
+
+
+
+        if (!query && !parentQuery) {
+
+          return inEditMode ? <Typography
+            color="error"
+          >
+            Query props required
+          </Typography> : null;
+
+        }
+
+        // const {
+        // } = this.getComponentProps(this);
+
+        const filters = this.getFilters();
+
+
+
+
+
+        let where;
+
+        let AND = [];
+
+        if (propsWhere) {
+          // AND.push({
+          //   ...propsWhere,
+          // });
+          AND.push(propsWhere);
+        }
+
+        if (filters) {
+          AND.push(filters);
+        }
+
+
+        if (!AND.length) {
+
+        }
+        else if (AND.length === 1) {
+
+          where = AND[0];
+        }
+        else {
+
+          where = {
+            AND,
+          }
+        }
+
+
+        /**
+          Если есть объект where, пытаемся найти в нем условия для выборки 
+          от родительского объекта
+         */
+
+        if (where && object) {
+
+          this.injectWhereFromObject(where, object);
+
+        }
+
+
+        return <ObjectsView
+          key={query}
+          query={query}
+          parentQuery={parentQuery}
+          setFilters={filters => this.setFilters(filters)}
+          getFilters={() => this.getFilters()}
+          filters={filters || []}
+          {...otherProps}
+          {...this.getComponentProps(this)}
+          where={where}
+          ConnectorContext={ConnectorContext}
+        >
+          {super.renderChildren()}
+        </ObjectsView>
+
+      }}
+
+    </ObjectContext.Consumer>
+
   }
 
 }

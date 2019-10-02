@@ -1,3 +1,7 @@
+2.12.8
+=================================
+- Added Connector::injectWhereFromObject()
+
 2.12.7
 =================================
 - Fix canBeParent()
