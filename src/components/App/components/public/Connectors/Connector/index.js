@@ -613,22 +613,20 @@ class Connector extends EditorComponent {
   getFilters() {
 
 
-
-
-
-
     const {
       inEditMode,
     } = this.getEditorContext();
 
 
     if (inEditMode) {
+
       const {
         where: filters,
         // } = this.props;
       } = this.getComponentProps(this);
 
       return filters;
+
     }
     else {
       return this.getUrlFilters();
@@ -704,9 +702,9 @@ class Connector extends EditorComponent {
 
   }
 
+
+
   setFilters(filters) {
-
-
 
 
 
@@ -874,11 +872,11 @@ class Connector extends EditorComponent {
 
         if (Array.isArray(value)) {
 
-          value.map(n => this.injectWhereFromObject(n, object));
+          where[i] = value.map(n => this.injectWhereFromObject({ ...n }, object));
 
         }
         else if (typeof value === "object") {
-          this.injectWhereFromObject(value, object)
+          where[i] = this.injectWhereFromObject({ ...value }, object)
         }
         else if (typeof value === "string" && value.startsWith(":")) {
 
@@ -892,21 +890,6 @@ class Connector extends EditorComponent {
               where[i] = newValue;
             }
 
-
-            // console.log("url", i, newValue, value);
-
-            // if (url) {
-
-            //   const {
-            //     router: {
-            //       history,
-            //     },
-            //   } = this.context;
-
-            //   history.push(decodeURIComponent(url));
-
-            // }
-
           }
           catch (error) {
             console.error(error)
@@ -918,7 +901,7 @@ class Connector extends EditorComponent {
 
     }
 
-
+    return where;
   }
 
 
@@ -996,7 +979,6 @@ class Connector extends EditorComponent {
 
 
 
-
         if (!query && !parentQuery) {
 
           return inEditMode ? <Typography
@@ -1010,9 +992,11 @@ class Connector extends EditorComponent {
         // const {
         // } = this.getComponentProps(this);
 
-        const filters = this.getFilters();
+        let filters = this.getFilters();
 
-
+        if (filters) {
+          filters = { ...filters }
+        }
 
 
 
@@ -1047,28 +1031,24 @@ class Connector extends EditorComponent {
         }
 
 
-        /**
-          Если есть объект where, пытаемся найти в нем условия для выборки 
-          от родительского объекта
-         */
-
-        if (where && object) {
-
-          this.injectWhereFromObject(where, object);
-
-        }
-
-
         return <ObjectsView
           key={query}
           query={query}
           parentQuery={parentQuery}
-          setFilters={filters => this.setFilters(filters)}
+          setFilters={filters => {
+            return this.setFilters(filters);
+          }}
           getFilters={() => this.getFilters()}
           filters={filters || []}
           {...otherProps}
           {...this.getComponentProps(this)}
-          where={where}
+
+          /**
+            Если есть объект where, пытаемся найти в нем условия для выборки 
+            от родительского объекта
+           */
+          where={where && object ? this.injectWhereFromObject({ ...where }, object) : where}
+
           ConnectorContext={ConnectorContext}
         >
           {super.renderChildren()}

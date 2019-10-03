@@ -1,3 +1,8 @@
+2.12.10
+=================================
+- Fix Connector::injectWhereFromObject()
+- Fix ObjectConnector::injectWhereFromObject()
+
 2.12.9
 =================================
 - Fix Connector::injectWhereFromObject()

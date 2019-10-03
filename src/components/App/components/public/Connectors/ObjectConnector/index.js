@@ -545,6 +545,52 @@ class ObjectConnector extends EditorComponent {
   }
 
 
+  /**
+   * Заменяем плейсхолдеры в условиях запроса
+   */
+  injectWhereFromObject(where, object) {
+
+    for (var i in where) {
+
+      let value = where[i];
+
+      if (value) {
+
+        if (Array.isArray(value)) {
+
+          where[i] = value.map(n => this.injectWhereFromObject({ ...n }, object));
+
+        }
+        else if (typeof value === "object") {
+          where[i] = this.injectWhereFromObject({ ...value }, object)
+        }
+        else if (typeof value === "string" && value.startsWith(":")) {
+
+          const toPath = pathToRegexp.compile(value);
+
+          try {
+
+            const newValue = toPath(object, { noValidate: true });
+
+            if (newValue) {
+              where[i] = newValue;
+            }
+
+          }
+          catch (error) {
+            console.error(error)
+          }
+
+        }
+
+      }
+
+    }
+
+    return where;
+  }
+
+
   renderChildren() {
 
     const {
@@ -635,7 +681,6 @@ class ObjectConnector extends EditorComponent {
 
 
 
-
         if (!where || !Object.keys(where).length) {
 
 
@@ -697,17 +742,6 @@ class ObjectConnector extends EditorComponent {
         }
 
 
-        /**
-          Если есть объект where, пытаемся найти в нем условия для выборки 
-          от родительского объекта
-         */
-
-        if (where && object) {
-
-          this.injectWhereFromObject(where, object);
-
-        }
-
 
         return <ObjectView
           {...otherProps}
@@ -718,74 +752,19 @@ class ObjectConnector extends EditorComponent {
           setFilters={filters => this.setFilters(filters)}
           getFilters={() => this.getFilters()}
           filters={filters || []}
-          where={where}
+
+          /**
+            Если есть объект where, пытаемся найти в нем условия для выборки 
+            от родительского объекта
+           */
+          where={where && object ? this.injectWhereFromObject({ ...where }, object) : where}
+
           ConnectorContext={ConnectorContext}
         >
           {super.renderChildren()}
         </ObjectView>
       }}
     </ObjectContext.Consumer>
-  }
-
-
-  /**
-   * Заменяем плейсхолдеры в условиях запроса
-   */
-  injectWhereFromObject(where, object) {
-
-    for (var i in where) {
-
-      let value = where[i];
-
-      if (value) {
-
-        if (Array.isArray(value)) {
-
-          value.map(n => this.injectWhereFromObject(n, object));
-
-        }
-        else if (typeof value === "object") {
-          this.injectWhereFromObject(value, object)
-        }
-        else if (typeof value === "string" && value.startsWith(":")) {
-
-          const toPath = pathToRegexp.compile(value);
-
-          try {
-
-            const newValue = toPath(object, { noValidate: true });
-
-            if (newValue) {
-              where[i] = newValue;
-            }
-
-
-            // console.log("url", i, newValue, value);
-
-            // if (url) {
-
-            //   const {
-            //     router: {
-            //       history,
-            //     },
-            //   } = this.context;
-
-            //   history.push(decodeURIComponent(url));
-
-            // }
-
-          }
-          catch (error) {
-            console.error(error)
-          }
-
-        }
-
-      }
-
-    }
-
-
   }
 
 
