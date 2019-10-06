@@ -5,6 +5,7 @@ import EditorComponent from '../../..';
 import MaterialUiTextField from 'material-ui/TextField';
 import { EditableObjectContext } from '../../../../context';
 
+import moment from "moment";
 
 class TextField extends EditorComponent {
 
@@ -49,6 +50,12 @@ class TextField extends EditorComponent {
 
   renderChildren() {
 
+    const {
+      name,
+      type,
+      ...other
+    } = this.getComponentProps(this);
+
     return <EditableObjectContext.Consumer
       key="editableobject_context"
     >
@@ -56,12 +63,59 @@ class TextField extends EditorComponent {
 
         const {
           getEditor,
+          getObjectWithMutations,
         } = context;
 
+        if (!getObjectWithMutations) {
+          return null;
+        }
+
+        let {
+          [name]: value,
+        } = getObjectWithMutations();
+
+        switch (type) {
+
+          case "date":
+
+            {
+              const date = value ? moment(value) : null;
+
+              if (date && date.isValid()) {
+
+                value = date.format("YYYY-MM-DD");
+
+              }
+            }
+
+            break;
+
+
+          case "time":
+
+            {
+              const date = value ? moment(value) : null;
+
+              if (date && date.isValid()) {
+
+                value = date.format("HH:mm");
+
+              }
+            }
+
+            break;
+
+          default: ;
+
+        }
 
         return getEditor ? getEditor({
-          ...this.getComponentProps(this),
+          ...other,
+          name,
+          type,
+          value: value || "",
           Editor: MaterialUiTextField,
+          // ...this.getComponentProps(this),
         }) : super.renderChildren();
 
       }}

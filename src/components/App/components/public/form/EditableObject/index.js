@@ -78,6 +78,22 @@ export class Editable extends ApolloEditableObject {
 
 
 
+  updateObject(data) {
+
+    for (var i in data) {
+
+      const value = data[i];
+
+      if (value === "") {
+        data[i] = null;
+      }
+
+    }
+
+    return super.updateObject(data);
+  }
+
+
   async mutate(props, method) {
 
     /**
