@@ -1,3 +1,8 @@
+2.12.11
+=================================
+- Added urijs
+- Fix Link for external domains
+
 2.12.10
 =================================
 - Fix Connector::injectWhereFromObject()

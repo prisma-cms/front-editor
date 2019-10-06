@@ -1,6 +1,6 @@
 {
   "name": "@prisma-cms/front-editor",
-  "version": "2.12.10",
+  "version": "2.12.11",
   "private": false,
   "main": "lib/App.js",
   "scripts": {
@@ -28,6 +28,7 @@
     "path-to-regexp": "^3.0.0",
     "react-slick": "^0.24.0",
     "slick-carousel": "^1.8.1",
+    "urijs": "^1.19.1",
     "vertical-timeline-component-for-react": "^1.0.6"
   },
   "devDependencies": {

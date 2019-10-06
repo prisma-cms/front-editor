@@ -2,10 +2,45 @@ import React from 'react';
 // import PropTypes from 'prop-types';
 import EditorComponent from '../..';
 
+import URI from "urijs";
 import Icon from "material-ui-icons/Link";
 
 import { Link as MuiLink } from "react-router-dom";
 import { ObjectContext } from '../Connectors/Connector/ListView';
+
+
+const Renderer = props => {
+
+  let {
+    to,
+    children,
+    ...other
+  } = props;
+
+  const uri = new URI(to);
+
+  let output = null;
+
+  if (uri.scheme()) {
+    output = <a
+      href={to}
+      {...other}
+    >
+      {children}
+    </a>
+  }
+  else {
+    output = <MuiLink
+      to={to}
+      {...other}
+    >
+      {children}
+    </MuiLink>
+  }
+
+  return output;
+}
+
 
 class Link extends EditorComponent {
 
@@ -36,9 +71,7 @@ class Link extends EditorComponent {
 
   getRootElement() {
 
-
-    return MuiLink;
-
+    return Renderer;
   }
 
 
