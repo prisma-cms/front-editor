@@ -1,3 +1,7 @@
+2.12.13
+=================================
+- Added Select::return_text_in_default_mode
+
 2.12.12
 =================================
 - Fix TextField with type=date

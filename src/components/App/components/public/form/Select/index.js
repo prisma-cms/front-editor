@@ -24,6 +24,11 @@ export class Select extends Iterable {
       minWidth: 200,
     },
     fullWidth: false,
+
+    /**
+     * В обычном режиме возвращает текстовое значение, а не селект
+     */
+    return_text_in_default_mode: true,
   }
 
 
@@ -56,6 +61,7 @@ export class Select extends Iterable {
       label,
       style,
       fullWidth,
+      return_text_in_default_mode,
     } = this.getComponentProps(this);
 
     if (!name) {
@@ -81,6 +87,7 @@ export class Select extends Iterable {
         const {
           getObjectWithMutations,
           getEditor,
+          inEditMode: objectInEditMode,
         } = editableObjectContext;
 
         if (!getObjectWithMutations) {
@@ -115,46 +122,71 @@ export class Select extends Iterable {
 
         const value = this.getValue(name, editableObjectContext);
 
-        return getEditor({
-          name,
-          value,
-          helperText,
-          label,
-          fullWidth,
-          Editor: props => {
+
+        let output = null;
+
+        if (!objectInEditMode && return_text_in_default_mode) {
+
+          const item = items ? items.find(n => n.id === value) : null;
+
+          if (item) {
 
             const {
-              error = false,
-              helperText,
+              id: itemId,
+              name,
               label,
-              fullWidth,
-            } = props;
+            } = item;
 
-            return <FormControl
-              error={error}
-              style={style}
-              fullWidth={fullWidth}
-            >
-              <InputLabel>
-                {label}
-              </InputLabel>
+            output = label || name || itemId;
 
-              <SelectMui
-                name={name}
-                value={value || ""}
-                onChange={event => {
-                  this.onSelectChange(event, editableObjectContext);
-                }}
+          }
+
+
+        }
+        else {
+
+          output = getEditor({
+            name,
+            value,
+            helperText,
+            label,
+            fullWidth,
+            Editor: props => {
+
+              const {
+                error = false,
+                helperText,
+                label,
+                fullWidth,
+              } = props;
+
+              return <FormControl
                 error={error}
+                style={style}
+                fullWidth={fullWidth}
               >
-                {super.renderItems(items, children)}
-              </SelectMui>
-              <FormHelperText>{helperText}</FormHelperText>
-            </FormControl>
-          },
-        });
+                <InputLabel>
+                  {label}
+                </InputLabel>
 
+                <SelectMui
+                  name={name}
+                  value={value || ""}
+                  onChange={event => {
+                    this.onSelectChange(event, editableObjectContext);
+                  }}
+                  error={error}
+                >
+                  {super.renderItems(items, children)}
+                </SelectMui>
+                <FormHelperText>{helperText}</FormHelperText>
+              </FormControl>
+            },
+          });
 
+        }
+
+        return output;
 
       }}
     </EditableObjectContext.Consumer>;
