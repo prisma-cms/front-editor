@@ -209,7 +209,11 @@ export class Select extends Iterable {
       [name]: value,
     } = getObjectWithMutations() || {};
 
-    return value && typeof value === "object" && value.id !== undefined ? value.id : value;
+    return value && typeof value === "object" ? (
+      value.connect && typeof value.connect === "object"
+        ? value.connect.id
+        : value.id !== undefined ? value.id : value
+    ) : value;
 
   }
 
