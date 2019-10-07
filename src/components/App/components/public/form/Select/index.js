@@ -29,6 +29,11 @@ export class Select extends Iterable {
      * В обычном режиме возвращает текстовое значение, а не селект
      */
     return_text_in_default_mode: true,
+
+    /**
+     * Если да, то при обновлении будет устанавливаться связь через {connect: {id: ...}}
+     */
+    new_object_connect: false,
   }
 
 
@@ -216,13 +221,33 @@ export class Select extends Iterable {
     } = editableObjectContext;
 
     const {
+      new_object_connect,
+    } = this.getComponentProps(this);
+
+    const {
       name,
       value,
     } = event.target;
 
-    return updateObject({
-      [name]: value,
-    });
+
+    let data;
+
+    if (new_object_connect) {
+      data = {
+        [name]: {
+          connect: {
+            id: value,
+          },
+        },
+      };
+    }
+    else {
+      data = {
+        [name]: value,
+      };
+    }
+
+    return updateObject(data);
 
   }
 
