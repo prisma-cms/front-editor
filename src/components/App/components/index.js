@@ -200,8 +200,6 @@ class EditorComponent extends ObjectEditable {
 
     registerMountedComponent(this);
 
-    this.processMeta();
-
     super.componentDidMount && super.componentDidMount();
 
   }
@@ -231,8 +229,6 @@ class EditorComponent extends ObjectEditable {
 
 
   componentDidUpdate(prevProps, prevState) {
-
-    this.processMeta();
 
     super.componentDidUpdate && super.componentDidUpdate(prevProps, prevState);
 
@@ -3078,6 +3074,13 @@ class EditorComponent extends ObjectEditable {
       hide_wrapper_in_default_mode,
       ...otherRenderProps
     } = this.getRenderProps();
+
+
+    /**
+     * Возможно надо будет переделать
+     */
+    this.processMeta();
+
 
     if (hide_wrapper_in_default_mode && !inEditMode) {
       return this.renderChildren();
