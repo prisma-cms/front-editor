@@ -69,6 +69,7 @@ import CurrentUser from './components/public/CurrentUser';
 import FileUploader from './components/public/FileUploader';
 import Select from './components/public/form/Select';
 import ContentEditor from './components/public/ContentEditor';
+import Page404 from './components/public/Page404';
 
 const styles = theme => {
 
@@ -284,6 +285,11 @@ class FrontEditor extends Component {
       Pagination,
       NamedField,
       DefaultValue,
+      EditableObject,
+      EditableView,
+      DefaultView,
+      EditableObjectButtons,
+      ResetObjectContext,
       RichText,
       ObjectImage,
       FileUploader,
@@ -299,6 +305,7 @@ class FrontEditor extends Component {
       Button,
       Switch,
       Route,
+      Page404,
       PageHeader,
       AppBar,
       Login,
@@ -312,11 +319,6 @@ class FrontEditor extends Component {
       // ParralaxTest,
       // DraftEditor,
 
-      EditableObject,
-      EditableView,
-      DefaultView,
-      EditableObjectButtons,
-      ResetObjectContext,
       TextField,
       Select,
       VerticalTimeline,
@@ -581,6 +583,8 @@ class FrontEditor extends Component {
         }
 
       },
+
+      setPageMeta: this.setPageMeta,
     }
 
     // eslint-disable-next-line react/no-direct-mutation-state
@@ -612,6 +616,33 @@ class FrontEditor extends Component {
     } = this.state.editorContext;
 
     return value;
+
+  }
+
+
+
+  setPageMeta(meta = {}) {
+
+    // console.log("setPageMeta meta");
+    // console.table(meta);
+
+    if (!global.document) {
+      global.document = {}
+    }
+
+    let {
+      document,
+    } = global;
+
+    for (var i in meta) {
+
+      const value = meta[i];
+
+      if (document[i] !== value) {
+        document[i] = value;
+      }
+
+    }
 
   }
 

@@ -32,6 +32,17 @@ class Login extends EditorComponent {
   }
 
 
+  initLocales(locales) {
+
+    Object.assign(locales.ru.values, {
+      Signin: "Вход",
+      Signout: "Выход",
+    });
+
+    return super.initLocales(locales);
+  }
+
+
   renderChildren() {
 
     const {
@@ -53,7 +64,7 @@ class Login extends EditorComponent {
     } = this.context;
 
     const {
-      id: userId,
+      // id: userId,
       username,
       fullname,
     } = user
@@ -61,6 +72,9 @@ class Login extends EditorComponent {
     return <Grid
       container
       alignItems="center"
+      style={{
+        flexWrap: "nowrap",
+      }}
     >
 
       <Grid

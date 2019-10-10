@@ -18,6 +18,7 @@ class ObjectView extends EditorComponent {
     ...EditorComponent.defaultProps,
     spacing: 8,
     hide_wrapper_in_default_mode: true,
+    field_as_pagetitle: "",
   };
 
   static Name = "ObjectView"
@@ -89,12 +90,9 @@ class ObjectView extends EditorComponent {
 
   renderChildren() {
 
-    // const {
-    //   ...other
-    //   // } = this.getRenderProps();
-    // } = this.getComponentProps(this);
-
-
+    const {
+      field_as_pagetitle,
+    } = this.getComponentProps(this);
 
 
     let children = super.renderChildren() || [];
@@ -135,6 +133,22 @@ class ObjectView extends EditorComponent {
           children = children.filter(n => n && n.type !== DefaultValue);
         }
 
+        /**
+        Устанавливает заголовок страницы
+         */
+        if (field_as_pagetitle) {
+
+          const {
+            [field_as_pagetitle]: title,
+          } = object || {};
+
+          if (title) {
+            this.processMeta({
+              title,
+            })
+          }
+
+        }
 
         return <ObjectContext.Provider
           value={data}

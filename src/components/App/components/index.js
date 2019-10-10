@@ -86,6 +86,13 @@ class EditorComponent extends ObjectEditable {
      * Может ли быть редактируемым во фронт-редакторе
      */
     can_be_edited: PropTypes.bool.isRequired,
+
+    /**
+     * Устанавливает заголовок для страницы
+     */
+    page_title: PropTypes.string,
+
+    page_status: PropTypes.number,
   };
 
 
@@ -137,6 +144,7 @@ class EditorComponent extends ObjectEditable {
     id: undefined,
     src: undefined,
     name: undefined,
+    page_title: undefined,
     contentEditable: undefined,
     className: undefined,
     lang: undefined,
@@ -192,6 +200,8 @@ class EditorComponent extends ObjectEditable {
 
     registerMountedComponent(this);
 
+    this.processMeta();
+
     super.componentDidMount && super.componentDidMount();
 
   }
@@ -222,8 +232,49 @@ class EditorComponent extends ObjectEditable {
 
   componentDidUpdate(prevProps, prevState) {
 
+    this.processMeta();
 
     super.componentDidUpdate && super.componentDidUpdate(prevProps, prevState);
+
+  }
+
+
+  processMeta(meta) {
+
+    const {
+      inEditMode,
+      setPageMeta,
+    } = this.getEditorContext()
+
+    const {
+      page_title,
+      page_status,
+    } = this.getComponentProps(this);
+
+
+    if (!inEditMode && this.inMainMode()) {
+
+      if (page_title) {
+
+        meta = {
+          ...meta,
+          title: page_title,
+        };
+
+      }
+
+      if (page_status) {
+
+        meta = {
+          ...meta,
+          status: page_status,
+        };
+
+      }
+
+      meta && setPageMeta(meta);
+
+    }
 
   }
 
@@ -981,6 +1032,16 @@ class EditorComponent extends ObjectEditable {
     } = this.state;
 
     return active ? true : false;
+
+  }
+
+  inMainMode = () => {
+
+    const {
+      mode,
+    } = this.props;
+
+    return mode === "main";
 
   }
 
@@ -3156,8 +3217,8 @@ class EditorComponent extends ObjectEditable {
       updateObject,
       TagEditor,
       fullWidth,
-      // render_badge,
-      // can_be_edited,
+      render_badge,
+      can_be_edited,
       ...other
     } = props;
 

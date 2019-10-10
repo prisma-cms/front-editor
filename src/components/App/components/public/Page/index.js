@@ -8,6 +8,7 @@ class Page extends EditorComponent {
     ...EditorComponent.defaultProps,
     // deletable: false,
     hide_wrapper_in_default_mode: true,
+    page_status: 200,
   }
 
 
