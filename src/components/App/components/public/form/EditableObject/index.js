@@ -949,7 +949,7 @@ class EditableObject extends EditorComponent {
         } = editableObject || {};
 
 
-        const cacheKey = cache_key ? cache_key : new_object_cache_key && !objectId ? new_object_cache_key : undefined;
+        const cacheKey = cache_key !== undefined ? cache_key : new_object_cache_key && !objectId ? new_object_cache_key : undefined;
         const cacheKeyPrefix = cache_key_prefix;
 
         return <Editable
