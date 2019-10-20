@@ -1,3 +1,8 @@
+2.13.3
+=================================
+- Added ObjectView::seo_description_field
+- Added ObjectView::seo_keywords_field
+
 2.13.2
 =================================
 - Fix EditableObject::cache_key

@@ -1,5 +1,5 @@
 import React from 'react';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 
 // import ViewIcon from "material-ui-icons/ViewModule";
 import { ConnectorContext } from '../../Connector';
@@ -14,11 +14,20 @@ import DefaultValue from '../../Connector/Fields/NamedField/DefaultValue';
 class ObjectView extends EditorComponent {
 
 
+  static propTypes = {
+    // eslint-disable-next-line react/forbid-foreign-prop-types
+    ...EditorComponent.propTypes,
+    seo_description_field: PropTypes.string,
+    seo_keywords_field: PropTypes.string,
+  }
+
   static defaultProps = {
     ...EditorComponent.defaultProps,
     spacing: 8,
     hide_wrapper_in_default_mode: true,
     field_as_pagetitle: "",
+    seo_description_field: undefined,
+    seo_keywords_field: undefined,
   };
 
   static Name = "ObjectView"
@@ -92,6 +101,8 @@ class ObjectView extends EditorComponent {
 
     const {
       field_as_pagetitle,
+      seo_description_field,
+      seo_keywords_field,
     } = this.getComponentProps(this);
 
 
@@ -133,6 +144,9 @@ class ObjectView extends EditorComponent {
           children = children.filter(n => n && n.type !== DefaultValue);
         }
 
+
+        let meta;
+
         /**
         Устанавливает заголовок страницы
          */
@@ -142,12 +156,42 @@ class ObjectView extends EditorComponent {
             [field_as_pagetitle]: title,
           } = object || {};
 
-          if (title) {
-            this.processMeta({
-              title,
-            })
-          }
+          meta = {
+            ...meta,
+            title,
+          };
 
+        }
+
+        if (seo_description_field) {
+
+          const {
+            [seo_description_field]: description,
+          } = object || {};
+
+          meta = {
+            ...meta,
+            description,
+          };
+
+        }
+
+        if (seo_keywords_field) {
+
+          const {
+            [seo_keywords_field]: keywords,
+          } = object || {};
+
+          meta = {
+            ...meta,
+            keywords,
+          };
+
+        }
+
+
+        if (meta) {
+          this.processMeta(meta);
         }
 
         return <ObjectContext.Provider

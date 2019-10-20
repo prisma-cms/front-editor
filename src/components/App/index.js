@@ -640,6 +640,26 @@ class FrontEditor extends Component {
 
       if (document[i] !== value) {
         document[i] = value;
+
+        switch (i) {
+
+          case "description":
+          case "keywords":
+
+            {
+              const meta = document.head && document.head.querySelector ? document.head.querySelector(`meta[name="${i}"]`) : null;
+
+              if (meta) {
+                meta.content = value;
+              }
+
+            }
+
+            break;
+
+          default: ;
+        }
+
       }
 
     }
