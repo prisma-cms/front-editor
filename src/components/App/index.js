@@ -370,6 +370,7 @@ class FrontEditor extends Component {
     }
 
 
+    // console.log("FrontEditor constructor", { ...this.props });
 
   }
 

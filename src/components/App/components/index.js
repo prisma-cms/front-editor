@@ -178,6 +178,11 @@ class EditorComponent extends ObjectEditable {
       active: false,
     }
 
+
+    // if (this.props.mode === "main") {
+    //   console.log("EditorComponent constructor", this.constructor.Name, { ...this.props });
+    // }
+
   }
 
 

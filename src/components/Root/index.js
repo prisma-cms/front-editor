@@ -14,6 +14,7 @@ import Button from 'material-ui/Button';
 class FrontEditorRoot extends PrismaCmsComponent {
 
   static propTypes = {
+    // eslint-disable-next-line react/forbid-foreign-prop-types
     ...PrismaCmsComponent.propTypes,
     data: PropTypes.object.isRequired,
     createTemplate: PropTypes.func.isRequired,
@@ -220,12 +221,12 @@ class FrontEditorRoot extends PrismaCmsComponent {
       }
       else {
 
-        let {
-          id: templateId,
-          name,
-          props,
-          components,
-        } = template;
+        // let {
+        //   id: templateId,
+        //   name,
+        //   props,
+        //   components,
+        // } = template;
 
         Object.assign(editorProps, {
           mutate: createTemplate,
@@ -244,7 +245,7 @@ class FrontEditorRoot extends PrismaCmsComponent {
 
 
       content = <Fragment
-        key={template ? `${template.id}-${template.updatedAt}` : "null"}
+        // key={template ? `${template.id}-${template.updatedAt}` : "null"}
       >
         {toolbar}
         <FrontEditor
@@ -333,14 +334,14 @@ export class RootConnector extends Component {
     } = this;
 
     const {
-      user: currentUser,
+      // user: currentUser,
       uri,
     } = this.context;
 
 
-    const {
-      id: currentUserId,
-    } = currentUser || {};
+    // const {
+    //   id: currentUserId,
+    // } = currentUser || {};
 
 
     let OR = [

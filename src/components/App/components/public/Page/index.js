@@ -18,10 +18,15 @@ class Page extends EditorComponent {
 
   //   super(props);
 
-  //   this.name = "Page";
-  //   this.Name = "Page";
+  //   // this.name = "Page";
+  //   // this.Name = "Page";
+
+  //   if (this.props.mode === "main") {
+  //     console.log("Page constructor", { ...this.props });
+  //   }
 
   // }
+
 
   canBeParent(parent) {
 

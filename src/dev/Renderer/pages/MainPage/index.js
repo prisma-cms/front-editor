@@ -1,8 +1,8 @@
-import React, { Component, Fragment } from 'react';
-import PropTypes from 'prop-types';
+import React from 'react';
+// import PropTypes from 'prop-types';
 
 import Page from "../layout";
-import DevApp from '../../../App';
+// import DevApp from '../../../App';
 
 
 import RootPage from "../../../../components/pages/Root";
