@@ -1,3 +1,7 @@
+2.13.4
+=================================
+- Fix subscription
+
 2.13.3
 =================================
 - Added ObjectView::seo_description_field

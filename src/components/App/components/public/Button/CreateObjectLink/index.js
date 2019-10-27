@@ -1,5 +1,4 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React from 'react';
 
 import { Link } from "react-router-dom";
 
@@ -61,6 +60,9 @@ class CreateObjectLink extends EditorComponent {
     return <Link
       key="link"
       to={to}
+      style={{
+        textDecoration: "none",
+      }}
     >
       {children && children.length ?
         children :
