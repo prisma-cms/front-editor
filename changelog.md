@@ -1,3 +1,6 @@
+=================================
+- Fix FileUploader multiple uploading
+
 2.13.5
 =================================
 - Fix Editor rerender

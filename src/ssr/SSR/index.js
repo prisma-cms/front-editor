@@ -7,56 +7,30 @@ import { InMemoryCache } from "apollo-cache-inmemory";
 
 import fetch from 'node-fetch';
 
-import React, { Component, Fragment } from 'react';
+import React from 'react';
 
 import { getDataFromTree } from "react-apollo"
 
 import ReactDOM from 'react-dom/server';
 
 
-import { createGenerateClassName } from 'material-ui/styles';
-
-import MainApp from '../../dev/App';
-
-// import PrismaCmsApp from '@prisma-cms/front/lib/components/App'
 import {
-  App as PrismaCmsApp,
-  Renderer as PrismaRenderer,
-} from '@prisma-cms/front';
+  // createMuiTheme,
+  createGenerateClassName,
+} from 'material-ui/styles';
 
-
-// class Renderer extends PrismaRenderer {
-
-
-//   render() {
-
-//     return "33333333sdfdsf";
-//   }
-// }
-
-
-class DevApp extends PrismaCmsApp {
-
-
-  render() {
-
-    const {
-      // children,
-      ...other
-    } = this.props;
-
-    return <Fragment>
-
-      {super.render()}
-
-    </Fragment>;
-  }
-}
+import MainApp from '../../src/dev/App';
 
 
 import chalk from "chalk";
 
+// import { MuiThemeProvider } from 'material-ui/styles';
+
 import URI from 'urijs';
+
+// import moment from "moment";
+
+// import htmlToJson from 'html-to-json';
 
 import cheerio from "cheerio";
 
@@ -64,11 +38,14 @@ var XMLWriter = require('xml-writer');
 
 const { Prisma } = require('prisma-binding')
 
+// eslint-disable-next-line no-unused-vars
 let api;
 
 const JssProvider = require('react-jss').JssProvider;
 const SheetsRegistry = require('react-jss').SheetsRegistry;
 
+// const theme = createMuiTheme({
+// });
 
 const fs = require("fs");
 
@@ -78,6 +55,7 @@ const HTML = fs.readFileSync(`${PWD}/build/index.html`, "utf8");
 
 
 let apiSchema;
+
 
 class Server {
 
@@ -89,6 +67,21 @@ class Server {
       ...other
     } = props;
 
+    const schemaFile = "src/schema/generated/api.graphql";
+
+    if (fs.existsSync(schemaFile)) {
+
+      api = new Prisma({
+        typeDefs: schemaFile,
+        endpoint: 'http://localhost:4000',
+        secret: 'mysecret123',
+        debug: false,
+        ...other,
+      });
+
+    }
+
+
     this.App = App || MainApp;
 
     this.props = props;
@@ -96,67 +89,7 @@ class Server {
   }
 
 
-  getApi(props) {
-
-    if (!api) {
-
-      api = new Prisma({
-        typeDefs: 'src/schema/generated/api.graphql',
-        endpoint: 'http://localhost:4000',
-        secret: 'mysecret123',
-        debug: false,
-        ...props,
-      });
-
-    }
-
-    return api;
-  }
-
-
-  timeLogStart(uri) {
-
-    if (process.env.PRISMA_CMS_TIMELOG === "true") {
-      console.log(chalk.green("Start request", uri));
-      console.time("PrismaCMS SSR Render");
-    }
-
-  }
-
-  timeLogEnd() {
-
-    if (process.env.PRISMA_CMS_TIMELOG === "true") {
-      console.timeEnd("PrismaCMS SSR Render");
-      console.log(chalk.green("End request"));
-    }
-
-  }
-
-  timeLog(label) {
-
-    if (process.env.PRISMA_CMS_TIMELOG === "true") {
-
-      // const args = ["PrismaCMS SSR Render"].concat((arguments || []));
-
-      const args = ["PrismaCMS SSR Render"].concat([...arguments]);
-
-      // console.log("arguments", arguments);
-
-      // console.log("arguments array", [...arguments]);
-      // console.log("args", args);
-
-      console.timeLog.apply(this, args);
-      // console.timeLog.apply("PrismaCMS SSR Render");
-      // console.timeLog("PrismaCMS SSR Render", label);
-    }
-
-  }
-
-
   middleware = async (req, res) => {
-
-    // console.log("process.env.NODE_ENV", process.env.PRISMA_CMS_TIMELOG);
-
 
     /**
      * Надо сбрасывать этот объект, чтобы не попадали результаты прошлого выполнения
@@ -164,21 +97,19 @@ class Server {
     global.document = undefined;
 
 
-    const protocol = req.protocol || "http";
+    const protocol = req.headers["server-protocol"] || req.protocol || "http";
+
+    // console.log("req.headers", req.headers);
+
+    // console.log("protocol", protocol);
 
     const host = req.get('host');
 
-    const uri = new URI(`${protocol}://${host}${req.url}`);
+    const url = `${protocol}://${host}${req.url}`;
 
-    this.timeLogStart(uri.toString());
+    // console.log("url", url);
 
-    // this.timeLog("start", uri.toString());
-
-    // this.timeLog();
-
-    const {
-      page,
-    } = uri.query(true);
+    const uri = new URI(url);
 
 
     const urlPath = uri.path();
@@ -201,22 +132,15 @@ class Server {
 
         break;
 
-      default:
-        response = await this.renderHTML(req, res, uri)
-          .catch(error => {
-            console.error(chalk.red("Server error"), error);
-            res.status(500);
-            res.end(error.message);
-            ;
-          });
-
-      // res.end("Debug");
+      default: response = await this.renderHTML(req, res, uri)
+        .catch(error => {
+          console.error(chalk.red("Server error"), error);
+          res.status(500);
+          res.end(error.message);
+          ;
+        });
 
     }
-
-    this.timeLogEnd();
-
-    // console.log(chalk.green("response"), response);
 
     return response;
 
@@ -224,27 +148,6 @@ class Server {
 
 
   async renderHTML(req, res) {
-
-
-    this.timeLog("renderHTML", "start");
-
-    // return new Promise((resolve) => {
-
-
-    //   this.timeLog("Promise start");
-
-    //   setTimeout(() => {
-    //     res.end("output");
-
-
-
-    //     resolve("dsfdsfdsf");
-    //   }, 3000);
-
-    // });
-
-    // res.end("output");
-    // return;
 
 
     let context = {}
@@ -256,60 +159,19 @@ class Server {
       // referer,
     } = req.headers;
 
-    // const host = req.get('host');
+    const host = req.get('host');
 
-    const uri = new URI(`${protocol}//${hostname}${req.url}`);
+    const uri = new URI(`${protocol}//${host}${req.url}`);
 
-
-    let assetsUrl;
-
-    let js_src;
-    let css_src;
-
-    let inline_styles;
-
-    let basePath = process.cwd() + "/";
-
-    let buildPath = basePath + "build/";
-
-
-    // if (process.env.NODE_ENV === 'production') {
-
-    //   let match = html.match(/<script [^>]*?src="(.*?)"/);
-
-    //   if (match) {
-    //     js_src = `/build${match[1]}`;
-    //   }
-
-    //   let css_match = html.match(/<link .*?href="(.*?)"/);
-
-    //   if (css_match) {
-    //     css_src = `/build${css_match[1]}`;
-    //   }
-
-    // }
-    // else {
-
-    //   js_src = `/dev/static/js/bundle.js`;
-    // }
-
-
-
-    // let css_match = html.match(/<link [^>]*?href="([^\"]*?\.css)" rel="stylesheet"/);
-
-    // if (css_match) {
-    //   css_src = `/build${css_match[1]}`;
-    // }
 
     const {
       App: MainApp,
       props: {
-        rootSelector,
+        // queryFragments,
+        apolloCaches,
       },
     } = this;
 
-
-    this.timeLog("renderHTML", "Init ApolloClient");
 
     const client = new ApolloClient({
       ssrMode: true,
@@ -326,123 +188,58 @@ class Server {
       cache: new InMemoryCache(),
     });
 
-
-    this.timeLog("renderHTML", "Init SheetsRegistry");
-
     const sheets = new SheetsRegistry();
-
-    this.timeLog("renderHTML", "Init App");
 
     const App = (
       <JssProvider
         registry={sheets}
         generateClassName={createGenerateClassName()}
       >
+        {/* <MuiThemeProvider
+          theme={theme}
+          sheetsManager={new Map()}
+        > */}
         <ApolloProvider client={client}>
           <StaticRouter location={req.url} context={context}>
-            <div>
+            <MainApp
+              sheetsManager={new Map()}
+              // queryFragments={queryFragments}
+              uri={uri}
+              // onSchemaLoad={schema => {
 
-            <DevApp
-                sheetsManager={new Map()}
-                uri={uri}
-                onSchemaLoad={clientSchema => {
+              //   // console.log("onSchemaLoad", schema);
+              //   // console.log(chalk.green("onSchemaLoad"));
 
-                  // console.log("onSchemaLoad", schema);
-                  console.log(chalk.green("SSR onSchemaLoad"), clientSchema);
+              //   if (!apiSchema && schema) {
+              //     apiSchema = `window.__PRISMA_CMS_API_SCHEMA__=${JSON.stringify(schema).replace(/</g, '\\u003c')};`;
+              //   }
 
-                  if (!apiSchema && clientSchema) {
-                    // apiSchema = `window.__PRISMA_CMS_API_SCHEMA__=${JSON.stringify(schema).replace(/</g, '\\u003c')};`;
-                    apiSchema = `window.__PRISMA_CMS_API_SCHEMA_DSL__=${JSON.stringify(clientSchema).replace(/</g, '\\u003c')};`;
-                    apiSchema = `<script type="text/javascript">
-                    ${apiSchema}
-                  </script>`
-                  }
+              // }}
+              onSchemaLoad={clientSchema => {
 
-                }}
-                // Renderer={Renderer}
-                routes={[
-                  {
-                    path: "/",
-                    render: () => {
+                // console.log(chalk.green("onSchemaLoad loaded"));
+                // console.log("onSchemaLoad", schema);
+                // console.log(chalk.green("onSchemaLoad"));
 
-                      return <MainApp
-                        data={{
-                          object: {
-                            name: "Section",
-                            component: "Section",
-                            props: {},
-                            components: [
-                              {
-                                name: "Tag",
-                                component: "Tag",
-                                props: {
-                                  text: "Test SSR",
-                                },
-                                components: [],
-                              },
-                              {
-                                id: "cjxikj16403v60917afs9zixw",
-                                name: "Section",
-                                component: "Section",
-                                props: {
-                                },
-                                components: [
-                                  {
-                                    name: "Tag",
-                                    component: "Tag",
-                                    props: {
-                                      text: "Test SSR",
-                                    },
-                                    components: [],
-                                  }
-                                ],
-                              },
-                            ],
-                          },
-                        }}
-                      // data={{
-                      //   object: {
-                      //     id: "cjxikj16403v60917afs9zixw",
-                      //     name: "Section",
-                      //     component: "Section",
-                      //     props: {
-                      //     },
-                      //     components: [
-                      //       {
-                      //         name: "Tag",
-                      //         component: "Tag",
-                      //         props: {
-                      //           text: "Test SSR",
-                      //         },
-                      //         components: [],
-                      //       }
-                      //     ],
-                      //   },
-                      // }}
-                      />
-                    }
-                  }
-                ]}
-              >
+                if (!apiSchema && clientSchema) {
+                  // apiSchema = `window.__PRISMA_CMS_API_SCHEMA_DSL__=${JSON.stringify(clientSchema).replace(/</g, '\\u003c')};`;
+                }
 
-              </DevApp>
-            </div>
+              }}
+            />
           </StaticRouter>
         </ApolloProvider>
+        {/* </MuiThemeProvider> */}
       </JssProvider>
     );
 
-    this.timeLog("renderHTML", "getDataFromTree start");
+
 
     await getDataFromTree(App)
       .then(async () => {
         // We are ready to render for real
         const content = await ReactDOM.renderToString(App);
-        this.timeLog("renderHTML", "getDataFromTree ReactDOM.renderToString");
-
         const initialState = await client.extract();
-
-        this.timeLog("renderHTML", "getDataFromTree client.extract()");
 
 
         let {
@@ -456,75 +253,20 @@ class Server {
         status = status || 200;
 
 
-        // const result = await htmlToJson.parse(HTML, {
-        //   'head': function ($doc, $) {
-
-        //     let head = $doc.find('head');
-
-        //     // return item ? item.attr("href") : null;
-
-        //     // console.log(chalk.green("TITLE"), $(head).find("title").html());
-        //     // console.log(chalk.green("TITLE"), $(head).find("title").remove().html());
-
-        //     return $(head);
-
-        //   },
-        //   // 'links': async function ($doc, $) {
-
-        //   //   let links = await this.map('a', item => {
-        //   //     // let text = item.text();
-        //   //     // return text ? text.replace('\n', '').trim().toLocaleLowerCase() : null;
-
-        //   //     const href = item.attr("href");
-
-        //   //     return href
-        //   //   }) || [];
-
-
-
-        //   //   switch (currentHost) {
-
-
-        //   //   }
-
-        //   //   return links;
-        //   // }
-        // });
-
-
-        // let {
-        //   head,
-        // } = result;
-
-        const Html = ({
+        function Html({
           content,
           state,
           sheets = "",
-        }) => {
+        }) {
 
 
-          // head = $(head);
-
-          // head = head.remove("title");
-
-          // let headHTML = head.find("title").remove().html()
+          // console.log('Object.keys(state)', Object.keys(state));
 
 
-
-          // console.log(chalk.green("title"), title.html());
-
-          // let headHTML = head.html()
-
-          // console.log(chalk.green("head"), head.html());
-
-
-          this.timeLog("renderHTML", "cheerio.load start");
 
           const $ = cheerio.load(HTML, {
             decodeEntities: false,
-          });
-
-          this.timeLog("renderHTML", "cheerio.load end");
+          })
 
           // console.log(chalk.green("$"), $);
 
@@ -534,21 +276,16 @@ class Server {
 
           $("noscript#react-noscript-notify").remove();
 
-          let root = $(rootSelector);
+          let root = $("#root");
 
 
           let head = $("head");
-          let body = $("body");
-
-
 
           if (title) {
             head.find("title").html(title);
           }
 
           // description = "Sdfdsfsdf";
-
-
 
           if (description) {
 
@@ -569,8 +306,6 @@ class Server {
             meta.attr("content", description);
           }
 
-
-
           if (canonical) {
 
             let meta = head.find("link[rel=canonical]");
@@ -584,78 +319,52 @@ class Server {
               head.append(meta);
             }
 
-
             meta.attr("href", canonical);
           }
 
 
-          this.timeLog("start add styles");
 
-          head.append(`<style
+          root.before(`<style
             id="server-side-jss"
           >
             ${sheets.toString()}
           </style>`);
 
-          this.timeLog("end add styles");
 
-          // <script dangerouslySetInnerHTML={{
-          //   __html: `window.__APOLLO_STATE__=${JSON.stringify(state).replace(/</g, '\\u003c')};`,
-          // }} />
+          const apolloStateId = new Date().getTime() * Math.random();
 
-          // this.timeLog( "start add apolloState");
+          // console.log("apolloStateId", apolloStateId);
 
-          // body.prepend(`<script type="text/javascript">
-          // ${`window.__APOLLO_STATE__=${JSON.stringify(state).replace(/</g, '\\u003c')};`}
+          root.after(`<script type="text/javascript">
+            ${`window.__APOLLO_STATE_ID__=${apolloStateId};`}
+          </script>`);
+
+          apolloCaches[apolloStateId] = state;
+
+
+          setTimeout(() => {
+            delete apolloCaches[apolloStateId]
+          }, 60 * 5 * 1000);
+
+          // root.after(`<script type="text/javascript">
+          //   ${`window.__APOLLO_STATE__=${JSON.stringify(state).replace(/</g, '\\u003c')};`}
           // </script>`);
 
 
-          let apolloState;
 
-          if (state) {
-            apolloState = `<script type="text/javascript">
-            ${`window.__APOLLO_STATE__=${JSON.stringify(state).replace(/</g, '\\u003c')};`}
-            </script>`;
+          if (apiSchema) {
+
+            root.after(`<script type="text/javascript">
+              ${apiSchema}
+            </script>`);
+
           }
 
+          // console.log("content", content);
 
-          // this.timeLog( "end add apolloState");
+          root.html(content);
 
-          // if (apiSchema) {
-
-
-          // this.timeLog( "start add apiSchema");
-
-          // body.prepend(`<script type="text/javascript">
-          // ${apiSchema}
-          // </script>`);
-
-          // this.timeLog( "end add apiSchema");
-
-          // }
-
-          // root.html(content);
-
-          console.log(chalk.green("content: "), content);
-
-
-          this.timeLog("renderHTML", "$.html() start");
-          let result = $.html();
-          this.timeLog("renderHTML", "$.html() end");
-
-
-          // <body><div id="root"></div>
-
-          this.timeLog("renderHTML", "replace root content start");
-
-          // result = result.replace(`<body><div id="root"></div>`, `<body><div id="root">${content}</div>`);
-          // result = result.replace(`<body><div id="root"></div>`, `<body><div id="root">${content}</div>${apiSchema}`);
-          result = result.replace(`<div id="root"></div>`, `<div id="root">${content}</div>${apolloState}${apiSchema || ""}`);
-
-          this.timeLog("renderHTML", "replace root content end");
-
-
-          return result;
+          return $.html();
 
           // const response = (
           //   <html>
@@ -675,75 +384,8 @@ class Server {
           //   </html>
           // );
 
-
-          const response___ = (
-            <html>
-              <head>
-                <title>{title || "Prisma-CMS"}</title>
-
-                <base href="/" />
-
-                <meta name="viewport" content="width=device-width, initial-scale=1" />
-                <meta name="description" content={description || ""} />
-                <meta name="language" content="Russian" />
-                <meta http-equiv="content-language" content="ru" />
-
-                <link rel="shortcut icon" href="/favicon.ico" />
-
-                {canonical ? <link rel="canonical" href={canonical} /> : ""}
-
-                {css_src ? <link
-                  type="text/css"
-                  rel="stylesheet"
-                  href={css_src}
-                /> : null}
-
-                <style
-                  id="server-side-jss"
-                  key="server-side-jss"
-                  type="text/css"
-                  dangerouslySetInnerHTML={{ __html: sheets.toString() }}
-                />
-
-
-              </head>
-
-              <body>
-                <div id="root" dangerouslySetInnerHTML={{ __html: content }} />
-                <script dangerouslySetInnerHTML={{
-                  __html: `window.__APOLLO_STATE__=${JSON.stringify(state).replace(/</g, '\\u003c')};`,
-                }} />
-
-                <script dangerouslySetInnerHTML={{
-                  __html: `
-                    setTimeout(() => {
-                      var script = document.createElement('script');
-
-                      script.setAttribute('src', '${js_src}');
-
-                      document.head.appendChild(script);
-
-
-                    }, 1000);
-                    `,
-                }} />
-
-              </body>
-            </html>
-          );
-
-
-
-          return response;
         }
 
-        // const html = <Html
-        //   content={content}
-        //   state={initialState}
-        //   sheets={sheets}
-        // />;
-
-        // const output = await ReactDOM.renderToStaticMarkup(html);
 
         const output = Html({
           content,
@@ -773,9 +415,6 @@ class Server {
         res.end(e.message);
         ;
       });
-
-
-    this.timeLog("renderHTML", "getDataFromTree end");
   }
 
 
@@ -795,7 +434,6 @@ class Server {
       case "main":
 
         return this.renderMainSitemap(req, res, uri);
-        break;
 
       default:
         return this.renderRootSitemap(req, res, uri);
@@ -910,6 +548,7 @@ class Server {
       .writeElement("loc", locUri.toString())
 
 
+    // updatedAt && xml.writeElement("updatedAt", moment(updatedAt).format())
     updatedAt && xml.writeElement("lastmod", updatedAt)
 
     changefreq && xml.writeElement("changefreq", changefreq)
@@ -923,5 +562,4 @@ class Server {
 }
 
 
-// module.exports = new Server().middleware;
 module.exports = Server;

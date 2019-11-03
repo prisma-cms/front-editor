@@ -1,4 +1,5 @@
 import React, { Fragment } from 'react';
+import PropTypes from "prop-types";
 
 import Typography from 'material-ui/Typography';
 import EditorComponent from '../..';
@@ -10,6 +11,17 @@ export class FileUploader extends EditorComponent {
 
   static Name = 'FileUploader';
 
+  static propTypes = {
+    // eslint-disable-next-line react/forbid-foreign-prop-types
+    ...EditorComponent.propTypes,
+    label: PropTypes.string,
+    helperText: PropTypes.string,
+    directory: PropTypes.string,
+    filename_as_name: PropTypes.bool.isRequired,
+    multiple: PropTypes.bool.isRequired,
+    // new_object_connect: PropTypes.bool.isRequired,
+  }
+
   static defaultProps = {
     ...EditorComponent.defaultProps,
     label: undefined,
@@ -18,6 +30,11 @@ export class FileUploader extends EditorComponent {
     filename_as_name: false,
     accept: undefined,
     multiple: false,
+
+    // /**
+    //  * Если да, то при обновлении будет устанавливаться связь через {connect: {id: ...}}
+    //  */
+    // new_object_connect: false,
   }
 
 
@@ -107,6 +124,7 @@ export class FileUploader extends EditorComponent {
         const {
           getEditor,
           updateObject,
+          getObjectWithMutations,
         } = editableObjectContext;
 
 
@@ -161,11 +179,21 @@ export class FileUploader extends EditorComponent {
 
                   if (Array.isArray(result)) {
 
+                    const {
+                      [name]: field,
+                    } = getObjectWithMutations();
+
+                    const {
+                      connect,
+                    } = field || {};
+
                     data = {
                       [name]: {
-                        connect: result.map(n => ({
-                          id: n.id,
-                        })),
+                        connect: (connect || []).concat(
+                          result.map(n => ({
+                            id: n.id,
+                          }))
+                        ),
                       },
                     };
 
