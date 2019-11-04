@@ -78,7 +78,7 @@ var bodyParser = require('body-parser');
 
 const cwd = process.cwd();
 
-const setupProxy = require("../src/setupProxy");
+const setupProxy = require("../setupProxy");
 
 setupProxy(app);
 

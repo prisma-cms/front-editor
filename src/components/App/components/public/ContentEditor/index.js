@@ -390,7 +390,7 @@ export class TagEditor extends HtmlTag {
           // onClick: event => document.execCommand('insertHTML', true, `<span>eded</span>`),
           onClick: event => {
 
-            const index = [...tr.parentElement.childNodes].indexOf(tr);
+            const index = Array.from(tr.parentElement.childNodes).indexOf(tr);
 
             this.insertTableRow(table, index + 1, tr.childElementCount, selection);
           },
@@ -423,7 +423,7 @@ export class TagEditor extends HtmlTag {
 
             const cell = this.closestInSelection(selection, "td,th");
 
-            const index = [...cell.parentElement.childNodes].indexOf(cell);
+            const index = Array.from(cell.parentElement.childNodes).indexOf(cell);
 
             this.insertTableCell(tr, index + 1, selection);
           },
@@ -1093,6 +1093,7 @@ export class ContentEditor extends EditorComponent {
 
 
     const editable = inEditMode && !read_only ? true : false;
+    // const editable = true;
 
     return editable
       ?

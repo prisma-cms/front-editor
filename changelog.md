@@ -1,3 +1,8 @@
+2.14.1
+=================================
+- Fix ContentEditor::insertTableRow
+- Fix SSR
+
 2.14.0
 =================================
 - Fix FileUploader multiple uploading

@@ -19,7 +19,7 @@ import {
   createGenerateClassName,
 } from 'material-ui/styles';
 
-import MainApp from '../../src/dev/App';
+import MainApp from '../../dev/App';
 
 
 import chalk from "chalk";
