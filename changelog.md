@@ -1,5 +1,7 @@
+2.14.0
 =================================
 - Fix FileUploader multiple uploading
+- Added ContentEditor table controls
 
 2.13.5
 =================================
