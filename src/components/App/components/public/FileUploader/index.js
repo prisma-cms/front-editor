@@ -189,7 +189,7 @@ export class FileUploader extends EditorComponent {
 
                     data = {
                       [name]: {
-                        connect: (connect || []).concat(
+                        connect: (connect ? (Array.isArray(connect) ? connect : [connect]) : []).concat(
                           result.map(n => ({
                             id: n.id,
                           }))

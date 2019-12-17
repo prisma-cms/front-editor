@@ -70,6 +70,7 @@ import FileUploader from './components/public/FileUploader';
 import Select from './components/public/form/Select';
 import ContentEditor from './components/public/ContentEditor';
 import Page404 from './components/public/Page404';
+import GalleryFiles from './components/public/Gallery/GalleryFiles';
 
 const styles = theme => {
 
@@ -293,6 +294,7 @@ class FrontEditor extends Component {
       RichText,
       ObjectImage,
       FileUploader,
+      GalleryFiles,
       UserLink,
       CurrentUser,
       Filters,

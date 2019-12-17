@@ -327,7 +327,13 @@ export class Editable extends ApolloEditableObject {
   render() {
 
     const {
+      _dirty: _dirty_null,
+      ...other
+    } = this.props;
+
+    const {
       loading,
+      _dirty,
     } = this.state;
 
     return <EditableObjectContext.Provider
@@ -343,7 +349,8 @@ export class Editable extends ApolloEditableObject {
         save: () => this.save(),
         mutate: this.mutate,
         loading,
-        ...this.props,
+        _dirty,
+        ...other,
       }}
     >
 

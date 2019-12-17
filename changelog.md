@@ -1,3 +1,8 @@
+2.15.0
+=================================
+- Added Gallery
+- Fix FileUploader
+
 2.14.1
 =================================
 - Fix ContentEditor::insertTableRow
