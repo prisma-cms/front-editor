@@ -4,6 +4,7 @@ import EditableObject from '../../form/EditableObject';
 import { EditableObjectContext } from '../../../../context';
 import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
+import FalleryFilesRenderer from './renderer';
 
 
 export class GalleryFiles extends EditorComponent {
@@ -55,6 +56,7 @@ export class GalleryFiles extends EditorComponent {
 
     const {
       Image,
+      Grid,
     } = this.context;
 
     const {
@@ -105,103 +107,15 @@ export class GalleryFiles extends EditorComponent {
           return null;
         }
 
-        const {
-          [name]: files,
-        } = object || {}
+        return <FalleryFilesRenderer
+          object={object}
+          getObjectWithMutations={getObjectWithMutations}
+          name={name}
+          dirty={_dirty}
+          Grid={Grid}
+          Image={Image}
+        />
 
-        const {
-          [name]: dirty_files,
-        } = _dirty || {}
-
-        let Files = [].concat(files || []);
-
-        // console.log('dirty_files', dirty_files);
-
-        if (dirty_files && dirty_files.connect && Array.isArray(dirty_files.connect)) {
-          // Files = Files.concat(dirty_files.connect);
-          Files = Files.concat(dirty_files.connect.map(n => ({
-            connect: {
-              id: n.id,
-            },
-          })));
-        }
-
-        // console.log('Files', Files);
-
-        return Files.map((n, index) => {
-          let item = null;
-
-          const {
-            id,
-            path,
-            connect,
-          } = n;
-
-          let src = path;
-
-          if (connect && typeof connect === "object") {
-
-            const {
-              id: newFileId,
-            } = connect;
-
-            if (newFileId) {
-
-              const query = gql`query file (
-              $where: FileWhereUniqueInput!
-            ){
-              object: file (
-                where: $where
-              ){
-                ...file
-              }
-            }
-
-            fragment file on File {
-              id
-              path
-            }`;
-
-              item = <Query
-                key={id || index}
-                query={query}
-                variables={{
-                  where: {
-                    id: newFileId
-                  },
-                }}
-              >
-                {({ data }) => {
-
-                  // console.log('Query data', data);
-
-                  const {
-                    path,
-                  } = (data && data.object) || {};
-
-                  return path ?
-                    <Image
-                      key={id || index}
-                      src={path}
-                    /> :
-                    null;
-                }}
-              </Query>
-
-            }
-
-          }
-
-          if (src) {
-
-            item = <Image
-              key={id || index}
-              src={src}
-            />
-          }
-
-          return item;
-        }).filter(n => n);
       }}
     </EditableObjectContext.Consumer>
   }

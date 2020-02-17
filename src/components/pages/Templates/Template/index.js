@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
 
@@ -14,6 +14,7 @@ class TemplatePage extends Page {
 
 
   static propTypes = {
+    // eslint-disable-next-line react/forbid-foreign-prop-types
     ...Page.propTypes,
     View: PropTypes.func.isRequired,
   };
@@ -83,7 +84,7 @@ class TemplatePage extends Page {
         name = name || id;
 
         return this.setPageMeta({
-          title: name && `Шаблон ${name}` || undefined,
+          title: (name && `Шаблон ${name}`) || undefined,
           status: id ? 200 : 404,
         })
       }}
