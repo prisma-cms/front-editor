@@ -1,3 +1,7 @@
+2.15.1
+=================================
+- Fix Connector::injectWhereFromObject
+
 2.15.0
 =================================
 - Added Gallery

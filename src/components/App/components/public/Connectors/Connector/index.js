@@ -872,11 +872,13 @@ class Connector extends EditorComponent {
 
         if (Array.isArray(value)) {
 
-          where[i] = value.map(n => this.injectWhereFromObject({ ...n }, object));
+          // where[i] = value.map(n => this.injectWhereFromObject({ ...n }, object));
+          where[i] = value.map(n => this.injectWhereFromObject(n, object));
 
         }
         else if (typeof value === "object") {
-          where[i] = this.injectWhereFromObject({ ...value }, object)
+          // where[i] = this.injectWhereFromObject({ ...value }, object)
+          where[i] = this.injectWhereFromObject(value, object)
         }
         else if (typeof value === "string" && value.startsWith(":")) {
 
