@@ -79,7 +79,7 @@ class TextField extends EditorComponent {
           case "date":
 
             {
-              const date = value ? moment(value) : null;
+              const date = value ? moment(value) : "";
 
               if (date && date.isValid()) {
 
@@ -94,7 +94,7 @@ class TextField extends EditorComponent {
           case "time":
 
             {
-              const date = value ? moment(value) : null;
+              const date = value ? moment(value) : "";
 
               if (date && date.isValid()) {
 
@@ -105,7 +105,14 @@ class TextField extends EditorComponent {
 
             break;
 
-          default: ;
+          /**
+          file value can not be setted
+           */
+          case "file":
+            value = undefined;
+            break;
+
+          default: value = value || "";
 
         }
 
@@ -113,7 +120,7 @@ class TextField extends EditorComponent {
           ...other,
           name,
           type,
-          value: value || "",
+          value: value,
           Editor: MaterialUiTextField,
           // ...this.getComponentProps(this),
         }) : super.renderChildren();

@@ -97,21 +97,9 @@ export class Switch extends EditorComponent {
     // return super.renderChildren();
 
 
-    if (!name) {
-
-      if (inEditMode) {
-        return <Typography
-          color="error"
-        >
-          name property is required
-        </Typography>
-      }
-      else {
-        return null;
-      }
-    }
-
-    return <EditableObjectContext.Consumer>
+    return <EditableObjectContext.Consumer
+      key="Switch"
+    >
       {editableObjectContext => {
 
         const {
@@ -123,6 +111,20 @@ export class Switch extends EditorComponent {
 
         if (!getObjectWithMutations) {
           return null;
+        }
+
+        if (!name) {
+
+          if (inEditMode) {
+            return <Typography
+              color="error"
+            >
+              name property is required
+            </Typography>
+          }
+          else {
+            return null;
+          }
         }
 
         const {
