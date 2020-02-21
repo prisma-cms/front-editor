@@ -1,3 +1,9 @@
+2.16.0
+=================================
+- Added Switch
+- Fix EditableObject context errors
+- Added EditableObject context fieldErrors
+
 2.15.1
 =================================
 - Fix Connector::injectWhereFromObject

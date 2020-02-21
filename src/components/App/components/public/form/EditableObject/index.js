@@ -15,7 +15,8 @@ import gql from 'graphql-tag';
 import { parse } from 'graphql';
 
 import pathToRegexp from 'path-to-regexp';
-import { IconButton, CircularProgress } from 'material-ui';
+import IconButton from 'material-ui/IconButton';
+import CircularProgress from 'material-ui/Progress/CircularProgress';
 
 import DeleteIcon from 'material-ui-icons/Delete';
 
@@ -334,7 +335,18 @@ export class Editable extends ApolloEditableObject {
     const {
       loading,
       _dirty,
+      errors,
+      notifications,
     } = this.state;
+
+    const fieldErrors = {};
+
+    if (errors && errors.length) {
+      errors.map(({ key, message }) => {
+        fieldErrors[key] = message;
+        return null;
+      })
+    }
 
     return <EditableObjectContext.Provider
       value={{
@@ -350,6 +362,9 @@ export class Editable extends ApolloEditableObject {
         mutate: this.mutate,
         loading,
         _dirty,
+        errors,
+        fieldErrors,
+        notifications,
         ...other,
       }}
     >

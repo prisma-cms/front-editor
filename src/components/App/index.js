@@ -24,7 +24,7 @@ import NamedField from './components/public/Connectors/Connector/Fields/NamedFie
 import Content from './components/public/Connectors/Connector/Fields/Content';
 import Section from './components/public/Section';
 import Typography from './components/public/Typography';
-import Switch from './components/public/Router/Switch';
+import RouterSwitch from './components/public/Router/Switch';
 import Route from './components/public/Router/Route';
 import PageHeader from './components/public/PageHeader';
 // import ParralaxTest from './components/public/Parallax/Test';
@@ -49,6 +49,7 @@ import Login from './components/public/Login';
 // import ChangeLanguage from './components/public/ChangeLanguage';
 import LanguageRouter from './components/public/LanguageRouter';
 import TextField from './components/public/form/TextField';
+import Switch from './components/public/form/Switch';
 import EditableObject from './components/public/form/EditableObject';
 import EditableView from './components/public/form/EditableObject/EditableView';
 import DefaultView from './components/public/form/EditableObject/DefaultView';
@@ -305,7 +306,7 @@ class FrontEditor extends Component {
       ContentEditor,
       Link,
       Button,
-      Switch,
+      RouterSwitch,
       Route,
       Page404,
       PageHeader,
@@ -322,6 +323,7 @@ class FrontEditor extends Component {
       // DraftEditor,
 
       TextField,
+      Switch,
       Select,
       VerticalTimeline,
       VerticalTimelineItem,
