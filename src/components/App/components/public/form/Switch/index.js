@@ -25,6 +25,7 @@ export class Switch extends EditorComponent {
     label: undefined,
     helperText: undefined,
     disabled: false,
+    color: 'primary',
   }
 
 
@@ -77,7 +78,20 @@ export class Switch extends EditorComponent {
       label,
       helperText,
       disabled,
-      // ...other
+      can_be_edited,
+      components,
+      contentEditable,
+      data,
+      hide_wrapper_in_default_mode,
+      lang,
+      object: componentObject,
+      page_title,
+      props,
+      render_badge,
+      src,
+      // style,
+      tag,
+      ...other
     } = this.getComponentProps(this);
 
     // return super.renderChildren();
@@ -132,6 +146,7 @@ export class Switch extends EditorComponent {
           <FormControlLabel
             control={
               <MuiSwitch
+                {...other}
                 checked={value === true}
                 onChange={(event, checked) => {
                   return updateObject({
