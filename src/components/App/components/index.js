@@ -200,15 +200,28 @@ class EditorComponent extends ObjectEditable {
 
     const {
       registerMountedComponent,
-    } = this.getEditorContext()
+    } = this.getEditorContext();
 
+    if (!this.container) {
+      this.container = ReactDOM.findDOMNode(this);
+    }
+
+    if (this.container) {
+      this.container.reactComponent = this;
+    }
 
     registerMountedComponent(this);
+
+    this.addEventListeners();
 
     super.componentDidMount && super.componentDidMount();
 
   }
 
+  addEventListeners() {
+
+    return;
+  }
 
   componentWillUnmount() {
 
@@ -3191,6 +3204,13 @@ class EditorComponent extends ObjectEditable {
     // }
 
     const {
+      component,
+      props: componentProps,
+      components,
+      object,
+      data,
+      parent,
+      tag,
       classes,
       createTemplate,
       updateTemplate,
@@ -3216,10 +3236,7 @@ class EditorComponent extends ObjectEditable {
       createTemplateResult,
       updateTemplateResult,
       PrismaProject,
-      component,
       query,
-      components,
-      parent,
       on_create_redirect_url,
       on_delete_redirect_url,
       updateObject,

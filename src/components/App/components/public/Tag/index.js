@@ -16,6 +16,13 @@ export class Tag extends HtmlTag {
     can_be_edited: true,
   }
 
+  // constructor(props) {
+
+  //   console.log('Tag constructor props', props);
+
+  //   super(props);
+  // }
+
 
   renderPanelView(content) {
 
@@ -35,9 +42,11 @@ export class Tag extends HtmlTag {
 
   editable() {
 
-    const inEditMode = this.inEditorMode();
+    return true;
 
-    return inEditMode ? true : false;
+    // const inEditMode = this.inEditorMode();
+
+    // return inEditMode ? true : false;
   }
 
   // updateContent(node,

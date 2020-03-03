@@ -8,6 +8,7 @@ import CloseTemplatesIcon from 'material-ui-icons/ArrowBack';
 
 import Context from "@prisma-cms/context";
 
+import Debug from './components/public/Debug';
 import Page from './components/public/Page';
 import Grid from './components/public/Grid';
 // import TextArea from './components/public/TextArea';
@@ -272,6 +273,7 @@ class FrontEditor extends Component {
   static defaultProps = {
     debug: false,
     Components: [
+      Debug,
       Grid,
       Section,
       Typography,
