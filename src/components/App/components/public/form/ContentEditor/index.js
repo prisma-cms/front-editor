@@ -206,7 +206,7 @@ class TagEditor extends Tag {
 
   componentDidMount() {
 
-    this.addEventListeners();
+    // this.addEventListeners();
 
     if (!this.readOnly()) {
 

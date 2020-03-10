@@ -15,7 +15,7 @@ export default class HtmlTag extends EditorComponent {
     // color: "default",
     // displayType: "span",
     // display: "inline-block",
-    // contentEditable: true,
+    contentEditable: undefined,
     render_badge: false,
     can_be_edited: false,
   }
@@ -417,6 +417,20 @@ export default class HtmlTag extends EditorComponent {
       components: [],
     }) {
 
+    const {
+      reactComponent,
+    } = node;
+
+    /**
+     * Если это реакт-нода, то возвращаем его состояние
+     */
+    if (reactComponent && !(reactComponent instanceof HtmlTag)) {
+
+      const component = reactComponent.getObjectWithMutations();
+      // console.log('updateContent node component', component);
+
+      return component;
+    }
 
 
     const nodes = node.childNodes;
@@ -458,9 +472,10 @@ export default class HtmlTag extends EditorComponent {
 
           case "contenteditable":
 
-            name = "contentEditable";
+            // name = "contentEditable";
+            // break;
 
-            break;
+            return null;
 
           case "class":
 

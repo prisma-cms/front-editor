@@ -145,7 +145,7 @@ class EditorComponent extends ObjectEditable {
     src: undefined,
     name: undefined,
     page_title: undefined,
-    contentEditable: undefined,
+    contentEditable: false,
     className: undefined,
     lang: undefined,
     tag: undefined,
@@ -200,13 +200,36 @@ class EditorComponent extends ObjectEditable {
 
     const {
       registerMountedComponent,
-    } = this.getEditorContext()
+    } = this.getEditorContext();
 
+    if (!this.container) {
+      this.container = ReactDOM.findDOMNode(this);
+    }
+
+    if (this.container) {
+      this.container.reactComponent = this;
+    }
 
     registerMountedComponent(this);
 
+
+    const {
+      mode,
+    } = this.props;
+
+    if (mode === 'main') {
+
+      this.addEventListeners();
+    }
+
+
     super.componentDidMount && super.componentDidMount();
 
+  }
+
+  addEventListeners() {
+
+    return;
   }
 
 
@@ -3227,8 +3250,14 @@ class EditorComponent extends ObjectEditable {
       fullWidth,
       render_badge,
       can_be_edited,
+      delete_component,
+      // contentEditable,
       ...other
     } = props;
+
+    // if (contentEditable !== undefined) {
+    //   console.log('contentEditable', contentEditable, typeof contentEditable, this);
+    // }
 
     let style;
 
@@ -3255,6 +3284,7 @@ class EditorComponent extends ObjectEditable {
 
     return {
       ...other,
+      // contentEditable,
       // render_badge: render_badge !== undefined ? render_badge.toString() : undefined,
       style,
     };

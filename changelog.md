@@ -1,3 +1,8 @@
+2.17.0
+=================================
+- Added ResourceFields
+- Added experimental feature: React components in HtmlTags
+
 2.16.2
 =================================
 - Fix TextField input type=file

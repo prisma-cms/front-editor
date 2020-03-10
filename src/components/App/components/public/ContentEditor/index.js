@@ -135,18 +135,18 @@ export class TagEditor extends HtmlTag {
   }
 
 
-  componentDidMount() {
+  // componentDidMount() {
 
-    this.addEventListeners();
+  //   this.addEventListeners();
 
-    // if (!this.readOnly()) {
+  //   // if (!this.readOnly()) {
 
-    //   this.setActiveItem(this);
+  //   //   this.setActiveItem(this);
 
-    // }
+  //   // }
 
-    super.componentDidMount && super.componentDidMount();
-  }
+  //   super.componentDidMount && super.componentDidMount();
+  // }
 
 
   componentWillUnmount() {
