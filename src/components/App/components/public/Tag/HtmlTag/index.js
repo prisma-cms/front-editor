@@ -10,12 +10,14 @@ export default class HtmlTag extends EditorComponent {
 
   static defaultProps = {
     ...EditorComponent.defaultProps,
-    tag: "span",
+    // tag: "span",
+    tag: "div",
     // text: "",
     // color: "default",
     // displayType: "span",
     // display: "inline-block",
     // contentEditable: true,
+    contentEditable: undefined,
     render_badge: false,
     can_be_edited: false,
   }
@@ -40,20 +42,21 @@ export default class HtmlTag extends EditorComponent {
     //   components,
     // } = object || {};
 
-    const {
-      components,
-    } = this.getObjectWithMutations() || {};
+    // const {
+    //   components,
+    // } = this.getObjectWithMutations() || {};
 
     // const {
     // } = objectProps || {};
 
 
 
+    // console.log('components', components);
 
     this.state = {
       ...this.state,
       focused: false,
-      components: components ? components.slice(0) : [],
+      // components: components && Array.isArray(components) ? components.slice(0) : [],
     }
   }
 
@@ -67,21 +70,21 @@ export default class HtmlTag extends EditorComponent {
   //   return false;
   // }
 
-  canBeChild(child) {
+  // canBeChild(child) {
 
-    // return super.canBeChild(child) && child instanceof Tag;
+  //   // return super.canBeChild(child) && child instanceof Tag;
 
-    return false;
-  }
+  //   return false;
+  // }
 
 
   /**
    * Не выводим кнопки, так как иначе сбивается редактирование текста
    */
-  renderAddButtons(content) {
+  // renderAddButtons(content) {
 
-    return null;
-  }
+  //   return null;
+  // }
 
 
   renderPanelView(content) {
@@ -124,7 +127,8 @@ export default class HtmlTag extends EditorComponent {
       tag,
     } = this.getComponentProps(this);
 
-    return tag;
+    return 'div';
+    // return tag;
   }
 
 
@@ -135,8 +139,8 @@ export default class HtmlTag extends EditorComponent {
 
     const node = event.target;
 
-    // console.log("TagEvent tagOnInput", event);
-    // console.log("TagEvent event.target", event.target);
+    console.log("TagEvent tagOnInput", event);
+    console.log("TagEvent event.target", event.target);
     // console.log("TagEvent event.currentTarget", event.currentTarget);
 
     const content = this.makeNewContent(node);
@@ -145,6 +149,9 @@ export default class HtmlTag extends EditorComponent {
       components,
     } = content;
 
+    console.log('tagOnInput content', JSON.stringify(content, true, 2));
+
+    // return;
 
     this.onChangeContent(components);
 
@@ -156,11 +163,11 @@ export default class HtmlTag extends EditorComponent {
    */
   onChangeContent(components) {
 
-    Object.assign(this.state, {
-      newContent: {
-        components,
-      },
-    });
+    // Object.assign(this.state, {
+    //   newContent: {
+    //     components,
+    //   },
+    // });
 
     // this.setState({
     //   newContent: {
@@ -168,12 +175,17 @@ export default class HtmlTag extends EditorComponent {
     //   },
     // });
 
+    this.updateObject({
+      components: components || [],
+    });
   }
 
 
   tagOnFocus(event) {
 
-    // console.log("TagEvent tagOnFocus", event);
+    console.log("TagEvent tagOnFocus", { ...event });
+
+    // event.stopPropagation();
 
     // if (this.isActive()) {
     this.setState({
@@ -191,7 +203,7 @@ export default class HtmlTag extends EditorComponent {
     // if (activeItem === this) {
     // if (this.isActive()) {
 
-    this.saveChanges();
+    // this.saveChanges();
 
     // }
 
@@ -306,24 +318,59 @@ export default class HtmlTag extends EditorComponent {
         options = {
           // contentEditable: true,
           // contentEditable: activeItem === this,
-          contentEditable: this.isActive(),
+          // contentEditable: this.isActive(),
+          contentEditable: this.isContentEditable(),
+          // contentEditable: false,
           suppressContentEditableWarning: true,
           style,
           onInput: event => this.tagOnInput(event),
           onFocus: event => this.tagOnFocus(event),
-          onBlur: event => this.tagOnBlur(event),
+          // onBlur: event => this.tagOnBlur(event),
           ...options,
         }
 
-        // console.log("options", options);
-
       }
 
+      // console.log("HTMLTag options", options);
 
       return super.renderMainView(options);
     }
   }
 
+
+  isContentEditable() {
+
+    // const {
+    //   focused,
+    // } = this.state;
+
+    // return !!focused;
+
+    // const isActive = this.isActive();
+
+    // if (isActive) {
+    //   console.log('isContentEditable isActive', isActive, this);
+    // }
+
+    // return isActive || undefined;
+
+
+    const {
+      parent,
+    } = this.props;
+
+    /**
+     * Элемент может быть редактируемым только если родитель отсутствует
+     * или родитель не HtmlTag. 
+     * ToDo: надо проверять не просто инстанс, а свойство contentEditable 
+     * в родительском элементе.
+     */
+    if (!parent || !(parent instanceof HtmlTag)) {
+      return true;
+    }
+
+    return undefined;
+  }
 
 
   renderChildren() {
@@ -334,13 +381,15 @@ export default class HtmlTag extends EditorComponent {
       props: {
         text,
       },
-      // components: itemComponents,
+      components: itemComponents,
     } = object;
 
 
-    const {
-      components: itemComponents,
-    } = this.state;
+    // const {
+    //   components: itemComponents,
+    // } = this.state;
+
+    console.log("HTMLTag renderChildren itemComponents", JSON.stringify(itemComponents, true, 2));
 
     if (itemComponents && itemComponents.length) {
 
@@ -402,9 +451,13 @@ export default class HtmlTag extends EditorComponent {
       components,
     });
 
-    // console.log("makeNewContent components", components);
+    console.log("makeNewContent components", JSON.stringify(components, true, 2));
 
     return content;
+
+    // this.updateObject({
+    //   components: content || [],
+    // });
   }
 
 
@@ -418,6 +471,23 @@ export default class HtmlTag extends EditorComponent {
     }) {
 
 
+    console.log('updateContent node', node);
+    console.log('updateContent node.reactComponent', node.reactComponent);
+
+    const {
+      reactComponent,
+    } = node;
+
+    /**
+     * Если это реакт-нода, то возвращаем его состояние
+     */
+    if (reactComponent && !(reactComponent instanceof HtmlTag)) {
+
+      const component = reactComponent.getObjectWithMutations();
+      console.log('updateContent node component', component);
+
+      return component;
+    }
 
     const nodes = node.childNodes;
 
@@ -453,14 +523,16 @@ export default class HtmlTag extends EditorComponent {
           case "props":
           case "object":
           case "data":
+          case "contenteditable":
+          case "contentEditable":
 
             return null;
 
-          case "contenteditable":
+          // case "contenteditable":
 
-            name = "contentEditable";
+          //   name = "contentEditable";
 
-            break;
+          //   break;
 
           case "class":
 
@@ -564,6 +636,13 @@ export default class HtmlTag extends EditorComponent {
 
 
     return field;
+  }
+
+  updateObject(data) {
+
+    console.log('HTMLTag updateObject data', JSON.stringify(data, true, 2));
+
+    return super.updateObject(data);
   }
 
 }

@@ -35,9 +35,37 @@ export class Tag extends HtmlTag {
 
   editable() {
 
+    let isEditable = false;
+
     const inEditMode = this.inEditorMode();
 
-    return inEditMode ? true : false;
+
+    // return inEditMode ? true : false;
+
+    if (inEditMode) {
+
+      // console.log('HTMLTag iseditable inEditMode', inEditMode);
+      // console.log('HTMLTag iseditable this', this);
+
+      const {
+        parent,
+      } = this.props;
+
+      /**
+       * Элемент может быть редактируемым только если родитель отсутствует
+       * или родитель не HtmlTag. 
+       * ToDo: надо проверять не просто инстанс, а свойство contentEditable 
+       * в родительском элементе.
+       */
+      if (!parent || !(parent instanceof HtmlTag)) {
+        isEditable = true;
+      }
+
+      // console.log('HTMLTag iseditable isEditable', isEditable, this.container, this);
+
+    }
+
+    return isEditable;
   }
 
   // updateContent(node,

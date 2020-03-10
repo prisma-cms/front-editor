@@ -137,13 +137,13 @@ export class TagEditor extends HtmlTag {
 
   componentDidMount() {
 
-    this.addEventListeners();
+    // this.addEventListeners();
 
-    // if (!this.readOnly()) {
+    if (!this.readOnly()) {
 
-    //   this.setActiveItem(this);
+      this.setActiveItem(this);
 
-    // }
+    }
 
     super.componentDidMount && super.componentDidMount();
   }
@@ -196,7 +196,6 @@ export class TagEditor extends HtmlTag {
     }
 
     super.addEventListeners && super.addEventListeners();
-
   }
 
 
@@ -882,6 +881,8 @@ export class ContentProxy extends Component {
       editable,
     } = this.props;
 
+    // console.log('ContentEditor shouldComponentUpdate editable', editable);
+
     return editable ? false : true;
   }
 
@@ -1051,10 +1052,10 @@ export class ContentEditor extends EditorComponent {
   }
 
 
-  canBeChild(child) {
+  // canBeChild(child) {
 
-    return false;
-  }
+  //   return false;
+  // }
 
 
   prepareRootElementProps(props) {

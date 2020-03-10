@@ -72,6 +72,7 @@ import Select from './components/public/form/Select';
 import ContentEditor from './components/public/ContentEditor';
 import Page404 from './components/public/Page404';
 import GalleryFiles from './components/public/Gallery/GalleryFiles';
+import ResourceFields from './components/public/Resource/Fields';
 
 const styles = theme => {
 
@@ -302,6 +303,7 @@ class FrontEditor extends Component {
       CreateObjectLink,
       SudoOnly,
       CreatedBy,
+      ResourceFields,
       Content,
       ContentEditor,
       Link,

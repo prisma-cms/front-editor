@@ -145,7 +145,7 @@ class EditorComponent extends ObjectEditable {
     src: undefined,
     name: undefined,
     page_title: undefined,
-    contentEditable: undefined,
+    contentEditable: false,
     className: undefined,
     lang: undefined,
     tag: undefined,
@@ -199,11 +199,28 @@ class EditorComponent extends ObjectEditable {
   componentDidMount() {
 
     const {
-      registerMountedComponent,
-    } = this.getEditorContext()
+      mode,
+    } = this.props;
 
+    const {
+      registerMountedComponent,
+    } = this.getEditorContext();
+
+    if (!this.container) {
+      this.container = ReactDOM.findDOMNode(this);
+    }
+
+    if (this.container) {
+      this.container.reactComponent = this;
+    }
 
     registerMountedComponent(this);
+
+    if (mode === "main") {
+
+      this.addEventListeners && this.addEventListeners();
+    }
+
 
     super.componentDidMount && super.componentDidMount();
 
@@ -339,6 +356,7 @@ class EditorComponent extends ObjectEditable {
 
     const activeParent = this.getActiveParent();
 
+    console.log('updateObject activeParent', this, activeParent, data);
 
     /**
      * Если это текущий компонент, обновляем его
@@ -382,7 +400,7 @@ class EditorComponent extends ObjectEditable {
 
       }
       else {
-        console.error("Can not get current element data in parent");
+        console.error("Can not get current element data in parent. (this, parent)", this, parent);
       }
 
     }
@@ -3034,6 +3052,7 @@ class EditorComponent extends ObjectEditable {
           key="add_buttons"
           container
           spacing={8}
+          contentEditable={false}
         >
 
           {Components.map((Component, index) => {
@@ -3149,13 +3168,7 @@ class EditorComponent extends ObjectEditable {
 
   renderActionPanel(content) {
 
-    const {
-      // actionPanel,
-      getActionPanel,
-    } = this.getEditorContext();
-
-    const actionPanel = getActionPanel();
-
+    const actionPanel = this.getActionPanel()
 
     if (actionPanel) {
       return ReactDOM.createPortal(content, actionPanel);
@@ -3165,6 +3178,16 @@ class EditorComponent extends ObjectEditable {
       return content;
     }
 
+  }
+
+
+  getActionPanel() {
+    const {
+      // actionPanel,
+      getActionPanel,
+    } = this.getEditorContext();
+
+    return getActionPanel();
   }
 
 
@@ -3227,6 +3250,9 @@ class EditorComponent extends ObjectEditable {
       fullWidth,
       render_badge,
       can_be_edited,
+      editable,
+      render_toolbar,
+      objectContext,
       ...other
     } = props;
 
