@@ -173,10 +173,12 @@ class FrontEditorRoot extends PrismaCmsComponent {
       let toolbar = null;
 
       const {
-        CreatedBy: {
-          id: createdById,
-        },
+        CreatedBy,
       } = template;
+
+      const {
+        id: createdById,
+      } = CreatedBy || {};
 
 
       /**
@@ -245,7 +247,7 @@ class FrontEditorRoot extends PrismaCmsComponent {
 
 
       content = <Fragment
-        // key={template ? `${template.id}-${template.updatedAt}` : "null"}
+      // key={template ? `${template.id}-${template.updatedAt}` : "null"}
       >
         {toolbar}
         <FrontEditor
@@ -380,10 +382,10 @@ export class RootConnector extends Component {
     };
 
 
-    if(currentProjectOnly) {
+    if (currentProjectOnly) {
 
       const domain = uri.hostname() || "localhost";
-      
+
 
       // if(!domain) {
 
