@@ -99,6 +99,7 @@ class FrontEditorRoot extends PrismaCmsComponent {
 
     const {
       id: currentUserId,
+      sudo,
     } = currentUser || {};
 
     /**
@@ -184,7 +185,7 @@ class FrontEditorRoot extends PrismaCmsComponent {
       /**
        * Если разрешено клонировать шаблоны или владелец - текущий пользователь, то выводим кнопки
        */
-      if (clonable || (currentUserId && currentUserId === createdById)) {
+      if (clonable || sudo || (currentUserId && currentUserId === createdById)) {
         toolbar = <Grid
           rel="noindex, nofollow"
           container
@@ -216,7 +217,7 @@ class FrontEditorRoot extends PrismaCmsComponent {
 
 
 
-      if (currentUserId && currentUserId === createdById) {
+      if (sudo || (currentUserId && currentUserId === createdById)) {
         Object.assign(editorProps, {
           mutate: updateTemplate,
         });
