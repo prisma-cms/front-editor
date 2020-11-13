@@ -21,7 +21,8 @@ module.exports = {
   testURL: 'http://localhost:3000',
   preset: 'ts-jest/presets/js-with-babel',
   collectCoverageFrom: [
-    'src/**/*.{ts,tsx,js,jsx,d.ts,d.tsx}',
+    './(src|dev)/**/*.{ts,tsx,js,jsx,d.ts,d.tsx}',
+    '!./dev/server/**',
     '!**/node_modules/**',
     '!**.next/**',
     '!**/dist/**',

@@ -16,7 +16,10 @@
     "test": "jest",
     "test:all": "yarn lint && yarn types && yarn test",
     "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook"
+    "build-storybook": "build-storybook",
+    "preversion": "yarn test",
+    "postversion": "npm publish",
+    "postpublish": "git push origin --all; git push origin --tags"
   },
   "husky": {
     "hooks": {
