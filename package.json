@@ -1,7 +1,7 @@
 {
   "name": "@prisma-cms/component-boilerplate",
   "description": "Component for prisma-cms",
-  "version": "1.4.3",
+  "version": "2.0.0",
   "private": false,
   "main": "dist",
   "scripts": {
@@ -9,7 +9,7 @@
     "start": "cross-env NODE_ENV=production node dev/server/dist/index.js",
     "build": "rimraf ./dist && tsc -p tsconfig.build.json",
     "build:server": "rimraf ./dev/server/dist && next build && tsc --project tsconfig.server.json",
-    "build:server:analyze": "ANALYZE=true yarn build:app",
+    "build:server:analyze": "ANALYZE=true yarn build:server",
     "types": "tsc --pretty --noEmit -p tsconfig.types.json",
     "format": "prettier --write .",
     "lint": "eslint . --ext ts --ext tsx --ext js",
