@@ -7,7 +7,8 @@
   "scripts": {
     "dev": "nodemon",
     "start": "cross-env NODE_ENV=production node dev/server/dist/index.js",
-    "build": "rimraf ./dist && tsc -p tsconfig.build.json",
+    "clean": "rimraf ./dist",
+    "build": "tsc -p tsconfig.build.json",
     "build:server": "rimraf ./dev/server/dist && next build && tsc --project tsconfig.server.json",
     "build:server:analyze": "ANALYZE=true yarn build:server",
     "types": "tsc --pretty --noEmit -p tsconfig.types.json",
