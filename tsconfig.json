@@ -7,7 +7,7 @@
       }
     ],
     "baseUrl": ".",
-    "target": "es6",
+    "target": "ES6",
     "module": "CommonJS",
     "jsx": "preserve",
     "lib": ["dom", "es2017", "es7", "es6"],

@@ -5,7 +5,6 @@ module.exports = ({ config }) => {
   // https://github.com/storybookjs/storybook/issues/11639#issuecomment-689835701
   // Указываем корень проекта для абсолютных путей
   config.resolve.modules = [
-    path.resolve(__dirname, '../src/next/'),
     path.resolve(__dirname, '..'),
     'node_modules',
   ]
