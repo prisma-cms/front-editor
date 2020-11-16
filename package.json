@@ -18,7 +18,7 @@
     "test:all": "yarn lint && yarn types && yarn test",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
-    "preversion": "yarn test",
+    "preversion": "yarn test && yarn clean && yarn build",
     "postversion": "yarn run npm publish",
     "postpublish": "git push origin --all; git push origin --tags"
   },
