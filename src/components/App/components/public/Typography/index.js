@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import EditorComponent from '../..';

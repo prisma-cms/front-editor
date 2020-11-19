@@ -5,6 +5,7 @@ import EditorComponent from '../..';
 // import Icon from "material-ui-icons/SettingsOverscan";
 import Typography from 'material-ui/Typography';
 import Button from 'material-ui/Button';
+import Grid from '../../../../../common/Grid';
 
 class Login extends EditorComponent {
 
@@ -34,10 +35,12 @@ class Login extends EditorComponent {
 
   initLocales(locales) {
 
-    Object.assign(locales.ru.values, {
-      Signin: "Вход",
-      Signout: "Выход",
-    });
+    if (locales) {
+      Object.assign(locales.ru.values, {
+        Signin: "Вход",
+        Signout: "Выход",
+      });
+    }
 
     return super.initLocales(locales);
   }
@@ -53,13 +56,19 @@ class Login extends EditorComponent {
     return user ? this.renderAuthorized() : this.renderUnauthorized()
   }
 
+  openLoginForm = () => {
+
+    const {
+      openLoginForm,
+    } = this.context;
+
+    openLoginForm && openLoginForm();
+  };
 
   renderAuthorized() {
 
     const {
       user,
-      Grid,
-      // Link,
       UserLink,
     } = this.context;
 
@@ -99,7 +108,7 @@ class Login extends EditorComponent {
         item
       >
         <Button
-          onClick={() => this.logout()}
+          onClick={this.logout}
           color="inherit"
         >
           {this.lexicon("Signout")}
@@ -113,29 +122,19 @@ class Login extends EditorComponent {
   renderUnauthorized() {
 
     return <Button
-      onClick={e => {
-        // this.setState({
-        //   opened: true,
-        // });
-        const {
-          openLoginForm,
-        } = this.context;
-        openLoginForm();
-      }}
+      onClick={this.openLoginForm}
       color="inherit"
     >
       {this.lexicon("Signin")}
     </Button>;
   }
 
-  logout() {
-
+  logout = () => {
     const {
       logout,
     } = this.context;
 
-    logout();
-
+    logout && logout();
   }
 
 }

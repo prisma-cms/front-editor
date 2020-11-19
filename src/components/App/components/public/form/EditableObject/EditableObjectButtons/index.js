@@ -6,7 +6,6 @@ import { EditableObjectContext } from '../../../../../context';
 
 class EditableObjectButtons extends EditorComponent {
 
-
   static defaultProps = {
     ...EditorComponent.defaultProps,
     hide_wrapper_in_default_mode: true,
@@ -14,15 +13,6 @@ class EditableObjectButtons extends EditorComponent {
 
   static Name = "EditableObjectButtons"
   static help_url = "";
-
-  // onBeforeDrop = () => {
-
-  // }
-
-  // canBeDropped = (dragItem) => {
-  //   return false;
-  // }
-
 
   renderPanelView(content) {
 
@@ -40,7 +30,7 @@ class EditableObjectButtons extends EditorComponent {
   }
 
 
-  canBeChild(child) {
+  canBeChild() {
     return false;
   }
 

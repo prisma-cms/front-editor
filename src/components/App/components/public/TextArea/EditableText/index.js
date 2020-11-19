@@ -1,8 +1,6 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-
-import CSSTransform from "./transform";
-import withStyles from 'material-ui/styles/withStyles';
+import CSSTransform from '../../Tag/HtmlTag/CSSTransform';
 
 class EditableText extends Component {
 
@@ -10,7 +8,6 @@ class EditableText extends Component {
     onChange: PropTypes.func,
     components: PropTypes.object,
     inEditMode: PropTypes.bool.isRequired,
-    // classes: PropTypes.object.isRequired,
   };
 
   static defaultProps = {
@@ -19,9 +16,6 @@ class EditableText extends Component {
     inEditMode: false,
   }
 
-  // shouldComponentUpdate() {
-  //   return false;
-  // }
 
 
   constructor(props) {
@@ -44,7 +38,7 @@ class EditableText extends Component {
 
   updateContent(node) {
 
-    let content = {
+    const content = {
       attributes: {},
     };
 
@@ -64,7 +58,7 @@ class EditableText extends Component {
     }
     else if (node.nodeType === Node.ELEMENT_NODE) {
 
-      let attributes = node.attributes;
+      const attributes = node.attributes;
 
       node.getAttributeNames().map(name => {
 
@@ -108,7 +102,7 @@ class EditableText extends Component {
 
       })
 
-      let children = [];
+      const children = [];
 
       nodes.forEach(node => {
 
@@ -171,9 +165,9 @@ class EditableText extends Component {
 
 
 
-    let children = [];
+    const children = [];
 
-    let content = {
+    const content = {
     };
 
     nodes.forEach(n => {
@@ -192,74 +186,49 @@ class EditableText extends Component {
     console.error(error, info);
   }
 
+  onInput = event => {
+
+    const {
+      onChange,
+    } = this.props;
+
+    const node = event.target;
+
+
+    const content = this.makeNewContent(node);
+
+    const newState = {
+      newContent: content,
+    };
+
+    Object.assign(this.state, newState);
+
+
+    onChange(content);
+
+  }
 
   render() {
 
     const {
       content,
-      // newContent,
     } = this.state;
 
     const {
-      onChange,
       inEditMode,
-      // classes,
     } = this.props;
-
-
-
-
 
     return (<div
       key="content"
-      // className={[classes.root, inEditMode ? classes.editable : ""].join(" ")}
       style={inEditMode ? {
         height: "100%",
         minHeight: "1rem",
       } : undefined}
       contentEditable={inEditMode ? true : false}
       suppressContentEditableWarning
-      onInput={event => {
-
-        // const {
-        //   nativeEvent: {
-        //     inputType,
-        //   },
-        // } = event;
-
-
-        const node = event.target;
-
-
-        const content = this.makeNewContent(node);
-
-
-
-        let newState = {
-          newContent: content,
-        };
-
-
-        // Object.assign(newState, {
-        //   // content,
-        // });
-
-        Object.assign(this.state, newState);
-
-
-        onChange(content);
-
-
-        // setTimeout(() => {
-        //   this.forceUpdate();
-        // }, 1000);
-
-
-      }}
+      onInput={this.onInput}
     >
-
       {this.renderContent(content) || <div></div>}
-
     </div>
 
     );

@@ -177,6 +177,7 @@ export class Select extends Iterable {
                 <SelectMui
                   name={name}
                   value={value || ""}
+                  // eslint-disable-next-line react/jsx-no-bind
                   onChange={event => {
                     this.onSelectChange(event, editableObjectContext);
                   }}
@@ -256,7 +257,7 @@ export class Select extends Iterable {
   }
 
 
-  renderItem(item, key, children) {
+  renderItem(item) {
 
     const {
       id,

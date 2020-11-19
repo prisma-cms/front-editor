@@ -101,7 +101,7 @@ class ListView extends EditorComponent {
           ...otherData
         } = data;
 
-        let items = objects ? objects : objectsConnection ? objectsConnection.edges.map(n => n.node) : null;
+        const items = objects ? objects : objectsConnection ? objectsConnection.edges.map(n => n.node) : null;
 
         if (!items) {
           return null;
@@ -119,11 +119,12 @@ class ListView extends EditorComponent {
          */
         if (children.length === 1 && children[0]
           && (
+            // eslint-disable-next-line no-prototype-builtins
             Iterable.isPrototypeOf(children[0].type)
             || children[0].type === Iterable
           )) {
 
-          let child = children[0];
+          const child = children[0];
 
           const {
             type: Type,

@@ -2,7 +2,6 @@ import React, { Fragment } from 'react';
 import PropTypes from "prop-types";
 
 import EditorComponent from '../../..';
-// import Button from 'material-ui/Button';
 import { EditableObjectContext, EditorContext } from '../../../../context';
 import Typography from 'material-ui/Typography';
 import EditableObject from '../../form/EditableObject';
@@ -28,17 +27,10 @@ export class ResourceFieldsProxy extends EditorComponent {
    */
   updateObject(data) {
 
-    // console.log("ResourceFieldsProxy updateObject data", JSON.stringify(data, true, 2));
-
-    // return;
-
-    // const object = this.getObjectWithMutations();
-
     const {
       objectContext,
     } = this.props;
 
-    // console.log("ResourceFieldsProxy updateObject objectContext", { ...objectContext });
 
     const {
       updateObject,
@@ -117,7 +109,6 @@ export class ResourceFields extends EditorComponent {
 
 
       if (updateObject && getObjectWithMutations) {
-        // console.log("updateObject updateObject", updateObject);
 
         const {
           components,
@@ -193,34 +184,9 @@ export class ResourceFields extends EditorComponent {
     return super.canBeParent(parent) && this.findInParent(parent, parent => parent instanceof EditableObject)
   }
 
-
-  // getActiveParent() {
-
-  //   const {
-  //     inEditMode,
-  //   } = this.getEditorContext();
-
-  //   let parent;
-
-  //   if (inEditMode) {
-
-  //     parent = super.getActiveParent();
-
-  //   }
-  //   else {
-  //     parent = this;
-  //   }
-
-
-  //   return parent;
-
-  // }
-
-
-  // getActionPanel() {
-  //   return this.actionPanel;
-  // }
-
+  panelRef = el => {
+    this.actionPanel = el;
+  }
 
   renderChildren() {
 
@@ -269,9 +235,7 @@ export class ResourceFields extends EditorComponent {
 
       if (objectInEditMode) {
         actionPanel = <div
-          ref={el => {
-            this.actionPanel = el;
-          }}
+          ref={this.panelRef }
           className={["front-editor--action-panel"].join(" ")}
         ></div>
       }

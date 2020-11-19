@@ -35,14 +35,13 @@ class ObjectConnector extends EditorComponent {
     fetchPolicy: undefined,
   };
 
+  constructor(props) {
 
-  // canBeDropped(dragItem) {
+    super(props);
 
-
-
-  //   return dragItem && dragItem instanceof ConnectorView ? true : false;
-  // }
-
+    this.getFilters = this.getFilters.bind(this);
+    this.setFilters = this.setFilters.bind(this);
+  }
 
   renderPanelView(content) {
 
@@ -65,6 +64,7 @@ class ObjectConnector extends EditorComponent {
   prepareRootElementProps(props) {
 
     const {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       fetchPolicy,
       ...other
     } = super.prepareRootElementProps(props);
@@ -107,11 +107,13 @@ class ObjectConnector extends EditorComponent {
   getEditorField(props) {
 
     let {
-      key,
       type,
+    } = props;
+
+    const {
+      key,
       name,
       value,
-      // ...other
     } = props;
 
 
@@ -140,10 +142,9 @@ class ObjectConnector extends EditorComponent {
             <InputLabel>Query name</InputLabel>
             <Select
               value={value}
-              onChange={event => this.onChangeProps(event)}
+              onChange={this.onChangeProps}
               inputProps={{
                 name,
-                // id: 'age-simple',
               }}
             >
               {queryNames
@@ -161,14 +162,7 @@ class ObjectConnector extends EditorComponent {
           </FormControl>;
           break;
 
-
         default: ;
-        // case "skip":
-        // case "last":
-
-        //   type = "number";
-
-        //   break;
       }
 
     }
@@ -180,9 +174,6 @@ class ObjectConnector extends EditorComponent {
       if (activeItem) {
 
         const {
-          // props: {
-          //   query: fieldName,
-          // },
           props: {
             query: fieldName,
           },
@@ -191,8 +182,6 @@ class ObjectConnector extends EditorComponent {
         if (fieldName) {
 
           const Field = this.getSchemaField(fieldName);
-
-
 
 
           if (Field) {
@@ -217,48 +206,45 @@ class ObjectConnector extends EditorComponent {
 
                 case "ENUM":
 
+                  {
+                    const Type = this.getSchemaType(n => n.name === typeName && n.kind === typeKind);
 
-                  const Type = this.getSchemaType(n => n.name === typeName && n.kind === typeKind);
+                    if (Type) {
 
-                  if (Type) {
+                      const {
+                        enumValues,
+                      } = Type;
 
-
-
-                    const {
-                      enumValues,
-                    } = Type;
-
-                    field = <FormControl
-                      key={key}
-                      fullWidth
-                    >
-                      <InputLabel>{name}</InputLabel>
-                      <Select
-                        value={value || ""}
-                        onChange={event => this.onChangeProps(event)}
-                        inputProps={{
-                          name,
-                          // id: 'age-simple',
-                        }}
+                      field = <FormControl
+                        key={key}
+                        fullWidth
                       >
-                        {enumValues.map(n => {
+                        <InputLabel>{name}</InputLabel>
+                        <Select
+                          value={value || ""}
+                          onChange={this.onChangeProps}
+                          inputProps={{
+                            name,
+                          }}
+                        >
+                          {enumValues.map(n => {
 
-                          const {
-                            name: fieldName,
-                          } = n;
+                            const {
+                              name: fieldName,
+                            } = n;
 
-                          return <MenuItem
-                            key={fieldName}
-                            value={fieldName}
-                          >
-                            {fieldName}
-                          </MenuItem>
-                        })}
-                      </Select>
-                    </FormControl>;
+                            return <MenuItem
+                              key={fieldName}
+                              value={fieldName}
+                            >
+                              {fieldName}
+                            </MenuItem>
+                          })}
+                        </Select>
+                      </FormControl>;
 
+                    }
                   }
-
                   break;
 
                 case "SCALAR":
@@ -306,13 +292,11 @@ class ObjectConnector extends EditorComponent {
 
   updateComponentProperty(name, value) {
 
-    const activeItem = this;
-
-    let newProps = {};
+    const newProps = {};
 
     const {
       props,
-    } = activeItem.getObjectWithMutations();
+    } = this.getObjectWithMutations();
 
     switch (name) {
 
@@ -331,9 +315,7 @@ class ObjectConnector extends EditorComponent {
 
             args.map(n => {
 
-
-
-              let {
+              const {
                 name: argName,
                 defaultValue,
                 type: {
@@ -401,7 +383,7 @@ class ObjectConnector extends EditorComponent {
 
         }
 
-        return activeItem.updateComponentProps({
+        return this.updateComponentProps({
           ...newProps,
           [name]: value,
         });
@@ -460,33 +442,19 @@ class ObjectConnector extends EditorComponent {
 
     const {
       where: filters,
-      // } = this.props;
     } = this.getComponentProps(this);
 
     return filters;
 
   }
 
-
   setFilters(filters) {
-
-
-
-
-
-    // activeItem.updateComponentProperty("where", filters)
-    // this.updateComponentProperty("test", "filters")
-
-    // return this.updateActiveComponentProps(this, {
-    //   where: filters,
-    // });
 
     return this.updateComponentProps({
       where: filters,
     });
 
   }
-
 
 
   canBeChild(child) {
@@ -514,11 +482,6 @@ class ObjectConnector extends EditorComponent {
 
       if (parent) {
 
-        // const {
-        //   query,
-        // } = parent.props.data.object.props;
-
-
         const {
           props: {
             query,
@@ -528,14 +491,11 @@ class ObjectConnector extends EditorComponent {
         if (query) {
           parentQuery = query;
         }
-
       }
 
 
       if (query || parentQuery) {
-
         can = true;
-
       }
 
     }
@@ -550,9 +510,9 @@ class ObjectConnector extends EditorComponent {
    */
   injectWhereFromObject(where, object) {
 
-    for (var i in where) {
+    for (const i in where) {
 
-      let value = where[i];
+      const value = where[i];
 
       if (value) {
 
@@ -624,12 +584,11 @@ class ObjectConnector extends EditorComponent {
 
         const {
           props: {
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
             orderBy,
             query,
             ...otherProps
           },
-          // eslint-disable-next-line no-unused-vars
-          where: propsWhere,
           parent,
           // ...other
         } = this.getRenderProps();
@@ -749,8 +708,8 @@ class ObjectConnector extends EditorComponent {
           key={query}
           query={query}
           parentQuery={parentQuery}
-          setFilters={filters => this.setFilters(filters)}
-          getFilters={() => this.getFilters()}
+          setFilters={this.setFilters}
+          getFilters={this.getFilters}
           filters={filters || []}
 
           /**

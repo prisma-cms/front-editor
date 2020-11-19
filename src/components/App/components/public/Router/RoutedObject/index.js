@@ -1,25 +1,10 @@
-import React, { Component, Fragment } from 'react';
-import PropTypes from 'prop-types';
+import React from 'react';
 import EditorComponent from '../../..';
 
-import Icon from "material-ui-icons/SettingsOverscan";
-
-import { Route as RouterRoute } from "react-router-dom";
-import Typography from 'material-ui/Typography';
 
 class RoutedObject extends EditorComponent {
 
-
   static Name = "RoutedObject"
-
-  // static propTypes = {
-  //   ...EditorComponent.propTypes,
-  // };
-
-  // static defaultProps = {
-  //   ...EditorComponent.defaultProps,
-  // }
-
 
   renderPanelView(content) {
 
@@ -35,15 +20,6 @@ class RoutedObject extends EditorComponent {
         Routed Object
     </div>);
   }
-
-
-  // renderChildren() {
-
-
-
-
-  //   return super.renderChildren();
-  // }
 
 }
 

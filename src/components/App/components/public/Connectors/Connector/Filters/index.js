@@ -1,5 +1,5 @@
-import React, { Component, Fragment } from 'react';
-import PropTypes, { bool } from 'prop-types';
+import React from 'react';
+import PropTypes from 'prop-types';
 
 import Connector, { ConnectorContext } from '..';
 
@@ -9,8 +9,6 @@ import EditorComponent from '../../../..';
 
 import PrismaCmsFilters from "@prisma-cms/filters";
 import ObjectConnector from '../../ObjectConnector';
-
-// import PrismaCmsPerformanceTester from "@prisma-cms/performance";
 
 class Filters extends EditorComponent {
 
@@ -28,7 +26,7 @@ class Filters extends EditorComponent {
   }
 
 
-  canBeChild(child) {
+  canBeChild() {
 
     return false;
   }
@@ -36,10 +34,7 @@ class Filters extends EditorComponent {
 
   canBeParent(parent) {
 
-
     let can = false;
-
-    // return false;
 
     if (super.canBeParent(parent)) {
 
@@ -100,34 +95,15 @@ class Filters extends EditorComponent {
     >
       {context => {
 
-
-
         const {
           queryName,
           filters,
           setFilters,
-          ...other
         } = context;
 
         if (!queryName) {
           return null;
         }
-
-        {/* return <Fragment>
-          <PrismaCmsPerformanceTester
-            props={this.props}
-            state={this.state}
-            context={this.context}
-            prefix="filters_performance"
-          />
-          
-          <PrismaCmsFilters
-            queryName={queryName}
-            filters={filters}
-            setFilters={setFilters}
-          />
-
-        </Fragment> */}
 
         return <PrismaCmsFilters
           queryName={queryName}

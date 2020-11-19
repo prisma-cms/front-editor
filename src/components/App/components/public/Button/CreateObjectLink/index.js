@@ -1,11 +1,10 @@
 import React from 'react';
 
-import { Link } from "react-router-dom";
-
 import Icon from "material-ui-icons/Add";
 import Typography from 'material-ui/Typography';
 import IconButton from 'material-ui/IconButton';
 import EditorComponent from '../../..';
+import { Link } from '../../../../../../common/Link';
 
 class CreateObjectLink extends EditorComponent {
 

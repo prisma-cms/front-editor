@@ -56,13 +56,8 @@ export class Table extends EditorComponent {
 
   renderChildren() {
 
-    // const {
-    // } = this.context;
-
-    // const {
-    // } = this.getEditorContext();
-
     const {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       children,
       ...other
     } = this.getComponentProps(this);

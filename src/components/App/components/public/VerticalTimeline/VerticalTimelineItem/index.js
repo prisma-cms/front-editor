@@ -1,5 +1,4 @@
-import React, { Component, Fragment } from 'react';
-import PropTypes from 'prop-types';
+import React, { Fragment } from 'react';
 
 
 import { TimelineItem as TimelineItemProto } from 'vertical-timeline-component-for-react';
@@ -98,6 +97,7 @@ class VerticalTimelineItem extends EditorComponent {
 
   onBeforeDrop = () => {
 
+    return;
   }
 
   // canBeDropped = (dragItem) => {

@@ -89,14 +89,12 @@ export class TableRow extends EditorComponent {
 
   renderChildren() {
 
-    // const {
-    // } = this.context;
-
     const {
       inEditMode,
     } = this.getEditorContext();
 
     const {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       children,
       ...other
     } = this.getComponentProps(this);
@@ -115,8 +113,6 @@ export class TableRow extends EditorComponent {
           ...style,
           display: "flex",
           width: "100%",
-          // borderColor: "red",
-          // border: "1px solid",
         },
       };
     }

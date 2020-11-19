@@ -1,5 +1,4 @@
-import React, { Component, Fragment, createContext } from 'react';
-import PropTypes from 'prop-types';
+import React from 'react';
 
 import { Timeline } from 'vertical-timeline-component-for-react';
 import Iterable from '../Connectors/Connector/ListView/Iterable';

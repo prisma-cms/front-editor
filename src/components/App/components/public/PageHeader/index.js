@@ -1,14 +1,11 @@
+/* eslint-disable react/jsx-no-bind */
 import React from 'react';
-// import PropTypes from 'prop-types';
 import EditorComponent from '../..';
 
-// import Icon from "material-ui-icons/SettingsOverscan";
-
-// import MainMenu from "@prisma-cms/front/lib/components/App/Renderer/MainMenu";
-// import Language from "@prisma-cms/front/lib/components/Language";
 import AppBar from 'material-ui/AppBar';
 import Typography from 'material-ui/Typography';
 import Button from 'material-ui/Button';
+import Grid from '../../../../../common/Grid';
 
 class PageHeader extends EditorComponent {
 
@@ -23,16 +20,6 @@ class PageHeader extends EditorComponent {
   renderPanelView() {
 
     return null;
-
-    // const {
-    //   classes,
-    // } = this.getEditorContext();
-
-    // return super.renderPanelView(<div
-    //   className={classes.panelButton}
-    // >
-    //   Page Header
-    // </div>);
   }
 
 
@@ -46,20 +33,11 @@ class PageHeader extends EditorComponent {
 
     const {
       user,
-      Grid,
-      // Link,
       UserLink,
     } = this.context;
 
-    // const {
-    //   // opened,
-    // } = this.state;
-
-    // const {
-    // } = this.props;
 
     const {
-      // id: userId,
       username,
       fullname,
     } = user || {}
@@ -72,10 +50,7 @@ class PageHeader extends EditorComponent {
         alignItems="center"
         className="MainMenu-root"
       >
-
-
         {super.renderChildren()}
-
 
         {user
           ?
@@ -117,10 +92,7 @@ class PageHeader extends EditorComponent {
             item
           >
             <Button
-              onClick={e => {
-                // this.setState({
-                //   opened: true,
-                // });
+              onClick={() => {
                 const {
                   openLoginForm,
                 } = this.context;
@@ -149,40 +121,6 @@ class PageHeader extends EditorComponent {
 
   }
 
-
-  // renderChildren(){
-
-  //   return <MainMenu 
-
-  //   />
-  // }
-
-
-  // renderMainView() {
-
-  //   // const {
-  //   //   marginTop,
-  //   //   marginBottom,
-  //   // } = this.getComponentProps(this);
-
-  //   const {
-  //     style,
-  //     marginTop,
-  //     marginBottom,
-  //     ...other
-  //   } = this.getRenderProps();
-
-  //   return <div
-  //     style={{
-  //       marginTop,
-  //       marginBottom,
-  //       ...style,
-  //     }}
-  //     {...other}
-  //   >
-  //     {super.renderMainView()}
-  //   </div>;
-  // }
 
 }
 

@@ -1,5 +1,4 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React from 'react';
 import EditorComponent from '../..';
 
 // import Icon from "material-ui-icons/SettingsOverscan";
@@ -32,7 +31,9 @@ class ChangeLanguage extends EditorComponent {
 
   getRootElement() {
 
-    return Language;
+    // return Language;
+
+    return null
   }
 
 

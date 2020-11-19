@@ -1,10 +1,12 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react/forbid-foreign-prop-types */
 import React from 'react';
 import PropTypes from 'prop-types';
 
 import EditorComponent from '../../..';
 
-import ApolloEditableObject from "apollo-cms/lib/DataView/Object/Editable";
+import { EditableObject as ApolloEditableObject } from "apollo-cms";
+
 import { ObjectContext } from '../../Connectors/Connector/ListView';
 import { EditableObjectContext } from '../../../../context';
 import Query from '../../Connectors/Query';
@@ -20,9 +22,7 @@ import CircularProgress from 'material-ui/Progress/CircularProgress';
 
 import DeleteIcon from 'material-ui-icons/Delete';
 
-// import EditableView from './EditableView';
-// import DefaultView from './DefaultView';
-
+// TODO Fix for new EditableObject
 export class Editable extends ApolloEditableObject {
 
 
@@ -51,37 +51,14 @@ export class Editable extends ApolloEditableObject {
 
     super(props);
 
-    this.mutate = this.mutate.bind(this);
+    this.delete = this.delete.bind(this);
 
   }
-
-  // componentDidUpdate(prevProps, prevState) {
-
-  //   const keys = Object.keys(this.props);
-
-  //   keys.map(key => {
-
-  //     const value = this.props[key];
-
-  //     const prevValue = prevProps[key];
-
-  //     if (value !== undefined && prevValue !== undefined && value !== prevValue) {
-
-  //       console.log("Editable componentDidUpdate value !== prevValue / ", key, value, prevValue);
-
-  //     }
-
-  //   });
-
-  //   super.componentDidUpdate && super.componentDidUpdate(prevProps, prevState);
-
-  // }
-
 
 
   updateObject(data) {
 
-    for (var i in data) {
+    for (const i in data) {
 
       const value = data[i];
 
@@ -107,7 +84,7 @@ export class Editable extends ApolloEditableObject {
       extendQuery,
     } = this.props;
 
-    let queries = {
+    const queries = {
 
     }
 
@@ -165,9 +142,6 @@ export class Editable extends ApolloEditableObject {
 
       const extendedQuery = extendQuery(mutation);
 
-      // console.log("mutation", mutation);
-      // console.log("mutation extendQuery", extendedQuery);
-      // console.log("props", props);
 
       mutation = gql(extendedQuery);
 
@@ -191,8 +165,6 @@ export class Editable extends ApolloEditableObject {
       children,
     } = this.props;
 
-    // return children ? children.filter(n => n && n.type !== DefaultView) : children;
-
     return children;
   }
 
@@ -203,20 +175,10 @@ export class Editable extends ApolloEditableObject {
       children,
     } = this.props;
 
-    // return children ? children.filter(n => n && n.type !== EditableView) : children;
-
     return children;
 
   }
 
-
-  // getCacheKey = () => {
-
-  //   const {
-  //     cacheKey,
-  //   } = this.props;
-
-  // }
 
   renderHeader() {
 
@@ -234,19 +196,13 @@ export class Editable extends ApolloEditableObject {
       id: objectId,
     } = this.getObject() || {};
 
-    let buttons = super.getButtons() || [];
+    const buttons = super.getButtons() || [];
 
-    if (this.isInEditMode() && objectId) {
+    if (this.inEditMode() && objectId) {
       buttons.push(this.renderDeleteButton());
     }
 
     return buttons;
-  }
-
-
-  bindGetButtons = () => () => {
-
-    return this.getButtons();
   }
 
 
@@ -265,9 +221,7 @@ export class Editable extends ApolloEditableObject {
     return deletable_object ?
       <IconButton
         key="delete"
-        onClick={event => {
-          this.delete();
-        }}
+        onClick={this.delete}
         disabled={loading}
       >
         {loading
@@ -328,6 +282,7 @@ export class Editable extends ApolloEditableObject {
   render() {
 
     const {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       _dirty: _dirty_null,
       ...other
     } = this.props;
@@ -348,17 +303,20 @@ export class Editable extends ApolloEditableObject {
       })
     }
 
+    const object = this.getObjectWithMutations();
+
     return <EditableObjectContext.Provider
       value={{
-        updateObject: data => this.updateObject(data),
-        getEditor: props => this.getEditor(props),
-        inEditMode: this.isInEditMode(),
-        canEdit: this.canEdit(),
-        getObjectWithMutations: () => this.getObjectWithMutations(),
-        getObject: () => this.getObject(),
         // getCacheKey: this.getCacheKey,
-        getButtons: this.bindGetButtons(),
-        save: () => this.save(),
+
+        updateObject: this.updateObject,
+        getEditor: this.getEditor,
+        inEditMode: this.inEditMode(),
+        canEdit: this.canEdit(),
+        getObjectWithMutations: this.getObjectWithMutations,
+        getObject: this.getObject,
+        getButtons: this.getButtons,
+        save: this.save,
         mutate: this.mutate,
         loading,
         _dirty,
@@ -461,6 +419,7 @@ class EditableObject extends EditorComponent {
 
   onBeforeDrop = () => {
 
+    return;
   }
 
 
@@ -517,8 +476,11 @@ class EditableObject extends EditorComponent {
   getDirty(context) {
 
     let {
-      object,
       _dirty,
+    } = context;
+
+    const {
+      object,
     } = context;
 
 
@@ -530,7 +492,6 @@ class EditableObject extends EditorComponent {
       id: objectId,
     } = object || {};
 
-    // console.log("getDirty object", object);
 
     if (create_as_a_child_of) {
 
@@ -548,35 +509,9 @@ class EditableObject extends EditorComponent {
 
     }
 
-    // console.log("getDirty _dirty", _dirty);
-
-    // return _dirty ? _dirty : !object ? {} : undefined;
     return _dirty;
 
   }
-
-
-  // prepareOnSave = (object) => {
-
-  //   const {
-  //     id: objectId,
-  //   } = object || {};
-
-  //   if (!objectId) {
-
-  //     return result => this.onCreateObject(result)
-
-  //   }
-  //   else {
-
-  //     return result => this.onUpdateObject(result)
-
-  //   }
-
-  // }
-
-
-  // onCreateObjectBind = () => this.onCreateObject();
 
 
   onCreateObject(result) {
@@ -585,9 +520,6 @@ class EditableObject extends EditorComponent {
     const {
       on_create_redirect_url,
     } = this.getComponentProps(this);
-
-
-    // console.log("onCreateObject on_create_redirect_url", on_create_redirect_url);
 
 
     if (on_create_redirect_url) {
@@ -600,10 +532,6 @@ class EditableObject extends EditorComponent {
       const {
         data: object,
       } = response || {}
-
-      // console.log("onCreateObject object", { ...object });
-      // console.log("onCreateObject result", { ...result });
-
 
       if (object) {
 
@@ -677,16 +605,10 @@ class EditableObject extends EditorComponent {
       schema,
     } = this.context;
 
-    // console.log("Viewer EditableObject schema", schema);
-
     if (Query && schema) {
-
-
       /**
        * Проходим запрос на предмет директив в фрагментах
        */
-
-
 
       const parsedQuery = parse(Query);
 
@@ -709,20 +631,9 @@ class EditableObject extends EditorComponent {
             const {
               kind,
               directives,
-              // loc: {
-              //   start,
-              //   end,
-              //   source: {
-              //     body,
-              //   },
-              // },
               selectionSet: {
                 loc: {
-                  // start,
                   end,
-                  // source: {
-                  //   body,
-                  // },
                 },
               },
               typeCondition,
@@ -743,25 +654,6 @@ class EditableObject extends EditorComponent {
                 } = typeCondition;
 
 
-
-
-
-
-
-
-                /**
-                 * Если указана автоподгрузка типов и получен тип, то получаем все скалярные поля для этого типа
-                 */
-
-
-
-
-
-
-                // const fragmentSource = body.slice(start, end);
-
-
-
                 if (type) {
 
                   const field = types.find(n => {
@@ -774,8 +666,6 @@ class EditableObject extends EditorComponent {
                     return kind === "OBJECT" && name === type;
 
                   });
-
-
 
 
                   if (field) {
@@ -912,7 +802,7 @@ class EditableObject extends EditorComponent {
     //   inEditMode,
     // } = this.getEditorContext();
 
-    let children = super.renderChildren();
+    const children = super.renderChildren();
 
 
 
@@ -939,8 +829,6 @@ class EditableObject extends EditorComponent {
     const Editable = this.getEditableClass();
 
 
-    // console.log("random_key", random_key, object_key);
-
     return <ObjectContext.Consumer
       key="editable_object"
     >
@@ -960,7 +848,6 @@ class EditableObject extends EditorComponent {
           return null;
         }
 
-
         /**
          * Здесь есть возможность переопределить объект
          */
@@ -979,7 +866,7 @@ class EditableObject extends EditorComponent {
           // data={{
           //   object: object || {},
           // }}
-          object={editableObject || {}}
+          object={editableObject}
 
 
           extendQuery={this.extendQueryBind}

@@ -68,6 +68,10 @@ class Query extends EditorComponent {
 
   }
 
+  onEditQuery = query => {
+    this.updateComponentProperty("query", query)
+  }
+
 
   renderChildren() {
 
@@ -89,30 +93,13 @@ class Query extends EditorComponent {
 
 
     if (activeItem && activeItem === this && expanded) {
-      // output = <div
-      //   style={{
-      //     height: "80vh",
-      //   }}
-      // >
-      //   <QueryBuilder
-      //     query={query || ""}
-      //     onEditQuery={query => {
-      //       this.updateComponentProperty("query", query)
-      //     }}
-      //   />
-      // </div>;
-
 
       output = <Drawer
         key="drawer"
         anchor="top"
         open={true}
         onClose={this.close}
-        // ModalProps={{
-
-        // }}
         style={{
-          // height: "100%",
           zIndex: 3000,
         }}
         PaperProps={{
@@ -121,11 +108,6 @@ class Query extends EditorComponent {
           },
         }}
       >
-        {/* <div
-          style={{
-            height: "80vh",
-          }}
-        > */}
 
         <div
           style={{
@@ -141,9 +123,7 @@ class Query extends EditorComponent {
 
         <QueryBuilder
           query={query || ""}
-          onEditQuery={query => {
-            this.updateComponentProperty("query", query)
-          }}
+          onEditQuery={this.onEditQuery }
         />
         {/* </div> */}
       </Drawer>

@@ -1,82 +1,40 @@
+import React, { Component } from 'react'
 
-import React, {
-  Component,
-} from 'react';
+import Context from '@prisma-cms/context'
 
-import Context from '@prisma-cms/context';
-
-import * as UI from "../ui";
+import * as UI from '../ui'
 
 class ContextProvider extends Component {
-
-  static contextType = Context;
-
-
-  // componentWillMount() {
-
-  //   const {
-  //     query,
-  //     ...other
-  //   } = this.context;
-
-  //   this.newContext = {
-  //     query: {
-  //       ...query,
-  //       ...this.prepareQuery(),
-  //     },
-  //     ...other
-  //   }
-
-  // }
-
+  static contextType = Context
 
   render() {
+    const { children } = this.props
 
-    const {
-      children,
-    } = this.props;
+    return (
+      <Context.Consumer>
+        {(context) => {
+          const { query } = context
 
-    let {
-      query,
-    } = this.context;
-
-    // Object.assign(this.context, {
-    //   query: query ? Object.assign(query, {
-    //     ...this.prepareQuery(),
-    //   }) : query,
-    //   // query: {
-    //   //   ...query,
-    //   //   ...this.prepareQuery(),
-    //   // },
-    //   ...UI,
-    // });
-
-    return <Context.Consumer>
-      {context => {
-
-        const {
-          query,
-        } = context;
-
-        return <Context.Provider
-          value={{
-            ...context,
-            query: {
-              ...query,
-              ...this.prepareQuery(),
-            },
-            ...UI,
-          }}
-        >
-          {children || null}
-        </Context.Provider>
-      }}
-    </Context.Consumer>
-
+          return (
+            <Context.Provider
+              value={{
+                ...context,
+                query: {
+                  ...query,
+                  ...this.prepareQuery(),
+                },
+                ...UI,
+              }}
+            >
+              {children || null}
+            </Context.Provider>
+          )
+        }}
+      </Context.Consumer>
+    )
   }
 
   prepareQuery() {
-
     return {
       // ...this.prepareUserQuery(),
       ...this.prepareTemplateQuery(),
@@ -85,18 +43,14 @@ class ContextProvider extends Component {
 
   // prepareUserQuery() {
 
-
   //   const {
   //     queryFragments,
   //   } = this.context;
-
 
   //   const {
   //     UserNoNestingFragment,
   //     BatchPayloadNoNestingFragment,
   //   } = queryFragments;
-
-
 
   //   const usersConnection = `
   //     query usersConnection (
@@ -131,7 +85,6 @@ class ContextProvider extends Component {
   //     ${UserNoNestingFragment}
   //   `;
 
-
   //   const users = `
   //     query users (
   //       $where: UserWhereInput
@@ -158,7 +111,6 @@ class ContextProvider extends Component {
   //     ${UserNoNestingFragment}
   //   `;
 
-
   //   const user = `
   //     query user (
   //       $where: UserWhereUniqueInput!
@@ -172,7 +124,6 @@ class ContextProvider extends Component {
 
   //     ${UserNoNestingFragment}
   //   `;
-
 
   //   const createUserProcessor = `
   //     mutation createUserProcessor(
@@ -195,7 +146,6 @@ class ContextProvider extends Component {
 
   //     ${UserNoNestingFragment}
   //   `;
-
 
   //   const updateUserProcessor = `
   //     mutation updateUserProcessor(
@@ -221,8 +171,6 @@ class ContextProvider extends Component {
   //     ${UserNoNestingFragment}
   //   `;
 
-
-
   //   const deleteUser = `
   //     mutation deleteUser (
   //       $where: UserWhereUniqueInput!
@@ -235,7 +183,6 @@ class ContextProvider extends Component {
   //     }
   //     ${UserNoNestingFragment}
   //   `;
-
 
   //   const deleteManyUsers = `
   //     mutation deleteManyUsers (
@@ -250,7 +197,6 @@ class ContextProvider extends Component {
   //     ${BatchPayloadNoNestingFragment}
   //   `;
 
-
   //   return {
   //     usersConnection,
   //     users,
@@ -263,9 +209,7 @@ class ContextProvider extends Component {
 
   // }
 
-
   prepareTemplateQuery() {
-
     const TemplateNoNestingFragment = `fragment TemplateNoNesting on Template {
       id
       createdAt
@@ -302,7 +246,6 @@ class ContextProvider extends Component {
     }
     `
 
-
     const TemplateFragment = `
       fragment Template on Template {
         ...TemplateNoNesting
@@ -317,8 +260,7 @@ class ContextProvider extends Component {
       ${TemplateNoNestingFragment}
       ${UserNoNestingFragment}
       ${ProjectNoNestingFragment}
-    `;
-
+    `
 
     const templatesConnection = `
       query templatesConnection (
@@ -351,8 +293,7 @@ class ContextProvider extends Component {
       }
 
       ${TemplateFragment}
-    `;
-
+    `
 
     const templates = `
       query templates (
@@ -378,8 +319,7 @@ class ContextProvider extends Component {
       }
 
       ${TemplateFragment}
-    `;
-
+    `
 
     const template = `
       query template (
@@ -393,8 +333,7 @@ class ContextProvider extends Component {
       }
 
       ${TemplateFragment}
-    `;
-
+    `
 
     const createTemplateProcessor = `
       mutation createTemplateProcessor(
@@ -416,8 +355,7 @@ class ContextProvider extends Component {
       }
 
       ${TemplateFragment}
-    `;
-
+    `
 
     const updateTemplateProcessor = `
       mutation updateTemplateProcessor(
@@ -441,9 +379,7 @@ class ContextProvider extends Component {
       }
 
       ${TemplateFragment}
-    `;
-
-
+    `
 
     const deleteTemplate = `
       mutation deleteTemplate (
@@ -456,8 +392,7 @@ class ContextProvider extends Component {
         }
       }
       ${TemplateNoNestingFragment}
-    `;
-
+    `
 
     const deleteManyTemplates = `
       mutation deleteManyTemplates (
@@ -469,8 +404,7 @@ class ContextProvider extends Component {
           count
         }
       }
-    `;
-
+    `
 
     return {
       templatesConnection,
@@ -481,9 +415,7 @@ class ContextProvider extends Component {
       deleteTemplate,
       deleteManyTemplates,
     }
-
   }
-
 }
 
-export default ContextProvider;
+export default ContextProvider

@@ -1,12 +1,6 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import React from 'react';
 
-// import EditorComponent from '../..';
-
-// import SlickSlider from "react-slick";
-
-// import "slick-carousel/slick/slick.css";
-// import "slick-carousel/slick/slick-theme.css";
 import Iterable from '../Connectors/Connector/ListView/Iterable';
 
 class Slider extends Iterable {
@@ -72,82 +66,6 @@ class Slider extends Iterable {
   }
 
 
-
-  // prepareDragItemComponents() {
-
-  //   return [
-  //     {
-  //       "name": "Section",
-  //       "props": {
-  //         "style": {
-  //           "textAlign": "center"
-  //         },
-  //         "className": "block"
-  //       },
-  //       "components": [
-  //         {
-  //           "name": "Tag",
-  //           "props": {
-  //             "tag": "h1"
-  //           },
-  //           "components": [
-  //             {
-  //               "name": "Tag",
-  //               "component": "Tag",
-  //               "props": {
-  //                 "text": "Недвижимость в Дубае, ОАЭ"
-  //               },
-  //               "components": []
-  //             }
-  //           ],
-  //           "component": "Tag"
-  //         },
-  //         {
-  //           "name": "Tag",
-  //           "props": {
-  //             "tag": "div",
-  //             "className": "caption"
-  //           },
-  //           "components": [
-  //             {
-  //               "name": "Tag",
-  //               "component": "Tag",
-  //               "props": {
-  //                 "text": "Квартиры и апартаменты премиум и бизнес-класса в лучших жилых комплексах Дубая"
-  //               },
-  //               "components": []
-  //             }
-  //           ],
-  //           "component": "Tag"
-  //         },
-  //         // {
-  //         //   "name": "Section",
-  //         //   "component": "Section",
-  //         //   "props": {
-  //         //   },
-  //         //   "components": [
-  //         //     {
-  //         //       "name": "Section",
-  //         //       "component": "Section",
-  //         //       "props": {
-  //         //       },
-  //         //       "components": [
-  //         //       ],
-  //         //     },
-  //         //   ],
-  //         // },
-  //       ],
-  //       "component": "Section"
-  //     }
-  //   ];
-  // }
-
-
-  // getRootElement() {
-
-  //   return MainMenu;
-  // }
-
   renderChildren() {
 
     const childs = super.renderChildren();
@@ -188,6 +106,7 @@ class Slider extends Iterable {
 
   prepareRootElementProps(props) {
 
+    // TODO Fix this hell
     const {
       dots,
       dotsClass,

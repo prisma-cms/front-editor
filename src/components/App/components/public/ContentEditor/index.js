@@ -25,6 +25,7 @@ import FormatIndentDecreaseIcon from "material-ui-icons/FormatIndentDecrease";
 import RedoIcon from "material-ui-icons/Redo";
 import UndoIcon from "material-ui-icons/Undo";
 import SaveIcon from "material-ui-icons/Save";
+import Grid from '../../../../../common/Grid';
 
 
 export class TagEditor extends HtmlTag {
@@ -79,27 +80,7 @@ export class TagEditor extends HtmlTag {
 
 
 
-  // tagOnFocus(event) {
-
-  //   if (!this.readOnly()) {
-
-  //     // this.editingStart();
-
-  //     this.setActiveItem(this);
-
-  //   }
-
-  //   super.tagOnFocus();
-  // }
-
-
-  // tagOnBlur(event) {
-
-  //   return super.tagOnBlur(event);
-  // }
-
-
-  onSelectionChange(event) {
+  onSelectionChange() {
 
     const {
       container,
@@ -117,8 +98,6 @@ export class TagEditor extends HtmlTag {
       else {
         selection = null;
       }
-
-      // console.log("selection eg", selection, this.state.selection, selection === this.state.selection);
 
       if (selection && selection === this.state.selection) {
         this.forceUpdate();
@@ -180,8 +159,6 @@ export class TagEditor extends HtmlTag {
         // const observer = new MutationObserver(this.onDOMSubtreeModified);
         const observer = new MutationObserver((changes, observer) => {
 
-          // console.log("MutationObserver changes", changes);
-
           this.onChangeDom(container, changes, observer);
 
         });
@@ -217,7 +194,7 @@ export class TagEditor extends HtmlTag {
   }
 
 
-  onChangeDom(container, changes, observer) {
+  onChangeDom(container) {
 
     const content = this.makeNewContent(container);
 
@@ -240,29 +217,6 @@ export class TagEditor extends HtmlTag {
   }
 
 
-  // onDOMSubtreeModified = (event, observer) => {
-
-  //   const node = event.currentTarget;
-
-  //   // console.log("onDOMSubtreeModified event", event);
-
-  //   // console.log("onDOMSubtreeModified event.target", event.target);
-  //   // console.log("onDOMSubtreeModified event.currentTarget", event.currentTarget);
-  //   // console.log("onDOMSubtreeModified node", node);
-
-  //   const content = this.makeNewContent(node);
-
-  //   const {
-  //     components,
-  //   } = content;
-
-  //   // console.log("onDOMSubtreeModified node", components);
-
-  //   this.onChangeContent(components);
-
-  // }
-
-
   onChangeContent(components) {
 
     this.setState({
@@ -279,14 +233,15 @@ export class TagEditor extends HtmlTag {
    * а DOMSubtreeModified,
    * поэтому перехватываем родительский обработчик
    */
-  tagOnInput(event) {
+  tagOnInput() {
 
     return false;
   }
 
 
-  tagOnKeyDown(event) {
+  tagOnKeyDown() {
 
+    return false
   }
 
 
@@ -304,12 +259,12 @@ export class TagEditor extends HtmlTag {
 
     const hasSelection = selection ? true : null;
 
-    let tableControls = [
+    const tableControls = [
       {
         key: "insertTable",
         title: "Вставить таблицу",
         disabled: hasSelection ? false : true,
-        onClick: event => this.execCommand('insertHTML', true, `<table><tbody><tr><td></td></tr></tbody></table>`),
+        onClick: () => this.execCommand('insertHTML', true, `<table><tbody><tr><td></td></tr></tbody></table>`),
         icon: <svg
           className={[classes.icon, !hasSelection ? "disabled" : ""].join(" ")}
           version="1.1"
@@ -388,7 +343,7 @@ export class TagEditor extends HtmlTag {
           disabled: hasSelection ? false : true,
           // onClick: event => this.execCommand('insertHTML', true, `<table width="100%" border="1"><tbody><tr><td></td></tr></tbody></table>`),
           // onClick: event => document.execCommand('insertHTML', true, `<span>eded</span>`),
-          onClick: event => {
+          onClick: () => {
 
             const index = Array.from(tr.parentElement.childNodes).indexOf(tr);
 
@@ -417,9 +372,7 @@ export class TagEditor extends HtmlTag {
           key: "insertCell",
           title: "Вставить колонку",
           disabled: hasSelection ? false : true,
-          // onClick: event => this.execCommand('insertHTML', true, `<table width="100%" border="1"><tbody><tr><td></td></tr></tbody></table>`),
-          // onClick: event => document.execCommand('insertHTML', true, `<span>eded</span>`),
-          onClick: event => {
+          onClick: () => {
 
             const cell = this.closestInSelection(selection, "td,th");
 
@@ -449,75 +402,6 @@ export class TagEditor extends HtmlTag {
           </svg>,
         });
 
-
-        // tableControls.push({
-        //   key: "removeTable",
-        //   title: "Удалить таблицу",
-        //   disabled: hasSelection ? false : true,
-        //   onClick: event => this.execCommand('insertHTML', true, `<table width="100%" border="1"><tbody><tr><td></td></tr></tbody></table>`),
-        //   // onClick: event => document.execCommand('insertHTML', true, `<span>eded</span>`),
-        //   icon: <svg
-        //     className={[classes.icon, !hasSelection ? "disabled" : ""].join(" ")}
-        //     version="1.1"
-        //     xmlns="http://www.w3.org/2000/svg"
-        //     xmlnsXlink="http://www.w3.org/1999/xlink"
-        //     x="0px"
-        //     y="0px"
-        //     viewBox="0 0 512 512"
-        //     style={{
-        //       enableBackground: "new 0 0 512 512",
-        //     }}
-        //     xmlSpace="preserve"
-        //   >
-        //     <g>
-        //       <g>
-        //         <g>
-        //           <path
-        //             d="M0,0v512h256v-32h-64V352h32v-32h-32V192h128v32h32v-32h96v-32h-96V32h128v96h32V0H0z M160,480H32V352h128V480z M160,320 H32V192h128V320z M160,160H32V32h128V160z M320,160H192V32h128V160z"
-        //           />
-        //           <path
-        //             d="M384,256c-70.692,0-128,57.308-128,128s57.308,128,128,128s128-57.308,128-128C511.921,313.34,454.66,256.079,384,256z M384,480c-53.019,0-96-42.981-96-96s42.981-96,96-96s96,42.981,96,96C479.947,436.997,436.997,479.947,384,480z" />
-        //           <polygon
-        //             points="368,368 336,368 336,400 368,400 400,400 432,400 432,368 400,368"
-        //           />
-        //           <rect x="480" y="224" width="32" height="32" />
-        //           <rect x="480" y="160" width="32" height="32" />
-        //         </g>
-        //       </g>
-        //     </g>
-        //     <g>
-        //     </g>
-        //     <g>
-        //     </g>
-        //     <g>
-        //     </g>
-        //     <g>
-        //     </g>
-        //     <g>
-        //     </g>
-        //     <g>
-        //     </g>
-        //     <g>
-        //     </g>
-        //     <g>
-        //     </g>
-        //     <g>
-        //     </g>
-        //     <g>
-        //     </g>
-        //     <g>
-        //     </g>
-        //     <g>
-        //     </g>
-        //     <g>
-        //     </g>
-        //     <g>
-        //     </g>
-        //     <g>
-        //     </g>
-        //   </svg>,
-        // });
-
       }
 
     }
@@ -525,127 +409,111 @@ export class TagEditor extends HtmlTag {
 
     const buttons = [
       {
-        key: "bold",
+        name: "bold",
         title: "Жирный текст",
         disabled: hasSelection ? false : true,
-        onClick: event => document.execCommand('bold'),
         icon: <FormatBoldIcon />,
       },
       {
-        key: "italic",
+        name: "italic",
         title: "Наклонный текст",
         disabled: hasSelection ? false : true,
-        onClick: event => document.execCommand('italic'),
         icon: <FormatItalicIcon />,
       },
       {
-        key: "underline",
+        name: "underline",
         title: "Подчеркнутый текст",
         disabled: hasSelection ? false : true,
-        onClick: event => document.execCommand('underline'),
         icon: <FormatUnderlinedIcon />,
       },
       {
-        key: "strikeThrough",
+        name: "strikeThrough",
         title: "Перечеркнутый текст",
         disabled: hasSelection ? false : true,
-        onClick: event => document.execCommand('strikeThrough'),
         icon: <FormatStrikethroughIcon />,
       },
       {
-        key: "justifyLeft",
+        name: "justifyLeft",
         title: "Выровнить влево",
         disabled: hasSelection ? false : true,
-        onClick: event => document.execCommand('justifyLeft'),
         icon: <AlignLeftIcon />,
       },
       {
-        key: "justifyCenter",
+        name: "justifyCenter",
         title: "Выровнить по центру",
         disabled: hasSelection ? false : true,
-        onClick: event => document.execCommand('justifyCenter'),
         icon: <AlignCenterIcon />,
       },
       {
-        key: "justifyRight",
+        name: "justifyRight",
         title: "Выровнить вправо",
         disabled: hasSelection ? false : true,
-        onClick: event => document.execCommand('justifyRight'),
         icon: <AlignRightIcon />,
       },
       {
-        key: "justifyFull",
+        name: "justifyFull",
         title: "Выровнить на всю ширину",
         disabled: hasSelection ? false : true,
-        onClick: event => document.execCommand('justifyFull'),
         icon: <AlignJustifyIcon />,
       },
       {
-        key: "insertUnorderedList",
+        name: "insertUnorderedList",
         title: "Ненумерованный список",
         disabled: hasSelection ? false : true,
-        onClick: event => document.execCommand('insertUnorderedList'),
         icon: <FormatListBulletedIcon />,
       },
       {
-        key: "insertOrderedList",
+        name: "insertOrderedList",
         title: "Нумерованный список",
         disabled: hasSelection ? false : true,
-        onClick: event => document.execCommand('insertOrderedList'),
         icon: <FormatListNumberedIcon />,
       },
       {
-        key: "outdent",
+        name: "outdent",
         title: "Уменьшить отступ",
         disabled: hasSelection ? false : true,
-        onClick: event => document.execCommand('outdent'),
         icon: <FormatIndentDecreaseIcon />,
       },
       {
-        key: "indent",
+        name: "indent",
         title: "Увеличить отступ",
         disabled: hasSelection ? false : true,
-        onClick: event => document.execCommand('indent'),
         icon: <FormatIndentIncreaseIcon />,
       },
       {
-        key: "selectAll",
+        name: "selectAll",
         title: "Выделить все",
         disabled: hasSelection ? false : true,
-        onClick: event => document.execCommand('selectAll'),
         icon: <SelectAllIcon />,
       },
       {
-        key: "removeFormat",
+        name: "removeFormat",
         title: "Удалить форматирование",
         disabled: hasSelection ? false : true,
-        onClick: event => document.execCommand('removeFormat'),
         icon: <FormatClearIcon />,
       }]
       .concat(tableControls)
       .concat([
         {
-          key: "undo",
+          name: "undo",
           title: "Откатить действие (Ctrl+Z)",
           disabled: hasSelection ? false : true,
-          onClick: event => document.execCommand('undo'),
           icon: <UndoIcon />,
         },
         {
-          key: "redo",
+          name: "redo",
           title: "Повторить действие (Ctrl+Y)",
           disabled: hasSelection ? false : true,
-          onClick: event => document.execCommand('redo'),
           icon: <RedoIcon />,
         },
       ]);
 
     if (newContent) {
       buttons.push({
-        key: "save",
+        name: "save",
         title: "Сохранить изменения",
         // disabled: hasSelection ? false : true,
-        onClick: event => this.saveChanges(),
+        onClick: this.saveChanges,
         icon: <SaveIcon
           style={{
             color: "red",
@@ -656,6 +524,12 @@ export class TagEditor extends HtmlTag {
 
     return buttons;
 
+  }
+
+
+  onButtonClick = (event) => {
+
+    return document.execCommand(event.currentTarget.name);
   }
 
 
@@ -683,7 +557,7 @@ export class TagEditor extends HtmlTag {
   /**
    * Вставляем новую строку в таблицу
    */
-  insertTableRow(table, index, columnsCount = 1, selection) {
+  insertTableRow(table, index, columnsCount = 1) {
 
     const tr = table.insertRow(index);
 
@@ -707,7 +581,7 @@ export class TagEditor extends HtmlTag {
   /**
    * Вставляем колонку
    */
-  insertTableCell(tr, index, selection) {
+  insertTableCell(tr, index) {
 
     tr.insertCell(index);
 
@@ -727,10 +601,6 @@ export class TagEditor extends HtmlTag {
     }
 
     const {
-      Grid,
-    } = this.context;
-
-    const {
       classes,
       render_toolbar,
     } = this.props;
@@ -746,7 +616,6 @@ export class TagEditor extends HtmlTag {
     >
       <Grid
         container
-      // spacing={8}
       >
 
         {this.renderToolbarButtons(buttons)}
@@ -763,24 +632,23 @@ export class TagEditor extends HtmlTag {
       classes,
     } = this.props;
 
-    const {
-      Grid,
-    } = this.context;
-
     return buttons.map((n, index) => {
 
       const {
-        key,
+        name,
         icon,
+        onClick,
         ...other
       } = n;
 
       return <Grid
-        key={key || index}
+        key={name || index}
         item
       >
         <IconButton
           className={classes.iconButton}
+          name={name}
+          onClick={onClick ? onClick : this.onButtonClick}
           {...other}
         >
           {icon}
@@ -802,24 +670,11 @@ export class TagEditor extends HtmlTag {
       options = {
         contentEditable: true,
         suppressContentEditableWarning: true,
-        // style: {
-        //   minHeignt: "1rem",
-        //   border: "1px dotted #ddd",
-        //   ...options.style,
-        // },
-        // onInput: event => this.tagOnInput(event),
         onFocus: event => this.tagOnFocus(event),
         onBlur: event => this.tagOnBlur(event),
         onKeyDown: event => this.tagOnKeyDown(event),
-        // onDOMSubtreeModified: event => {
-        //   console.log("DOMSubtreeModified event", event);
-        // },
         ref: el => {
           this.container = el;
-
-          // if (el) {
-          //   el.addEventListener("DOMSubtreeModified", a => console.log("DOMSubtreeModified", a));
-          // }
         },
         ...options,
       }
@@ -919,10 +774,6 @@ export class ContentProxy extends Component {
 
 export const tagEditorStyles = {
   root: {
-    // resize: "vertical",
-    // height: 300,
-    // display: "flex",
-    // flexDirection: "column",
 
     "& table": {
 
@@ -1036,22 +887,13 @@ export class ContentEditor extends EditorComponent {
   }
 
 
-  /**
-   * Нельзя выводить бадж, потому что он попадает в дочерний контент
-   */
-  // renderBadge(badge) {
-
-  //   return null;
-  // }
-
-
   getRootElement() {
 
     return super.getRootElement();
   }
 
 
-  canBeChild(child) {
+  canBeChild() {
 
     return false;
   }
@@ -1060,9 +902,13 @@ export class ContentEditor extends EditorComponent {
   prepareRootElementProps(props) {
 
     const {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       initialContent,
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       read_only,
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       updateObject,
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       editable,
       ...other
     } = super.prepareRootElementProps(props);
@@ -1072,10 +918,6 @@ export class ContentEditor extends EditorComponent {
 
 
   renderChildren() {
-
-    // const {
-    //   inEditMode,
-    // } = this.getEditorContext();
 
     const inEditMode = this.inEditorMode();
 
@@ -1099,13 +941,7 @@ export class ContentEditor extends EditorComponent {
       ?
       <ContentProxyStyled
         key={editable.toString()}
-        updateObject={(data) => {
-
-          // console.log("components", components);
-
-          this.updateObject(data);
-
-        }}
+        updateObject={this.updateObject}
         components={components}
         editable={editable}
         initialContent={initialContent}

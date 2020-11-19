@@ -1,8 +1,6 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React from 'react';
 
 import EditorComponent from '../../../..';
-import EditableObject from '..';
 import { EditableObjectContext } from '../../../../../context';
 
 class EditableView extends EditorComponent {
@@ -18,13 +16,8 @@ class EditableView extends EditorComponent {
 
   onBeforeDrop = () => {
 
+    return;
   }
-
-
-  // canBeParent(parent) {
-
-  //   return parent instanceof EditableObject && super.canBeParent(parent);
-  // }
 
 
   renderPanelView(content) {

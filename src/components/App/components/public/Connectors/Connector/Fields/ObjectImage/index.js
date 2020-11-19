@@ -67,14 +67,16 @@ class ObjectImage extends EditorComponent {
 
     // {...this.getRenderProps()}
 
-    let {
-      name,
+    const {
+      name: nameProp,
 
       // Deprecated
       field_name,
 
       ...other
     } = this.getComponentProps(this);
+
+    let name = nameProp;
 
     if (name === undefined) {
       name = field_name;

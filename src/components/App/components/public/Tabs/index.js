@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 
 import Tab from './Tab';
 import EditorComponent from '../..';
@@ -68,14 +68,13 @@ export class Tabs extends EditorComponent {
     return child instanceof Tab;
   }
 
+  onTabChange = (item, tabIndex) => {
+    this.setState({
+      tabIndex,
+    });
+  }
 
   renderChildren() {
-
-    // const {
-    // } = this.context;
-
-    // const {
-    // } = this.getEditorContext();
 
     const {
       centered,
@@ -84,6 +83,7 @@ export class Tabs extends EditorComponent {
       scrollable,
       scrollButtons,
       textColor,
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       hide_wrapper_in_default_mode,
       ...other
     } = this.getComponentProps(this);
@@ -98,7 +98,7 @@ export class Tabs extends EditorComponent {
     } = this.getObjectWithMutations();
 
 
-    let tabs = [];
+    const tabs = [];
 
     let content = null;
 
@@ -150,11 +150,7 @@ export class Tabs extends EditorComponent {
         scrollButtons={scrollButtons}
         textColor={textColor}
         value={tabIndex}
-        onChange={(item, tabIndex) => {
-          this.setState({
-            tabIndex,
-          });
-        }}
+        onChange={this.onTabChange}
       >
         {tabs}
       </MuiTabs>
