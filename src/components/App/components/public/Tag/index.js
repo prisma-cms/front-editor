@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React from 'react';
 // import PropTypes from 'prop-types';
 
@@ -39,18 +40,6 @@ export class Tag extends HtmlTag {
 
     return inEditMode ? true : false;
   }
-
-  // updateContent(node,
-  //   content = {
-  //     name: "Tag",
-  //     component: "Tag",
-  //     props: {},
-  //     components: [],
-  //   }) {
-
-  //   return super.updateContent(node, content);
-  // }
-
 
   prepareRootElementProps(props) {
 

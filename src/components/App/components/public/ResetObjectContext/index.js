@@ -20,17 +20,6 @@ export class ResetObjectContext extends EditorComponent {
   }
 
 
-  constructor(props) {
-
-    super(props);
-
-    this.state = {
-      ...this.state,
-      objectContext: {},
-    }
-
-  }
-
   renderPanelView(content) {
 
     const {
@@ -48,46 +37,21 @@ export class ResetObjectContext extends EditorComponent {
   }
 
 
-  getRootElement() {
-
-    return super.getRootElement();
-  }
-
-
-  canBeParent(parent) {
-
-    return super.canBeParent(parent);
-  }
-
-
-  canBeChild(child) {
-
-    return super.canBeChild(child);
-  }
-
-
   renderChildren() {
 
-    // const {
-    // } = this.context;
-
-    // const {
-    // } = this.getEditorContext();
-
-    // const {
-    //   ...other
-    // } = this.getComponentProps(this);
-
     const {
-      objectContext,
-    } = this.state;
-
+      props: {
+        object,
+      },
+    } = this.getComponentProps(this);
+    
+    // TODO: Created ObjectContext Component
     return <ObjectContext.Provider
       key="object_context"
-      value={objectContext}
+      value={{ object }}
     >
       <EditableObjectContext.Provider
-        value={objectContext}
+        value={{ object }}
       >
         {super.renderChildren()}
       </EditableObjectContext.Provider>

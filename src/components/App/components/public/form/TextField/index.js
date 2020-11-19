@@ -25,9 +25,10 @@ class TextField extends EditorComponent {
 
   onBeforeDrop = () => {
 
+    return;
   }
 
-  canBeDropped = (dragItem) => {
+  canBeDropped = () => {
     return false;
   }
 
@@ -70,9 +71,11 @@ class TextField extends EditorComponent {
           return null;
         }
 
+        const object = getObjectWithMutations();
+
         let {
           [name]: value,
-        } = getObjectWithMutations();
+        } = object || {};
 
         switch (type) {
 

@@ -1,4 +1,4 @@
-import cssParser from 'css';
+/* eslint-disable @typescript-eslint/no-unused-vars */
 
 //
 // Transform implementation or originally thanks to
@@ -8,29 +8,29 @@ import cssParser from 'css';
 
 function transformRules(self, rules, result) {
   rules.forEach(function (rule) {
-    var obj = {};
+    const obj = {};
     if (rule.type === 'media') {
-      var name = mediaNameGenerator(rule.media);
-      var media = result[name] = result[name] || {
+      const name = mediaNameGenerator(rule.media);
+      const media = result[name] = result[name] || {
         "__expression__": rule.media
       };
       transformRules(self, rule.rules, media)
     } else if (rule.type === 'rule') {
       rule.declarations.forEach(function (declaration) {
         if (declaration.type === 'declaration') {
-          var cleanProperty = cleanPropertyName(declaration.property);
+          const cleanProperty = cleanPropertyName(declaration.property);
           obj[cleanProperty] = declaration.value;
         }
       });
       rule.selectors.forEach(function (selector) {
-        var name = nameGenerator(selector.trim());
+        const name = nameGenerator(selector.trim());
         result[name] = obj;
       });
     }
   });
 }
 
-var cleanPropertyName = function (name) {
+const cleanPropertyName = function (name) {
 
   // turn things like 'align-items' into 'alignItems'
   name = name.replace(/(-.)/g, function (v) { return v[1].toUpperCase(); })
@@ -38,11 +38,11 @@ var cleanPropertyName = function (name) {
   return name;
 }
 
-var mediaNameGenerator = function (name) {
+const mediaNameGenerator = function (name) {
   return '@media ' + name;
 };
 
-var nameGenerator = function (name) {
+const nameGenerator = function (name) {
   name = name.replace(/\s\s+/g, ' ');
   name = name.replace(/[^a-zA-Z0-9]/g, '_');
   name = name.replace(/^_+/g, '');
@@ -51,7 +51,7 @@ var nameGenerator = function (name) {
   return name;
 };
 
-export default function transform(inputCssText) {
+export default function CSSTransform(inputCssText) {
 
   if (!inputCssText) {
     throw new Error('missing css text to transform');
@@ -59,20 +59,37 @@ export default function transform(inputCssText) {
 
   // If the input "css" doesn't wrap it with a css class (raw styles)
   // we need to wrap it with a style so the css parser doesn't choke.
-  var bootstrapWithCssClass = false;
-  if (inputCssText.indexOf("{") === -1) {
-    bootstrapWithCssClass = true;
-    inputCssText = `.bootstrapWithCssClass { ${inputCssText} }`;
-  }
+  // var bootstrapWithCssClass = false;
+  // if (inputCssText.indexOf("{") === -1) {
+  //   bootstrapWithCssClass = true;
+  //   inputCssText = `.bootstrapWithCssClass { ${inputCssText} }`;
+  // }
 
-  var css = cssParser.parse(inputCssText);
-  var result = {};
-  transformRules(this, css.stylesheet.rules, result);
+  const result = {};
 
-  // Don't expose the implementation detail of our wrapped css class.
-  if (bootstrapWithCssClass) {
-    result = result.bootstrapWithCssClass;
-  }
+  // TODO https://github.com/reworkcss/css/pull/146
+  // try {
+
+  //   if (typeof window === "undefined") {
+
+  //     const cssParser = require("css");
+
+  //     var css = cssParser.parse(inputCssText);
+
+  //     transformRules(this, css.stylesheet.rules, result);
+
+  //     // Don't expose the implementation detail of our wrapped css class.
+  //     if (bootstrapWithCssClass) {
+  //       result = result.bootstrapWithCssClass;
+  //     }
+
+  //   }
+
+  // }
+  // catch (error) {
+  //   console.warn("error", error);
+  // }
+
 
   return result;
 }

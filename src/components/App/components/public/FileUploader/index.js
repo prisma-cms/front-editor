@@ -57,7 +57,8 @@ export class FileUploader extends EditorComponent {
 
   prepareRootElementProps(props) {
 
-    let {
+    const {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       filename_as_name,
       ...other
     } = super.prepareRootElementProps(props);
@@ -78,9 +79,8 @@ export class FileUploader extends EditorComponent {
   }
 
 
-  canBeChild(child) {
+  canBeChild() {
 
-    // return super.canBeChild(child);
     return false;
   }
 
@@ -229,20 +229,12 @@ export class FileUploader extends EditorComponent {
                 ...other,
               })}
 
-              {/* {helperText ?
-                <Typography
-                  variant="caption"
-                  color={error ? "error" : undefined}
-                >
-                  {helperText}
-                </Typography>
-                : null
-              } */}
 
             </Fragment>
 
           },
           onChange: () => {
+            return;
           },
         }) : super.renderChildren();
 

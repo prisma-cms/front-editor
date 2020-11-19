@@ -99,13 +99,6 @@ class ObjectView extends EditorComponent {
 
   renderChildren() {
 
-    const {
-      field_as_pagetitle,
-      seo_description_field,
-      seo_keywords_field,
-    } = this.getComponentProps(this);
-
-
     let children = super.renderChildren() || [];
 
     return <ConnectorContext.Consumer
@@ -121,8 +114,6 @@ class ObjectView extends EditorComponent {
         if (!data) {
           return null;
         }
-
-        // console.log("data", { ...data });
 
         const {
           object,
@@ -144,55 +135,6 @@ class ObjectView extends EditorComponent {
           children = children.filter(n => n && n.type !== DefaultValue);
         }
 
-
-        let meta;
-
-        /**
-        Устанавливает заголовок страницы
-         */
-        if (field_as_pagetitle) {
-
-          const {
-            [field_as_pagetitle]: title,
-          } = object || {};
-
-          meta = {
-            ...meta,
-            title,
-          };
-
-        }
-
-        if (seo_description_field) {
-
-          const {
-            [seo_description_field]: description,
-          } = object || {};
-
-          meta = {
-            ...meta,
-            description,
-          };
-
-        }
-
-        if (seo_keywords_field) {
-
-          const {
-            [seo_keywords_field]: keywords,
-          } = object || {};
-
-          meta = {
-            ...meta,
-            keywords,
-          };
-
-        }
-
-
-        if (meta) {
-          this.processMeta(meta);
-        }
 
         return <ObjectContext.Provider
           value={data}

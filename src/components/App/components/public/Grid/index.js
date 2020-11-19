@@ -5,6 +5,7 @@ import EditorComponent from '../..';
 import GridIcon from "material-ui-icons/GridOn";
 import Button from 'material-ui/Button';
 
+import MaterialUiGrid from '../../../../../common/Grid';
 
 class Grid extends EditorComponent {
 
@@ -23,6 +24,7 @@ class Grid extends EditorComponent {
 
   onBeforeDrop = () => {
 
+    return;
   }
 
 
@@ -50,12 +52,16 @@ class Grid extends EditorComponent {
   }
 
 
+  updateType = (event) => {
+    const name = event.currentTarget.name;
+    this.updateComponentProperty(name === "container" ? "item" : "container", true);
+  }
+
   getEditorField(props) {
 
     const {
       key,
       name,
-      value,
     } = props;
 
 
@@ -64,31 +70,20 @@ class Grid extends EditorComponent {
       case "container":
       case "item":
 
-
-
         return <Button
           key={key}
           size="small"
           variant="raised"
-          onClick={event => {
-
-            // const component = this.getActiveComponent();
-            // this.updateComponentProperty(component, name === "container" ? "item" : "container", true);
-
-            this.updateComponentProperty(name === "container" ? "item" : "container", true);
-
-          }}
+          name={name}
+          onClick={this.updateType}
         >
           {name}
         </Button>
-
-        break;
 
     }
 
     return super.getEditorField(props);
   }
-
 
 
   updateComponentProperty(name, value) {
@@ -109,11 +104,6 @@ class Grid extends EditorComponent {
         }
 
         break;
-
-      // case "container":
-
-      //   break;
-
     }
 
 
@@ -154,18 +144,13 @@ class Grid extends EditorComponent {
 
   removeProps(name) {
 
-
     switch (name) {
 
       case "container":
       case "item":
 
         return false;
-
-        break;
-
     }
-
 
     return super.removeProps(name);
   }
@@ -190,7 +175,7 @@ class Grid extends EditorComponent {
   prepareNewItem(item) {
 
 
-    let newItem = super.prepareNewItem(item);
+    const newItem = super.prepareNewItem(item);
 
 
 
@@ -205,7 +190,7 @@ class Grid extends EditorComponent {
 
 
 
-    let {
+    const {
       props: {
         container,
       },
@@ -270,7 +255,7 @@ class Grid extends EditorComponent {
 
   prepareDragItemProps() {
 
-    let props = super.prepareDragItemProps();
+    const props = super.prepareDragItemProps();
 
     Object.assign(props, {
       container: true,
@@ -283,36 +268,9 @@ class Grid extends EditorComponent {
 
   getRootElement() {
 
-    const {
-      Grid: MaterialUiGrid,
-    } = this.context;
-
     return MaterialUiGrid;
   }
 
-
-  // renderMainView() {
-
-  //   const {
-  //     Grid: MaterialUiGrid,
-  //   } = this.context;
-
-
-  //   const {
-  //     props,
-  //     ...other
-  //   } = this.getRenderProps();
-
-
-  //   return <MaterialUiGrid
-  //     {...other}
-  //     {...props}
-  //   >
-
-  //     {super.renderMainView()}
-
-  //   </MaterialUiGrid>;
-  // }
 
 
   prepareRootElementProps(props) {

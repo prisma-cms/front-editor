@@ -1,14 +1,15 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
 import Context from "@prisma-cms/context";
 
-import { graphql } from 'react-apollo';
+// import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 
 import { parse } from 'graphql';
+import { useQuery } from '@apollo/client';
 
-class Viewer extends Component {
+class Viewer extends React.PureComponent {
 
   static propTypes = {
     query: PropTypes.string,
@@ -29,9 +30,7 @@ class Viewer extends Component {
   state = {}
 
 
-  componentWillMount() {
-
-    // console.log("Viewer this", this);
+  UNSAFE_componentWillMount() {
 
     const {
       query,
@@ -72,36 +71,62 @@ class Viewer extends Component {
 
     }
 
-
-
     if (Query) {
 
       Query = this.extendQuery(Query);
 
-      this.Renderer = graphql(gql(Query), {
-        options: {
-          fetchPolicy,
-        },
-      })(props => {
+      // this.Renderer = graphql(gql(Query), {
+      //   options: {
+      //     client,
+      //     fetchPolicy,
+      //   },
+      // })(props => {
 
+
+      //   const {
+      //     children,
+      //     ...other
+      //   } = props;
+
+      //   return <ConnectorContext.Consumer>
+      //     {context => <ConnectorContext.Provider
+      //       value={{
+      //         ...context,
+      //         ...other,
+      //       }}
+      //     >
+      //       {children}
+      //     </ConnectorContext.Provider>}
+      //   </ConnectorContext.Consumer>;
+
+      // });
+
+      const Renderer = (props) => {
 
         const {
           children,
           ...other
         } = props;
 
+        const result = useQuery(gql(Query), {
+          fetchPolicy,
+        });
+
         return <ConnectorContext.Consumer>
           {context => <ConnectorContext.Provider
             value={{
               ...context,
               ...other,
+              ...result,
             }}
           >
             {children}
           </ConnectorContext.Provider>}
         </ConnectorContext.Consumer>;
+      };
 
-      });
+
+      this.Renderer = Renderer;
 
       Object.assign(this.state, {
         queryName,
@@ -109,7 +134,6 @@ class Viewer extends Component {
 
     }
 
-    super.componentWillMount && super.componentWillMount();
   }
 
 
@@ -121,8 +145,6 @@ class Viewer extends Component {
     const {
       schema,
     } = this.context;
-
-    // console.log("Viewer extendQuery schema", schema);
 
     if (Query && schema) {
 

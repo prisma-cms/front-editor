@@ -1,0 +1,17 @@
+{
+  "presets": ["next/babel"],
+  "plugins": [
+    // [
+    // Не используем этот плагин, так как из-за него магия с тестами происходит.
+    // https://github.com/styled-components/jest-styled-components/issues/294
+    //   "babel-plugin-styled-components",
+    //   {
+    //     // In some projects missed namespace for styled-components
+    //     // По какой-то причине в styled пустой неймспейс и в тестах не проходит маска
+    //     // /^(\w+(-|_))?sc-/.test(className)
+    //     // "namespace": "sc-",
+    //     "ssr": true
+    //   }
+    // ]
+  ]
+}

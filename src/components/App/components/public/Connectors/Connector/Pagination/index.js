@@ -1,10 +1,11 @@
-import React, { Component, Fragment } from 'react';
-import PropTypes from 'prop-types';
+import React, { Fragment } from 'react';
 
 import Connector, { ConnectorContext } from '..';
 
 import PaginationIcon from "material-ui-icons/LastPage";
 import EditorComponent from '../../../..';
+
+// TODO Fix pagination
 
 class Pagination extends EditorComponent {
 
@@ -32,7 +33,7 @@ class Pagination extends EditorComponent {
   }
 
 
-  canBeChild(child) {
+  canBeChild() {
 
     return false;
   }
@@ -77,12 +78,9 @@ class Pagination extends EditorComponent {
       <ConnectorContext.Consumer>
         {context => {
 
-
-
           const {
             data,
             pageVariable = "page",
-            ...other
           } = context;
 
           if (!data) {
@@ -123,24 +121,12 @@ class Pagination extends EditorComponent {
 
           page = parseInt(page) || 0;
 
-
-
-
-
           return <PrismaCmsPagination
             pageVariable={pageVariable}
             limit={limit}
             total={total}
             page={page || 1}
           />;
-
-          {/* if (!object) {
-            return null;
-          }
-
-          return <PrismaCmsPagination
-            user={object}
-          /> */}
 
         }}
       </ConnectorContext.Consumer>

@@ -1,28 +1,14 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React from 'react';
 
 import EditorComponent from '../..';
 
 import TextIcon from "material-ui-icons/Title";
-// import EditableText from './EditableText';
 
 import CSSTransform from "./EditableText/transform";
 
-
 class TextArea extends EditorComponent {
 
-
   static Name = "TextArea"
-
-  // onBeforeDrop = () => {
-
-  // }
-
-
-  // canBeDropped(dragItem) {
-
-  //   return false;
-  // }
 
   renderPanelView(content) {
 
@@ -43,17 +29,6 @@ class TextArea extends EditorComponent {
 
   renderMainView() {
 
-    const {
-      content,
-      // newContent,
-    } = this.state;
-
-    // const {
-    //   // onChange,
-    //   inEditMode,
-    //   // classes,
-    // } = this.props;
-
 
     const {
       inEditMode,
@@ -71,13 +46,6 @@ class TextArea extends EditorComponent {
         suppressContentEditableWarning: true,
         onInput: event => {
 
-          // const {
-          //   nativeEvent: {
-          //     inputType,
-          //   },
-          // } = event;
-
-
           const node = event.target;
 
 
@@ -85,7 +53,7 @@ class TextArea extends EditorComponent {
 
 
 
-          let newState = {
+          const newState = {
             newContent: content,
           };
 
@@ -103,12 +71,6 @@ class TextArea extends EditorComponent {
             content,
           });
 
-
-          // setTimeout(() => {
-          //   this.forceUpdate();
-          // }, 1000);
-
-
         },
       }
 
@@ -116,65 +78,6 @@ class TextArea extends EditorComponent {
 
     return super.renderMainView(options);
 
-
-
-    // return (<div
-    //   key="content"
-    //   // className={[classes.root, inEditMode ? classes.editable : ""].join(" ")}
-    //   style={inEditMode ? {
-    //     height: "100%",
-    //     minHeight: "1rem",
-    //   } : undefined}
-    //   contentEditable={inEditMode ? true : false}
-    //   suppressContentEditableWarning
-    //   onInput={event => {
-
-    //     // const {
-    //     //   nativeEvent: {
-    //     //     inputType,
-    //     //   },
-    //     // } = event;
-
-
-    //     const node = event.target;
-
-
-    //     const content = this.makeNewContent(node);
-
-
-
-    //     let newState = {
-    //       newContent: content,
-    //     };
-
-
-    //     // Object.assign(newState, {
-    //     //   // content,
-    //     // });
-
-    //     Object.assign(this.state, newState);
-
-
-    //     // onChange(content);
-
-    //     this.updateComponentProps({
-    //       content,
-    //     });
-
-
-    //     // setTimeout(() => {
-    //     //   this.forceUpdate();
-    //     // }, 1000);
-
-
-    //   }}
-    // >
-
-    //   {this.renderContent(content) || ""}
-
-    // </div>
-
-    // );
   }
 
 
@@ -225,7 +128,7 @@ class TextArea extends EditorComponent {
 
   updateContent(node) {
 
-    let content = {
+    const content = {
       attributes: {},
     };
 
@@ -245,7 +148,7 @@ class TextArea extends EditorComponent {
     }
     else if (node.nodeType === Node.ELEMENT_NODE) {
 
-      let attributes = node.attributes;
+      const attributes = node.attributes;
 
       node.getAttributeNames().map(name => {
 
@@ -289,7 +192,7 @@ class TextArea extends EditorComponent {
 
       })
 
-      let children = [];
+      const children = [];
 
       nodes.forEach(node => {
 
@@ -352,9 +255,9 @@ class TextArea extends EditorComponent {
 
 
 
-    let children = [];
+    const children = [];
 
-    let content = {
+    const content = {
     };
 
     nodes.forEach(n => {
@@ -373,134 +276,6 @@ class TextArea extends EditorComponent {
     console.error(error, info);
   }
 
-
-
-
-
-  renderTextArea___() {
-
-    const {
-      content,
-      // newContent,
-    } = this.state;
-
-    // const {
-    //   // onChange,
-    //   inEditMode,
-    //   // classes,
-    // } = this.props;
-
-
-    const {
-      inEditMode,
-    } = this.getEditorContext();
-
-
-
-
-    return (<div
-      key="content"
-      // className={[classes.root, inEditMode ? classes.editable : ""].join(" ")}
-      style={inEditMode ? {
-        height: "100%",
-        minHeight: "1rem",
-      } : undefined}
-      contentEditable={inEditMode ? true : false}
-      suppressContentEditableWarning
-      onInput={event => {
-
-        // const {
-        //   nativeEvent: {
-        //     inputType,
-        //   },
-        // } = event;
-
-
-        const node = event.target;
-
-
-        const content = this.makeNewContent(node);
-
-
-
-        let newState = {
-          newContent: content,
-        };
-
-
-        // Object.assign(newState, {
-        //   // content,
-        // });
-
-        Object.assign(this.state, newState);
-
-
-        // onChange(content);
-
-        this.updateComponentProps({
-          content,
-        });
-
-
-        // setTimeout(() => {
-        //   this.forceUpdate();
-        // }, 1000);
-
-
-      }}
-    >
-
-      {this.renderContent(content) || ""}
-
-    </div>
-
-    );
-  }
-
-
-
-
-
-
-  // getRenderProps() {
-
-  //   const {
-  //     inEditMode,
-  //   } = this.getEditorContext();
-
-  //   const {
-  //     style,
-  //     ...props
-  //   } = super.getRenderProps();
-
-  //   return {
-  //     contentEditable: inEditMode ? true : false,
-  //     suppressContentEditableWarning: true,
-  //     onInput: event => {
-
-  //       const {
-  //         nativeEvent: {
-  //           inputType,
-  //         },
-  //       } = event;
-
-  //     },
-  //     style: {
-  //       ...style,
-  //       display: "inline-block",
-  //     },
-  //     ...props,
-  //   }
-  // }
-
-
-  // renderMainView() {
-
-  //   return <span
-  //     {...this.getRenderProps()}
-  //   >
-  //   </span>;
-  // }
 
 
 }

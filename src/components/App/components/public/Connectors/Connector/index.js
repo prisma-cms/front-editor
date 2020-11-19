@@ -39,6 +39,14 @@ class Connector extends EditorComponent {
     fetchPolicy: undefined,
   };
 
+  constructor(props) {
+    super(props);
+
+    this.setFilters = this.setFilters.bind(this);
+    this.getFilters = this.getFilters.bind(this);
+    this.onChangeProps = this.onChangeProps.bind(this);
+  }
+
 
   // canBeDropped(dragItem) {
 
@@ -51,6 +59,7 @@ class Connector extends EditorComponent {
   prepareRootElementProps(props) {
 
     const {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       fetchPolicy,
       ...other
     } = super.prepareRootElementProps(props);
@@ -187,12 +196,15 @@ class Connector extends EditorComponent {
 
   getEditorField(props) {
 
-    let {
+    const {
       key,
-      type,
       name,
       value,
       // ...other
+    } = props;
+
+    let {
+      type,
     } = props;
 
 
@@ -224,7 +236,7 @@ class Connector extends EditorComponent {
             <InputLabel>Query name</InputLabel>
             <Select
               value={value}
-              onChange={event => this.onChangeProps(event)}
+              onChange={this.onChangeProps}
               inputProps={{
                 name,
                 // id: 'age-simple',
@@ -305,48 +317,48 @@ class Connector extends EditorComponent {
 
                 case "ENUM":
 
+                  {
+                    const Type = this.getSchemaType(n => n.name === typeName && n.kind === typeKind);
 
-                  const Type = this.getSchemaType(n => n.name === typeName && n.kind === typeKind);
-
-                  if (Type) {
+                    if (Type) {
 
 
 
-                    const {
-                      enumValues,
-                    } = Type;
+                      const {
+                        enumValues,
+                      } = Type;
 
-                    field = <FormControl
-                      key={key}
-                      fullWidth
-                    >
-                      <InputLabel>{name}</InputLabel>
-                      <Select
-                        value={value || ""}
-                        onChange={event => this.onChangeProps(event)}
-                        inputProps={{
-                          name,
-                          // id: 'age-simple',
-                        }}
+                      field = <FormControl
+                        key={key}
+                        fullWidth
                       >
-                        {enumValues.map(n => {
+                        <InputLabel>{name}</InputLabel>
+                        <Select
+                          value={value || ""}
+                          onChange={this.onChangeProps}
+                          inputProps={{
+                            name,
+                            // id: 'age-simple',
+                          }}
+                        >
+                          {enumValues.map(n => {
 
-                          const {
-                            name: fieldName,
-                          } = n;
+                            const {
+                              name: fieldName,
+                            } = n;
 
-                          return <MenuItem
-                            key={fieldName}
-                            value={fieldName}
-                          >
-                            {fieldName}
-                          </MenuItem>
-                        })}
-                      </Select>
-                    </FormControl>;
+                            return <MenuItem
+                              key={fieldName}
+                              value={fieldName}
+                            >
+                              {fieldName}
+                            </MenuItem>
+                          })}
+                        </Select>
+                      </FormControl>;
 
+                    }
                   }
-
                   break;
 
                 case "SCALAR":
@@ -404,19 +416,12 @@ class Connector extends EditorComponent {
 
   updateComponentProperty(name, value) {
 
-    // const activeItem = this.getActiveItem();
-    const activeItem = this;
 
-
-    let newProps = {};
-
-    // const {
-    //   props,
-    // } = activeItem;
+    const newProps = {};
 
     const {
       props,
-    } = activeItem.getObjectWithMutations();
+    } = this.getObjectWithMutations();
 
     switch (name) {
 
@@ -437,7 +442,7 @@ class Connector extends EditorComponent {
 
 
 
-              let {
+              const {
                 name: argName,
                 defaultValue,
                 type: {
@@ -505,7 +510,7 @@ class Connector extends EditorComponent {
 
         }
 
-        return activeItem.updateComponentProps({
+        return this.updateComponentProps({
           ...newProps,
           [name]: value,
         });
@@ -651,9 +656,6 @@ class Connector extends EditorComponent {
     let newUri = uri.clone();
 
 
-
-
-
     try {
 
       filters = filters ? JSON.stringify(filters) : undefined;
@@ -665,7 +667,6 @@ class Connector extends EditorComponent {
     if (filters === "{}") {
       filters = null;
     }
-
 
 
     if (filters) {
@@ -691,11 +692,7 @@ class Connector extends EditorComponent {
     newUri.removeQuery("page");
 
 
-
-
     const url = newUri.resource();
-
-
 
 
     history.push(url);
@@ -706,12 +703,6 @@ class Connector extends EditorComponent {
 
   setFilters(filters) {
 
-
-
-    // activeItem.updateComponentProperty("where", filters)
-    // this.updateComponentProperty("test", "filters")
-
-
     const {
       inEditMode,
     } = this.getEditorContext();
@@ -721,9 +712,6 @@ class Connector extends EditorComponent {
       return this.setUrlFilters(filters);
     }
     else {
-      // return this.updateActiveComponentProps(this, {
-      //   where: filters,
-      // });
       return this.updateComponentProps({
         where: filters,
       });
@@ -734,69 +722,6 @@ class Connector extends EditorComponent {
 
 
 
-  // renderMainView() {
-
-  //   const {
-  //     props: {
-  //       orderBy,
-  //       query,
-  //       ...otherProps
-  //     },
-  //     where: propsWhere,
-  //     ...other
-  //   } = this.getRenderProps();
-
-
-  //   // const {
-  //   // } = this.getComponentProps(this);
-
-  //   const filters = this.getFilters();
-
-
-  //   let where;
-
-  //   let AND = [];
-
-  //   if (propsWhere) {
-  //     // AND.push({
-  //     //   ...propsWhere,
-  //     // });
-  //     AND.push(propsWhere);
-  //   }
-
-  //   if (filters) {
-  //     AND.push(filters);
-  //   }
-
-  //   if (AND.length) {
-
-
-  //     where = {
-  //       AND,
-  //     }
-  //   }
-
-
-
-  //   return <div
-  //     {...other}
-  //   >
-  //     <Viewer
-  //       key={query}
-  //       query={query}
-  //       setFilters={filters => this.setFilters(filters)}
-  //       filters={filters || []}
-  //       where={where}
-  //       {...otherProps}
-  //     >
-  //       {super.renderMainView()}
-  //     </Viewer>
-
-  //   </div>
-  // }
-
-
-
   canBeChild(child) {
 
     let can = false;
@@ -804,14 +729,6 @@ class Connector extends EditorComponent {
     if (super.canBeChild(child)) {
 
 
-      // const {
-      //   props: componentProps,
-      // } = this.getComponentProps(this);
-
-
-      // const {
-      //   query,
-      // } = componentProps || {};
 
       const {
         props: {
@@ -864,9 +781,9 @@ class Connector extends EditorComponent {
    */
   injectWhereFromObject(where, object) {
 
-    for (var i in where) {
+    for (const i in where) {
 
-      let value = where[i];
+      const value = where[i];
 
       if (value) {
 
@@ -916,7 +833,7 @@ class Connector extends EditorComponent {
     /**
      * schema required for viewer
      */
-    if (!schema) {
+    if (!schema && this.inEditorMode()) {
       return null;
     }
 
@@ -948,6 +865,7 @@ class Connector extends EditorComponent {
 
 
         const {
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
           orderBy,
           query,
           ...otherProps
@@ -991,8 +909,6 @@ class Connector extends EditorComponent {
 
         }
 
-        // const {
-        // } = this.getComponentProps(this);
 
         let filters = this.getFilters();
 
@@ -1004,12 +920,9 @@ class Connector extends EditorComponent {
 
         let where;
 
-        let AND = [];
+        const AND = [];
 
         if (propsWhere) {
-          // AND.push({
-          //   ...propsWhere,
-          // });
           AND.push({ ...propsWhere });
         }
 
@@ -1017,15 +930,11 @@ class Connector extends EditorComponent {
           AND.push({ ...filters });
         }
 
-
-        if (!AND.length) {
-
-        }
-        else if (AND.length === 1) {
+        if (AND.length === 1) {
 
           where = AND[0];
         }
-        else {
+        else if (AND.length) {
 
           where = {
             AND,
@@ -1037,10 +946,8 @@ class Connector extends EditorComponent {
           key={query}
           query={query}
           parentQuery={parentQuery}
-          setFilters={filters => {
-            return this.setFilters(filters);
-          }}
-          getFilters={() => this.getFilters()}
+          setFilters={this.setFilters}
+          getFilters={this.getFilters}
           filters={filters || []}
           {...otherProps}
           {...this.getComponentProps(this)}

@@ -1,0 +1,79 @@
+@import '~prismjs/themes/prism.css';
+.Editor-text {
+  background-color: transparent !important;
+  margin: 0;
+  transition: background-color 0.2s fade-in-out;
+}
+.Editor-text .text-content {
+  cursor: default;
+}
+.edit.Editor-text .text-content {
+  cursor: pointer;
+}
+.Editor-activeText.Editor-text .text-content {
+  cursor: default;
+}
+.Editor-text .Editor-panel .Editor-textValue {
+  border: 1px solid #e1e1e1;
+  display: block;
+  font-family: 'Inconsolata', 'Menlo', monospace;
+  font-size: 14px;
+  min-height: 300px;
+  margin: 20px 0;
+  outline: none;
+  padding: 14px;
+  box-sizing: border-box;
+  width: 100%;
+}
+.Editor-text .Editor-panel .Editor-buttons {
+  text-align: center;
+}
+.Editor-text .Editor-panel .Editor-saveButton,
+.Editor-text .Editor-panel .Editor-removeButton {
+  background-color: #fff;
+  border: 1px solid #0a0;
+  cursor: pointer;
+  font-family: 'Helvetica', 'Arial', sans-serif;
+  font-size: 16px;
+  font-weight: 200;
+  margin: 10px auto;
+  padding: 6px;
+  border-radius: 3px;
+  width: 100px;
+}
+.Editor-text .Editor-panel .Editor-removeButton {
+  border-color: #aaa;
+  color: #999;
+  margin-left: 8px;
+}
+.Editor-text .Editor-panel .Editor-invalidButton {
+  background-color: #eee;
+  border-color: #a00;
+  color: #666;
+}
+.rdw-editor-wrapper .public-DraftEditorPlaceholder-root {
+  padding: 10px 15px;
+}
+.rdw-editor-wrapper
+  .DraftEditor-editorContainer
+  .public-DraftEditor-content[contenteditable='true']
+  > div {
+  min-height: 100px;
+  padding: 10px 15px;
+  border: 1px solid #d1d8dc;
+  border-radius: 5px;
+  transition: all 0.25s;
+}
+.rdw-editor-wrapper
+  .DraftEditor-editorContainer
+  .public-DraftEditor-content[contenteditable='true']
+  > div:focus {
+  border-color: #1aa3ff;
+}
+.rdw-editor-wrapper
+  .DraftEditor-editorContainer
+  .public-DraftEditor-content
+  .public-DraftStyleDefault-block {
+  margin: 0.3rem 0;
+  font-size: 0.9rem;
+}

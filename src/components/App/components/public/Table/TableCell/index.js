@@ -88,21 +88,6 @@ export class TableCell extends EditorComponent {
   }
 
 
-  // renderChildren() {
-
-  //   const {
-  //   } = this.context;
-
-  //   const {
-  //   } = this.getEditorContext();
-
-  //   const {
-  //     ...other
-  //   } = this.getComponentProps(this);
-
-  //   return super.renderChildren();
-  // }
-
 }
 
 export default TableCell;

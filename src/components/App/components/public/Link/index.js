@@ -5,13 +5,13 @@ import EditorComponent from '../..';
 import URI from "urijs";
 import Icon from "material-ui-icons/Link";
 
-import { Link as MuiLink } from "react-router-dom";
+import { default as MuiLink } from "../../../../../common/Link";
 import { ObjectContext } from '../Connectors/Connector/ListView';
 
 
 const Renderer = props => {
 
-  let {
+  const {
     to,
     children,
     ...other
@@ -68,66 +68,16 @@ class Link extends EditorComponent {
     </div>);
   }
 
-
   getRootElement() {
 
     return Renderer;
   }
 
-
-  // prepareDragItemComponents() {
-
-  //   return super.prepareDragItemComponents().concat([
-  //     {
-  //       name: "Tag",
-  //       component: "Tag",
-  //       props: {
-  //         tag: "span",
-  //       },
-  //       components: [],
-  //     }
-  //   ]);
-  // }
-
-
-  // getRenderProps() {
-
-  //   let renderProps = super.getRenderProps();
-
-
-
-
-  //   // let test = <ObjectContext.Consumer>
-  //   //   {context => {
-
-
-
-  //   //     {/* return content; */}
-  //   //   }}
-  //   // </ObjectContext.Consumer>
-
-  //   return renderProps;
-
-  // }
-
-
   renderMainView() {
-
-    // const object = this.getObjectWithMutations();
-
-
-    // const {
-    // } = this.props;
 
     let {
       to,
-      // native,
-      // ...props
     } = this.getComponentProps(this);
-
-
-    // let content = super.renderMainView();;
-
 
 
     if (to) {
@@ -135,9 +85,7 @@ class Link extends EditorComponent {
        * Проверяем есть ли параметры в УРЛ
        */
 
-      let segments = to.split("/");
-
-
+      const segments = to.split("/");
 
       /**
        * Если есть, то нам надо обернуть вывод в контекст объекта
@@ -176,74 +124,6 @@ class Link extends EditorComponent {
 
     return super.renderMainView();
   }
-
-  // getRenderProps() {
-
-  //   const {
-  //     style,
-  //     marginTop,
-  //     marginBottom,
-  //     // props: {
-  //     //   ...otherProps
-  //     // },
-  //     ...other
-  //   } = super.getRenderProps();
-
-  //   // const {
-  //   //   text,
-  //   //   // type,
-  //   //   // style,
-  //   //   color,
-  //   //   display,
-  //   //   displayType,
-  //   //   ...otherProps
-  //   // } = this.getComponentProps(this);
-
-
-
-
-
-  //   const renderProps = {
-  //     style: {
-  //       ...style,
-  //       marginTop,
-  //       marginBottom,
-  //     },
-  //     ...other,
-  //     // ...otherProps
-  //   }
-
-
-
-
-  //   return renderProps;
-  // }
-
-  // renderMainView() {
-
-  //   // const {
-  //   //   marginTop,
-  //   //   marginBottom,
-  //   // } = this.getComponentProps(this);
-
-  //   const {
-  //     style,
-  //     marginTop,
-  //     marginBottom,
-  //     ...other
-  //   } = this.getRenderProps();
-
-  //   return <div
-  //     style={{
-  //       marginTop,
-  //       marginBottom,
-  //       ...style,
-  //     }}
-  //     {...other}
-  //   >
-  //     {super.renderMainView()}
-  //   </div>;
-  // }
 
 }
 

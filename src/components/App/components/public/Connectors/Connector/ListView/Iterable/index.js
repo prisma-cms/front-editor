@@ -1,10 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
-// import ViewIcon from "material-ui-icons/ViewModule";
-
 import EditorComponent from '../../../../..';
-// import ListView from '..';
 import DefaultValue from '../../Fields/NamedField/DefaultValue';
 import ListView from '..';
 
@@ -27,12 +23,6 @@ class Iterable extends EditorComponent {
   }
 
 
-  // constructor(props) {
-
-  //   super(props);
-  // }
-
-
   renderPanelView(content) {
 
     const {
@@ -53,17 +43,6 @@ class Iterable extends EditorComponent {
 
     return super.canBeParent(parent) && parent instanceof ListView;
   }
-
-
-  // renderMainView() {
-
-  //   const {
-  //     inEditMode,
-  //   } = this.getEditorContext();
-
-  //   return inEditMode ? super.renderMainView() : this.renderChildren();
-
-  // }
 
 
   renderChildren() {

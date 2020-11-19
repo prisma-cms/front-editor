@@ -1,8 +1,6 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React from 'react';
 
 import EditorComponent from '../../../..';
-import EditableObject from '..';
 import { EditableObjectContext } from '../../../../../context';
 
 class DefaultView extends EditorComponent {
@@ -13,20 +11,13 @@ class DefaultView extends EditorComponent {
     hide_wrapper_in_default_mode: true,
   }
 
-
   static Name = "DefaultView"
   static help_url = "https://front-editor.prisma-cms.com/topics/editableobject.html";
 
   onBeforeDrop = () => {
 
+    return;
   }
-
-
-  // canBeParent(parent) {
-
-  //   return parent instanceof EditableObject && super.canBeParent(parent);
-  // }
-
 
   renderPanelView(content) {
 

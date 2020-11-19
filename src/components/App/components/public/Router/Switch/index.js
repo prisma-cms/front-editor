@@ -1,4 +1,5 @@
-import React, { Component, Fragment } from 'react';
+/* eslint-disable react/jsx-no-bind */
+import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import EditorComponent from '../../..';
 
@@ -11,6 +12,7 @@ import {
 import Typography from 'material-ui/Typography';
 import EditorRoute from '../Route';
 import { RouteContext } from '../../../../context';
+import Grid from '../../../../../../common/Grid';
 
 // import PrismaCmsPerformanceTester from "@prisma-cms/performance";
 
@@ -31,52 +33,6 @@ class EditorSwitch extends EditorComponent {
     showRoutes: true,
     hide_wrapper_in_default_mode: true,
   }
-
-
-
-  // prepareDragItemComponents() {
-
-  //   return super.prepareDragItemComponents().concat([
-  //     {
-  //       name: "EditorRoute",
-  //       component: "EditorRoute",
-  //       props: {
-  //         path: "/",
-  //         exact: true,
-  //       },
-  //       components: [],
-  //     }
-  //   ]);
-  // }
-
-
-  // onDrop(event) {
-
-  //   const {
-  //     dragItem,
-  //     dragTarget,
-  //   } = this.getEditorContext();
-
-  //   if (dragItem && dragTarget && dragTarget === this) {
-
-  //     event.preventDefault();
-  //     event.stopPropagation();
-
-  //     const {
-  //       name,
-  //     } = dragItem;
-
-  //     /**
-  //      * Позволяем добавить только роутеры
-  //      */
-  //     if (name !== "EditorRoute") {
-  //       return false;
-  //     }
-  //   }
-
-  //   return super.onDrop(event);
-
-  // }
 
 
   /**
@@ -105,16 +61,6 @@ class EditorSwitch extends EditorComponent {
   }
 
 
-  // renderMainView() {
-
-  //   const {
-  //     inEditMode,
-  //   } = this.getEditorContext();
-
-  //   return inEditMode ? super.renderMainView() : this.renderChildren();
-
-  // }
-
 
   renderItems({
     itemComponents,
@@ -126,10 +72,6 @@ class EditorSwitch extends EditorComponent {
     updateTemplate,
     routesShowed,
   }) {
-
-    const {
-      Grid,
-    } = this.context;
 
     itemComponents.map((n, index) => {
 
@@ -146,14 +88,14 @@ class EditorSwitch extends EditorComponent {
         routername,
       } = props;
 
-      let Component = Components.find(n => n.Name === name);
+      const Component = Components.find(n => n.Name === name);
 
       if (Component) {
 
         let component;
 
 
-        let route = <Route
+        const route = <Route
           key={id || index}
           exact={exact === undefined ? false : exact}
           path={path}
@@ -259,10 +201,6 @@ class EditorSwitch extends EditorComponent {
   renderChildren() {
 
     const {
-      Grid,
-    } = this.context;
-
-    const {
       inEditMode,
     } = this.getEditorContext();
 
@@ -277,21 +215,9 @@ class EditorSwitch extends EditorComponent {
     } = this.getComponentProps(this);
 
 
-
-    // const {
-
-    // } = this.getRenderProps();
-
     const object = this.getObjectWithMutations();
 
-    // const {
-    //   // Components,
-    //   // components,
-    //   updateObject,
-    // } = this.context;
 
-
-    // const Components = this.getComponents();
     const {
       Components,
     } = this.getEditorContext();
@@ -303,7 +229,7 @@ class EditorSwitch extends EditorComponent {
     } = object;
 
 
-    let output = [];
+    const output = [];
 
     let header;
 
@@ -313,7 +239,7 @@ class EditorSwitch extends EditorComponent {
 
     if (itemComponents) {
 
-      let menuItems = []
+      const menuItems = []
 
 
       this.renderItems({
@@ -354,18 +280,6 @@ class EditorSwitch extends EditorComponent {
         {output}
       </RouterSwitch>;
     }
-
-    // return <Fragment>
-    //   <PrismaCmsPerformanceTester
-    //     props={this.props}
-    //     state={this.state}
-    //     context={this.context}
-    //     prefix="switch_performance"
-    //   />
-
-    //   {result}
-
-    // </Fragment>
 
     return result;
 

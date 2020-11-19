@@ -32,12 +32,6 @@ export class DefaultValue extends EditorComponent {
   }
 
 
-  // getRootElement() {
-
-  //   return super.getRootElement();
-  // }
-
-
   canBeParent(parent) {
 
     return parent instanceof NamedField
@@ -45,28 +39,6 @@ export class DefaultValue extends EditorComponent {
       || parent instanceof ListView
       || parent instanceof CurrentUser
   }
-
-
-  // canBeChild(child) {
-
-  //   return super.canBeChild(child);
-  // }
-
-
-  // renderChildren() {
-
-  //   const {
-  //   } = this.context;
-
-  //   const {
-  //   } = this.getEditorContext();
-
-  //   const {
-  //     ...other
-  //   } = this.getComponentProps(this);
-
-  //   return super.renderChildren();
-  // }
 
 }
 

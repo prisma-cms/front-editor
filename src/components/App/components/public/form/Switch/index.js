@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { Fragment } from 'react';
 
 import Typography from 'material-ui/Typography';
@@ -144,12 +145,13 @@ export class Switch extends EditorComponent {
         }
 
 
-        let output = <Fragment>
+        const output = <Fragment>
           <FormControlLabel
             control={
               <MuiSwitch
                 {...other}
                 checked={value === true}
+                // eslint-disable-next-line react/jsx-no-bind
                 onChange={(event, checked) => {
                   return updateObject({
                     [name]: checked,

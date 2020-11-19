@@ -72,18 +72,6 @@ export class GalleryFiles extends EditorComponent {
       return children;
     }
 
-    // const {
-    //   0: fileConnector,
-    // } = children.slice(0).splice(0, 1);
-
-    // console.log('fileConnector', fileConnector);
-
-    // const {
-
-    // } = fileConnector;
-
-    // console.log('fileConnector clone', fileConnector.cloneElement());
-
     /**
      * Проблема заключается в том, что надо соблюдать сортировку для новых файлов и имеющихся.
      */
@@ -92,8 +80,6 @@ export class GalleryFiles extends EditorComponent {
       key="GalleryFiles"
     >
       {editableObjectContext => {
-
-        // console.log('editableObjectContext', editableObjectContext);
 
         const {
           object,
@@ -115,7 +101,6 @@ export class GalleryFiles extends EditorComponent {
 
         let Files = [].concat(files || []);
 
-        // console.log('dirty_files', dirty_files);
 
         if (dirty_files && dirty_files.connect && Array.isArray(dirty_files.connect)) {
           // Files = Files.concat(dirty_files.connect);
@@ -126,7 +111,6 @@ export class GalleryFiles extends EditorComponent {
           })));
         }
 
-        // console.log('Files', Files);
 
         return Files.map((n, index) => {
           let item = null;
@@ -137,7 +121,7 @@ export class GalleryFiles extends EditorComponent {
             connect,
           } = n;
 
-          let src = path;
+          const src = path;
 
           if (connect && typeof connect === "object") {
 
@@ -173,7 +157,6 @@ export class GalleryFiles extends EditorComponent {
               >
                 {({ data }) => {
 
-                  // console.log('Query data', data);
 
                   const {
                     path,

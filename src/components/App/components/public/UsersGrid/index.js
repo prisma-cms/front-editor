@@ -1,11 +1,10 @@
-import React, { Component, Fragment } from 'react';
-import PropTypes from 'prop-types';
+import React, { Fragment } from 'react';
 
 import EditorComponent from '../..';
 
 import PeopleIcon from "material-ui-icons/People";
 
-// import UsersPage from "@prisma-cms/front/lib/components/pages/UsersPage";
+import UsersPage from "@prisma-cms/front/dist/components/pages/UsersPage";
 
 class UsersGrid extends EditorComponent {
 
@@ -33,7 +32,7 @@ class UsersGrid extends EditorComponent {
   }
 
 
-  canBeDropped(dragItem) {
+  canBeDropped() {
 
     return false;
   }

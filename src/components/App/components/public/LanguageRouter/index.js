@@ -1,5 +1,4 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React  from 'react';
 
 import EditorComponent from '../..';
 
@@ -17,6 +16,7 @@ class LanguageRouter extends EditorComponent {
 
   onBeforeDrop = () => {
 
+    return;
   }
 
 
@@ -64,7 +64,7 @@ class LanguageRouter extends EditorComponent {
     if (children) {
 
       if (activeItem && (activeItem === this || activeItem.props.parent === this)) {
-
+        return;
       }
       else {
 

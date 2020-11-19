@@ -10,6 +10,7 @@ import NumberFormat from "react-number-format";
 import moment from "moment";
 import Typography from 'material-ui/Typography';
 import DefaultValue from './DefaultValue';
+import Grid from '../../../../../../../../common/Grid';
 
 class NamedField extends EditorComponent {
 
@@ -67,10 +68,6 @@ class NamedField extends EditorComponent {
   renderBadgeTitle(title) {
 
     const {
-      Grid,
-    } = this.context;
-
-    const {
       name,
     } = this.getComponentProps(this);
 
@@ -112,31 +109,31 @@ class NamedField extends EditorComponent {
     switch (type) {
 
       case "number":
+        {
+          const {
+            thousandSeparator = " ",
+            decimalSeparator = ".",
+            decimalScale,
+            prefix,
+            suffix,
+            defaultValue,
+            isNumericString = false,
+            displayType = "text",
+            mask,
+          } = props;
 
-        const {
-          thousandSeparator = " ",
-          decimalSeparator = ".",
-          decimalScale,
-          prefix,
-          suffix,
-          defaultValue,
-          isNumericString = false,
-          displayType = "text",
-          mask,
-        } = props;
-
-        otherProps = {
-          thousandSeparator,
-          decimalSeparator,
-          decimalScale: decimalScale ? parseInt(decimalScale) : undefined,
-          prefix,
-          suffix,
-          defaultValue: defaultValue ? parseFloat(defaultValue) : undefined,
-          isNumericString,
-          displayType,
-          mask,
+          otherProps = {
+            thousandSeparator,
+            decimalSeparator,
+            decimalScale: decimalScale ? parseInt(decimalScale) : undefined,
+            prefix,
+            suffix,
+            defaultValue: defaultValue ? parseFloat(defaultValue) : undefined,
+            isNumericString,
+            displayType,
+            mask,
+          }
         }
-
         break;
 
       default: ;
@@ -220,7 +217,9 @@ class NamedField extends EditorComponent {
           Так как без опеределения типа данных мы можем уйти не в тот контекст, возвращаем ничего,
           если значение отсутствует или null
            */
-          if (value !== undefined || true) {
+          {/* TODO: Check if broken */ }
+          {/* if (value !== undefined || true) { */ }
+          if (value !== undefined) {
 
             if (typeof value === "object" && value !== null) {
 
@@ -300,7 +299,6 @@ class NamedField extends EditorComponent {
                 так как логика может быть заложена именно на проверку значения,
                 чтобы ничего не выводить, если значение есть.
                  */
-                // children = children.filter(n => n && n.type !== DefaultValue);
 
                 output = childrenWithoutDefaultValue;
 
@@ -370,8 +368,6 @@ class NamedField extends EditorComponent {
 
               }
 
-
-
             }
 
           }
@@ -379,17 +375,13 @@ class NamedField extends EditorComponent {
         }
 
 
-
         return output;
-
-        // return value && (typeof value !== "object") ? value : null;
-
       }}
     </ObjectContext.Consumer>;
   }
 
 
-  prepareScalarValue(value, context) {
+  prepareScalarValue(value) {
 
     return value;
   }
