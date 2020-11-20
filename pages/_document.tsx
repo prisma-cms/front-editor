@@ -1,1 +1,1 @@
-export { default } from 'dev/pages/_Document'
+export { default } from '../dev/pages/_Document'

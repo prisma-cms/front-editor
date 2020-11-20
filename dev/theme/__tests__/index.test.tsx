@@ -1,5 +1,5 @@
 import React from 'react'
-import { render } from 'dev/tests/utils'
+import { render } from '../../tests/utils'
 import styled from 'styled-components'
 import theme from '..'
 

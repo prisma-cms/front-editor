@@ -1,10 +1,30 @@
 import React from 'react'
-import { addDecorator } from '@storybook/react'
-import theme from 'dev/theme'
+import { addDecorator, Parameters } from '@storybook/react'
+import theme from '../dev/theme'
 import { ThemeProvider } from 'styled-components'
 import { makeDecorator } from '@storybook/addons'
+import { createGlobalStyle } from 'styled-components'
 
-export const parameters = {
+const GlobalStyle = createGlobalStyle`
+
+  body, html {
+    padding: 0;
+    margin: 0;
+    height: 100%;
+  }
+
+  body {
+    &.sb-show-main {
+
+      &, #root {
+        height: 100%;
+      }
+    }
+  }
+`
+
+export const parameters: Parameters = {
+  layout: 'fullscreen',
   options: {
     storySort: (a: any, b: any) => {
       // We want the Welcome story at the top
@@ -26,7 +46,12 @@ addDecorator(
     name: 'withSomething',
     parameterName: 'something',
     wrapper: (storyFn, context) => {
-      return <ThemeProvider theme={theme}>{storyFn(context)}</ThemeProvider>
+      return (
+        <>
+          <GlobalStyle />
+          <ThemeProvider theme={theme}>{storyFn(context)}</ThemeProvider>
+        </>
+      )
     },
   })
 )

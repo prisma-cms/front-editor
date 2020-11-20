@@ -8,3 +8,4 @@ dist
 generated
 storybook-static
 *.d.ts
+.github

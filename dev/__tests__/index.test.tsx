@@ -1,8 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
-import Component from 'src'
+import Component from '../../src'
 
-import { render } from 'dev/tests/utils'
+import { render } from '../tests/utils'
 
 const border = '1px solid green'
 

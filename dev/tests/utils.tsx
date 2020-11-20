@@ -4,7 +4,7 @@ import ReactDOMServer from 'react-dom/server'
 import { render as baseRender, RenderResult } from '@testing-library/react'
 
 // import App from 'pages/_app'
-import theme from 'dev/theme'
+import theme from '../theme'
 import { ThemeProvider } from 'styled-components'
 
 // For handle css

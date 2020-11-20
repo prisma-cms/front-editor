@@ -1,6 +1,6 @@
 import React from 'react'
 import Head from 'next/head'
-import App from 'src'
+import App from '../src'
 
 const MainPage: React.FC = (props) => {
   return (
