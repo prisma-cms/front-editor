@@ -95,6 +95,11 @@ export interface EditorComponentProps extends EditableObjectProps {
    * @deprecated
    */
   style?: any
+
+  /**
+   * Handler on change component data
+   */
+  onChangeState?: (data: EditorComponentProps["_dirty"]) => EditorComponentProps["_dirty"];
 }
 
 export interface EditorComponentState extends EditableObjectState {

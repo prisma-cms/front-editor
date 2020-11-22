@@ -1,4 +1,4 @@
-import EditorComponent from './components'
+import EditorComponent, { EditorComponentProps } from './components'
 import { EditorComponentObject } from './components/interfaces'
 import { EditorContextValue } from './context/EditorContext/interfaces'
 
@@ -24,6 +24,17 @@ export interface FrontEditorProps {
 
   Components?: ComponentsArray
   CustomComponents?: ComponentsArray
+
+  /**
+   * Show items only
+   */
+  itemsOnly?: boolean
+
+  // TODO: add checking for invoke only on root component
+  /**
+   * Handle on change components data
+   */
+  onChangeState?: EditorComponentProps["onChangeState"]
 }
 
 export interface FrontEditorState {

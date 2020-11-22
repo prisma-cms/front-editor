@@ -20,7 +20,7 @@ class Section<P extends SectionProps = SectionProps, S extends SectionState = Se
 
   static Name = "Section"
 
-  renderPanelView(content: React.ReactNode) {
+  renderPanelView(content?: React.ReactNode) {
 
     const {
       classes,

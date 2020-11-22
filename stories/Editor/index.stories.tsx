@@ -1,5 +1,5 @@
-import React, { useMemo } from 'react'
-// import { action } from '@storybook/addon-actions'
+import React, { useCallback, useMemo } from 'react'
+import { action } from '@storybook/addon-actions'
 
 import { Meta } from '@storybook/react'
 import {
@@ -12,12 +12,13 @@ import {
   PRIMARY_STORY,
 } from '@storybook/addon-docs/blocks'
 
-import Component, { FrontEditorProps } from '../src'
+import Component, { FrontEditorProps } from '../../src'
 import object from './object'
 
 import Context from '@prisma-cms/context'
+import { EditorComponentProps } from '../../src/components/App/components'
 
-const title = '@prisma-cms/front-editor'
+const title = '@prisma-cms/front-editor/Editor'
 
 export const FrontEditor: React.FC<Partial<FrontEditorProps>> = ({
   inEditMode = false,
@@ -27,9 +28,16 @@ export const FrontEditor: React.FC<Partial<FrontEditorProps>> = ({
     return {}
   }, [])
 
+  const onChangeState = useCallback((data: EditorComponentProps["_dirty"]) => {
+
+    action('onChange')(data);
+
+    return data;
+  }, []);
+
   return (
     <Context.Provider value={context}>
-      <Component {...other} object={object} inEditMode={inEditMode}></Component>
+      <Component {...other} object={object} inEditMode={inEditMode} onChangeState={onChangeState}></Component>
     </Context.Provider>
   )
 }

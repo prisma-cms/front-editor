@@ -16,7 +16,7 @@ export interface EditorContextValue {
   registerMountedComponent?: FrontEditor['registerMountedComponent']
   unregisterMountedComponent?: FrontEditor['unregisterMountedComponent']
   setActiveItem?: FrontEditor['setActiveItem']
-  updateObject?: FrontEditor['updateObject']
+  // updateObject?: FrontEditor['updateObject']
   getDragItem?: FrontEditor['getDragItem']
   getDragTarget?: FrontEditor['getDragTarget']
   getActiveItem?: FrontEditor['getActiveItem']

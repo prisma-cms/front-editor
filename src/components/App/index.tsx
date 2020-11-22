@@ -264,6 +264,7 @@ export class FrontEditor<
   // };
 
   static defaultProps = {
+    itemsOnly: false,
     inEditMode: false,
     debug: false,
     Components: [
@@ -503,7 +504,7 @@ export class FrontEditor<
       classes,
       // components,
       Components,
-      updateObject: this.updateObject,
+      // updateObject: this.updateObject,
       // dragItem,
       getDragItem: this.getDragItem,
       // dragTarget,
@@ -655,6 +656,7 @@ export class FrontEditor<
       // CustomComponents,
       object,
       // ...other
+      onChangeState,
     } = this.props
 
     const component = object?.component ?? null
@@ -673,18 +675,18 @@ export class FrontEditor<
       return null
     }
 
-    return <Component mode="main" object={object} />
+    return <Component mode="main" object={object} onChangeState={onChangeState} />
   }
 
-  updateObject = (data: EditorComponentObject) => {
-    const { components } = data
+  // updateObject = (data: EditorComponentObject) => {
+  //   const { components } = data
 
-    const { onChange } = this.props
+  //   const { onChange } = this.props
 
-    if (onChange && components !== undefined) {
-      return onChange(components)
-    }
-  }
+  //   if (onChange && components !== undefined) {
+  //     return onChange(components)
+  //   }
+  // }
 
   getComponents() {
     const { Components } = this.state
@@ -697,7 +699,7 @@ export class FrontEditor<
   }
 
   render() {
-    const { classes, inEditMode, className } = this.props
+    const { classes, inEditMode, className, itemsOnly } = this.props
 
     const { editorContext } = this.state
 
@@ -705,7 +707,7 @@ export class FrontEditor<
 
     return (
       <EditorContext.Provider value={editorContext}>
-        {inEditMode ? (
+        {inEditMode && !itemsOnly ? (
           <Fragment>
             <div
               id="prisma-cms-front-editor--wrapper"

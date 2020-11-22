@@ -287,6 +287,15 @@ class EditorComponent<
   //   return false
   // }
 
+  prepareDirty (data: P["_dirty"]){
+
+    const newData = super.prepareDirty(data);
+
+    this.props.onChangeState && this.props.onChangeState(newData);
+
+    return newData;
+  }
+
   /**
    * Обновление данных объекта.
    * Так как компоненты рендерятся на основании передаваемых свойств,
@@ -296,7 +305,7 @@ class EditorComponent<
     const object = this.getObjectWithMutations()
 
     const activeParent = this.getActiveParent()
-
+    
     /**
      * Если это текущий компонент, обновляем его
      */
@@ -2500,7 +2509,7 @@ class EditorComponent<
   }
 
   // prepareRootElementProps(props: P & React.AllHTMLAttributes<HTMLElement>) {
-  prepareRootElementProps(props: P & Record<string, any>) {
+  prepareRootElementProps(props: P & Record<string, any>): Record<string, any> {
     // for (var i in props) {
 
     //   let value = props[i];
