@@ -32,3 +32,5 @@ __snapshots__
 
 # next-js
 /.next
+
+.vscode
