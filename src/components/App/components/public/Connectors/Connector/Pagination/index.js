@@ -72,6 +72,11 @@ class Pagination extends EditorComponent {
       Pagination: PrismaCmsPagination,
     } = this.context;
 
+    if(!PrismaCmsPagination) {
+      console.error("Pagination not defined");
+      return null;
+    }
+
     return <Fragment
       key="pagination"
     >

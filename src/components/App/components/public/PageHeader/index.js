@@ -36,6 +36,10 @@ class PageHeader extends EditorComponent {
       UserLink,
     } = this.context;
 
+    if(!UserLink) {
+      console.error("UserLink not defined");
+      return null;
+    }
 
     const {
       username,

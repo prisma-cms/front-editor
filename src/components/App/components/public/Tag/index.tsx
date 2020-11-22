@@ -4,7 +4,7 @@ import React from 'react';
 
 import Icon from "material-ui-icons/Title";
 
-import HtmlTag from './HtmlTag';
+import HtmlTag, { HtmlTagProps } from './HtmlTag';
 
 
 export class Tag extends HtmlTag {
@@ -18,7 +18,7 @@ export class Tag extends HtmlTag {
   }
 
 
-  renderPanelView(content) {
+  renderPanelView(content?: React.ReactNode) {
 
     const {
       classes,
@@ -27,7 +27,7 @@ export class Tag extends HtmlTag {
     return super.renderPanelView(
       content ||
       <div
-        className={classes.panelButton}
+        className={classes?.panelButton}
       >
         <Icon /> Tag
     </div>);
@@ -41,7 +41,7 @@ export class Tag extends HtmlTag {
     return inEditMode ? true : false;
   }
 
-  prepareRootElementProps(props) {
+  prepareRootElementProps(props: HtmlTagProps & Record<string, any>) {
 
     const {
       initialContent,
@@ -55,9 +55,5 @@ export class Tag extends HtmlTag {
   }
 
 }
-
-export {
-  HtmlTag,
-};
 
 export default Tag;

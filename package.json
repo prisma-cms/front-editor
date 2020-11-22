@@ -44,6 +44,8 @@
     "apollo-cms": "latest",
     "css": "^3.0.0",
     "graphql": "14.0.2",
+    "material-ui": "1.0.0-beta.43",
+    "material-ui-icons": "^1.0.0-beta.17",
     "moment": "^2.24.0",
     "path-to-regexp": "^3.0.0",
     "react-number-format": "^4.4.1",

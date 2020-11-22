@@ -72,6 +72,11 @@ class Login extends EditorComponent {
       UserLink,
     } = this.context;
 
+    if(!UserLink) {
+      console.error("UserLink not defined");
+      return null;
+    }
+
     const {
       // id: userId,
       username,

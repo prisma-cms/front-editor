@@ -45,6 +45,11 @@ class UserLink extends EditorComponent {
       UserLink: PrismaCmsUserLink,
     } = this.context;
 
+    if(!PrismaCmsUserLink) {
+      console.error("UserLink not defined");
+      return null;
+    }
+
     return <ObjectContext.Consumer
       key="object_context"
     >

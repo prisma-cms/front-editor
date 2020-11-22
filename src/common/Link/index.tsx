@@ -4,9 +4,10 @@ import NextLink from 'next/link'
 
 import Typography from 'material-ui/Typography'
 
-import { withStyles } from 'material-ui/styles'
+import withStyles from 'material-ui/styles/withStyles'
 
 import { UiLinkProps } from './interfaces'
+export * from './interfaces'
 
 export const styles = {
   root: {},

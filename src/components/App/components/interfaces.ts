@@ -15,7 +15,7 @@ export interface EditorComponentObject<
   components: EditorComponentObject[]
   props: React.AllHTMLAttributes<P> & {
     // TODO maybe replace with "content"
-    text?: string | undefined
+    text?: string | undefined | null
 
     tag?: string | undefined
 
@@ -101,6 +101,12 @@ export interface EditorComponentState extends EditableObjectState {
   active: boolean
   hovered: boolean
   maxStructureLengthView: EditorComponentProps['maxStructureLengthView']
-}
 
-export interface EditorComponentInterface {}
+  /**
+   * For HTMLTag
+   */
+  focused?: boolean
+  components?: EditorComponentObject['components']
+  // 
+
+}

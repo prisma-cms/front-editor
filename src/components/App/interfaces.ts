@@ -5,13 +5,13 @@ import { EditorContextValue } from './context/EditorContext/interfaces'
 type ComponentsArray = Array<typeof EditorComponent>
 
 export interface FrontEditorProps {
-  object: EditorComponentObject
+  object: EditorComponentObject | undefined
 
   classes?: Record<string, any>
 
   className?: string
 
-  inEditMode: boolean
+  inEditMode?: boolean
 
   onChange?: (components: EditorComponentObject[]) => void
 

@@ -43,6 +43,11 @@ class CreatedBy extends EditorComponent {
     const {
       UserLink,
     } = this.context;
+    
+    if(!UserLink) {
+      console.error("UserLink not defined");
+      return null;
+    }
 
     return <ObjectContext.Consumer
       key="object_context"

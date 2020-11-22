@@ -1,12 +1,14 @@
 import React, { Component } from 'react'
 
-import { withStyles } from 'material-ui/styles'
+import withStyles from 'material-ui/styles/withStyles'
 
 import Link from 'next/link'
 
 import URI from 'urijs'
-import { PaginationProps } from './interfaces'
 import { PrismaCmsContext } from '@prisma-cms/context'
+
+import { PaginationProps } from './interfaces'
+export * from './interfaces'
 
 import Context from '@prisma-cms/context'
 

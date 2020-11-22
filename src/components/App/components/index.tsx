@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/ban-ts-ignore */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable no-lone-blocks */
 
@@ -42,100 +41,102 @@ import { EditableObject } from 'apollo-cms'
 // import gql from 'graphql-tag'
 import { EditorContext, EditorContextValue } from '../context'
 
-import Context, { PrismaCmsContext } from '@prisma-cms/context'
+import { PrismaCmsContext } from '@prisma-cms/context'
 
 // import SingleUploader from "@prisma-cms/uploader/lib/components/SingleUploader";
 import Uploader from '@prisma-cms/uploader'
 import Typography from 'material-ui/Typography'
+import Grid from '../../../common/Grid'
+import Link from '../../../common/Link'
+
 import {
   EditorComponentObject,
   EditorComponentProps,
   EditorComponentState,
-  EditorComponentInterface,
 } from './interfaces'
-import Grid from '../../../common/Grid'
-import Link from '../../../common/Link'
-
 export * from './interfaces'
 
 // eslint-disable-next-line @typescript-eslint/no-empty-function
-const emptyMutate = async () => {}
+const emptyMutate = async () => { }
 
-abstract class EditorComponent<
-    P extends EditorComponentProps = EditorComponentProps,
-    S extends EditorComponentState = EditorComponentState
+const defaultProps: typeof EditableObject.defaultProps & {
+  contentEditable: boolean | undefined
+} & Record<string, any> = {
+  ...EditableObject.defaultProps,
+  deletable: true,
+  mutate: emptyMutate,
+  // data: {},
+  object: {
+    props: {},
+    components: [],
+  },
+  style: {
+    position: undefined,
+    display: undefined,
+    marginTop: undefined,
+    marginBottom: undefined,
+    marginLeft: undefined,
+    marginRight: undefined,
+    paddingTop: undefined,
+    paddingBottom: undefined,
+    paddingLeft: undefined,
+    paddingRight: undefined,
+    color: undefined,
+    fontFamily: undefined,
+    fontSize: undefined,
+    fontWeight: undefined,
+    textAlign: undefined,
+    textTransform: undefined,
+    verticalAlign: undefined,
+    minHeight: undefined,
+    height: undefined,
+    width: undefined,
+    maxWidth: undefined,
+    border: undefined,
+    borderRadius: undefined,
+    background: undefined,
+    backgroundImage: undefined,
+    backgroundColor: undefined,
+    backgroundPosition: undefined,
+    backgroundClip: undefined,
+    backgroundSize: undefined,
+    backgroundRepeat: undefined,
+    backgroundAttachment: undefined,
+    opacity: undefined,
+    visibility: undefined,
+    zIndex: undefined,
+  },
+  id: undefined,
+  src: undefined,
+  name: undefined,
+  page_title: undefined,
+  contentEditable: false,
+  className: undefined,
+  lang: undefined,
+  tag: undefined,
+  hide_wrapper_in_default_mode: false,
+  render_badge: true,
+  can_be_edited: true,
+};
+
+class EditorComponent<
+  P extends EditorComponentProps = EditorComponentProps,
+  S extends EditorComponentState = EditorComponentState
   >
-  extends EditableObject<P, S>
-  implements EditorComponentInterface {
+  extends EditableObject<P, S> {
   // static id = module.id;
 
   context!: PrismaCmsContext
 
   static Name = 'EditorComponent'
 
-  static contextType = Context
+  // static contextType = Context
 
   static saveable = true
 
   static help_url = ''
 
-  static defaultProps = {
-    ...EditableObject.defaultProps,
-    deletable: true,
-    mutate: emptyMutate,
-    data: {},
-    object: {
-      props: {},
-      components: [],
-    },
-    style: {
-      position: undefined,
-      display: undefined,
-      marginTop: undefined,
-      marginBottom: undefined,
-      marginLeft: undefined,
-      marginRight: undefined,
-      paddingTop: undefined,
-      paddingBottom: undefined,
-      paddingLeft: undefined,
-      paddingRight: undefined,
-      color: undefined,
-      fontFamily: undefined,
-      fontSize: undefined,
-      fontWeight: undefined,
-      textAlign: undefined,
-      textTransform: undefined,
-      verticalAlign: undefined,
-      minHeight: undefined,
-      height: undefined,
-      width: undefined,
-      maxWidth: undefined,
-      border: undefined,
-      borderRadius: undefined,
-      background: undefined,
-      backgroundImage: undefined,
-      backgroundColor: undefined,
-      backgroundPosition: undefined,
-      backgroundClip: undefined,
-      backgroundSize: undefined,
-      backgroundRepeat: undefined,
-      backgroundAttachment: undefined,
-      opacity: undefined,
-      visibility: undefined,
-      zIndex: undefined,
-    },
-    id: undefined,
-    src: undefined,
-    name: undefined,
-    page_title: undefined,
-    contentEditable: false,
-    className: undefined,
-    lang: undefined,
-    tag: undefined,
-    hide_wrapper_in_default_mode: false,
-    render_badge: true,
-    can_be_edited: true,
-  }
+  static defaultProps = defaultProps
 
   public component: EditorComponent | undefined
 
@@ -150,6 +151,7 @@ abstract class EditorComponent<
     this.updateProps = this.updateProps.bind(this)
     this.getActiveParent = this.getActiveParent.bind(this)
     this.renderHeader = this.renderHeader.bind(this)
+    this.renderComponentHeader = this.renderComponentHeader.bind(this)
     this.save = this.save.bind(this)
     this.moveBlockUp = this.moveBlockUp.bind(this)
     this.moveBlockDown = this.moveBlockDown.bind(this)
@@ -1392,7 +1394,7 @@ abstract class EditorComponent<
           className={[classes?.panelItem, className].join(' ')}
           onClick={this.onAddButtonClick}
           style={style}
-          // {...other}
+        // {...other}
         >
           {content || (this.constructor as typeof EditorComponent).Name}{' '}
           {help_url ? (
@@ -1476,7 +1478,7 @@ abstract class EditorComponent<
 
     const { maxStructureLengthView } = this.state
 
-    const header = this.renderHeader(true)
+    const header = this.renderComponentHeader()
 
     // let {
     //   props: {
@@ -1531,9 +1533,9 @@ abstract class EditorComponent<
           style={
             canEdit
               ? {
-                  border: '1px dashed #ddd',
-                  padding: 3,
-                }
+                border: '1px dashed #ddd',
+                padding: 3,
+              }
               : undefined
           }
           onInput={this.onInputSettings}
@@ -1556,7 +1558,6 @@ abstract class EditorComponent<
       const names = Object.keys(componentProps)
 
       names.map((name) => {
-        // @ts-ignore
         const value = componentProps[name]
 
         const type = typeof value
@@ -1583,8 +1584,7 @@ abstract class EditorComponent<
       const names = Object.keys(editableStyles)
 
       names.map((name) => {
-        // @ts-ignore
-        const value = editableStyles[name]
+        const value = (editableStyles as Record<string, any>)[name]
 
         const type = typeof value
 
@@ -1611,9 +1611,9 @@ abstract class EditorComponent<
         container
         spacing={8}
         alignItems="center"
-        // style={{
-        //   flexDirection: "row-reverse",
-        // }}
+      // style={{
+      //   flexDirection: "row-reverse",
+      // }}
       >
         <Grid item xs></Grid>
 
@@ -1971,7 +1971,7 @@ abstract class EditorComponent<
                   />
                 }
                 label={name}
-                // fullWidth
+              // fullWidth
               />
             </Grid>
             {deleteButton ? <Grid item>{deleteButton}</Grid> : null}
@@ -2070,7 +2070,7 @@ abstract class EditorComponent<
   updateComponentProperty(
     name: keyof P['object']['props'],
     value: any,
-    style: any
+    style?: any
   ) {
     if (style) {
       return this.updateComponentProps({
@@ -2080,10 +2080,9 @@ abstract class EditorComponent<
         },
       })
     } else {
-      // @ts-ignore
       return this.updateComponentProps({
         [name]: value,
-      })
+      } as P['object']['props'])
     }
   }
 
@@ -2202,10 +2201,9 @@ abstract class EditorComponent<
   // }
 
   removeProps(name: keyof P['object']['props']) {
-    // @ts-ignore
     this.updateComponentProps({
       [name]: undefined,
-    })
+    } as P['object']['props'])
   }
 
   getActiveItem() {
@@ -2264,7 +2262,7 @@ abstract class EditorComponent<
       ? getSettingsViewContainer()
       : null
 
-    const RootElement = this.getRootElement()
+    const RootElement = this.getRootElement() as unknown as React.ComponentClass
 
     let settingsView
 
@@ -2429,9 +2427,12 @@ abstract class EditorComponent<
       return this.renderChildren()
     }
 
+    if (!RootElement) {
+      return null;
+    }
+
     return (
       <>
-        {/* @ts-ignore */}
         <RootElement
           // {...objectProps}
           // {...other}
@@ -2584,13 +2585,13 @@ abstract class EditorComponent<
     }
   }
 
-  getRootElement() {
+  getRootElement(): string | undefined {
     const { tag } = this.getComponentProps(this)
 
     return tag || 'div'
   }
 
-  renderChildren() {
+  renderChildren(): React.ReactNode {
     if (this.isVoidElement()) {
       return null
     }
@@ -2664,7 +2665,7 @@ abstract class EditorComponent<
       ...other
     } = objectComponent
 
-    const Component = Components.find((n) => n.Name === component)
+    const Component = Components.find((n) => n.Name === component) as unknown as React.ComponentClass
 
     if (Component) {
       if (templateId) {
@@ -2691,8 +2692,7 @@ abstract class EditorComponent<
           />
         )
       } else {
-        return (
-          // @ts-ignore
+        return Component ? (
           <Component
             key={index}
             mode="main"
@@ -2705,7 +2705,7 @@ abstract class EditorComponent<
             updateTemplate={updateTemplate}
             {...other}
           />
-        )
+        ) : null
       }
     } else {
       if (inEditMode) {
@@ -2746,11 +2746,15 @@ abstract class EditorComponent<
     return inEditMode && can_be_edited ? true : false
   }
 
-  // @ts-ignore
-  renderHeader(show: boolean) {
-    if (!show) {
-      return null
-    }
+  /**
+   * Do not render header for all components.
+   * If newwd render, use renderComponentHeader()
+   */
+  renderHeader() {
+    return null
+  }
+
+  renderComponentHeader() {
     return super.renderHeader()
   }
 
@@ -2760,8 +2764,8 @@ abstract class EditorComponent<
     return !name && !component
       ? ''
       : name === component
-      ? name
-      : `${name} (${component})`
+        ? name
+        : `${name} (${component})`
   }
 
   renderEmpty() {

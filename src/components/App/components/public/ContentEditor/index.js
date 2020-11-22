@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import PropTypes from "prop-types";
 
-import { HtmlTag } from '../Tag';
+import HtmlTag from '../Tag/HtmlTag';
 import EditorComponent from '../..';
 
 import withStyles from 'material-ui/styles/withStyles';

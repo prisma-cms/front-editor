@@ -1,360 +1,360 @@
 import { EditorComponentObject } from '../../../src/components/App/components/interfaces'
 
 const object: EditorComponentObject = {
-  "name": "Section",
-  "props": {},
-  "components": [
+  name: 'Section',
+  props: {},
+  components: [
     {
-      "name": "ContentEditor",
-      "props": {},
-      "components": [
+      name: 'ContentEditor',
+      props: {},
+      components: [
         {
-          "name": "HtmlTag",
-          "component": "HtmlTag",
-          "props": {
-            "name": "HtmlTag",
-            "tag": "p",
-            "className": ""
+          name: 'HtmlTag',
+          component: 'HtmlTag',
+          props: {
+            name: 'HtmlTag',
+            tag: 'p',
+            className: '',
           },
-          "components": [
+          components: [
             {
-              "name": "HtmlTag",
-              "component": "HtmlTag",
-              "props": {
-                "tag": "b"
+              name: 'HtmlTag',
+              component: 'HtmlTag',
+              props: {
+                tag: 'b',
               },
-              "components": [
+              components: [
                 {
-                  "name": "HtmlTag",
-                  "component": "HtmlTag",
-                  "props": {
-                    "text": "Content"
+                  name: 'HtmlTag',
+                  component: 'HtmlTag',
+                  props: {
+                    text: 'Content',
                   },
-                  "components": []
-                }
-              ]
+                  components: [],
+                },
+              ],
             },
             {
-              "name": "HtmlTag",
-              "component": "HtmlTag",
-              "props": {
-                "text": " "
+              name: 'HtmlTag',
+              component: 'HtmlTag',
+              props: {
+                text: ' ',
               },
-              "components": []
+              components: [],
             },
             {
-              "name": "HtmlTag",
-              "component": "HtmlTag",
-              "props": {
-                "tag": "i"
+              name: 'HtmlTag',
+              component: 'HtmlTag',
+              props: {
+                tag: 'i',
               },
-              "components": [
+              components: [
                 {
-                  "name": "HtmlTag",
-                  "component": "HtmlTag",
-                  "props": {
-                    "text": "editor"
+                  name: 'HtmlTag',
+                  component: 'HtmlTag',
+                  props: {
+                    text: 'editor',
                   },
-                  "components": []
-                }
-              ]
+                  components: [],
+                },
+              ],
             },
             {
-              "name": "HtmlTag",
-              "component": "HtmlTag",
-              "props": {
-                "text": " "
+              name: 'HtmlTag',
+              component: 'HtmlTag',
+              props: {
+                text: ' ',
               },
-              "components": []
+              components: [],
             },
             {
-              "name": "HtmlTag",
-              "component": "HtmlTag",
-              "props": {
-                "tag": "u"
+              name: 'HtmlTag',
+              component: 'HtmlTag',
+              props: {
+                tag: 'u',
               },
-              "components": [
+              components: [
                 {
-                  "name": "HtmlTag",
-                  "component": "HtmlTag",
-                  "props": {
-                    "text": "text "
+                  name: 'HtmlTag',
+                  component: 'HtmlTag',
+                  props: {
+                    text: 'text ',
                   },
-                  "components": []
-                }
-              ]
+                  components: [],
+                },
+              ],
             },
             {
-              "name": "HtmlTag",
-              "component": "HtmlTag",
-              "props": {
-                "text": "sdfdsf "
+              name: 'HtmlTag',
+              component: 'HtmlTag',
+              props: {
+                text: 'sdfdsf ',
               },
-              "components": []
+              components: [],
             },
             {
-              "name": "HtmlTag",
-              "component": "HtmlTag",
-              "props": {
-                "tag": "strike"
+              name: 'HtmlTag',
+              component: 'HtmlTag',
+              props: {
+                tag: 'strike',
               },
-              "components": [
+              components: [
                 {
-                  "name": "HtmlTag",
-                  "component": "HtmlTag",
-                  "props": {
-                    "text": "dsfsdf"
+                  name: 'HtmlTag',
+                  component: 'HtmlTag',
+                  props: {
+                    text: 'dsfsdf',
                   },
-                  "components": []
-                }
-              ]
+                  components: [],
+                },
+              ],
             },
             {
-              "name": "HtmlTag",
-              "component": "HtmlTag",
-              "props": {
-                "text": " sd"
+              name: 'HtmlTag',
+              component: 'HtmlTag',
+              props: {
+                text: ' sd',
               },
-              "components": []
-            }
-          ]
+              components: [],
+            },
+          ],
         },
         {
-          "name": "HtmlTag",
-          "component": "HtmlTag",
-          "props": {
-            "name": "HtmlTag",
-            "tag": "p",
-            "className": ""
+          name: 'HtmlTag',
+          component: 'HtmlTag',
+          props: {
+            name: 'HtmlTag',
+            tag: 'p',
+            className: '',
           },
-          "components": [
+          components: [
             {
-              "name": "HtmlTag",
-              "component": "HtmlTag",
-              "props": {
-                "tag": "ul"
+              name: 'HtmlTag',
+              component: 'HtmlTag',
+              props: {
+                tag: 'ul',
               },
-              "components": [
+              components: [
                 {
-                  "name": "HtmlTag",
-                  "component": "HtmlTag",
-                  "props": {
-                    "tag": "li"
+                  name: 'HtmlTag',
+                  component: 'HtmlTag',
+                  props: {
+                    tag: 'li',
                   },
-                  "components": [
+                  components: [
                     {
-                      "name": "HtmlTag",
-                      "component": "HtmlTag",
-                      "props": {
-                        "text": "sadasd"
+                      name: 'HtmlTag',
+                      component: 'HtmlTag',
+                      props: {
+                        text: 'sadasd',
                       },
-                      "components": []
-                    }
-                  ]
+                      components: [],
+                    },
+                  ],
                 },
                 {
-                  "name": "HtmlTag",
-                  "component": "HtmlTag",
-                  "props": {
-                    "tag": "li"
+                  name: 'HtmlTag',
+                  component: 'HtmlTag',
+                  props: {
+                    tag: 'li',
                   },
-                  "components": [
+                  components: [
                     {
-                      "name": "HtmlTag",
-                      "component": "HtmlTag",
-                      "props": {
-                        "text": "asd"
+                      name: 'HtmlTag',
+                      component: 'HtmlTag',
+                      props: {
+                        text: 'asd',
                       },
-                      "components": []
-                    }
-                  ]
+                      components: [],
+                    },
+                  ],
                 },
                 {
-                  "name": "HtmlTag",
-                  "component": "HtmlTag",
-                  "props": {
-                    "tag": "ul"
+                  name: 'HtmlTag',
+                  component: 'HtmlTag',
+                  props: {
+                    tag: 'ul',
                   },
-                  "components": [
+                  components: [
                     {
-                      "name": "HtmlTag",
-                      "component": "HtmlTag",
-                      "props": {
-                        "tag": "li"
+                      name: 'HtmlTag',
+                      component: 'HtmlTag',
+                      props: {
+                        tag: 'li',
                       },
-                      "components": [
+                      components: [
                         {
-                          "name": "HtmlTag",
-                          "component": "HtmlTag",
-                          "props": {
-                            "text": "wq"
+                          name: 'HtmlTag',
+                          component: 'HtmlTag',
+                          props: {
+                            text: 'wq',
                           },
-                          "components": []
-                        }
-                      ]
-                    }
-                  ]
+                          components: [],
+                        },
+                      ],
+                    },
+                  ],
                 },
                 {
-                  "name": "HtmlTag",
-                  "component": "HtmlTag",
-                  "props": {
-                    "tag": "li"
+                  name: 'HtmlTag',
+                  component: 'HtmlTag',
+                  props: {
+                    tag: 'li',
                   },
-                  "components": [
+                  components: [
                     {
-                      "name": "HtmlTag",
-                      "component": "HtmlTag",
-                      "props": {
-                        "text": "dqwd"
+                      name: 'HtmlTag',
+                      component: 'HtmlTag',
+                      props: {
+                        text: 'dqwd',
                       },
-                      "components": []
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
+                      components: [],
+                    },
+                  ],
+                },
+              ],
+            },
+          ],
         },
         {
-          "name": "HtmlTag",
-          "component": "HtmlTag",
-          "props": {
-            "name": "HtmlTag",
-            "tag": "p",
-            "className": ""
+          name: 'HtmlTag',
+          component: 'HtmlTag',
+          props: {
+            name: 'HtmlTag',
+            tag: 'p',
+            className: '',
           },
-          "components": [
+          components: [
             {
-              "name": "HtmlTag",
-              "component": "HtmlTag",
-              "props": {
-                "tag": "ol"
+              name: 'HtmlTag',
+              component: 'HtmlTag',
+              props: {
+                tag: 'ol',
               },
-              "components": [
+              components: [
                 {
-                  "name": "HtmlTag",
-                  "component": "HtmlTag",
-                  "props": {
-                    "tag": "li"
+                  name: 'HtmlTag',
+                  component: 'HtmlTag',
+                  props: {
+                    tag: 'li',
                   },
-                  "components": [
+                  components: [
                     {
-                      "name": "HtmlTag",
-                      "component": "HtmlTag",
-                      "props": {
-                        "text": "dqwdqw"
+                      name: 'HtmlTag',
+                      component: 'HtmlTag',
+                      props: {
+                        text: 'dqwdqw',
                       },
-                      "components": []
-                    }
-                  ]
+                      components: [],
+                    },
+                  ],
                 },
                 {
-                  "name": "HtmlTag",
-                  "component": "HtmlTag",
-                  "props": {
-                    "tag": "ol"
+                  name: 'HtmlTag',
+                  component: 'HtmlTag',
+                  props: {
+                    tag: 'ol',
                   },
-                  "components": [
+                  components: [
                     {
-                      "name": "HtmlTag",
-                      "component": "HtmlTag",
-                      "props": {
-                        "tag": "li"
+                      name: 'HtmlTag',
+                      component: 'HtmlTag',
+                      props: {
+                        tag: 'li',
                       },
-                      "components": [
+                      components: [
                         {
-                          "name": "HtmlTag",
-                          "component": "HtmlTag",
-                          "props": {
-                            "text": "dwq"
+                          name: 'HtmlTag',
+                          component: 'HtmlTag',
+                          props: {
+                            text: 'dwq',
                           },
-                          "components": []
-                        }
-                      ]
-                    }
-                  ]
+                          components: [],
+                        },
+                      ],
+                    },
+                  ],
                 },
                 {
-                  "name": "HtmlTag",
-                  "component": "HtmlTag",
-                  "props": {
-                    "tag": "li"
+                  name: 'HtmlTag',
+                  component: 'HtmlTag',
+                  props: {
+                    tag: 'li',
                   },
-                  "components": [
+                  components: [
                     {
-                      "name": "HtmlTag",
-                      "component": "HtmlTag",
-                      "props": {
-                        "text": "dqw"
+                      name: 'HtmlTag',
+                      component: 'HtmlTag',
+                      props: {
+                        text: 'dqw',
                       },
-                      "components": []
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
+                      components: [],
+                    },
+                  ],
+                },
+              ],
+            },
+          ],
         },
         {
-          "name": "HtmlTag",
-          "component": "HtmlTag",
-          "props": {
-            "name": "HtmlTag",
-            "tag": "p",
-            "className": ""
+          name: 'HtmlTag',
+          component: 'HtmlTag',
+          props: {
+            name: 'HtmlTag',
+            tag: 'p',
+            className: '',
           },
-          "components": [
+          components: [
             {
-              "name": "HtmlTag",
-              "component": "HtmlTag",
-              "props": {
-                "text": "dq "
+              name: 'HtmlTag',
+              component: 'HtmlTag',
+              props: {
+                text: 'dq ',
               },
-              "components": []
+              components: [],
             },
             {
-              "name": "HtmlTag",
-              "component": "HtmlTag",
-              "props": {
-                "text": "rwerwerwer"
+              name: 'HtmlTag',
+              component: 'HtmlTag',
+              props: {
+                text: 'rwerwerwer',
               },
-              "components": []
+              components: [],
             },
             {
-              "name": "HtmlTag",
-              "component": "HtmlTag",
-              "props": {
-                "text": " wer werwe"
+              name: 'HtmlTag',
+              component: 'HtmlTag',
+              props: {
+                text: ' wer werwe',
               },
-              "components": []
-            }
-          ]
+              components: [],
+            },
+          ],
         },
         {
-          "name": "HtmlTag",
-          "component": "HtmlTag",
-          "props": {
-            "name": "HtmlTag",
-            "tag": "p",
-            "className": ""
+          name: 'HtmlTag',
+          component: 'HtmlTag',
+          props: {
+            name: 'HtmlTag',
+            tag: 'p',
+            className: '',
           },
-          "components": [
+          components: [
             {
-              "name": "HtmlTag",
-              "component": "HtmlTag",
-              "props": {
-                "tag": "br"
+              name: 'HtmlTag',
+              component: 'HtmlTag',
+              props: {
+                tag: 'br',
               },
-              "components": []
-            }
-          ]
-        }
+              components: [],
+            },
+          ],
+        },
       ],
-      "component": "ContentEditor"
-    }
+      component: 'ContentEditor',
+    },
   ],
-  "component": "Section"
+  component: 'Section',
 }
 
 export default object

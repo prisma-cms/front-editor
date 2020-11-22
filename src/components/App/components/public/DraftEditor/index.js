@@ -41,6 +41,11 @@ class DraftEditor extends EditorComponent {
       Editor,
     } = this.context;
 
+    if(!Editor) {
+      console.error("Editor not defined");
+      return null;
+    }
+
 
     const {
       readOnly,

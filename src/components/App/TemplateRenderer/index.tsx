@@ -2,6 +2,7 @@ import React from 'react'
 
 // import { useQuery } from "@apollo/client";
 import { TemplateRendererProps } from './interfaces'
+export * from './interfaces'
 
 // TODO Restore
 

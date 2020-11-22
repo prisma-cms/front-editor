@@ -5,7 +5,7 @@ import Context from '@prisma-cms/context'
 
 import Avatar from 'material-ui/Avatar'
 
-import { withStyles } from 'material-ui/styles'
+import withStyles from 'material-ui/styles/withStyles'
 import { UserAvatarProps } from './interfaces'
 
 export * from './interfaces'

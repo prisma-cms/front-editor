@@ -1,638 +1,656 @@
 import { EditorComponentObject } from '../../../src/components/App/components/interfaces'
 
 const object: EditorComponentObject = {
-  name: 'Section',
-  props: {},
-  components: [
+  "name": "Section",
+  "props": {},
+  "components": [
     {
-      name: 'Section',
-      props: {},
-      components: [
+      "name": "Section",
+      "props": {},
+      "components": [
         {
-          name: 'Grid',
-          props: {
-            container: true,
-            spacing: 0,
+          "name": "Grid",
+          "props": {
+            "container": true,
+            "spacing": 0
           },
-          components: [
+          "components": [
             {
-              name: 'Grid',
-              props: {
-                spacing: 0,
-                xs: 12,
-                sm: 6,
-                md: 4,
-                lg: 3,
-                xl: 2,
-                item: true,
+              "name": "Grid",
+              "props": {
+                "spacing": 0,
+                "xs": 12,
+                "sm": 6,
+                "md": 4,
+                "lg": 3,
+                "xl": 2,
+                "item": true
               },
-              components: [
+              "components": [
                 {
-                  name: 'Tag',
-                  props: {
-                    tag: 'span',
-                    style: {
-                      color: 'blue',
-                    },
+                  "name": "Tag",
+                  "props": {
+                    "tag": "span",
+                    "style": {
+                      "color": "blue"
+                    }
                   },
-                  components: [
+                  "components": [
                     {
-                      name: 'HtmlTag',
-                      component: 'HtmlTag',
-                      props: {
-                        text: 'Grid',
+                      "name": "HtmlTag",
+                      "component": "HtmlTag",
+                      "props": {
+                        "text": "Grid"
                       },
-                      components: [],
-                    },
+                      "components": []
+                    }
                   ],
-                  component: 'Tag',
-                },
+                  "component": "Tag"
+                }
               ],
-              component: 'Grid',
+              "component": "Grid"
             },
             {
-              name: 'Grid',
-              props: {
-                spacing: 0,
-                xs: 12,
-                sm: 6,
-                md: 4,
-                lg: 3,
-                xl: 2,
-                item: true,
+              "name": "Grid",
+              "props": {
+                "spacing": 0,
+                "xs": 12,
+                "sm": 6,
+                "md": 4,
+                "lg": 3,
+                "xl": 2,
+                "item": true
               },
-              components: [
+              "components": [
                 {
-                  name: 'UserLink',
-                  props: {},
-                  components: [],
-                  component: 'UserLink',
+                  "name": "UserLink",
+                  "props": {},
+                  "components": [],
+                  "component": "UserLink"
                 },
                 {
-                  name: 'CurrentUser',
-                  props: {},
-                  components: [],
-                  component: 'CurrentUser',
-                },
+                  "name": "CurrentUser",
+                  "props": {},
+                  "components": [],
+                  "component": "CurrentUser"
+                }
               ],
-              component: 'Grid',
+              "component": "Grid"
             },
             {
-              name: 'Grid',
-              props: {
-                spacing: 0,
-                xs: 12,
-                sm: 6,
-                md: 4,
-                lg: 3,
-                xl: 2,
-                item: true,
+              "name": "Grid",
+              "props": {
+                "spacing": 0,
+                "xs": 12,
+                "sm": 6,
+                "md": 4,
+                "lg": 3,
+                "xl": 2,
+                "item": true
               },
-              components: [],
-              component: 'Grid',
+              "components": [],
+              "component": "Grid"
             },
             {
-              name: 'Grid',
-              props: {
-                spacing: 0,
-                xs: 12,
-                sm: 6,
-                md: 4,
-                lg: 3,
-                xl: 2,
-                item: true,
+              "name": "Grid",
+              "props": {
+                "spacing": 0,
+                "xs": 12,
+                "sm": 6,
+                "md": 4,
+                "lg": 3,
+                "xl": 2,
+                "item": true
               },
-              components: [
+              "components": [
                 {
-                  name: 'Link',
-                  props: {
-                    to: 'https://prisma-cms.com',
+                  "name": "Link",
+                  "props": {
+                    "to": "https://prisma-cms.com"
                   },
-                  components: [
+                  "components": [
                     {
-                      name: 'Tag',
-                      props: {
-                        tag: 'span',
+                      "name": "Tag",
+                      "props": {
+                        "tag": "span"
                       },
-                      components: [
+                      "components": [
                         {
-                          name: 'HtmlTag',
-                          component: 'HtmlTag',
-                          props: {
-                            text: 'prisma-cms.com',
+                          "name": "HtmlTag",
+                          "component": "HtmlTag",
+                          "props": {
+                            "text": "prisma-cms.com"
                           },
-                          components: [],
-                        },
+                          "components": []
+                        }
                       ],
-                      component: 'Tag',
-                    },
+                      "component": "Tag"
+                    }
                   ],
-                  component: 'Link',
-                },
+                  "component": "Link"
+                }
               ],
-              component: 'Grid',
+              "component": "Grid"
             },
             {
-              name: 'Grid',
-              props: {
-                spacing: 0,
-                xs: 12,
-                sm: 6,
-                md: 4,
-                lg: 3,
-                xl: 2,
-                item: true,
+              "name": "Grid",
+              "props": {
+                "spacing": 0,
+                "xs": 12,
+                "sm": 6,
+                "md": 4,
+                "lg": 3,
+                "xl": 2,
+                "item": true
               },
-              components: [
+              "components": [
                 {
-                  name: 'Button',
-                  props: {},
-                  components: [
+                  "name": "Button",
+                  "props": {},
+                  "components": [
                     {
-                      name: 'Tag',
-                      props: {
-                        tag: 'span',
+                      "name": "Tag",
+                      "props": {
+                        "tag": "span"
                       },
-                      components: [
+                      "components": [
                         {
-                          name: 'HtmlTag',
-                          component: 'HtmlTag',
-                          props: {
-                            text: 'Button',
+                          "name": "HtmlTag",
+                          "component": "HtmlTag",
+                          "props": {
+                            "text": "Button"
                           },
-                          components: [],
-                        },
+                          "components": []
+                        }
                       ],
-                      component: 'Tag',
-                    },
+                      "component": "Tag"
+                    }
                   ],
-                  component: 'Button',
-                },
+                  "component": "Button"
+                }
               ],
-              component: 'Grid',
+              "component": "Grid"
             },
             {
-              name: 'Grid',
-              props: {
-                spacing: 0,
-                xs: 12,
-                sm: 6,
-                md: 4,
-                lg: 3,
-                xl: 2,
-                item: true,
+              "name": "Grid",
+              "props": {
+                "spacing": 0,
+                "xs": 12,
+                "sm": 6,
+                "md": 4,
+                "lg": 3,
+                "xl": 2,
+                "item": true
               },
-              components: [],
-              component: 'Grid',
+              "components": [],
+              "component": "Grid"
             },
             {
-              name: 'Grid',
-              props: {
-                spacing: 0,
-                xs: 12,
-                sm: 6,
-                md: 4,
-                lg: 3,
-                xl: 2,
-                item: true,
+              "name": "Grid",
+              "props": {
+                "spacing": 0,
+                "xs": 12,
+                "sm": 6,
+                "md": 4,
+                "lg": 3,
+                "xl": 2,
+                "item": true
               },
-              components: [],
-              component: 'Grid',
+              "components": [],
+              "component": "Grid"
             },
             {
-              name: 'Grid',
-              props: {
-                spacing: 0,
-                xs: 12,
-                sm: 6,
-                md: 4,
-                lg: 3,
-                xl: 2,
-                item: true,
+              "name": "Grid",
+              "props": {
+                "spacing": 0,
+                "xs": 12,
+                "sm": 6,
+                "md": 4,
+                "lg": 3,
+                "xl": 2,
+                "item": true
               },
-              components: [],
-              component: 'Grid',
+              "components": [],
+              "component": "Grid"
             },
             {
-              name: 'Grid',
-              props: {
-                spacing: 0,
-                xs: 12,
-                sm: 6,
-                md: 4,
-                lg: 3,
-                xl: 2,
-                item: true,
+              "name": "Grid",
+              "props": {
+                "spacing": 0,
+                "xs": 12,
+                "sm": 6,
+                "md": 4,
+                "lg": 3,
+                "xl": 2,
+                "item": true
               },
-              components: [],
-              component: 'Grid',
+              "components": [],
+              "component": "Grid"
             },
             {
-              name: 'Grid',
-              props: {
-                spacing: 0,
-                xs: 12,
-                item: true,
+              "name": "Grid",
+              "props": {
+                "spacing": 0,
+                "xs": 12,
+                "item": true
               },
-              components: [
+              "components": [
                 {
-                  name: 'AppBar',
-                  props: {},
-                  components: [],
-                  component: 'AppBar',
-                },
+                  "name": "AppBar",
+                  "props": {},
+                  "components": [],
+                  "component": "AppBar"
+                }
               ],
-              component: 'Grid',
-            },
+              "component": "Grid"
+            }
           ],
-          component: 'Grid',
-        },
+          "component": "Grid"
+        }
       ],
-      component: 'Section',
+      "component": "Section"
     },
     {
-      name: 'Section',
-      props: {},
-      components: [
+      "name": "Section",
+      "props": {},
+      "components": [
         {
-          name: 'Typography',
-          props: {
-            text: 'Typography',
+          "name": "Typography",
+          "props": {
+            "text": "Typography"
           },
-          components: [],
-          component: 'Typography',
-        },
+          "components": [],
+          "component": "Typography"
+        }
       ],
-      component: 'Section',
+      "component": "Section"
     },
     {
-      name: 'Section',
-      props: {},
-      components: [
+      "name": "Section",
+      "props": {},
+      "components": [
         {
-          name: 'EditableObject',
-          props: {
-            _dirty: {
-              name: 'EditableObject in edit mode',
-            },
+          "name": "EditableObject",
+          "props": {
+            "_dirty": {
+              "name": "EditableObject in edit mode"
+            }
           },
-          components: [
+          "components": [
             {
-              name: 'EditableView',
-              props: {},
-              components: [
+              "name": "EditableView",
+              "props": {},
+              "components": [
                 {
-                  name: 'TextField',
-                  props: {
-                    name: 'name',
-                    fullWidth: true,
+                  "name": "TextField",
+                  "props": {
+                    "name": "name",
+                    "fullWidth": true
                   },
-                  components: [],
-                  component: 'TextField',
+                  "components": [],
+                  "component": "TextField"
                 },
                 {
-                  name: 'Section',
-                  props: {},
-                  components: [
+                  "name": "Section",
+                  "props": {},
+                  "components": [
                     {
-                      name: 'FileUploader',
-                      props: {
-                        name: 'name',
+                      "name": "FileUploader",
+                      "props": {
+                        "name": "name"
                       },
-                      components: [],
-                      component: 'FileUploader',
-                    },
+                      "components": [],
+                      "component": "FileUploader"
+                    }
                   ],
-                  component: 'Section',
+                  "component": "Section"
                 },
                 {
-                  name: 'Section',
-                  props: {},
-                  components: [
+                  "name": "Section",
+                  "props": {},
+                  "components": [
                     {
-                      name: 'RichText',
-                      props: {},
-                      components: [],
-                      component: 'RichText',
-                    },
+                      "name": "RichText",
+                      "props": {},
+                      "components": [],
+                      "component": "RichText"
+                    }
                   ],
-                  component: 'Section',
-                },
+                  "component": "Section"
+                }
               ],
-              component: 'EditableView',
+              "component": "EditableView"
             },
             {
-              name: 'EditableObjectButtons',
-              props: {},
-              components: [],
-              component: 'EditableObjectButtons',
+              "name": "EditableObjectButtons",
+              "props": {},
+              "components": [],
+              "component": "EditableObjectButtons"
             },
             {
-              name: 'CreatedBy',
-              props: {},
-              components: [],
-              component: 'CreatedBy',
+              "name": "CreatedBy",
+              "props": {},
+              "components": [],
+              "component": "CreatedBy"
             },
             {
-              name: 'ResourceFields',
-              props: {},
-              components: [],
-              component: 'ResourceFields',
+              "name": "ResourceFields",
+              "props": {},
+              "components": [],
+              "component": "ResourceFields"
             },
             {
-              name: 'Section',
-              props: {},
-              components: [
+              "name": "Section",
+              "props": {},
+              "components": [
                 {
-                  name: 'Content',
-                  props: {},
-                  components: [],
-                  component: 'Content',
-                },
+                  "name": "Content",
+                  "props": {},
+                  "components": [],
+                  "component": "Content"
+                }
               ],
-              component: 'Section',
+              "component": "Section"
             },
             {
-              name: 'Section',
-              props: {},
-              components: [
+              "name": "Section",
+              "props": {},
+              "components": [
                 {
-                  name: 'ContentEditor',
-                  props: {},
-                  components: [
+                  "name": "ContentEditor",
+                  "props": {},
+                  "components": [
                     {
-                      name: 'HtmlTag',
-                      component: 'HtmlTag',
-                      props: {
-                        name: 'HtmlTag',
-                        tag: 'p',
-                        className: '',
+                      "name": "HtmlTag",
+                      "component": "HtmlTag",
+                      "props": {
+                        "name": "HtmlTag",
+                        "tag": "p",
+                        "className": ""
                       },
-                      components: [
+                      "components": [
                         {
-                          name: 'HtmlTag',
-                          component: 'HtmlTag',
-                          props: {
-                            text: 'Content ',
+                          "name": "HtmlTag",
+                          "component": "HtmlTag",
+                          "props": {
+                            "text": "Content "
                           },
-                          components: [],
+                          "components": []
                         },
                         {
-                          name: 'HtmlTag',
-                          component: 'HtmlTag',
-                          props: {
-                            tag: 'i',
+                          "name": "HtmlTag",
+                          "component": "HtmlTag",
+                          "props": {
+                            "tag": "i"
                           },
-                          components: [
+                          "components": [
                             {
-                              name: 'HtmlTag',
-                              component: 'HtmlTag',
-                              props: {
-                                text: 'editor',
+                              "name": "HtmlTag",
+                              "component": "HtmlTag",
+                              "props": {
+                                "text": "editor"
                               },
-                              components: [],
-                            },
-                          ],
+                              "components": []
+                            }
+                          ]
                         },
                         {
-                          name: 'HtmlTag',
-                          component: 'HtmlTag',
-                          props: {
-                            text: ' text',
+                          "name": "HtmlTag",
+                          "component": "HtmlTag",
+                          "props": {
+                            "text": " text"
                           },
-                          components: [],
-                        },
-                      ],
-                    },
+                          "components": []
+                        }
+                      ]
+                    }
                   ],
-                  component: 'ContentEditor',
-                },
+                  "component": "ContentEditor"
+                }
               ],
-              component: 'Section',
+              "component": "Section"
             },
             {
-              name: 'Grid',
-              props: {
-                container: true,
-                spacing: 0,
+              "name": "Grid",
+              "props": {
+                "container": true,
+                "spacing": 0
               },
-              components: [
+              "components": [
                 {
-                  name: 'Grid',
-                  props: {
-                    spacing: 0,
-                    xs: 12,
-                    sm: 6,
-                    md: 4,
-                    lg: 3,
-                    xl: 2,
-                    item: true,
+                  "name": "Grid",
+                  "props": {
+                    "spacing": 0,
+                    "xs": 12,
+                    "sm": 6,
+                    "md": 4,
+                    "lg": 3,
+                    "xl": 2,
+                    "item": true
                   },
-                  components: [
+                  "components": [
                     {
-                      name: 'Switch',
-                      props: {
-                        name: 'switch',
+                      "name": "Switch",
+                      "props": {
+                        "name": "switch"
                       },
-                      components: [],
-                      component: 'Switch',
-                    },
+                      "components": [],
+                      "component": "Switch"
+                    }
                   ],
-                  component: 'Grid',
+                  "component": "Grid"
                 },
                 {
-                  name: 'Grid',
-                  props: {
-                    spacing: 0,
-                    xs: 12,
-                    sm: 6,
-                    md: 4,
-                    lg: 3,
-                    xl: 2,
-                    item: true,
+                  "name": "Grid",
+                  "props": {
+                    "spacing": 0,
+                    "xs": 12,
+                    "sm": 6,
+                    "md": 4,
+                    "lg": 3,
+                    "xl": 2,
+                    "item": true
                   },
-                  components: [],
-                  component: 'Grid',
+                  "components": [],
+                  "component": "Grid"
                 },
                 {
-                  name: 'Grid',
-                  props: {
-                    spacing: 0,
-                    xs: 12,
-                    sm: 6,
-                    md: 4,
-                    lg: 3,
-                    xl: 2,
-                    item: true,
+                  "name": "Grid",
+                  "props": {
+                    "spacing": 0,
+                    "xs": 12,
+                    "sm": 6,
+                    "md": 4,
+                    "lg": 3,
+                    "xl": 2,
+                    "item": true
                   },
-                  components: [],
-                  component: 'Grid',
-                },
+                  "components": [],
+                  "component": "Grid"
+                }
               ],
-              component: 'Grid',
-            },
+              "component": "Grid"
+            }
           ],
-          component: 'EditableObject',
-        },
+          "component": "EditableObject"
+        }
       ],
-      component: 'Section',
+      "component": "Section"
     },
     {
-      name: 'Section',
-      props: {},
-      components: [
+      "name": "Section",
+      "props": {},
+      "components": [
         {
-          name: 'ResetObjectContext',
-          component: 'ResetObjectContext',
-          props: {
-            object: {
-              id: 'test-id',
-              name: 'EditableObject in default mode with id',
-            },
+          "name": "ResetObjectContext",
+          "component": "ResetObjectContext",
+          "props": {
+            "object": {
+              "id": "test-id",
+              "name": "EditableObject in default mode with id"
+            }
           },
-          components: [
+          "components": [
             {
-              name: 'EditableObject',
-              props: {},
-              components: [
+              "name": "EditableObject",
+              "props": {},
+              "components": [
                 {
-                  name: 'DefaultView',
-                  props: {},
-                  components: [
+                  "name": "DefaultView",
+                  "props": {},
+                  "components": [
                     {
-                      name: 'NamedField',
-                      props: {
-                        name: 'name',
+                      "name": "NamedField",
+                      "props": {
+                        "name": "name"
                       },
-                      components: [],
-                      component: 'NamedField',
-                    },
+                      "components": [],
+                      "component": "NamedField"
+                    }
                   ],
-                  component: 'DefaultView',
-                },
+                  "component": "DefaultView"
+                }
               ],
-              component: 'EditableObject',
-            },
-          ],
-        },
+              "component": "EditableObject"
+            }
+          ]
+        }
       ],
-      component: 'Section',
+      "component": "Section"
     },
     {
-      name: 'Section',
-      props: {},
-      components: [
+      "name": "Section",
+      "props": {},
+      "components": [
         {
-          name: 'Table',
-          props: {},
-          components: [
+          "name": "Table",
+          "props": {},
+          "components": [
             {
-              name: 'TableRow',
-              props: {},
-              components: [
+              "name": "TableRow",
+              "props": {},
+              "components": [
                 {
-                  name: 'TableCell',
-                  props: {
-                    tag: 'th',
+                  "name": "TableCell",
+                  "props": {
+                    "tag": "th"
                   },
-                  components: [
+                  "components": [
                     {
-                      name: 'Tag',
-                      props: {
-                        tag: 'span',
+                      "name": "Tag",
+                      "props": {
+                        "tag": "span"
                       },
-                      components: [
+                      "components": [
                         {
-                          name: 'HtmlTag',
-                          component: 'HtmlTag',
-                          props: {
-                            text: 'TH',
+                          "name": "HtmlTag",
+                          "component": "HtmlTag",
+                          "props": {
+                            "text": "TH"
                           },
-                          components: [],
-                        },
+                          "components": []
+                        }
                       ],
-                      component: 'Tag',
-                    },
+                      "component": "Tag"
+                    }
                   ],
-                  component: 'TableCell',
+                  "component": "TableCell"
                 },
                 {
-                  name: 'TableCell',
-                  props: {},
-                  components: [
+                  "name": "TableCell",
+                  "props": {},
+                  "components": [
                     {
-                      name: 'Tag',
-                      props: {
-                        tag: 'span',
+                      "name": "Tag",
+                      "props": {
+                        "tag": "span"
                       },
-                      components: [
+                      "components": [
                         {
-                          name: 'HtmlTag',
-                          component: 'HtmlTag',
-                          props: {
-                            text: 'TD',
+                          "name": "HtmlTag",
+                          "component": "HtmlTag",
+                          "props": {
+                            "text": "TD"
                           },
-                          components: [],
-                        },
+                          "components": []
+                        }
                       ],
-                      component: 'Tag',
-                    },
+                      "component": "Tag"
+                    }
                   ],
-                  component: 'TableCell',
+                  "component": "TableCell"
                 },
                 {
-                  name: 'TableCell',
-                  props: {},
-                  components: [],
-                  component: 'TableCell',
-                },
+                  "name": "TableCell",
+                  "props": {},
+                  "components": [],
+                  "component": "TableCell"
+                }
               ],
-              component: 'TableRow',
-            },
+              "component": "TableRow"
+            }
           ],
-          component: 'Table',
-        },
+          "component": "Table"
+        }
       ],
-      component: 'Section',
+      "component": "Section"
     },
     {
-      name: 'Section',
-      props: {},
-      components: [],
-      component: 'Section',
+      "name": "Section",
+      "props": {},
+      "components": [],
+      "component": "Section"
     },
     {
-      name: 'Section',
-      props: {},
-      components: [],
-      component: 'Section',
+      "name": "Section",
+      "props": {},
+      "components": [],
+      "component": "Section"
     },
     {
-      name: 'Section',
-      props: {},
-      components: [],
-      component: 'Section',
+      "name": "Section",
+      "props": {},
+      "components": [],
+      "component": "Section"
     },
     {
-      name: 'Section',
-      props: {},
-      components: [],
-      component: 'Section',
+      "name": "Section",
+      "props": {},
+      "components": [],
+      "component": "Section"
     },
     {
-      name: 'Section',
-      props: {},
-      components: [],
-      component: 'Section',
+      "name": "Section",
+      "props": {},
+      "components": [],
+      "component": "Section"
     },
     {
-      name: 'Section',
-      props: {},
-      components: [],
-      component: 'Section',
-    },
+      "name": "Section",
+      "props": {},
+      "components": [
+        {
+          "name": "Tag",
+          "props": {
+            "tag": "span"
+          },
+          "components": [
+            {
+              "name": "HtmlTag",
+              "component": "HtmlTag",
+              "props": {
+                "text": "Tag"
+              },
+              "components": []
+            }
+          ],
+          "component": "Tag"
+        }
+      ],
+      "component": "Section"
+    }
   ],
-  component: 'Section',
+  "component": "Section"
 }
 
 export default object

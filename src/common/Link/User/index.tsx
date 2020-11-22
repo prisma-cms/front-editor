@@ -3,7 +3,7 @@ import Typography from 'material-ui/Typography'
 
 import Link, { styles as defaultStyles } from '..'
 
-import { withStyles } from 'material-ui/styles'
+import withStyles from 'material-ui/styles/withStyles'
 import Grid from 'material-ui/Grid'
 import Avatar from '../../Avatar'
 

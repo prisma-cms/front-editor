@@ -10,10 +10,30 @@ import withStyles from 'material-ui/styles/withStyles'
 
 import Context, { PrismaCmsContext } from '@prisma-cms/context'
 
-import Page from './components/public/Page'
-import GridComponent from './components/public/Grid'
+import { EditorContext } from './context'
+import { EditorContextValue } from './context/EditorContext/interfaces'
+import { EditorComponentObject } from './components/interfaces'
+import TemplateRenderer from './TemplateRenderer'
+import Grid from '../../common/Grid'
+import EditorComponent from './components'
+
 // import TextArea from './components/public/TextArea';
 // import UsersGrid from './components/public/UsersGrid';
+// import RouterSwitch from './components/public/Router/Switch'
+// import Route from './components/public/Router/Route'
+// import RoutedObject from './components/public/Router/RoutedObject';
+// // import DraftEditor from './components/public/DraftEditor';
+// // import TextArea from './components/public/TextArea';
+// import IconButton from 'material-ui/IconButton'
+// import { graphql } from 'react-apollo'
+// import gql from 'graphql-tag'
+// import ChangeLanguage from './components/public/ChangeLanguage';
+// import VerticalTimeline from './components/public/VerticalTimeline';
+// import VerticalTimelineItem from './components/public/VerticalTimeline/VerticalTimelineItem';
+// import GalleryFiles from './components/public/Gallery/GalleryFiles'
+
+import Page from './components/public/Page'
+import GridComponent from './components/public/Grid'
 import Connector from './components/public/Connectors/Connector'
 import ObjectConnector from './components/public/Connectors/ObjectConnector'
 import ListView from './components/public/Connectors/Connector/ListView'
@@ -26,34 +46,23 @@ import NamedField from './components/public/Connectors/Connector/Fields/NamedFie
 import Content from './components/public/Connectors/Connector/Fields/Content'
 import Section from './components/public/Section'
 import Typography from './components/public/Typography'
-// import RouterSwitch from './components/public/Router/Switch'
-// import Route from './components/public/Router/Route'
 import PageHeader from './components/public/PageHeader'
-// import RoutedObject from './components/public/Router/RoutedObject';
 import Link from './components/public/Link'
-import { EditorContext } from './context'
-// // import DraftEditor from './components/public/DraftEditor';
-// // import TextArea from './components/public/TextArea';
-import Tag, { HtmlTag } from './components/public/Tag'
-// import IconButton from 'material-ui/IconButton'
+import Tag from './components/public/Tag'
+import HtmlTag from './components/public/Tag/HtmlTag'
 import ObjectImage from './components/public/Connectors/Connector/Fields/ObjectImage'
-// import { graphql } from 'react-apollo'
-// import gql from 'graphql-tag'
 import Button from './components/public/Button'
 import Query from './components/public/Connectors/Query'
 import Slider from './components/public/Slider'
 import Iterable from './components/public/Connectors/Connector/ListView/Iterable'
 import AppBar from './components/public/AppBar'
 import Login from './components/public/Login'
-// import ChangeLanguage from './components/public/ChangeLanguage';
 import LanguageRouter from './components/public/LanguageRouter'
 import TextField from './components/public/form/TextField'
 import Switch from './components/public/form/Switch'
 import EditableObject from './components/public/form/EditableObject'
 import EditableView from './components/public/form/EditableObject/EditableView'
 import DefaultView from './components/public/form/EditableObject/DefaultView'
-// import VerticalTimeline from './components/public/VerticalTimeline';
-// import VerticalTimelineItem from './components/public/VerticalTimeline/VerticalTimelineItem';
 import RichText from './components/public/RichText'
 import Table from './components/public/Table'
 import TableRow from './components/public/Table/TableRow'
@@ -69,16 +78,10 @@ import CurrentUser from './components/public/CurrentUser'
 import FileUploader from './components/public/FileUploader'
 import Select from './components/public/form/Select'
 import ContentEditor from './components/public/ContentEditor'
-// import GalleryFiles from './components/public/Gallery/GalleryFiles'
 import ResourceFields from './components/public/Resource/Fields'
 
-import { FrontEditorProps, FrontEditorState } from './interfaces'
-import { EditorContextValue } from './context/EditorContext/interfaces'
-import { EditorComponentObject } from './components/interfaces'
-import EditorComponent from './components'
-import TemplateRenderer from './TemplateRenderer'
-import Grid from '../../common/Grid'
 
+import { FrontEditorProps, FrontEditorState } from './interfaces'
 export * from './interfaces'
 
 const styles = (theme: any) => {
@@ -243,7 +246,7 @@ const styles = (theme: any) => {
 export class FrontEditor<
   P extends FrontEditorProps = FrontEditorProps,
   S extends FrontEditorState = FrontEditorState
-> extends PureComponent<P, S> {
+  > extends PureComponent<P, S> {
   context!: PrismaCmsContext
 
   static contextType = Context
@@ -261,6 +264,7 @@ export class FrontEditor<
   // };
 
   static defaultProps = {
+    inEditMode: false,
     debug: false,
     Components: [
       Page,
@@ -310,6 +314,8 @@ export class FrontEditor<
       TableCell,
       Tabs,
       Tab,
+
+
       // TODO Restore
       // GalleryFiles,
       // RouterSwitch,
@@ -651,10 +657,7 @@ export class FrontEditor<
       // ...other
     } = this.props
 
-    const {
-      // name,
-      component,
-    } = object || {}
+    const component = object?.component ?? null
 
     if (!component) {
       return null
@@ -748,8 +751,8 @@ export class FrontEditor<
             </div>
           </Fragment>
         ) : (
-          items
-        )}
+            items
+          )}
       </EditorContext.Provider>
     )
   }
