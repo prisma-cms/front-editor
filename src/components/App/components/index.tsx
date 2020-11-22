@@ -2018,6 +2018,7 @@ abstract class EditorComponent<
 
     return (
       <Uploader
+        name="file"
         helperText="Можно перетащить файл"
         // eslint-disable-next-line react/jsx-no-bind
         onUpload={(response) => {
