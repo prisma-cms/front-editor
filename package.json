@@ -35,13 +35,13 @@
     ]
   },
   "dependencies": {
+    "@apollo/client": "^3.2.7",
     "@prisma-cms/context": "latest",
     "@prisma-cms/editor": "latest",
     "@prisma-cms/filters": "latest",
-    "@prisma-cms/front": "latest",
     "@prisma-cms/query-builder": "latest",
     "@prisma-cms/uploader": "latest",
-    "apollo-cms": "latest",
+    "apollo-cms": "^2.2.0",
     "css": "^3.0.0",
     "graphql": "14.0.2",
     "material-ui": "1.0.0-beta.43",
@@ -101,6 +101,7 @@
     "sass-loader": "^10.1.0",
     "style-loader": "^2.0.0",
     "styled-components": "^5.2.1",
+    "subscriptions-transport-ws": "^0.9.18",
     "ts-jest": "^26.4.3",
     "ts-node": "^9.0.0",
     "typescript": "^4.0.5",
