@@ -2,10 +2,16 @@ import { EditableObjectProps, EditableObjectState } from 'apollo-cms/dist'
 import EditorComponent from '.'
 import { FrontEditorProps } from '..'
 
+// export interface EditorComponentObject<
+//   P extends HTMLElement = HTMLElement & {
+//     text?: string
+//   }
+// > {
+
 export interface EditorComponentObject<
-  P extends HTMLElement = HTMLElement & {
+  P extends Record<string, any> & {
     text?: string
-  }
+  } = Record<string, any>
 > {
   __typename?: string | undefined
   id?: string
@@ -13,7 +19,8 @@ export interface EditorComponentObject<
   description?: string
   component: string | EditorComponent
   components: EditorComponentObject[]
-  props: React.AllHTMLAttributes<P> & {
+  // props: React.AllHTMLAttributes<P> & {
+  props: P & {
     // TODO maybe replace with "content"
     text?: string | undefined | null
 
