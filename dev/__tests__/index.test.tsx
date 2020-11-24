@@ -5,6 +5,7 @@ import Component, { FrontEditorProps } from '../../src'
 import { appRender } from '../tests/utils'
 
 import object from '../pages/MainPage/object'
+import allComponentsPreset from '../../src/preset/all'
 
 const border = '1px solid green'
 
@@ -17,6 +18,7 @@ const ComponentStyled = styled(Component)`
 const props: FrontEditorProps = {
   inEditMode: true,
   object,
+  Components: allComponentsPreset,
 }
 
 describe('Component', () => {

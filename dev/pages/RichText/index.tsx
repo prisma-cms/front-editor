@@ -1,7 +1,10 @@
 import React from 'react'
 import Head from 'next/head'
-import App from '../../../src/components/App'
+import App, { FrontEditorProps } from '../../../src'
 import object from './object'
+import RichText from '../../../src/components/RichText'
+
+const Components = [RichText] as FrontEditorProps["Components"];
 
 const createTemplate = async () => {
   console.error('called createTemplate')
@@ -29,6 +32,7 @@ const RichTextPage: React.FC = (props) => {
         createTemplate={createTemplate}
         updateTemplate={updateTemplate}
         inEditMode={true}
+        Components={Components}
       />
     </>
   )

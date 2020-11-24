@@ -5,12 +5,10 @@ import { createGlobalStyle, ThemeProvider } from 'styled-components'
 import theme from '../../theme'
 import { useApollo } from '../../lib/apolloClient'
 import Context, { PrismaCmsContext } from '@prisma-cms/context'
-import Editor from '@prisma-cms/editor'
 import { ApolloProvider } from '@apollo/client'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import URI from 'urijs'
 import { muiTheme } from './MUI/theme'
-import Pagination from '../../../src/common/Pagination'
 import UserLink from '../../../src/common/Link/User'
 
 export const GlobalStyle = createGlobalStyle`
@@ -59,15 +57,12 @@ const App = ({ Component, pageProps }: AppProps) => {
       //     return apolloClient.resetStore().catch(console.error)
       //   }
       // },
-      Pagination,
+      // Pagination,
       UserLink,
-      Editor,
     }
 
     return context
   }, [apolloClient])
-
-  contextValue.Editor
 
   return (
     <>

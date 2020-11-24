@@ -1,7 +1,8 @@
 import React from 'react'
 import Head from 'next/head'
-import App from '../../../src/components/App'
+import App from '../../../src'
 import object from './object'
+import allComponentsPreset from '../../../src/preset/all'
 
 const createTemplate = async () => {
   console.error('called createTemplate')
@@ -29,6 +30,7 @@ const UsersPage: React.FC = (props) => {
         createTemplate={createTemplate}
         updateTemplate={updateTemplate}
         inEditMode={false}
+        Components={allComponentsPreset}
       />
     </>
   )

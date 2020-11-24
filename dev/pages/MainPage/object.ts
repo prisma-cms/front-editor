@@ -1,4 +1,4 @@
-import { EditorComponentObject } from '../../../src/components/App/components/interfaces'
+import { EditorComponentObject } from '../../../src/EditorComponent'
 
 const object: EditorComponentObject = {
   "name": "Section",

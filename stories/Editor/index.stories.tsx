@@ -16,7 +16,8 @@ import Component, { FrontEditorProps } from '../../src'
 import object from './object'
 
 import Context from '@prisma-cms/context'
-import { EditorComponentProps } from '../../src/components/App/components'
+import { EditorComponentProps } from '../../src/EditorComponent'
+import allComponentsPreset from '../../src/preset/all'
 
 const title = '@prisma-cms/front-editor/Editor'
 
@@ -37,7 +38,7 @@ export const FrontEditor: React.FC<Partial<FrontEditorProps>> = ({
 
   return (
     <Context.Provider value={context}>
-      <Component {...other} object={object} inEditMode={inEditMode} onChangeState={onChangeState}></Component>
+      <Component {...other} object={object} inEditMode={inEditMode} onChangeState={onChangeState} Components={allComponentsPreset}></Component>
     </Context.Provider>
   )
 }
