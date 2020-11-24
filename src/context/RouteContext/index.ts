@@ -6,6 +6,6 @@ export * from './interfaces'
 /**
  * @deprecated
  */
-const RouteContext = createContext<RouteContextValue>({})
+export const RouteContext = createContext<RouteContextValue>({})
 
 export default RouteContext

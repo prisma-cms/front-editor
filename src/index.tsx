@@ -16,12 +16,14 @@ import { EditorContextValue } from './context/EditorContext/interfaces'
 import TemplateRenderer from './TemplateRenderer'
 import Grid from './common/Grid'
 
-import EditorComponent, {EditorComponentObject} from './EditorComponent'
-
-
+import EditorComponent, { EditorComponentObject } from './EditorComponent'
 
 import { FrontEditorProps, FrontEditorState } from './interfaces'
 export * from './interfaces'
+
+export * from './EditorComponent'
+export * from './context'
+
 
 const styles = (theme: any) => {
   const {

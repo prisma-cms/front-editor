@@ -119,7 +119,7 @@ const defaultProps: typeof EditableObject.defaultProps & {
   can_be_edited: true,
 };
 
-class EditorComponent<
+export class EditorComponent<
   P extends EditorComponentProps = EditorComponentProps,
   S extends EditorComponentState = EditorComponentState
   >
