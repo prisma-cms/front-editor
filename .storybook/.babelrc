@@ -1,5 +1,0 @@
-// TODO https://github.com/storybookjs/storybook/issues/12952
-{
-  "presets": ["next/babel"],
-  "plugins": []
-}
