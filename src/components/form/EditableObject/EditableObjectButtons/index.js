@@ -1,60 +1,42 @@
-import React from 'react';
+import React from 'react'
 
-import EditorComponent from '../../../../EditorComponent';
-import { EditableObjectContext } from '../../../../context';
-
+import EditorComponent from '../../../../EditorComponent'
+import { EditableObjectContext } from '../../../../context'
 
 class EditableObjectButtons extends EditorComponent {
-
   static defaultProps = {
     ...EditorComponent.defaultProps,
     hide_wrapper_in_default_mode: true,
   }
 
-  static Name = "EditableObjectButtons"
-  static help_url = "";
+  static Name = 'EditableObjectButtons'
+  static help_url = ''
 
   renderPanelView(content) {
-
-    const {
-      classes,
-    } = this.getEditorContext();
-
     return super.renderPanelView(
-      content ||
-      <div
-        className={classes.panelEditableObjectButtons}
-      >
-        EditableObjectButtons
-    </div>);
+      content || (
+        <div className={'panelEditableObjectButtons'}>
+          EditableObjectButtons
+        </div>
+      )
+    )
   }
-
 
   canBeChild() {
-    return false;
+    return false
   }
-
 
   renderChildren() {
+    return (
+      <EditableObjectContext.Consumer key="editable_context">
+        {(context) => {
+          const { getButtons } = context
 
-    return <EditableObjectContext.Consumer
-      key="editable_context"
-    >
-      {context => {
-
-        const {
-          getButtons,
-        } = context;
-
-
-        return getButtons ? getButtons() : null;
-
-      }}
-    </EditableObjectContext.Consumer>
-
+          return getButtons ? getButtons() : null
+        }}
+      </EditableObjectContext.Consumer>
+    )
   }
-
-
 }
 
-export default EditableObjectButtons;
+export default EditableObjectButtons

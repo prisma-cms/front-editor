@@ -29,16 +29,21 @@ export const FrontEditor: React.FC<Partial<FrontEditorProps>> = ({
     return {}
   }, [])
 
-  const onChangeState = useCallback((data: EditorComponentProps["_dirty"]) => {
+  const onChangeState = useCallback((data: EditorComponentProps['_dirty']) => {
+    action('onChange')(data)
 
-    action('onChange')(data);
-
-    return data;
-  }, []);
+    return data
+  }, [])
 
   return (
     <Context.Provider value={context}>
-      <Component {...other} object={object} inEditMode={inEditMode} onChangeState={onChangeState} Components={allComponentsPreset}></Component>
+      <Component
+        {...other}
+        object={object}
+        inEditMode={inEditMode}
+        onChangeState={onChangeState}
+        Components={allComponentsPreset}
+      ></Component>
     </Context.Provider>
   )
 }

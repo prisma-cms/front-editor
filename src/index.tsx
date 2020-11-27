@@ -1,8 +1,8 @@
 /* eslint-disable react/jsx-no-bind */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import React, { PureComponent, Fragment } from 'react'
+import React, { PureComponent } from 'react'
 // import PropTypes from 'prop-types';
-import withStyles from 'material-ui/styles/withStyles'
+// import withStyles from 'material-ui/styles/withStyles'
 
 // import CloseIcon from 'material-ui-icons/Close';
 // import OpenTemplatesIcon from 'material-ui-icons/ArrowForward'
@@ -19,180 +19,183 @@ import Grid from './common/Grid'
 import EditorComponent, { EditorComponentObject } from './EditorComponent'
 
 import { FrontEditorProps, FrontEditorState } from './interfaces'
+import { FrontEditorStyled } from './styles'
 export * from './interfaces'
 
 export * from './EditorComponent'
 export * from './context'
 
+// const styles = (theme: any) => {
+//   const {
+//     breakpoints,
+//     palette: {
+//       background: {
+//         default: bgDefault,
+//         // paper: bgPaper,
+//       },
+//       text: { primary: textPrimary },
+//     },
+//   } = theme
 
-const styles = (theme: any) => {
-  const {
-    breakpoints,
-    palette: {
-      background: {
-        default: bgDefault,
-        // paper: bgPaper,
-      },
-      text: { primary: textPrimary },
-    },
-  } = theme
+//   const desktop = breakpoints.up('sm')
 
-  const desktop = breakpoints.up('sm')
+//   const dragOveredBorderColor = '#15e408'
+//   const hoveredBorderColor = '#7509da'
+//   const activeBorderColor = '#b806bb'
+//   const dirtyBorderColor = 'red'
 
-  const dragOveredBorderColor = '#15e408'
-  const hoveredBorderColor = '#7509da'
-  const activeBorderColor = '#b806bb'
-  const dirtyBorderColor = 'red'
+//   const itemsPanelWidth = 290
 
-  const itemsPanelWidth = 290
+//   return {
+//     root: {
+//       [desktop]: {
+//         flex: 1,
+//         display: 'flex' as 'flex',
+//         // flexDirection: "row-reverse",
+//       },
 
-  return {
-    root: {
-      [desktop]: {
-        flex: 1,
-        display: 'flex' as 'flex',
-        // flexDirection: "row-reverse",
-      },
+//       '&.fullheight': {
+//         // height: '100vh',
+//         height: '100%',
+//       },
+//     },
+//     editor: {
+//       position: 'relative' as 'relative',
 
-      '&.fullheight': {
-        // height: '100vh',
-        height: '100%',
-      },
-    },
-    editor: {
-      position: 'relative' as 'relative',
+//       [desktop]: {
+//         flex: 1,
+//         overflow: 'auto',
+//         height: '100%',
+//       },
+//     },
+//     panel: {
+//       [desktop]: {
+//         width: 'min-content',
+//         height: '100%',
+//         overflow: 'auto',
+//         position: 'relative' as 'relative',
+//         transition: 'width 0.5s',
+//         '&.opened': {
+//           width: itemsPanelWidth,
+//         },
+//       },
+//     },
+//     panelItems: {
+//       [desktop]: {
+//         height: '100%',
+//         width: '100%',
+//         // width: itemsPanelWidth,
+//         // position: "absolute",
+//         overflow: 'auto',
+//       },
+//     },
+//     panelItem: {
+//       cursor: 'grab',
+//       padding: 10,
+//       border: '1px solid #ddd',
+//       display: 'flex',
+//       flexDirection: 'row' as 'row',
+//       alignItems: 'center' as 'center',
+//       '&:hover': {
+//         border: `1px solid ${hoveredBorderColor}`,
+//       },
+//       '&.active': {
+//         border: `1px solid ${activeBorderColor}`,
+//       },
+//       '&.hovered': {
+//         border: `1px solid ${hoveredBorderColor}`,
+//       },
+//       '&.dragOvered': {
+//         border: `1px solid ${dragOveredBorderColor}`,
+//       },
 
-      [desktop]: {
-        flex: 1,
-        overflow: 'auto',
-        height: '100%',
-      },
-    },
-    panel: {
-      [desktop]: {
-        width: 'min-content',
-        height: '100%',
-        overflow: 'auto',
-        position: 'relative' as 'relative',
-        transition: 'width 0.5s',
-        '&.opened': {
-          width: itemsPanelWidth,
-        },
-      },
-    },
-    panelItems: {
-      [desktop]: {
-        height: '100%',
-        width: '100%',
-        // width: itemsPanelWidth,
-        // position: "absolute",
-        overflow: 'auto',
-      },
-    },
-    panelItem: {
-      cursor: 'grab',
-      padding: 10,
-      border: '1px solid #ddd',
-      display: 'flex',
-      flexDirection: 'row' as 'row',
-      alignItems: 'center' as 'center',
-      '&:hover': {
-        border: `1px solid ${hoveredBorderColor}`,
-      },
-      '&.active': {
-        border: `1px solid ${activeBorderColor}`,
-      },
-      '&.hovered': {
-        border: `1px solid ${hoveredBorderColor}`,
-      },
-      '&.dragOvered': {
-        border: `1px solid ${dragOveredBorderColor}`,
-      },
+//       '&.add_child': {
+//         cursor: 'pointer' as 'pointer',
+//       },
+//     },
+//     items: {
+//       position: 'relative' as 'relative',
+//     },
+//     item: {},
+//     // inEditMode
+//     itemEditable: {
+//       position: 'relative' as 'relative',
+//       minHeight: '30px',
+//       border: '1px dotted #ddd',
+//       padding: 7,
 
-      '&.add_child': {
-        cursor: 'pointer' as 'pointer',
-      },
-    },
-    items: {
-      position: 'relative' as 'relative',
-    },
-    item: {},
-    // inEditMode
-    itemEditable: {
-      position: 'relative' as 'relative',
-      minHeight: '30px',
-      border: '1px dotted #ddd',
-      padding: 7,
+//       '&.dirty': {
+//         border: `1px solid ${dirtyBorderColor}`,
+//       },
+//       '&.active': {
+//         border: `1px solid ${activeBorderColor}`,
+//       },
+//       '&.dragOvered': {
+//         border: `1px solid ${dragOveredBorderColor}`,
+//       },
+//       '&.hovered': {
+//         border: `1px solid ${hoveredBorderColor}`,
+//       },
+//       '&.root': {
+//         borderWidth: 2,
+//       },
+//       '&.disabled': {
+//         borderColor: 'transparent' as 'transparent',
+//       },
 
-      '&.dirty': {
-        border: `1px solid ${dirtyBorderColor}`,
-      },
-      '&.active': {
-        border: `1px solid ${activeBorderColor}`,
-      },
-      '&.dragOvered': {
-        border: `1px solid ${dragOveredBorderColor}`,
-      },
-      '&.hovered': {
-        border: `1px solid ${hoveredBorderColor}`,
-      },
-      '&.root': {
-        borderWidth: 2,
-      },
-      '&.disabled': {
-        borderColor: 'transparent' as 'transparent',
-      },
-
-      // https://habr.com/ru/post/456248/
-      '&[contenteditable=true]': {
-        '&:empty:before': {
-          content: 'unset' as 'unset',
-        },
-      },
-    },
-    blockBadge: {
-      border: '1px solid #ddd',
-      position: 'absolute' as 'absolute',
-      bottom: '100%',
-      right: 0,
-      zIndex: 2000,
-      background: bgDefault,
-      color: textPrimary,
-      padding: 3,
-    },
-    badgeButton: {
-      height: 34,
-      width: 34,
-    },
-    panelButton: {
-      display: 'flex' as 'flex',
-      flexDirection: 'row' as 'row',
-      alignItems: 'center' as 'center',
-    },
-    bordered: {
-      border: '1px solid #ddd',
-    },
-    helpLink: {
-      color: 'inherit' as 'inherit',
-      marginLeft: 3,
-    },
-    actionPanel: {
-      borderTop: '1px solid #ddd',
-      maxHeight: 250,
-      overflow: 'auto',
-    },
-  }
-}
+//       // https://habr.com/ru/post/456248/
+//       '&[contenteditable=true]': {
+//         '&:empty:before': {
+//           content: 'unset' as 'unset',
+//         },
+//       },
+//     },
+//     blockBadge: {
+//       border: '1px solid #ddd',
+//       position: 'absolute' as 'absolute',
+//       bottom: '100%',
+//       right: 0,
+//       zIndex: 2000,
+//       background: bgDefault,
+//       color: textPrimary,
+//       padding: 3,
+//     },
+//     badgeButton: {
+//       height: 34,
+//       width: 34,
+//     },
+//     panelButton: {
+//       display: 'flex' as 'flex',
+//       flexDirection: 'row' as 'row',
+//       alignItems: 'center' as 'center',
+//     },
+//     bordered: {
+//       border: '1px solid #ddd',
+//     },
+//     helpLink: {
+//       color: 'inherit' as 'inherit',
+//       marginLeft: 3,
+//     },
+//     actionPanel: {
+//       borderTop: '1px solid #ddd',
+//       maxHeight: 250,
+//       overflow: 'auto',
+//     },
+//   }
+// }
 
 export class FrontEditor<
   P extends FrontEditorProps = FrontEditorProps,
   S extends FrontEditorState = FrontEditorState
-  > extends PureComponent<P, S> {
+> extends PureComponent<P, S> {
   context!: PrismaCmsContext
 
   static contextType = Context
 
-  static defaultProps: Pick<FrontEditorProps, "itemsOnly" | "inEditMode" | "Components" | "className"> = {
+  static defaultProps: Pick<
+    FrontEditorProps,
+    'itemsOnly' | 'inEditMode' | 'Components' | 'className'
+  > = {
     itemsOnly: false,
     inEditMode: false,
     Components: [],
@@ -366,13 +369,12 @@ export class FrontEditor<
   }
 
   initContext() {
-    const { classes, inEditMode } = this.props
+    const { inEditMode } = this.props
 
     const Components = this.getComponents()
 
     const editorContext: EditorContextValue = {
       inEditMode,
-      classes,
       // components,
       Components,
       // updateObject: this.updateObject,
@@ -460,23 +462,15 @@ export class FrontEditor<
   }
 
   renderPanels() {
-    const { classes } = this.props
-
     const Components = this.getComponents()
 
     return (
-      <div className={classes?.panelItems}>
+      <div className="panelItems">
         <Grid container spacing={8}>
           {Components.map((Component) => {
             const name = Component.Name
 
-            return (
-              <Component
-                key={name}
-                mode="panel"
-                className={classes?.panelItem}
-              />
-            )
+            return <Component key={name} mode="panel" className="panelItem" />
           })}
 
           <Grid item xs={12}>
@@ -520,7 +514,9 @@ export class FrontEditor<
       return null
     }
 
-    return <Component mode="main" object={object} onChangeState={onChangeState} />
+    return (
+      <Component mode="main" object={object} onChangeState={onChangeState} />
+    )
   }
 
   // updateObject = (data: EditorComponentObject) => {
@@ -544,7 +540,7 @@ export class FrontEditor<
   }
 
   render() {
-    const { classes, inEditMode, className, itemsOnly } = this.props
+    const { inEditMode, className, itemsOnly } = this.props
 
     const { editorContext } = this.state
 
@@ -553,60 +549,55 @@ export class FrontEditor<
     return (
       <EditorContext.Provider value={editorContext}>
         {inEditMode && !itemsOnly ? (
-          <Fragment>
+          <FrontEditorStyled
+            id="prisma-cms-front-editor--wrapper"
+            className={['root', className].join(' ')}
+          >
             <div
-              id="prisma-cms-front-editor--wrapper"
-              className={[classes?.root, className].join(' ')}
+              id="prisma-cms-front-editor--content"
+              className="editor bordered"
+              style={{
+                height: '100%',
+                display: 'flex',
+                flexDirection: 'column' as 'column',
+              }}
             >
               <div
-                id="prisma-cms-front-editor--content"
-                className={[classes?.editor, classes?.bordered].join(' ')}
+                id="prisma-cms-front-editor--items"
+                className="items"
                 style={{
-                  height: '100%',
-                  display: 'flex',
-                  flexDirection: 'column' as 'column',
+                  flex: 1,
+                  overflow: 'auto',
                 }}
               >
-                <div
-                  id="prisma-cms-front-editor--items"
-                  className={[classes?.items].join(' ')}
-                  style={{
-                    flex: 1,
-                    overflow: 'auto',
-                  }}
-                >
-                  {items}
-                </div>
-
-                <div
-                  ref={this.actionPanelRef}
-                  className={[
-                    classes?.actionPanel,
-                    'front-editor--action-panel',
-                  ].join(' ')}
-                ></div>
+                {items}
               </div>
 
               <div
-                id="prisma-cms-front-editor--panel"
-                className={[classes?.panel, classes?.bordered, 'opened'].join(
-                  ' '
-                )}
-              >
-                {this.renderPanels()}
-              </div>
+                ref={this.actionPanelRef}
+                className="front-editor--action-panel actionPanel"
+              ></div>
             </div>
-          </Fragment>
+
+            <div
+              id="prisma-cms-front-editor--panel"
+              className="panel bordered opened"
+            >
+              {this.renderPanels()}
+            </div>
+          </FrontEditorStyled>
         ) : (
-            items
-          )}
+          items
+        )}
       </EditorContext.Provider>
     )
   }
 }
 
-const FrontEditorRenderer = withStyles(styles)((props: FrontEditorProps) => (
-  <FrontEditor {...props} />
-))
+export default FrontEditor
 
-export default FrontEditorRenderer
+// const FrontEditorRenderer = withStyles(styles)((props: FrontEditorProps) => (
+//   <FrontEditor {...props} />
+// ))
+
+// export default FrontEditorRenderer

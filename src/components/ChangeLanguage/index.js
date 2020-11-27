@@ -1,41 +1,29 @@
-import React from 'react';
-import EditorComponent from '../../EditorComponent';
+import React from 'react'
+import EditorComponent from '../../EditorComponent'
 
 // import Icon from "material-ui-icons/SettingsOverscan";
 // import Language from "@prisma-cms/front/lib/components/Language";
 
 class ChangeLanguage extends EditorComponent {
-
   // static defaultProps = {
   //   ...EditorComponent.defaultProps,
   // }
 
-  static Name = "ChangeLanguage"
-  
+  static Name = 'ChangeLanguage'
 
   renderPanelView(content) {
-
-    const {
-      classes,
-    } = this.getEditorContext();
-
     return super.renderPanelView(
-      content ||
-      <div
-      className={classes.panelButton}
-    >
-      Change Language
-    </div>);
+      content || (
+        <div className="editor-component--panel-icon">Change Language</div>
+      )
+    )
   }
 
-
   getRootElement() {
-
     // return Language;
 
     return null
   }
-
 
   // renderChildren() {
 
@@ -68,9 +56,7 @@ class ChangeLanguage extends EditorComponent {
   //       className="MainMenu-root"
   //     >
 
-
   //       {super.renderChildren()}
-
 
   //       {user
   //         ?
@@ -133,7 +119,6 @@ class ChangeLanguage extends EditorComponent {
   //   )
   // }
 
-
   // logout() {
 
   //   const {
@@ -144,14 +129,12 @@ class ChangeLanguage extends EditorComponent {
 
   // }
 
-
   // renderChildren(){
 
-  //   return <MainMenu 
+  //   return <MainMenu
 
   //   />
   // }
-
 
   // renderMainView() {
 
@@ -178,7 +161,6 @@ class ChangeLanguage extends EditorComponent {
   //     {super.renderMainView()}
   //   </div>;
   // }
-
 }
 
-export default ChangeLanguage;
+export default ChangeLanguage

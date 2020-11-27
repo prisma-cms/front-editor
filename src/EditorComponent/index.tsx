@@ -57,7 +57,7 @@ import {
 export * from './interfaces'
 
 // eslint-disable-next-line @typescript-eslint/no-empty-function
-const emptyMutate = async () => { }
+const emptyMutate = async () => {}
 
 const defaultProps: typeof EditableObject.defaultProps & {
   contentEditable: boolean | undefined
@@ -117,13 +117,12 @@ const defaultProps: typeof EditableObject.defaultProps & {
   hide_wrapper_in_default_mode: false,
   render_badge: true,
   can_be_edited: true,
-};
+}
 
 export class EditorComponent<
   P extends EditorComponentProps = EditorComponentProps,
   S extends EditorComponentState = EditorComponentState
-  >
-  extends EditableObject<P, S> {
+> extends EditableObject<P, S> {
   // static id = module.id;
 
   context!: PrismaCmsContext
@@ -287,13 +286,12 @@ export class EditorComponent<
   //   return false
   // }
 
-  prepareDirty(data: P["_dirty"]) {
+  prepareDirty(data: P['_dirty']) {
+    const newData = super.prepareDirty(data)
 
-    const newData = super.prepareDirty(data);
+    this.props.onChangeState && this.props.onChangeState(newData)
 
-    this.props.onChangeState && this.props.onChangeState(newData);
-
-    return newData;
+    return newData
   }
 
   /**
@@ -301,7 +299,7 @@ export class EditorComponent<
    * Так как компоненты рендерятся на основании передаваемых свойств,
    * надо обновить данные абсолютного родителя, а не просто текущего элемента
    */
-  updateObject(data: P["_dirty"]) {
+  updateObject(data: P['_dirty']) {
     const object = this.getObjectWithMutations()
 
     const activeParent = this.getActiveParent()
@@ -467,7 +465,6 @@ export class EditorComponent<
             // return;
           }
         }
-
       }
 
       // setActiveItem(null);
@@ -479,11 +476,9 @@ export class EditorComponent<
 
   // prepareNewItem(item: NonNullable<EditorContextValue['dragItem']>) {
   prepareNewItem(item: P['object']): P['object'] | undefined {
-
     if (!item) {
       return
     }
-
 
     // TODO: Check logic
     // if (item instanceof EditorComponent) {
@@ -1216,11 +1211,6 @@ export class EditorComponent<
   }
 
   getRenderProps(componentProps = {}): any {
-    const {
-      // inEditMode,
-      classes,
-    } = this.getEditorContext()
-
     const inEditMode = this.inEditorMode()
 
     const {
@@ -1282,8 +1272,8 @@ export class EditorComponent<
       const isRoot = this.isRoot()
 
       classNames = classNames.concat([
-        classes?.item,
-        inEditMode ? classes?.itemEditable : '',
+        'item',
+        inEditMode ? 'itemEditable' : '',
         isRoot ? 'root' : '',
       ])
 
@@ -1333,7 +1323,7 @@ export class EditorComponent<
   }
 
   renderPanelView(content?: React.ReactNode): React.ReactNode {
-    const { classes, hoveredItem, dragTarget } = this.getEditorContext()
+    const { hoveredItem, dragTarget } = this.getEditorContext()
 
     const isActive = this.isActive()
 
@@ -1348,9 +1338,8 @@ export class EditorComponent<
     return (
       <Grid
         item
-        // className={[classes?.panelItem, isActive ? "active" : ""].join(" ")}
         className={[
-          classes?.panelItem,
+          'panelItem',
           isHovered ? 'hovered' : '',
           isDragOvered ? 'dragOvered' : '',
         ].join(' ')}
@@ -1364,7 +1353,7 @@ export class EditorComponent<
             href={help_url}
             target="_blank"
             rel="noopener noreferrer"
-            className={classes?.helpLink}
+            className="helpLink"
           >
             <HelpIcon />
           </a>
@@ -1389,11 +1378,6 @@ export class EditorComponent<
   }
 
   renderAddButton(content?: React.ReactNode): React.ReactNode {
-    const {
-      classes,
-      // setActiveItem,
-    } = this.getEditorContext()
-
     const help_url = (this.constructor as typeof EditorComponent).help_url
 
     const {
@@ -1405,11 +1389,10 @@ export class EditorComponent<
     return (
       <Grid item>
         <div
-          // className={[classes?.panelItem, isActive ? "active" : ""].join(" ")}
-          className={[classes?.panelItem, className].join(' ')}
+          className={['panelItem', className].join(' ')}
           onClick={this.onAddButtonClick}
           style={style}
-        // {...other}
+          // {...other}
         >
           {content || (this.constructor as typeof EditorComponent).Name}{' '}
           {help_url ? (
@@ -1417,7 +1400,7 @@ export class EditorComponent<
               href={help_url}
               target="_blank"
               rel="noopener noreferrer"
-              className={classes?.helpLink}
+              className="helpLink"
             >
               <HelpIcon />
             </a>
@@ -1548,9 +1531,9 @@ export class EditorComponent<
           style={
             canEdit
               ? {
-                border: '1px dashed #ddd',
-                padding: 3,
-              }
+                  border: '1px dashed #ddd',
+                  padding: 3,
+                }
               : undefined
           }
           onInput={this.onInputSettings}
@@ -1626,9 +1609,9 @@ export class EditorComponent<
         container
         spacing={8}
         alignItems="center"
-      // style={{
-      //   flexDirection: "row-reverse",
-      // }}
+        // style={{
+        //   flexDirection: "row-reverse",
+        // }}
       >
         <Grid item xs></Grid>
 
@@ -1986,7 +1969,7 @@ export class EditorComponent<
                   />
                 }
                 label={name}
-              // fullWidth
+                // fullWidth
               />
             </Grid>
             {deleteButton ? <Grid item>{deleteButton}</Grid> : null}
@@ -2266,7 +2249,6 @@ export class EditorComponent<
       // settingsViewContainer,
       getSettingsViewContainer,
       // inEditMode,
-      classes,
       // onDragStart,
       Components,
     } = this.getEditorContext()
@@ -2277,7 +2259,7 @@ export class EditorComponent<
       ? getSettingsViewContainer()
       : null
 
-    const RootElement = this.getRootElement() as unknown as React.ComponentClass
+    const RootElement = (this.getRootElement() as unknown) as React.ComponentClass
 
     let settingsView
 
@@ -2318,11 +2300,7 @@ export class EditorComponent<
 
       if (isActive || isDragOvered || isHovered) {
         badge = (
-          <div
-            key="badge"
-            className={classes?.blockBadge}
-            contentEditable={false}
-          >
+          <div key="badge" className="blockBadge" contentEditable={false}>
             <Grid
               container
               alignItems="center"
@@ -2335,10 +2313,7 @@ export class EditorComponent<
               </Grid>
 
               <Grid item>
-                <IconButton
-                  onClick={this.moveBlockUp}
-                  className={classes?.badgeButton}
-                >
+                <IconButton onClick={this.moveBlockUp} className="badgeButton">
                   <ArrowUpIcon />
                 </IconButton>
               </Grid>
@@ -2346,7 +2321,7 @@ export class EditorComponent<
               <Grid item>
                 <IconButton
                   onClick={this.moveBlockDown}
-                  className={classes?.badgeButton}
+                  className="badgeButton"
                 >
                   <ArrowDownIcon />
                 </IconButton>
@@ -2358,7 +2333,7 @@ export class EditorComponent<
                   <IconButton
                     title="Удалить элемент"
                     onClick={this.delete}
-                    className={classes?.badgeButton}
+                    className="badgeButton"
                   >
                     <DeleteIcon />
                   </IconButton>
@@ -2443,7 +2418,7 @@ export class EditorComponent<
     }
 
     if (!RootElement) {
-      return null;
+      return null
     }
 
     return (
@@ -2531,7 +2506,6 @@ export class EditorComponent<
     // }
 
     const {
-      classes,
       createTemplate,
       updateTemplate,
       deleteTemplate,
@@ -2683,7 +2657,9 @@ export class EditorComponent<
       ...other
     } = objectComponent
 
-    const Component = Components.find((n) => n.Name === component) as unknown as React.ComponentClass
+    const Component = (Components.find(
+      (n) => n.Name === component
+    ) as unknown) as React.ComponentClass
 
     if (Component) {
       if (templateId) {
@@ -2783,8 +2759,8 @@ export class EditorComponent<
     return !name && !component
       ? ''
       : name === component
-        ? name
-        : `${name} (${component})`
+      ? name
+      : `${name} (${component})`
   }
 
   renderEmpty() {

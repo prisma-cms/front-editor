@@ -1,142 +1,109 @@
-import React from 'react';
+import React from 'react'
 
-import EditorComponent from '../../../EditorComponent';
+import EditorComponent from '../../../EditorComponent'
 
-import MaterialUiTextField from 'material-ui/TextField';
-import { EditableObjectContext } from '../../../context';
+import MaterialUiTextField from 'material-ui/TextField'
+import { EditableObjectContext } from '../../../context'
 
-import moment from "moment";
+import moment from 'moment'
 
 class TextField extends EditorComponent {
-
-
   static defaultProps = {
     ...EditorComponent.defaultProps,
     label: undefined,
     helperText: undefined,
     fullWidth: false,
     multiline: false,
-    type: "text",
+    type: 'text',
     hide_wrapper_in_default_mode: true,
   }
 
-  static Name = "TextField"
-  static help_url = "https://front-editor.prisma-cms.com/topics/editableobject.html";
+  static Name = 'TextField'
+  static help_url =
+    'https://front-editor.prisma-cms.com/topics/editableobject.html'
 
   onBeforeDrop = () => {
-
-    return;
+    return
   }
 
   canBeDropped = () => {
-    return false;
+    return false
   }
-
 
   renderPanelView(content) {
-
-    const {
-      classes,
-    } = this.getEditorContext();
-
     return super.renderPanelView(
-      content ||
-      <div
-        className={classes.panelTextField}
-      >
-        TextField
-    </div>);
+      content || <div className={'panelTextField'}>TextField</div>
+    )
   }
 
-
   renderChildren() {
+    const { name, type, ...other } = this.getComponentProps(this)
 
-    const {
-      name,
-      type,
-      ...other
-    } = this.getComponentProps(this);
+    return (
+      <EditableObjectContext.Consumer key="editableobject_context">
+        {(context) => {
+          const { getEditor, getObjectWithMutations } = context
 
-    return <EditableObjectContext.Consumer
-      key="editableobject_context"
-    >
-      {context => {
+          if (!getObjectWithMutations) {
+            return null
+          }
 
-        const {
-          getEditor,
-          getObjectWithMutations,
-        } = context;
+          const object = getObjectWithMutations()
 
-        if (!getObjectWithMutations) {
-          return null;
-        }
+          let { [name]: value } = object || {}
 
-        const object = getObjectWithMutations();
+          switch (type) {
+            case 'date':
+              {
+                const date = value ? moment(value) : ''
 
-        let {
-          [name]: value,
-        } = object || {};
-
-        switch (type) {
-
-          case "date":
-
-            {
-              const date = value ? moment(value) : "";
-
-              if (date && date.isValid()) {
-
-                value = date.format("YYYY-MM-DD");
-
+                if (date && date.isValid()) {
+                  value = date.format('YYYY-MM-DD')
+                }
               }
-            }
 
-            break;
+              break
 
+            case 'time':
+              {
+                const date = value ? moment(value) : ''
 
-          case "time":
-
-            {
-              const date = value ? moment(value) : "";
-
-              if (date && date.isValid()) {
-
-                value = date.format("HH:mm");
-
+                if (date && date.isValid()) {
+                  value = date.format('HH:mm')
+                }
               }
-            }
 
-            break;
+              break
 
-          /**
+            /**
           file value can not be setted
            */
-          case "file":
-            value = undefined;
-            break;
+            case 'file':
+              value = undefined
+              break
 
-          default: value = value || "";
+            default:
+              value = value || ''
+          }
 
-        }
-
-        return getEditor ? getEditor({
-          ...other,
-          name,
-          type,
-          value: value,
-          Editor: MaterialUiTextField,
-          // ...this.getComponentProps(this),
-        }) : super.renderChildren();
-
-      }}
-    </EditableObjectContext.Consumer>
+          return getEditor
+            ? getEditor({
+                ...other,
+                name,
+                type,
+                value: value,
+                Editor: MaterialUiTextField,
+                // ...this.getComponentProps(this),
+              })
+            : super.renderChildren()
+        }}
+      </EditableObjectContext.Consumer>
+    )
 
     // return super.renderMainView({
     //   label: "FDSgdsf",
     // });
   }
-
-
 }
 
-export default TextField;
+export default TextField

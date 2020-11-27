@@ -1,9 +1,8 @@
-import { EditorComponentProps, EditorComponentState } from '../../EditorComponent';
+import {
+  EditorComponentProps,
+  EditorComponentState,
+} from '../../EditorComponent'
 
-export interface SectionProps extends EditorComponentProps {
+export interface SectionProps extends EditorComponentProps {}
 
-}
-
-export interface SectionState extends EditorComponentState {
-
-}
+export interface SectionState extends EditorComponentState {}

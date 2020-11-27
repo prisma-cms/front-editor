@@ -1,53 +1,39 @@
 /* eslint-disable react/jsx-no-bind */
-import React from 'react';
-import EditorComponent from '../../EditorComponent';
+import React from 'react'
+import EditorComponent from '../../EditorComponent'
 
-import AppBar from 'material-ui/AppBar';
-import Typography from 'material-ui/Typography';
-import Button from 'material-ui/Button';
-import Grid from '../../common/Grid';
+import AppBar from 'material-ui/AppBar'
+import Typography from 'material-ui/Typography'
+import Button from 'material-ui/Button'
+import Grid from '../../common/Grid'
 
 class PageHeader extends EditorComponent {
-
   static defaultProps = {
     ...EditorComponent.defaultProps,
-    position: "static",
+    position: 'static',
   }
 
-  static Name = "PageHeader"
-  
+  static Name = 'PageHeader'
 
   renderPanelView() {
-
-    return null;
+    return null
   }
-
 
   getRootElement() {
-
-    return AppBar;
+    return AppBar
   }
 
-
   renderChildren() {
+    const { user, UserLink } = this.context
 
-    const {
-      user,
-      UserLink,
-    } = this.context;
-
-    if(!UserLink) {
-      console.error("UserLink not defined");
-      return null;
+    if (!UserLink) {
+      console.error('UserLink not defined')
+      return null
     }
 
-    const {
-      username,
-      fullname,
-    } = user || {}
+    const { username, fullname } = user || {}
 
     return (
-
       <Grid
         container
         spacing={16}
@@ -56,13 +42,9 @@ class PageHeader extends EditorComponent {
       >
         {super.renderChildren()}
 
-        {user
-          ?
+        {user ? (
           [
-            <Grid
-              key="user"
-              item
-            >
+            <Grid key="user" item>
               <UserLink
                 user={user}
                 style={{
@@ -70,62 +52,37 @@ class PageHeader extends EditorComponent {
                 }}
                 variant={null}
               >
-                <Typography
-                  color="inherit"
-                >
-                  {fullname || username}
-                </Typography>
+                <Typography color="inherit">{fullname || username}</Typography>
               </UserLink>
             </Grid>,
-            <Grid
-              key="logout"
-              item
-            >
-              <Button
-                onClick={() => this.logout()}
-                color="inherit"
-              >
-                {this.lexicon("Signout")}
+            <Grid key="logout" item>
+              <Button onClick={() => this.logout()} color="inherit">
+                {this.lexicon('Signout')}
               </Button>
-
-            </Grid>
+            </Grid>,
           ]
-          :
-          <Grid
-            key="login"
-            item
-          >
+        ) : (
+          <Grid key="login" item>
             <Button
               onClick={() => {
-                const {
-                  openLoginForm,
-                } = this.context;
-                openLoginForm();
+                const { openLoginForm } = this.context
+                openLoginForm()
               }}
               color="inherit"
             >
-              {this.lexicon("Signin")}
+              {this.lexicon('Signin')}
             </Button>
-
           </Grid>
-        }
-
+        )}
       </Grid>
     )
   }
 
-
   logout() {
+    const { logout } = this.context
 
-    const {
-      logout,
-    } = this.context;
-
-    logout();
-
+    logout()
   }
-
-
 }
 
-export default PageHeader;
+export default PageHeader

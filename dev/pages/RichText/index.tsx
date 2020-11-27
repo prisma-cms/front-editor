@@ -4,7 +4,7 @@ import App, { FrontEditorProps } from '../../../src'
 import object from './object'
 import RichText from '../../../src/components/RichText'
 
-const Components = [RichText] as FrontEditorProps["Components"];
+const Components = [RichText] as FrontEditorProps['Components']
 
 const createTemplate = async () => {
   console.error('called createTemplate')

@@ -1,93 +1,63 @@
-import React from 'react';
-import PropTypes from "prop-types";
+import React from 'react'
+import PropTypes from 'prop-types'
 
-import TableRow from '../TableRow';
-import EditorComponent from '../../../EditorComponent';
+import TableRow from '../TableRow'
+import EditorComponent from '../../../EditorComponent'
 
 export class TableCell extends EditorComponent {
-
-  static Name = 'TableCell';
+  static Name = 'TableCell'
 
   static defaultProps = {
     ...EditorComponent.defaultProps,
     rowSpan: undefined,
     colSpan: undefined,
-    tag: "td",
+    tag: 'td',
   }
 
   static propTypes = {
     // eslint-disable-next-line react/forbid-foreign-prop-types
     ...EditorComponent.propTypes,
-    tag: PropTypes.oneOf(["td", "th"]).isRequired,
+    tag: PropTypes.oneOf(['td', 'th']).isRequired,
   }
-
 
   renderPanelView(content) {
-
-    const {
-      classes,
-    } = this.getEditorContext();
-
     return super.renderPanelView(
-      content ||
-      <div
-        className={classes.panelButton}
-      >
-        TableCell
-      </div>
-    );
+      content || <div className="editor-component--panel-icon">TableCell</div>
+    )
   }
-
 
   getRootElement() {
+    const { tag } = this.getComponentProps(this)
 
-    const {
-      tag,
-    } = this.getComponentProps(this);
-
-    return tag || "td";
+    return tag || 'td'
   }
-
 
   canBeParent(parent) {
-
-    return parent instanceof TableRow;
+    return parent instanceof TableRow
   }
-
 
   canBeChild(child) {
-
-    return super.canBeChild(child);
+    return super.canBeChild(child)
   }
 
-
   renderMainView() {
+    const { inEditMode } = this.getEditorContext()
 
-    const {
-      inEditMode,
-    } = this.getEditorContext();
-
-    let inEditModeProps;
+    let inEditModeProps
 
     if (inEditMode) {
-
-      const {
-        style,
-      } = this.getComponentProps(this);
+      const { style } = this.getComponentProps(this)
 
       inEditModeProps = {
         style: {
           ...style,
           flex: 1,
         },
-      };
+      }
     }
 
-
-    return super.renderMainView(inEditModeProps);
+    return super.renderMainView(inEditModeProps)
   }
-
-
 }
 
-export default TableCell;
+export default TableCell

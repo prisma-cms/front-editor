@@ -16,11 +16,11 @@ const updateTemplate = async () => {
   return new Error('called updateTemplate')
 }
 
-const Components: FrontEditorProps["Components"] = [
+const Components: FrontEditorProps['Components'] = [
   Section,
   ContentEditor,
   HtmlTag,
-] as FrontEditorProps["Components"];
+] as FrontEditorProps['Components']
 
 // TODO: Fix editing via chrome dev-tools
 const ContentEditorPage: React.FC = (props) => {

@@ -1,5 +1,3 @@
-
-
 // import TextArea from '../components/TextArea';
 // import UsersGrid from '../components/UsersGrid';
 // import RouterSwitch from '../components/Router/Switch'
@@ -64,7 +62,7 @@ import ContentEditor from '../components/ContentEditor'
 import ResourceFields from '../components/Resource/Fields'
 import { FrontEditorProps } from '../interfaces'
 
-const allComponentsPreset: FrontEditorProps["Components"] = [
+const allComponentsPreset: FrontEditorProps['Components'] = [
   Page,
   GridComponent,
   Section,
@@ -113,7 +111,6 @@ const allComponentsPreset: FrontEditorProps["Components"] = [
   Tabs,
   Tab,
 
-
   // TODO Restore
   // GalleryFiles,
   // RouterSwitch,
@@ -122,6 +119,6 @@ const allComponentsPreset: FrontEditorProps["Components"] = [
   // VerticalTimelineItem,
 
   // TODO Rewrite all components to .tsx
-] as FrontEditorProps["Components"]
+] as FrontEditorProps['Components']
 
-export default allComponentsPreset;
+export default allComponentsPreset

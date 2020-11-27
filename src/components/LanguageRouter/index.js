@@ -1,102 +1,68 @@
-import React  from 'react';
+import React from 'react'
 
-import EditorComponent from '../../EditorComponent';
+import EditorComponent from '../../EditorComponent'
 
 class LanguageRouter extends EditorComponent {
-
-
   static defaultProps = {
     ...EditorComponent.defaultProps,
-    tag: "div",
+    tag: 'div',
     hide_wrapper_in_default_mode: true,
   }
 
-  static Name = "LanguageRouter"
-  static help_url = "https://front-editor.prisma-cms.com/topics/language-router.html";
+  static Name = 'LanguageRouter'
+  static help_url =
+    'https://front-editor.prisma-cms.com/topics/language-router.html'
 
   onBeforeDrop = () => {
-
-    return;
+    return
   }
-
 
   renderPanelView(content) {
-
-    const {
-      classes,
-    } = this.getEditorContext();
-
     return super.renderPanelView(
-      content ||
-      <div
-        className={classes.panelLanguageRouter}
-      >
-        Language Router
-    </div>);
+      content || <div className={'panelLanguageRouter'}>Language Router</div>
+    )
   }
-
 
   getRootElement() {
+    const { tag } = this.getComponentProps(this)
 
-    const {
-      tag,
-    } = this.getComponentProps(this);
-
-    return tag;
+    return tag
   }
-
 
   renderChildren() {
+    const { activeItem } = this.getEditorContext()
 
-    const {
-      activeItem,
-    } = this.getEditorContext();
+    const { getLanguage } = this.context
 
-    const {
-      getLanguage,
-    } = this.context;
+    const language = getLanguage()
 
-    const language = getLanguage();
-
-    let children = super.renderChildren();
-
+    let children = super.renderChildren()
 
     if (children) {
-
-      if (activeItem && (activeItem === this || activeItem.props.parent === this)) {
-        return;
-      }
-      else {
-
-        children = children.filter(n => {
-
+      if (
+        activeItem &&
+        (activeItem === this || activeItem.props.parent === this)
+      ) {
+        return
+      } else {
+        children = children.filter((n) => {
           if (n) {
+            const { props } = n.props
 
-            const {
-              props,
-            } = n.props;
-
-            const {
-              lang,
-            } = props || {};
+            const { lang } = props || {}
 
             if (lang && lang !== language) {
-              return false;
+              return false
             }
-
           }
 
-          return true;
-        });
-
+          return true
+        })
       }
-
     }
 
-    return children;
+    return children
   }
-
-
 }
 
-export default LanguageRouter;
+export default LanguageRouter

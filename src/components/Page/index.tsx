@@ -1,38 +1,30 @@
+import EditorComponent from '../../EditorComponent'
+import { PageProps, PageState } from './interfaces'
 
-import EditorComponent from '../../EditorComponent';
-import { PageProps, PageState } from './interfaces';
+export * from './interfaces'
 
-export * from './interfaces';
-
-
-class Page<P extends PageProps = PageProps, S extends PageState = PageState>
-  extends EditorComponent<P, S> {
-
+class Page<
+  P extends PageProps = PageProps,
+  S extends PageState = PageState
+> extends EditorComponent<P, S> {
   static defaultProps = {
     ...EditorComponent.defaultProps,
     hide_wrapper_in_default_mode: true,
   }
 
-
-  static Name = "Page"
-
+  static Name = 'Page'
 
   canBeParent() {
-
-    return false;
+    return false
   }
 
-
   renderPanelView() {
-
-    return null;
+    return null
   }
 
   renderAddButton() {
-
-    return null;
+    return null
   }
-
 }
 
-export default Page;
+export default Page

@@ -1,4 +1,7 @@
-import EditorComponent, { EditorComponentProps, EditorComponentObject } from './EditorComponent'
+import EditorComponent, {
+  EditorComponentProps,
+  EditorComponentObject,
+} from './EditorComponent'
 import { EditorContextValue } from './context/EditorContext/interfaces'
 
 type ComponentsArray = Array<typeof EditorComponent>
@@ -6,7 +9,7 @@ type ComponentsArray = Array<typeof EditorComponent>
 export interface FrontEditorProps {
   object: EditorComponentObject | undefined
 
-  classes?: Record<string, any>
+  // classes?: Record<string, any>
 
   className?: string
 
@@ -33,7 +36,7 @@ export interface FrontEditorProps {
   /**
    * Handle on change components data
    */
-  onChangeState?: EditorComponentProps["onChangeState"]
+  onChangeState?: EditorComponentProps['onChangeState']
 }
 
 export interface FrontEditorState {

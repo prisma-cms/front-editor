@@ -1,80 +1,55 @@
-import React from 'react';
+import React from 'react'
 // import PropTypes from 'prop-types';
-import EditorComponent from '../../EditorComponent';
+import EditorComponent from '../../EditorComponent'
 
 // import Icon from "material-ui-icons/SettingsOverscan";
-import Typography from 'material-ui/Typography';
-import Button from 'material-ui/Button';
-import Grid from '../../common/Grid';
+import Typography from 'material-ui/Typography'
+import Button from 'material-ui/Button'
+import Grid from '../../common/Grid'
 
 class Login extends EditorComponent {
-
-
   static defaultProps = {
     ...EditorComponent.defaultProps,
     hide_wrapper_in_default_mode: true,
   }
 
-  static Name = "Login"
+  static Name = 'Login'
 
   renderPanelView(content) {
-
-    const {
-      classes,
-    } = this.getEditorContext();
-
     return super.renderPanelView(
-      content ||
-      <div
-        className={classes.panelButton}
-      >
-        Login
-    </div>);
+      content || <div className="editor-component--panel-icon">Login</div>
+    )
   }
-
 
   initLocales(locales) {
-
     if (locales) {
       Object.assign(locales.ru.values, {
-        Signin: "Вход",
-        Signout: "Выход",
-      });
+        Signin: 'Вход',
+        Signout: 'Выход',
+      })
     }
 
-    return super.initLocales(locales);
+    return super.initLocales(locales)
   }
 
-
   renderChildren() {
-
-    const {
-      user,
-    } = this.context;
-
+    const { user } = this.context
 
     return user ? this.renderAuthorized() : this.renderUnauthorized()
   }
 
   openLoginForm = () => {
+    const { openLoginForm } = this.context
 
-    const {
-      openLoginForm,
-    } = this.context;
-
-    openLoginForm && openLoginForm();
-  };
+    openLoginForm && openLoginForm()
+  }
 
   renderAuthorized() {
+    const { user, UserLink } = this.context
 
-    const {
-      user,
-      UserLink,
-    } = this.context;
-
-    if(!UserLink) {
-      console.error("UserLink not defined");
-      return null;
+    if (!UserLink) {
+      console.error('UserLink not defined')
+      return null
     }
 
     const {
@@ -83,65 +58,47 @@ class Login extends EditorComponent {
       fullname,
     } = user
 
-    return <Grid
-      container
-      alignItems="center"
-      style={{
-        flexWrap: "nowrap",
-      }}
-    >
-
+    return (
       <Grid
-        item
+        container
+        alignItems="center"
+        style={{
+          flexWrap: 'nowrap',
+        }}
       >
-        <UserLink
-          user={user}
-          style={{
-            marginLeft: 5,
-          }}
-          variant={null}
-        >
-          <Typography
-            color="inherit"
+        <Grid item>
+          <UserLink
+            user={user}
+            style={{
+              marginLeft: 5,
+            }}
+            variant={null}
           >
-            {fullname || username}
-          </Typography>
-        </UserLink>
-
+            <Typography color="inherit">{fullname || username}</Typography>
+          </UserLink>
+        </Grid>
+        <Grid item>
+          <Button onClick={this.logout} color="inherit">
+            {this.lexicon('Signout')}
+          </Button>
+        </Grid>
       </Grid>
-      <Grid
-        item
-      >
-        <Button
-          onClick={this.logout}
-          color="inherit"
-        >
-          {this.lexicon("Signout")}
-        </Button>
-      </Grid>
-
-    </Grid>;
+    )
   }
 
-
   renderUnauthorized() {
-
-    return <Button
-      onClick={this.openLoginForm}
-      color="inherit"
-    >
-      {this.lexicon("Signin")}
-    </Button>;
+    return (
+      <Button onClick={this.openLoginForm} color="inherit">
+        {this.lexicon('Signin')}
+      </Button>
+    )
   }
 
   logout = () => {
-    const {
-      logout,
-    } = this.context;
+    const { logout } = this.context
 
-    logout && logout();
+    logout && logout()
   }
-
 }
 
-export default Login;
+export default Login

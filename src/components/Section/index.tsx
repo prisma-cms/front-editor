@@ -1,15 +1,14 @@
-import React from 'react';
+import React from 'react'
 // import PropTypes from 'prop-types';
-import EditorComponent from '../../EditorComponent';
+import EditorComponent from '../../EditorComponent'
 
-import Icon from "material-ui-icons/SettingsOverscan";
-import { SectionProps, SectionState } from './interfaces';
-export * from './interfaces';
+import { SectionProps, SectionState } from './interfaces'
+export * from './interfaces'
 
-
-class Section<P extends SectionProps = SectionProps, S extends SectionState = SectionState>
-  extends EditorComponent<P, S> {
-
+class Section<
+  P extends SectionProps = SectionProps,
+  S extends SectionState = SectionState
+> extends EditorComponent<P, S> {
   // static defaultProps = {
   //   ...EditorComponent.defaultProps,
   //   // marginTop: 10,
@@ -18,23 +17,17 @@ class Section<P extends SectionProps = SectionProps, S extends SectionState = Se
   //   // fontSize: 20,
   // }
 
-  static Name = "Section"
+  static Name = 'Section'
 
   renderPanelView(content?: React.ReactNode) {
-
-    const {
-      classes,
-    } = this.getEditorContext();
-
     return super.renderPanelView(
-      content ||
-      <div
-        className={classes?.panelButton}
-      >
-        <Icon /> Section
-    </div>);
+      content || (
+        <div className="editor-component--panel-icon">
+          <span>&#9881;</span> Section
+        </div>
+      )
+    )
   }
-
 }
 
-export default Section;
+export default Section

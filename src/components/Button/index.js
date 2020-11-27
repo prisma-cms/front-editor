@@ -1,48 +1,29 @@
-import React from 'react';
+import React from 'react'
 
-import EditorComponent from '../../EditorComponent';
+import EditorComponent from '../../EditorComponent'
 
-import MaterialUiButton from 'material-ui/Button';
-
+import MaterialUiButton from 'material-ui/Button'
 
 class Button extends EditorComponent {
-
-
   static defaultProps = {
     ...EditorComponent.defaultProps,
   }
 
-  static Name = "Button"
+  static Name = 'Button'
 
   onBeforeDrop = () => {
-
-    return;
+    return
   }
-
 
   renderPanelView(content) {
-
-    const {
-      classes,
-    } = this.getEditorContext();
-
     return super.renderPanelView(
-      content ||
-      <div
-      className={classes.panelButton}
-    >
-      Button
-    </div>);
+      content || <div className="editor-component--panel-icon">Button</div>
+    )
   }
-
-
 
   getRootElement() {
-
-    return MaterialUiButton;
+    return MaterialUiButton
   }
-
-
 }
 
-export default Button;
+export default Button

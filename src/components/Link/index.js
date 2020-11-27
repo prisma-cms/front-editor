@@ -1,130 +1,103 @@
-import React from 'react';
+import React from 'react'
 // import PropTypes from 'prop-types';
-import EditorComponent from '../../EditorComponent';
+import EditorComponent from '../../EditorComponent'
 
-import URI from "urijs";
-import Icon from "material-ui-icons/Link";
+import URI from 'urijs'
+import Icon from 'material-ui-icons/Link'
 
-import { default as MuiLink } from "../../common/Link";
-import { ObjectContext } from '../Connectors/Connector/ListView';
+import { default as MuiLink } from '../../common/Link'
+import { ObjectContext } from '../Connectors/Connector/ListView'
 
+const Renderer = (props) => {
+  const { to, children, ...other } = props
 
-const Renderer = props => {
+  const uri = new URI(to)
 
-  const {
-    to,
-    children,
-    ...other
-  } = props;
-
-  const uri = new URI(to);
-
-  let output = null;
+  let output = null
 
   if (uri.scheme()) {
-    output = <a
-      href={to}
-      {...other}
-    >
-      {children}
-    </a>
-  }
-  else {
-    output = <MuiLink
-      to={to}
-      {...other}
-    >
-      {children}
-    </MuiLink>
+    output = (
+      <a href={to} {...other}>
+        {children}
+      </a>
+    )
+  } else {
+    output = (
+      <MuiLink to={to} {...other}>
+        {children}
+      </MuiLink>
+    )
   }
 
-  return output;
+  return output
 }
 
-
 class Link extends EditorComponent {
-
   static defaultProps = {
     ...EditorComponent.defaultProps,
     // native: false,
-    to: "",
-    target: "",
+    to: '',
+    target: '',
   }
 
-  static Name = "Link"
+  static Name = 'Link'
 
   renderPanelView(content) {
-
-    const {
-      classes,
-    } = this.getEditorContext();
-
     return super.renderPanelView(
-      content ||
-      <div
-        className={classes.panelButton}
-      >
-        <Icon /> Link
-    </div>);
+      content || (
+        <div className="editor-component--panel-icon">
+          <Icon /> Link
+        </div>
+      )
+    )
   }
 
   getRootElement() {
-
-    return Renderer;
+    return Renderer
   }
 
   renderMainView() {
-
-    let {
-      to,
-    } = this.getComponentProps(this);
-
+    let { to } = this.getComponentProps(this)
 
     if (to) {
       /**
        * Проверяем есть ли параметры в УРЛ
        */
 
-      const segments = to.split("/");
+      const segments = to.split('/')
 
       /**
        * Если есть, то нам надо обернуть вывод в контекст объекта
        */
-      if (segments.find(n => n && n.startsWith(":"))) {
+      if (segments.find((n) => n && n.startsWith(':'))) {
+        return (
+          <ObjectContext.Consumer>
+            {(context) => {
+              const { object } = context
 
-        return <ObjectContext.Consumer>
-          {context => {
+              if (object) {
+                to = segments
+                  .map((n) => {
+                    if (n && n.startsWith(':')) {
+                      n = object[n.replace(/^:/, '')]
+                    }
 
-            const {
-              object,
-            } = context;
+                    return n
+                  })
+                  .join('/')
+              }
 
-            if (object) {
-
-              to = segments.map(n => {
-
-                if (n && n.startsWith(":")) {
-                  n = object[n.replace(/^:/, '')];
-                }
-
-                return n;
-              }).join("/");
-
-            }
-
-            return super.renderMainView({
-              to,
-            });
-          }}
-        </ObjectContext.Consumer>
+              return super.renderMainView({
+                to,
+              })
+            }}
+          </ObjectContext.Consumer>
+        )
       }
-
     }
 
-
-    return super.renderMainView();
+    return super.renderMainView()
   }
-
 }
 
-export default Link;
+export default Link

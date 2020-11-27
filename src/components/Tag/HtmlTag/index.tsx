@@ -1,36 +1,32 @@
-import React from 'react';
+import React from 'react'
 
-import EditorComponent from '../../../EditorComponent';
+import EditorComponent from '../../../EditorComponent'
 
-import { HtmlTagProps, HtmlTagState } from './interfaces';
-export * from './interfaces';
+import { HtmlTagProps, HtmlTagState } from './interfaces'
+export * from './interfaces'
 
 // TODO: Restore
 // import CSSTransform from "./CSSTransform";
 
-export default class HtmlTag<P extends HtmlTagProps = HtmlTagProps, S extends HtmlTagState = HtmlTagState>
-  extends EditorComponent<P, S> {
-
-  static Name = "HtmlTag"
-  static help_url = "https://front-editor.prisma-cms.com/topics/html-tag.html";
+export default class HtmlTag<
+  P extends HtmlTagProps = HtmlTagProps,
+  S extends HtmlTagState = HtmlTagState
+> extends EditorComponent<P, S> {
+  static Name = 'HtmlTag'
+  static help_url = 'https://front-editor.prisma-cms.com/topics/html-tag.html'
 
   static defaultProps = {
     ...EditorComponent.defaultProps,
-    tag: "span",
+    tag: 'span',
     contentEditable: undefined,
     render_badge: false,
     can_be_edited: false,
   }
 
-
   constructor(props: P) {
+    super(props)
 
-    super(props);
-
-    const {
-      components,
-    } = this.getObjectWithMutations() || {};
-
+    const { components } = this.getObjectWithMutations() || {}
 
     this.state = {
       ...this.state,
@@ -38,142 +34,101 @@ export default class HtmlTag<P extends HtmlTagProps = HtmlTagProps, S extends Ht
       components: components ? components.slice(0) : [],
     }
 
-    this.saveChanges = this.saveChanges.bind(this);
-    this.tagOnInput = this.tagOnInput.bind(this);
-    this.tagOnFocus = this.tagOnFocus.bind(this);
-    this.tagOnBlur = this.tagOnBlur.bind(this);
-
+    this.saveChanges = this.saveChanges.bind(this)
+    this.tagOnInput = this.tagOnInput.bind(this)
+    this.tagOnFocus = this.tagOnFocus.bind(this)
+    this.tagOnBlur = this.tagOnBlur.bind(this)
   }
-
 
   canBeChild() {
-
-    return false;
+    return false
   }
-
 
   /**
    * Не выводим кнопки, так как иначе сбивается редактирование текста
    */
   renderAddButtons() {
-
-    return null;
+    return null
   }
-
 
   renderPanelView(content?: React.ReactNode) {
-    return content ?
-      super.renderPanelView(
-        content) :
-      null;
+    return content ? super.renderPanelView(content) : null
   }
 
-
   prepareDragItemProps() {
-
-    const {
-      tag,
-    } = this.props;
+    const { tag } = this.props
 
     return {
       ...super.prepareDragItemProps(),
       tag,
     }
-
   }
 
   getRootElement() {
+    const { tag } = this.getComponentProps(this as EditorComponent)
 
-    const {
-      tag,
-    } = this.getComponentProps(this as EditorComponent);
-
-    return tag;
+    return tag
   }
-
 
   tagOnInput(event: React.ChangeEvent) {
+    const node = event.target
 
-    const node = event.target;
+    const content = this.makeNewContent(node)
 
-    const content = this.makeNewContent(node);
+    const { components } = content
 
-    const {
-      components,
-    } = content;
-
-    components && this.onChangeContent(components);
-
+    components && this.onChangeContent(components)
   }
-
 
   /**
    * Измененный контент (конечная JSON-структура)
    */
-  onChangeContent(components: P["object"]["components"]) {
-
+  onChangeContent(components: P['object']['components']) {
     Object.assign(this.state, {
       newContent: {
         components,
       },
-    });
-
+    })
   }
-
 
   tagOnFocus() {
-
     this.setState({
       focused: true,
-    });
-
+    })
   }
 
-
   tagOnBlur() {
-
-    this.saveChanges();
+    this.saveChanges()
 
     this.setState({
       focused: false,
-    });
-
+    })
   }
 
   /**
    * Сохраняем измененный контент (обновляем родительский объект)
    */
   saveChanges() {
-
-    const {
-      newContent,
-    } = this.state;
+    const { newContent } = this.state
 
     if (newContent && newContent.components) {
-
-      this.setComponents(newContent.components);
+      this.setComponents(newContent.components)
 
       this.setState({
         newContent: null,
       })
-
     }
-
   }
-
 
   /**
    * Этот тег не должен редактироваться во фронт-редакторе
    */
   editable() {
-
-    return false;
+    return false
   }
 
-
   renderMainView(options = {}) {
-
-    const object = this.getObjectWithMutations();
+    const object = this.getObjectWithMutations()
 
     // const {
     //   props: {
@@ -182,50 +137,40 @@ export default class HtmlTag<P extends HtmlTagProps = HtmlTagProps, S extends Ht
     //   },
     // } = object;
 
-    const tag = object?.props.tag;
-    const text = object?.props.text;
+    const tag = object?.props.tag
+    const text = object?.props.text
 
     if (!tag) {
-      return text;
-    }
-
-    else {
-
+      return text
+    } else {
       switch (tag.toLowerCase()) {
+        case 'script':
+          console.error(`Tag "${tag}" not allowed`)
 
-        case "script":
+          return null
 
-          console.error(`Tag "${tag}" not allowed`);
-
-          return null;
-
-        default: ;
+        default:
       }
 
       if (this.editable()) {
-
-        const {
-          style: baseStyle,
-        } = this.getRenderProps();
+        const { style: baseStyle } = this.getRenderProps()
 
         const style = {
-          outline: "none",
-          height: "auto",
-          width: "auto",
+          outline: 'none',
+          height: 'auto',
+          width: 'auto',
           ...baseStyle,
         }
 
         switch (tag) {
-
-          case "a":
-
+          case 'a':
             Object.assign(style, {
-              border: "1px solid green",
-            });
+              border: '1px solid green',
+            })
 
-            break;
+            break
 
-          default: ;
+          default:
         }
 
         options = {
@@ -237,97 +182,75 @@ export default class HtmlTag<P extends HtmlTagProps = HtmlTagProps, S extends Ht
           onBlur: this.tagOnBlur,
           ...options,
         }
-
       }
 
-      return super.renderMainView(options);
+      return super.renderMainView(options)
     }
   }
 
-
   renderChildren() {
+    const object = this.getObjectWithMutations()
 
-    const object = this.getObjectWithMutations();
+    const text = object?.props.text ?? null
 
-    const text = object?.props.text ?? null;
-
-
-    const {
-      components: itemComponents,
-    } = this.state;
+    const { components: itemComponents } = this.state
 
     if (itemComponents && itemComponents.length) {
-
-      return super.renderChildren();
-
-    }
-
-    else return text;
+      return super.renderChildren()
+    } else return text
   }
 
   renderBadge(badge: React.ReactNode) {
+    const { focused } = this.state
 
-    const {
-      focused,
-    } = this.state;
-
-    return focused ? null : super.renderBadge(badge);
+    return focused ? null : super.renderBadge(badge)
   }
-
 
   isVoidElement() {
+    const { tag } = this.getComponentProps(this as EditorComponent)
 
-    const {
-      tag,
-    } = this.getComponentProps(this as EditorComponent);
-
-    return tag && ["img"].indexOf(tag) !== -1 ? true : super.isVoidElement();
-
+    return tag && ['img'].indexOf(tag) !== -1 ? true : super.isVoidElement()
   }
 
-
   makeNewContent(node: HTMLElement | (EventTarget & Element)) {
+    const nodes = node.childNodes
 
-    const nodes = node.childNodes;
+    const components: P['object']['components'] = []
 
-
-    const components: P["object"]["components"] = [];
-
-    const content: Partial<P["object"]> = {};
+    const content: Partial<P['object']> = {}
 
     nodes.forEach((n) => {
-      const component = this.updateContent(n);
-      component && components.push(component);
-    });
+      const component = this.updateContent(n)
+      component && components.push(component)
+    })
 
     Object.assign(content, {
       components,
-    });
+    })
 
-    return content;
+    return content
   }
 
-
-
-  updateContent(node: InstanceType<typeof EditorComponent> | HTMLElement | ChildNode, content?: P["object"]) {
-
+  updateContent(
+    node: InstanceType<typeof EditorComponent> | HTMLElement | ChildNode,
+    content?: P['object']
+  ) {
     // if (!node || (typeof node !== "object") || typeof node.reactComponent === "undefined") {
     //   return;
     // }
 
     if (!node) {
-      return;
+      return
     }
 
     if (!content) {
       content = {
-        name: "HtmlTag",
-        component: "HtmlTag",
+        name: 'HtmlTag',
+        component: 'HtmlTag',
         props: {},
         components: [],
-      };
+      }
     }
-
 
     // TODO check logic
     /**
@@ -341,42 +264,32 @@ export default class HtmlTag<P extends HtmlTagProps = HtmlTagProps, S extends Ht
     //   return component;
     // }
     if (node instanceof EditorComponent) {
-
       if (!(node.reactComponent instanceof HtmlTag)) {
-
-        return node.reactComponent?.getObjectWithMutations();
+        return node.reactComponent?.getObjectWithMutations()
       }
 
-      return;
+      return
+    } else if (!(node instanceof HTMLElement)) {
+      return
     }
-    else if (!(node instanceof HTMLElement)) {
-      return;
-    }
 
+    const nodes = node.childNodes
 
-    const nodes = node.childNodes;
+    let NodeName: string | undefined = node.nodeName.toLowerCase()
 
-
-    let NodeName: string | undefined = node.nodeName.toLowerCase();
-
-
-    if (NodeName === "#text") {
-      NodeName = undefined;
+    if (NodeName === '#text') {
+      NodeName = undefined
     }
 
     if (node.nodeType === Node.TEXT_NODE) {
-      content.props.text = node.textContent;
-    }
-    else if (node.nodeType === Node.ELEMENT_NODE) {
-
-      const attributes = node.attributes;
+      content.props.text = node.textContent
+    } else if (node.nodeType === Node.ELEMENT_NODE) {
+      const attributes = node.attributes
 
       node.getAttributeNames().map((name: string) => {
-
-        const value = attributes.getNamedItem(name)?.value;
+        const value = attributes.getNamedItem(name)?.value
 
         switch (name) {
-
           // case "id":
           // case "src":
           // case "href":
@@ -384,38 +297,32 @@ export default class HtmlTag<P extends HtmlTagProps = HtmlTagProps, S extends Ht
 
           //   break;
 
-          case "props":
-          case "object":
-          case "data":
+          case 'props':
+          case 'object':
+          case 'data':
+            return null
 
-            return null;
-
-          case "contenteditable":
-
+          case 'contenteditable':
             // name = "contentEditable";
             // break;
 
-            return null;
+            return null
 
-          case "class":
+          case 'class':
+            name = 'className'
 
-            name = "className";
+            break
 
-            break;
+          case 'staticcontext':
+            name = 'staticContext'
 
-          case "staticcontext":
+            break
 
-            name = "staticContext";
-
-            break;
-
-          case "style":
-
+          case 'style':
             // TODO Restore
             // try {
 
             //   value = value ? CSSTransform(value) : undefined;
-
 
             // }
             // catch (error) {
@@ -423,82 +330,64 @@ export default class HtmlTag<P extends HtmlTagProps = HtmlTagProps, S extends Ht
             //   value = undefined;
             // }
 
-            break;
+            break
 
-          default: ;
+          default:
         }
 
-        content && Object.assign(content.props, {
-          [name]: value,
-        });
+        content &&
+          Object.assign(content.props, {
+            [name]: value,
+          })
 
-        return null;
+        return null
       })
 
-      const components: P["object"]["components"] = [];
+      const components: P['object']['components'] = []
 
       nodes.forEach((node) => {
+        const component = this.updateContent(node)
 
-        const component = this.updateContent(node);
-
-        component && components.push(component);
-
-      });
+        component && components.push(component)
+      })
 
       Object.assign(content, {
         components,
-      });
-
+      })
     }
 
-    content.props.tag = NodeName;
+    content.props.tag = NodeName
 
-    return content;
-
+    return content
   }
-
 
   componentDidCatch(error: Error, info: any) {
-
-    console.error(error, info);
+    console.error(error, info)
   }
-
 
   getEditorField(props: any) {
+    const { name } = props
 
-    const {
-      name,
-    } = props;
+    const field = super.getEditorField(props)
 
-    const field = super.getEditorField(props);
+    const { tag } = this.getComponentProps(this as EditorComponent)
 
-    const {
-      tag,
-    } = this.getComponentProps(this as EditorComponent);
-
-
-    if (tag === "img" && name === "src") {
-
-      return <div>
-
+    if (tag === 'img' && name === 'src') {
+      return (
         <div>
-          {field}
+          <div>{field}</div>
+
+          <div>
+            {this.renderUploader({
+              onUpload: ({ path }: { path: string }) => {
+                this.updateComponentProperty(name, `/images/big/${path}`)
+              },
+            })}
+          </div>
         </div>
-
-        <div>
-          {this.renderUploader({
-            onUpload: ({ path }: { path: string }) => {
-              this.updateComponentProperty(name, `/images/big/${path}`);
-            },
-          })}
-        </div>
-
-      </div>
-
+      )
     }
 
-
-    return field;
+    return field
   }
-
 }

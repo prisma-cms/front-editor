@@ -1,6 +1,6 @@
-import RichText from "../../../../RichText";
+import RichText from '../../../../RichText'
 
 /**
  * @deprecated
  */
-export default RichText;
+export default RichText

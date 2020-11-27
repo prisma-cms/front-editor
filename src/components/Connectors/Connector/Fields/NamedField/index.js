@@ -1,20 +1,19 @@
-import React from 'react';
+import React from 'react'
 // import PropTypes from 'prop-types';
-import EditorComponent from '../../../../../EditorComponent';
-import { ObjectContext } from '../../ListView';
+import EditorComponent from '../../../../../EditorComponent'
+import { ObjectContext } from '../../ListView'
 
-import Icon from "material-ui-icons/ShortText";
-import { ConnectorContext } from '../..';
+import Icon from 'material-ui-icons/ShortText'
+import { ConnectorContext } from '../..'
 
-import NumberFormat from "react-number-format";
-import moment from "moment";
-import Typography from 'material-ui/Typography';
-import DefaultValue from './DefaultValue';
-import Grid from '../../../../../common/Grid';
+import NumberFormat from 'react-number-format'
+import moment from 'moment'
+import Typography from 'material-ui/Typography'
+import DefaultValue from './DefaultValue'
+import Grid from '../../../../../common/Grid'
 
 class NamedField extends EditorComponent {
-
-  static Name = "NamedField"
+  static Name = 'NamedField'
 
   // static propTypes = {
   //   // eslint-disable-next-line react/forbid-foreign-prop-types
@@ -27,100 +26,73 @@ class NamedField extends EditorComponent {
   //   override_context: PropTypes.bool.isRequired,
   // }
 
-
   static defaultProps = {
     ...EditorComponent.defaultProps,
-    name: "",
-    tag: "span",
+    name: '',
+    tag: 'span',
     type: undefined,
     format: undefined,
     override_context: true,
     hide_wrapper_in_default_mode: true,
   }
 
-
   renderPanelView(content) {
-
-    const {
-      classes,
-    } = this.getEditorContext();
-
     return super.renderPanelView(
-      content ||
-      <div
-        className={classes.panelButton}
-      >
-        <Icon /> Object field
-    </div>);
+      content || (
+        <div className="editor-component--panel-icon">
+          <Icon /> Object field
+        </div>
+      )
+    )
   }
-
 
   getRootElement() {
+    const { tag } = this.getComponentProps(this)
 
-    const {
-      tag,
-    } = this.getComponentProps(this);
-
-    return tag || "span";
+    return tag || 'span'
   }
-
 
   renderBadgeTitle(title) {
+    const { name } = this.getComponentProps(this)
 
-    const {
-      name,
-    } = this.getComponentProps(this);
-
-
-    return <Grid
-      container
-      spacing={8}
-      alignItems="center"
-      style={{
-        flexWrap: "nowrap",
-      }}
-    >
+    return (
       <Grid
-        item
+        container
+        spacing={8}
+        alignItems="center"
+        style={{
+          flexWrap: 'nowrap',
+        }}
       >
-        {super.renderBadgeTitle(title)}
+        <Grid item>{super.renderBadgeTitle(title)}</Grid>
+        {name ? (
+          <Grid item>
+            <b>{name}</b>
+          </Grid>
+        ) : null}
       </Grid>
-      {name
-        ? <Grid
-          item
-        >
-          <b>{name}</b>
-        </Grid>
-        : null
-      }
-    </Grid>;
+    )
   }
 
-
   getComponentProps(component) {
+    const { type, ...props } = super.getComponentProps(component)
 
-    const {
-      type,
-      ...props
-    } = super.getComponentProps(component);
-
-    let otherProps = {};
+    let otherProps = {}
 
     switch (type) {
-
-      case "number":
+      case 'number':
         {
           const {
-            thousandSeparator = " ",
-            decimalSeparator = ".",
+            thousandSeparator = ' ',
+            decimalSeparator = '.',
             decimalScale,
             prefix,
             suffix,
             defaultValue,
             isNumericString = false,
-            displayType = "text",
+            displayType = 'text',
             mask,
-          } = props;
+          } = props
 
           otherProps = {
             thousandSeparator,
@@ -134,10 +106,9 @@ class NamedField extends EditorComponent {
             mask,
           }
         }
-        break;
+        break
 
-      default: ;
-
+      default:
     }
 
     return {
@@ -145,12 +116,9 @@ class NamedField extends EditorComponent {
       ...props,
       ...otherProps,
     }
-
   }
 
-
   renderChildren() {
-
     // const {
     //   UserLink,
     // } = this.context;
@@ -164,228 +132,181 @@ class NamedField extends EditorComponent {
       type,
       override_context,
       ...other
-    } = this.getComponentProps(this);
-
+    } = this.getComponentProps(this)
 
     if (!name) {
-      return null;
+      return null
     }
-
 
     // const {
     //   inEditMode,
     // } = this.getEditorContext();
-
 
     /**
      * Дочерние элементы выводим только в том случае, если значение массив или объект,
      * иначе есть вероятность, что на нижних уровнях компоненты попадут в контект не того объекта
      */
 
-    return <ObjectContext.Consumer
-      key="object_context"
-    >
-      {context => {
+    return (
+      <ObjectContext.Consumer key="object_context">
+        {(context) => {
+          const { object } = context
 
+          if (!object) {
+            return null
+          }
 
+          let output = null
 
-        const {
-          object,
-        } = context;
+          if (name) {
+            let { [name]: value } = object
 
-        if (!object) {
-          return null;
-        }
+            let children = super.renderChildren() || []
+            const childrenWithoutDefaultValue = children.filter(
+              (n) => n && n.type !== DefaultValue
+            )
 
-
-
-
-        let output = null;
-
-
-        if (name) {
-
-          let {
-            [name]: value,
-          } = object;
-
-
-          let children = super.renderChildren() || [];
-          const childrenWithoutDefaultValue = children.filter(n => n && n.type !== DefaultValue);
-
-          /**
+            /**
           Так как без опеределения типа данных мы можем уйти не в тот контекст, возвращаем ничего,
           если значение отсутствует или null
            */
-          {/* TODO: Check if broken */ }
-          {/* if (value !== undefined || true) { */ }
-          if (value !== undefined) {
-
-            if (typeof value === "object" && value !== null) {
-
-
-              if (Array.isArray(value)) {
-                /**
+            {
+              /* TODO: Check if broken */
+            }
+            {
+              /* if (value !== undefined || true) { */
+            }
+            if (value !== undefined) {
+              if (typeof value === 'object' && value !== null) {
+                if (Array.isArray(value)) {
+                  /**
                 Если это массив, то передаем как массив объектов.
                 Если объект, то передаем как объект
                  */
 
-                output = value.length ? children.filter(n => n && n.type !== DefaultValue) : children.filter(n => n && n.type === DefaultValue);
+                  output = value.length
+                    ? children.filter((n) => n && n.type !== DefaultValue)
+                    : children.filter((n) => n && n.type === DefaultValue)
 
-                if (override_context) {
+                  if (override_context) {
+                    output = (
+                      <ConnectorContext.Provider
+                        value={{
+                          data: {
+                            objects: value,
+                          },
+                        }}
+                      >
+                        {output}
+                      </ConnectorContext.Provider>
+                    )
+                  }
+                } else {
+                  // children = children.filter(n => n && n.type !== DefaultValue);
+                  // output = value ? children.filter(n => n && n.type !== DefaultValue) : children.filter(n => n && n.type === DefaultValue);
 
-                  output = <ConnectorContext.Provider
-                    value={{
-                      data: {
-                        objects: value,
-                      },
-                    }}
-                  >
-                    {output}
-                  </ConnectorContext.Provider>
+                  output = value
+                    ? childrenWithoutDefaultValue
+                    : children.filter((n) => n && n.type === DefaultValue)
 
+                  if (override_context) {
+                    output = (
+                      <ObjectContext.Provider
+                        value={{
+                          object: value,
+                        }}
+                      >
+                        {output}
+                      </ObjectContext.Provider>
+                    )
+                  }
                 }
-
-              }
-              else {
-
-                // children = children.filter(n => n && n.type !== DefaultValue);
-                // output = value ? children.filter(n => n && n.type !== DefaultValue) : children.filter(n => n && n.type === DefaultValue);
-
-                output = value ? childrenWithoutDefaultValue : children.filter(n => n && n.type === DefaultValue);
-
-                if (override_context) {
-
-                  output = <ObjectContext.Provider
-                    value={{
-                      object: value,
-                    }}
-                  >
-                    {output}
-                  </ObjectContext.Provider>
-
-                }
-
-              }
-
-            }
-            else if (!value) {
-
-              /**
+              } else if (!value) {
+                /**
               Есть предположение, что надо перетирать контекст, даже если нет объекта.
               Но это сейчас больше неудобств добавить.
               Вероятнее всего надо добавлять сущность новую Child для предполагаемого дочернего объекта 
               и Children для предполагаемого массива дочерних объектов
                */
-              children = children.filter(n => n && n.type === DefaultValue);
+                children = children.filter((n) => n && n.type === DefaultValue)
 
-              output = children;
-
-            }
-
-            /**
-            Если есть скалярное значение
-             */
-            else {
+                output = children
+              } else {
 
               /**
+            Если есть скалярное значение
+             */
+                /**
               Если есть дочерние элементы, то выводим их.
                */
-              if (childrenWithoutDefaultValue.length) {
-
-                /**
+                if (childrenWithoutDefaultValue.length) {
+                  /**
                 Даже если за вычетом дефолтных элементов не останется дочерних элементов,
                 все равно выводим остаточный пустой массив, а не само значение,
                 так как логика может быть заложена именно на проверку значения,
                 чтобы ничего не выводить, если значение есть.
                  */
 
-                output = childrenWithoutDefaultValue;
-
-              }
-              /**
+                  output = childrenWithoutDefaultValue
+                } else {
+                /**
               Иначе выводим просто скалярное значение
                */
-              else {
+                  value = this.prepareScalarValue(value, context)
 
-                value = this.prepareScalarValue(value, context);
+                  switch (type) {
+                    case 'number':
+                      {
+                        const { defaultValue } = other
 
-                switch (type) {
+                        output = (
+                          <NumberFormat
+                            value={value || defaultValue || ''}
+                            {...other}
+                          />
+                        )
+                      }
 
-                  case "number":
+                      break
 
-                    {
-                      const {
-                        defaultValue,
-                      } = other;
+                    case 'date':
+                      if (value) {
+                        const { format } = other
 
-                      output = <NumberFormat
-                        value={value || defaultValue || ""}
-                        {...other}
-                      />;
-                    }
+                        let date = moment(value)
 
-                    break;
+                        if (date.isValid()) {
+                          if (format) {
+                            date = date.format(format)
+                          }
 
-                  case "date":
-
-                    if (value) {
-
-
-                      const {
-                        format,
-                      } = other;
-
-                      let date = moment(value);
-
-                      if (date.isValid()) {
-
-
-                        if (format) {
-                          date = date.format(format)
+                          output = date.toString()
+                        } else {
+                          output = (
+                            <Typography color="error">Invalid date</Typography>
+                          )
                         }
-
-
-                        output = date.toString();
-
-                      }
-                      else {
-
-                        output = <Typography
-                          color="error"
-                        >
-                          Invalid date
-                        </Typography>
-
                       }
 
-                    }
+                      break
 
-                    break;
-
-                  default: output = value;
+                    default:
+                      output = value
+                  }
                 }
-
               }
-
             }
-
           }
 
-        }
-
-
-        return output;
-      }}
-    </ObjectContext.Consumer>;
+          return output
+        }}
+      </ObjectContext.Consumer>
+    )
   }
-
 
   prepareScalarValue(value) {
-
-    return value;
+    return value
   }
-
 }
 
-export default NamedField;
+export default NamedField

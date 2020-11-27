@@ -1,14 +1,13 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import React from 'react';
+import React from 'react'
 
-import Iterable from '../Connectors/Connector/ListView/Iterable';
+import Iterable from '../Connectors/Connector/ListView/Iterable'
 
 class Slider extends Iterable {
-
   static defaultProps = {
     ...Iterable.defaultProps,
     dots: true,
-    dotsClass: "slick-dots",
+    dotsClass: 'slick-dots',
     speed: 500,
     slidesToScroll: 1,
     slidesToShow: 1,
@@ -21,7 +20,7 @@ class Slider extends Iterable {
     centerMode: false,
     centerPadding: 50,
     draggable: true,
-    easing: "linear",
+    easing: 'linear',
     fade: false,
     focusOnSelect: false,
     infinite: true,
@@ -34,7 +33,7 @@ class Slider extends Iterable {
     // responsive: array,
 
     rows: 1,
-    slide: "div",
+    slide: 'div',
     swipe: true,
     swipeToSlide: false,
     touchMove: true,
@@ -50,52 +49,37 @@ class Slider extends Iterable {
     },
   }
 
-  static Name = "Slider"
+  static Name = 'Slider'
 
   renderPanelView(content) {
-
-    const {
-      classes,
-    } = this.getEditorContext();
-
-    return super.renderPanelView(content || <div
-      className={classes.panelButton}
-    >
-      Slider
-    </div>);
+    return super.renderPanelView(
+      content || <div className="editor-component--panel-icon">Slider</div>
+    )
   }
-
 
   renderChildren() {
-
-    const childs = super.renderChildren();
+    const childs = super.renderChildren()
 
     if (!childs) {
-      return childs;
+      return childs
     }
 
-    const SlickSlider = require("react-slick").default;
+    const SlickSlider = require('react-slick').default
 
-    return <SlickSlider
-      key="slick"
-      {...this.getSliderProps()}
-    >
-      {childs}
-    </SlickSlider>
+    return (
+      <SlickSlider key="slick" {...this.getSliderProps()}>
+        {childs}
+      </SlickSlider>
+    )
   }
 
-
   getSliderProps() {
+    const { slidesToShow = 1, ...other } = this.getComponentProps(this)
 
-    const {
-      slidesToShow = 1,
-      ...other
-    } = this.getComponentProps(this);
-
-    const childs = super.renderChildren();
+    const childs = super.renderChildren()
 
     return {
-      ref: slider => this.slider = slider,
+      ref: (slider) => (this.slider = slider),
 
       // Fix issue https://github.com/akiran/react-slick/issues/1553
       slidesToShow: childs.length > slidesToShow ? slidesToShow : childs.length,
@@ -103,9 +87,7 @@ class Slider extends Iterable {
     }
   }
 
-
   prepareRootElementProps(props) {
-
     // TODO Fix this hell
     const {
       dots,
@@ -147,12 +129,10 @@ class Slider extends Iterable {
       ObjectContext,
       items,
       ...other
-    } = super.prepareRootElementProps(props);
+    } = super.prepareRootElementProps(props)
 
-    return other;
+    return other
   }
-
-
 }
 
-export default Slider;
+export default Slider

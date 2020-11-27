@@ -1,138 +1,99 @@
-import React, { Fragment } from 'react';
+import React, { Fragment } from 'react'
 
-import Connector, { ConnectorContext } from '..';
+import Connector, { ConnectorContext } from '..'
 
-import PaginationIcon from "material-ui-icons/LastPage";
-import EditorComponent from '../../../../EditorComponent';
+import PaginationIcon from 'material-ui-icons/LastPage'
+import EditorComponent from '../../../../EditorComponent'
 
 import PaginationProto from '../../../../common/Pagination'
 
 // TODO Fix pagination
 class Pagination extends EditorComponent {
-
-  static Name = "Pagination"
+  static Name = 'Pagination'
 
   static defaultProps = {
     ...EditorComponent.defaultProps,
     hide_wrapper_in_default_mode: true,
   }
 
-
   renderPanelView(content) {
-
-    const {
-      classes,
-    } = this.getEditorContext();
-
     return super.renderPanelView(
-      content ||
-      <div
-        className={classes.panelButton}
-      >
-        <PaginationIcon /> Pagination
-    </div>);
+      content || (
+        <div className="editor-component--panel-icon">
+          <PaginationIcon /> Pagination
+        </div>
+      )
+    )
   }
-
 
   canBeChild() {
-
-    return false;
+    return false
   }
 
-
   canBeParent(parent) {
-
-
-    let can = false;
+    let can = false
 
     // return false;
 
     if (super.canBeParent(parent)) {
-
       while (parent) {
-
         if (parent instanceof Connector) {
+          can = true
 
-          can = true;
-
-          break;
+          break
         }
 
-        parent = parent.props.parent;
+        parent = parent.props.parent
       }
-
     }
 
-    return can;
+    return can
   }
-
 
   renderChildren() {
+    return (
+      <Fragment key="pagination">
+        <ConnectorContext.Consumer>
+          {(context) => {
+            const { data, pageVariable = 'page' } = context
 
-    return <Fragment
-      key="pagination"
-    >
-      <ConnectorContext.Consumer>
-        {context => {
+            if (!data) {
+              return
+            }
 
-          const {
-            data,
-            pageVariable = "page",
-          } = context;
+            const { objectsConnection, variables } = data
 
-          if (!data) {
-            return;
-          }
+            if (!objectsConnection) {
+              return null
+            }
 
-          const {
-            objectsConnection,
-            variables,
-          } = data;
+            const {
+              aggregate: { count: total },
+            } = objectsConnection
 
-          if (!objectsConnection) {
-            return null;
-          }
+            const { first: limit } = variables || {}
 
-          const {
-            aggregate: {
-              count: total,
-            },
-          } = objectsConnection;
+            const { uri } = this.context
 
+            let { [pageVariable]: page } = uri.query(true)
 
+            page = parseInt(page) || 0
 
-          const {
-            first: limit,
-          } = variables || {};
+            return (
+              <PaginationProto
+                pageVariable={pageVariable}
+                limit={limit}
+                total={total}
+                page={page || 1}
+              />
+            )
+          }}
+        </ConnectorContext.Consumer>
 
-
-          const {
-            uri,
-          } = this.context;
-
-
-          let {
-            [pageVariable]: page,
-          } = uri.query(true);
-
-
-          page = parseInt(page) || 0;
-
-          return <PaginationProto
-            pageVariable={pageVariable}
-            limit={limit}
-            total={total}
-            page={page || 1}
-          />;
-
-        }}
-      </ConnectorContext.Consumer>
-
-      {super.renderChildren()}
-
-    </Fragment>;
+        {super.renderChildren()}
+      </Fragment>
+    )
   }
-
 }
 
-export default Pagination;
+export default Pagination

@@ -1,18 +1,15 @@
-import React, { Fragment } from 'react';
+import React, { Fragment } from 'react'
 
+import { TimelineItem as TimelineItemProto } from 'vertical-timeline-component-for-react'
 
-import { TimelineItem as TimelineItemProto } from 'vertical-timeline-component-for-react';
+import EditorComponent from '../../../EditorComponent'
+import { ObjectContext } from '../../Connectors/Connector/ListView'
 
-import EditorComponent from '../../../EditorComponent';
-import { ObjectContext } from '../../Connectors/Connector/ListView';
-
-import classNames from "classnames"
-import VisibilitySensor from 'react-visibility-sensor';
-import VerticalTimeline from '..';
+import classNames from 'classnames'
+import VisibilitySensor from 'react-visibility-sensor'
+import VerticalTimeline from '..'
 
 export class TimelineItem extends TimelineItemProto {
-
-
   render() {
     const {
       id,
@@ -25,10 +22,10 @@ export class TimelineItem extends TimelineItemProto {
       style,
       className,
       visibilitySensorProps,
-    } = this.props;
-    const { visible } = this.state;
+    } = this.props
+    const { visible } = this.state
 
-    const isSSR = typeof window === "undefined";
+    const isSSR = typeof window === 'undefined'
 
     return (
       <div
@@ -44,29 +41,33 @@ export class TimelineItem extends TimelineItemProto {
         >
           <Fragment>
             <div className="title">
-              <div className={`${visible || isSSR ? 'bounce-in' : 'is-hidden'}`}>
-                {DateComponent ? typeof DateComponent === "function" ? <DateComponent
-
-                /> : (
-                    DateComponent
+              <div
+                className={`${visible || isSSR ? 'bounce-in' : 'is-hidden'}`}
+              >
+                {DateComponent ? (
+                  typeof DateComponent === 'function' ? (
+                    <DateComponent />
                   ) : (
-                    <span style={dateStyle} className="timeline-item-date">
-                      <time
-                        style={dateInnerStyle}
-                        className="timeline-item-dateinner"
-                        title={dateText}
-                      >
-                        {dateText}
-                      </time>
-                    </span>
-                  )}
+                    DateComponent
+                  )
+                ) : (
+                  <span style={dateStyle} className="timeline-item-date">
+                    <time
+                      style={dateInnerStyle}
+                      className="timeline-item-dateinner"
+                      title={dateText}
+                    >
+                      {dateText}
+                    </time>
+                  </span>
+                )}
               </div>
             </div>
             <div className="body">
               <div
                 className={`body-container ${
                   visible || isSSR ? 'bounce-in' : 'is-hidden'
-                  }`}
+                }`}
                 style={bodyContainerStyle}
               >
                 {children}
@@ -75,51 +76,38 @@ export class TimelineItem extends TimelineItemProto {
           </Fragment>
         </VisibilitySensor>
       </div>
-    );
+    )
   }
-
 }
 
-
 class VerticalTimelineItem extends EditorComponent {
-
-
   static defaultProps = {
     ...EditorComponent.defaultProps,
     label: undefined,
     helperText: undefined,
     readOnly: true,
-    backgroundColor: "#76bb7f",
+    backgroundColor: '#76bb7f',
   }
 
-  static Name = "VerticalTimelineItem"
-  static help_url = "https://front-editor.prisma-cms.com/topics/verticaltimeline.html";
+  static Name = 'VerticalTimelineItem'
+  static help_url =
+    'https://front-editor.prisma-cms.com/topics/verticaltimeline.html'
 
   onBeforeDrop = () => {
-
-    return;
+    return
   }
 
   // canBeDropped = (dragItem) => {
   //   return false;
   // }
 
-
   renderPanelView(content) {
-
-    const {
-      classes,
-    } = this.getEditorContext();
-
     return super.renderPanelView(
-      content ||
-      <div
-        className={classes.panelVerticalTimelineItem}
-      >
-        VerticalTimelineItem
-    </div>);
+      content || (
+        <div className={'panelVerticalTimelineItem'}>VerticalTimelineItem</div>
+      )
+    )
   }
-
 
   // getRootElement() {
 
@@ -127,13 +115,10 @@ class VerticalTimelineItem extends EditorComponent {
   // }
 
   getRootElement() {
-
     return this.renderRoot
   }
 
-
-  renderRoot = props => {
-
+  renderRoot = (props) => {
     const {
       style,
       dateText,
@@ -143,108 +128,98 @@ class VerticalTimelineItem extends EditorComponent {
       bodyContainerStyle,
       visibilitySensorProps,
       ...other
-    } = props;
+    } = props
 
-    return <TimelineItem
-      {...{
-        style,
-        dateText,
-        dateStyle,
-        dateInnerStyle,
-        dateComponent,
-        bodyContainerStyle,
-        visibilitySensorProps,
-      }}
-    >
-      <div
-        {...other}
-      >
-
-      </div>
-    </TimelineItem>
-  }
-
-
-  renderMainView() {
-
-    return <ObjectContext.Consumer>
-      {context => {
-
-        const {
-          object,
-        } = context;
-
-
-        return super.renderMainView({
-          object,
-          dateComponent: this.renderDateComponent,
-        });
-      }}
-    </ObjectContext.Consumer>
-  }
-
-
-  renderDateComponent = () => {
-
-    const object = this.getObjectWithMutations();
-
-    const {
-      components,
-    } = object || {};
-
-    const {
-      backgroundColor,
-    } = this.getComponentProps(this);
-
-
-    return <div
-      className="timeline-item-date"
-      style={{
-        position: "relative",
-        zIndex: 100,
-        clipPath: "unset",
-        display: "flex",
-        flexDirection: "row",
-        background: "transparent",
-        whiteSpace: "nowrap",
-      }}
-    >
-      <div
-        className="timeline-item-dateinner"
-        style={{
-          clipPath: "unset",
-          flex: 1,
-          backgroundColor: backgroundColor ? backgroundColor : "transparent",
+    return (
+      <TimelineItem
+        {...{
+          style,
+          dateText,
+          dateStyle,
+          dateInnerStyle,
+          dateComponent,
+          bodyContainerStyle,
+          visibilitySensorProps,
         }}
       >
-        {components && components.length ? this.renderComponent(components[0]) : null}
-      </div>
-      <div
-        style={backgroundColor ? {
-          "width": "0",
-          "height": "0",
-          "borderStyle": "solid",
-          "borderWidth": "25px 0 25px 10px",
-          "borderColor": `transparent transparent transparent ${backgroundColor}`
-        } : undefined}
-      >
-      </div>
-    </div>
+        <div {...other}></div>
+      </TimelineItem>
+    )
   }
 
+  renderMainView() {
+    return (
+      <ObjectContext.Consumer>
+        {(context) => {
+          const { object } = context
+
+          return super.renderMainView({
+            object,
+            dateComponent: this.renderDateComponent,
+          })
+        }}
+      </ObjectContext.Consumer>
+    )
+  }
+
+  renderDateComponent = () => {
+    const object = this.getObjectWithMutations()
+
+    const { components } = object || {}
+
+    const { backgroundColor } = this.getComponentProps(this)
+
+    return (
+      <div
+        className="timeline-item-date"
+        style={{
+          position: 'relative',
+          zIndex: 100,
+          clipPath: 'unset',
+          display: 'flex',
+          flexDirection: 'row',
+          background: 'transparent',
+          whiteSpace: 'nowrap',
+        }}
+      >
+        <div
+          className="timeline-item-dateinner"
+          style={{
+            clipPath: 'unset',
+            flex: 1,
+            backgroundColor: backgroundColor ? backgroundColor : 'transparent',
+          }}
+        >
+          {components && components.length
+            ? this.renderComponent(components[0])
+            : null}
+        </div>
+        <div
+          style={
+            backgroundColor
+              ? {
+                  width: '0',
+                  height: '0',
+                  borderStyle: 'solid',
+                  borderWidth: '25px 0 25px 10px',
+                  borderColor: `transparent transparent transparent ${backgroundColor}`,
+                }
+              : undefined
+          }
+        ></div>
+      </div>
+    )
+  }
 
   getComponents(itemComponents) {
-
-    return itemComponents && itemComponents.length ? itemComponents.slice(1) : [];
+    return itemComponents && itemComponents.length
+      ? itemComponents.slice(1)
+      : []
   }
-
-
 
   canBeParent(parent) {
-
-    return parent instanceof VerticalTimeline && super.canBeParent(parent);
+    return parent instanceof VerticalTimeline && super.canBeParent(parent)
   }
-
 }
 
-export default VerticalTimelineItem;
+export default VerticalTimelineItem

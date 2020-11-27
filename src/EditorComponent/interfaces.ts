@@ -89,7 +89,7 @@ export interface EditorComponentProps extends EditableObjectProps {
 
   className?: string
 
-  classes?: Record<string, any>
+  // classes?: Record<string, any>
 
   createTemplate?: FrontEditorProps['createTemplate']
   updateTemplate?: FrontEditorProps['updateTemplate']
@@ -108,7 +108,9 @@ export interface EditorComponentProps extends EditableObjectProps {
   /**
    * Handler on change component data
    */
-  onChangeState?: (data: EditorComponentProps["_dirty"]) => EditorComponentProps["_dirty"];
+  onChangeState?: (
+    data: EditorComponentProps['_dirty']
+  ) => EditorComponentProps['_dirty']
 }
 
 export interface EditorComponentState extends EditableObjectState {
@@ -121,6 +123,5 @@ export interface EditorComponentState extends EditableObjectState {
    */
   focused?: boolean
   components?: EditorComponentObject['components']
-  // 
-
+  //
 }

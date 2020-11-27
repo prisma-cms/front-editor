@@ -3,8 +3,7 @@ import { EditorComponentObject } from '../../src/EditorComponent'
 const object: EditorComponentObject = {
   name: 'Section',
   props: {},
-  components: [
-  ],
+  components: [],
   component: 'Section',
 }
 

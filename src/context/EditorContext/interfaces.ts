@@ -4,7 +4,7 @@ import TemplateRenderer from '../../TemplateRenderer'
 export interface EditorContextValue {
   Components?: FrontEditorProps['Components']
 
-  classes?: FrontEditorProps['classes']
+  // classes?: FrontEditorProps['classes']
 
   inEditMode?: FrontEditorProps['inEditMode']
 

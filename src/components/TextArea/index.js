@@ -1,283 +1,200 @@
-import React from 'react';
+import React from 'react'
 
-import EditorComponent from '../../EditorComponent';
+import EditorComponent from '../../EditorComponent'
 
-import TextIcon from "material-ui-icons/Title";
+import TextIcon from 'material-ui-icons/Title'
 
-import CSSTransform from "./EditableText/transform";
+import CSSTransform from './EditableText/transform'
 
 class TextArea extends EditorComponent {
-
-  static Name = "TextArea"
+  static Name = 'TextArea'
 
   renderPanelView(content) {
-
-    const {
-      classes,
-    } = this.getEditorContext();
-
     return super.renderPanelView(
-      content ||
-      <div
-        className={classes.panelButton}
-      >
-        <TextIcon /> TextArea
-    </div>);
+      content || (
+        <div className="editor-component--panel-icon">
+          <TextIcon /> TextArea
+        </div>
+      )
+    )
   }
 
-
-
   renderMainView() {
+    const { inEditMode } = this.getEditorContext()
 
-
-    const {
-      inEditMode,
-    } = this.getEditorContext();
-
-
-
-
-    let options;
+    let options
 
     if (inEditMode) {
-
       options = {
         contentEditable: true,
         suppressContentEditableWarning: true,
-        onInput: event => {
+        onInput: (event) => {
+          const node = event.target
 
-          const node = event.target;
-
-
-          const content = this.makeNewContent(node);
-
-
+          const content = this.makeNewContent(node)
 
           const newState = {
             newContent: content,
-          };
-
+          }
 
           // Object.assign(newState, {
           //   // content,
           // });
 
-          Object.assign(this.state, newState);
-
+          Object.assign(this.state, newState)
 
           // onChange(content);
 
           this.updateComponentProps({
             content,
-          });
-
+          })
         },
       }
-
     }
 
-    return super.renderMainView(options);
-
+    return super.renderMainView(options)
   }
-
 
   renderChildren() {
+    const { content } = this.state
 
-    const {
-      content,
-    } = this.state;
-
-    return this.renderContent(content) || "";
-
+    return this.renderContent(content) || ''
   }
 
-
-
-
   constructor(props) {
-
-    super(props);
+    super(props)
 
     const {
       // content,
-      data: {
-        object,
-      },
-    } = props;
+      data: { object },
+    } = props
 
+    const { props: objectProps } = object || {}
 
-    const {
-      props: objectProps,
-    } = object || {};
-
-    const {
-      content,
-    } = objectProps || {};
-
-
+    const { content } = objectProps || {}
 
     this.state = {
       ...this.state,
       content: content || {
-        children: [
-        ],
+        children: [],
       },
     }
   }
 
-
   updateContent(node) {
-
     const content = {
       attributes: {},
-    };
-
-    const nodes = node.childNodes;
-
-
-    let NodeName = node.nodeName.toLowerCase();
-
-
-    if (NodeName === "#text") {
-      NodeName = undefined;
     }
 
+    const nodes = node.childNodes
+
+    let NodeName = node.nodeName.toLowerCase()
+
+    if (NodeName === '#text') {
+      NodeName = undefined
+    }
 
     if (node.nodeType === Node.TEXT_NODE) {
-      content.text = node.textContent;
-    }
-    else if (node.nodeType === Node.ELEMENT_NODE) {
+      content.text = node.textContent
+    } else if (node.nodeType === Node.ELEMENT_NODE) {
+      const attributes = node.attributes
 
-      const attributes = node.attributes;
-
-      node.getAttributeNames().map(name => {
-
-        let value = attributes[name].value;
+      node.getAttributeNames().map((name) => {
+        let value = attributes[name].value
 
         switch (name) {
-
-          case "id":
-          case "src":
-          case "href":
+          case 'id':
+          case 'src':
+          case 'href':
             // case "editable":
 
-            break;
+            break
 
-          case "class":
+          case 'class':
+            name = 'className'
 
-            name = "className";
+            break
 
-            break;
-
-          case "style":
-
+          case 'style':
             try {
-
-              value = value ? CSSTransform(value) : undefined;
-
-            }
-            catch (error) {
-              console.error(error);
-              value = undefined;
+              value = value ? CSSTransform(value) : undefined
+            } catch (error) {
+              console.error(error)
+              value = undefined
             }
 
-            break;
+            break
 
-          default: return;
+          default:
+            return
         }
 
         Object.assign(content.attributes, {
           [name]: value,
-        });
-
+        })
       })
 
-      const children = [];
+      const children = []
 
-      nodes.forEach(node => {
-
-        children.push(this.updateContent(node, {}));
-
-      });
+      nodes.forEach((node) => {
+        children.push(this.updateContent(node, {}))
+      })
 
       Object.assign(content, {
         children,
-      });
-
+      })
     }
 
-    content.tag = NodeName;
+    content.tag = NodeName
 
-    return content;
-
+    return content
   }
 
-
   renderContent(node, key) {
-
     if (!node) {
-      return null;
+      return null
     }
 
-    const {
-      text,
-      tag: Tag,
-      children,
-      attributes,
-      ...other
-    } = node;
+    const { text, tag: Tag, children, attributes, ...other } = node
 
-    let content = text;
-
+    let content = text
 
     if (children && children.length) {
-      content = children.map((n, index) => this.renderContent(n, index));
+      content = children.map((n, index) => this.renderContent(n, index))
     }
 
     if (Tag) {
-      content = <Tag
-        key={key}
-        {...attributes}
-        {...other}
-      >
-        {content}
-      </Tag>
+      content = (
+        <Tag key={key} {...attributes} {...other}>
+          {content}
+        </Tag>
+      )
     }
 
-    return content;
-
-
+    return content
   }
 
-
   makeNewContent(node) {
-    const nodes = node.childNodes;
+    const nodes = node.childNodes
 
+    const children = []
 
+    const content = {}
 
-    const children = [];
-
-    const content = {
-    };
-
-    nodes.forEach(n => {
-      children.push(this.updateContent(n));
-    });
+    nodes.forEach((n) => {
+      children.push(this.updateContent(n))
+    })
 
     Object.assign(content, {
       children,
-    });
+    })
 
-    return content;
+    return content
   }
 
   componentDidCatch(error, info) {
-
-    console.error(error, info);
+    console.error(error, info)
   }
-
-
-
 }
 
-export default TextArea;
+export default TextArea

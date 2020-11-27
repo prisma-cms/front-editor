@@ -1,18 +1,16 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from 'react'
+import PropTypes from 'prop-types'
 
-import Connector, { ConnectorContext } from '..';
+import Connector, { ConnectorContext } from '..'
 
-import FiltersIcon from "material-ui-icons/FilterList";
-import EditorComponent from '../../../../EditorComponent';
+import FiltersIcon from 'material-ui-icons/FilterList'
+import EditorComponent from '../../../../EditorComponent'
 
-
-import PrismaCmsFilters from "@prisma-cms/filters";
-import ObjectConnector from '../../ObjectConnector';
+import PrismaCmsFilters from '@prisma-cms/filters'
+import ObjectConnector from '../../ObjectConnector'
 
 class Filters extends EditorComponent {
-
-  static Name = "Filters"
+  static Name = 'Filters'
 
   static propsTypes = {
     ...EditorComponent.propsTypes,
@@ -25,96 +23,67 @@ class Filters extends EditorComponent {
     hide_wrapper_in_default_mode: true,
   }
 
-
   canBeChild() {
-
-    return false;
+    return false
   }
-
 
   canBeParent(parent) {
-
-    let can = false;
+    let can = false
 
     if (super.canBeParent(parent)) {
-
       while (parent) {
-
         if (parent instanceof Connector || parent instanceof ObjectConnector) {
+          can = true
 
-          can = true;
-
-          break;
+          break
         }
 
-        parent = parent.props.parent;
+        parent = parent.props.parent
       }
-
     }
 
-    return can;
+    return can
   }
-
 
   renderPanelView(content) {
-
-    const {
-      classes,
-    } = this.getEditorContext();
-
     return super.renderPanelView(
-      content ||
-      <div
-        className={classes.panelButton}
-      >
-        <FiltersIcon /> Filters
-    </div>);
+      content || (
+        <div className="editor-component--panel-icon">
+          <FiltersIcon /> Filters
+        </div>
+      )
+    )
   }
 
-
   renderChildren() {
+    const { inEditMode } = this.getEditorContext()
 
-    const {
-      inEditMode,
-    } = this.getEditorContext();
-
-    const {
-      visible,
-    } = this.getComponentProps(this);
-
-
-
+    const { visible } = this.getComponentProps(this)
 
     if (!visible && !inEditMode) {
-
       return null
     }
 
-    return <ConnectorContext.Consumer
-      key="connector_context"
-    >
-      {context => {
+    return (
+      <ConnectorContext.Consumer key="connector_context">
+        {(context) => {
+          const { queryName, filters, setFilters } = context
 
-        const {
-          queryName,
-          filters,
-          setFilters,
-        } = context;
+          if (!queryName) {
+            return null
+          }
 
-        if (!queryName) {
-          return null;
-        }
-
-        return <PrismaCmsFilters
-          queryName={queryName}
-          filters={filters}
-          setFilters={setFilters}
-        />;
-
-      }}
-    </ConnectorContext.Consumer>;
+          return (
+            <PrismaCmsFilters
+              queryName={queryName}
+              filters={filters}
+              setFilters={setFilters}
+            />
+          )
+        }}
+      </ConnectorContext.Consumer>
+    )
   }
-
 }
 
-export default Filters;
+export default Filters

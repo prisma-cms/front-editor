@@ -1,15 +1,12 @@
-import React, { Fragment } from 'react';
-import PropTypes from "prop-types";
+import React, { Fragment } from 'react'
+import PropTypes from 'prop-types'
 
-import Typography from 'material-ui/Typography';
-import EditorComponent from '../../EditorComponent';
-import { EditableObjectContext } from '../../context';
-
-
+import Typography from 'material-ui/Typography'
+import EditorComponent from '../../EditorComponent'
+import { EditableObjectContext } from '../../context'
 
 export class FileUploader extends EditorComponent {
-
-  static Name = 'FileUploader';
+  static Name = 'FileUploader'
 
   static propTypes = {
     // eslint-disable-next-line react/forbid-foreign-prop-types
@@ -37,56 +34,37 @@ export class FileUploader extends EditorComponent {
     // new_object_connect: false,
   }
 
-
   renderPanelView(content) {
-
-    const {
-      classes,
-    } = this.getEditorContext();
-
     return super.renderPanelView(
-      content ||
-      <div
-        className={classes.panelButton}
-      >
-        FileUploader
-      </div>
-    );
+      content || (
+        <div className="editor-component--panel-icon">FileUploader</div>
+      )
+    )
   }
 
-
   prepareRootElementProps(props) {
-
     const {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       filename_as_name,
       ...other
-    } = super.prepareRootElementProps(props);
+    } = super.prepareRootElementProps(props)
 
-    return other;
+    return other
   }
-
 
   getRootElement() {
-
-    return super.getRootElement();
+    return super.getRootElement()
   }
-
 
   canBeParent(parent) {
-
-    return super.canBeParent(parent);
+    return super.canBeParent(parent)
   }
-
 
   canBeChild() {
-
-    return false;
+    return false
   }
 
-
   renderChildren() {
-
     const {
       name,
       accept,
@@ -94,156 +72,123 @@ export class FileUploader extends EditorComponent {
       filename_as_name,
       multiple,
       ...other
-    } = this.getComponentProps(this);
+    } = this.getComponentProps(this)
 
-
-    const {
-      inEditMode,
-    } = this.getEditorContext();
+    const { inEditMode } = this.getEditorContext()
 
     if (!name) {
-
       if (inEditMode) {
-        return <Typography
-          color="error"
-        >
-          Property "name" required
-        </Typography>
+        return <Typography color="error">Property "name" required</Typography>
+      } else {
+        return null
       }
-      else {
-        return null;
-      }
-
     }
 
-    return <EditableObjectContext.Consumer
-      key="editableobject_context"
-    >
-      {editableObjectContext => {
+    return (
+      <EditableObjectContext.Consumer key="editableobject_context">
+        {(editableObjectContext) => {
+          const {
+            getEditor,
+            updateObject,
+            getObjectWithMutations,
+          } = editableObjectContext
 
-        const {
-          getEditor,
-          updateObject,
-          getObjectWithMutations,
-        } = editableObjectContext;
-
-
-        if (!updateObject) {
-          if (inEditMode) {
-            return <Typography
-              color="error"
-            >
-              updateObject method required
-            </Typography>
-          }
-          else {
-            return null;
-          }
-        }
-
-        return getEditor ? getEditor({
-          ...this.getComponentProps(this),
-          Editor: (props) => {
-
-            const {
-              label,
-              error,
-              // errors,
-              // helperText,
-              // onChange,
-            } = props;
-
-
-            return <Fragment>
-
-              {label ?
-                <Typography
-                  color={error ? "error" : "textSecondary"}
-                >
-                  {label}
+          if (!updateObject) {
+            if (inEditMode) {
+              return (
+                <Typography color="error">
+                  updateObject method required
                 </Typography>
-                : null
-              }
+              )
+            } else {
+              return null
+            }
+          }
 
-              {this.renderUploader({
-                accept,
-                directory,
-                multiple,
-                onUpload: (result) => {
+          return getEditor
+            ? getEditor({
+                ...this.getComponentProps(this),
+                Editor: (props) => {
+                  const {
+                    label,
+                    error,
+                    // errors,
+                    // helperText,
+                    // onChange,
+                  } = props
 
-                  if (!result) {
-                    return;
-                  }
+                  return (
+                    <Fragment>
+                      {label ? (
+                        <Typography color={error ? 'error' : 'textSecondary'}>
+                          {label}
+                        </Typography>
+                      ) : null}
 
-                  let data;
+                      {this.renderUploader({
+                        accept,
+                        directory,
+                        multiple,
+                        onUpload: (result) => {
+                          if (!result) {
+                            return
+                          }
 
-                  if (Array.isArray(result)) {
+                          let data
 
-                    const {
-                      [name]: field,
-                    } = getObjectWithMutations();
+                          if (Array.isArray(result)) {
+                            const { [name]: field } = getObjectWithMutations()
 
-                    const {
-                      connect,
-                    } = field || {};
+                            const { connect } = field || {}
 
-                    data = {
-                      [name]: {
-                        connect: (connect ? (Array.isArray(connect) ? connect : [connect]) : []).concat(
-                          result.map(n => ({
-                            id: n.id,
-                          }))
-                        ),
-                      },
-                    };
+                            data = {
+                              [name]: {
+                                connect: (connect
+                                  ? Array.isArray(connect)
+                                    ? connect
+                                    : [connect]
+                                  : []
+                                ).concat(
+                                  result.map((n) => ({
+                                    id: n.id,
+                                  }))
+                                ),
+                              },
+                            }
+                          } else {
+                            const { id, path } = result
 
-                  }
-                  else {
+                            if (filename_as_name) {
+                              data = {
+                                [name]: path,
+                              }
+                            } else {
+                              data = {
+                                [name]: {
+                                  connect: {
+                                    id,
+                                  },
+                                },
+                              }
+                            }
+                          }
 
-                    const {
-                      id,
-                      path,
-                    } = result;
-
-                    if (filename_as_name) {
-                      data = {
-                        [name]: path,
-                      };
-                    }
-                    else {
-                      data = {
-                        [name]: {
-                          connect: {
-                            id,
-                          },
+                          updateObject(data)
                         },
-                      };
-                    }
-
-                  }
-
-
-                  updateObject(data);
-
+                        ...other,
+                      })}
+                    </Fragment>
+                  )
                 },
-                ...other,
-              })}
-
-
-            </Fragment>
-
-          },
-          onChange: () => {
-            return;
-          },
-        }) : super.renderChildren();
-
-
-      }}
-    </EditableObjectContext.Consumer>
-
+                onChange: () => {
+                  return
+                },
+              })
+            : super.renderChildren()
+        }}
+      </EditableObjectContext.Consumer>
+    )
   }
-
 }
 
-export default FileUploader;
+export default FileUploader

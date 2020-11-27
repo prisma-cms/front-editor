@@ -1,69 +1,50 @@
-import React from 'react';
+import React from 'react'
 
-import Icon from "material-ui-icons/Image";
-import EditorComponent from '../../../../../EditorComponent';
-import { ObjectContext } from '../../ListView';
-
-
+import Icon from 'material-ui-icons/Image'
+import EditorComponent from '../../../../../EditorComponent'
+import { ObjectContext } from '../../ListView'
 
 class ObjectImage extends EditorComponent {
-
-
   static defaultProps = {
     ...EditorComponent.defaultProps,
-    name: "image",
+    name: 'image',
     type: 'thumb',
     style: {
       ...EditorComponent.defaultProps.style,
-      maxWidth: "100%",
+      maxWidth: '100%',
     },
     hide_wrapper_in_default_mode: true,
   }
 
-  static Name = "ObjectImage"
+  static Name = 'ObjectImage'
 
   renderPanelView(content) {
-
-    const {
-      classes,
-    } = this.getEditorContext();
-
     return super.renderPanelView(
-      content ||
-      <div
-        className={classes.panelButton}
-      >
-        <Icon /> Object Image
-    </div>);
+      content || (
+        <div className="editor-component--panel-icon">
+          <Icon /> Object Image
+        </div>
+      )
+    )
   }
-
 
   getRootElement() {
-
-    return "span";
+    return 'span'
   }
 
-
   renderMainView() {
-
-    const {
-      inEditMode,
-    } = this.getEditorContext();
+    const { inEditMode } = this.getEditorContext()
 
     if (!inEditMode) {
-      return this.renderChildren();
+      return this.renderChildren()
     }
 
     // else
-    return super.renderMainView();
+    return super.renderMainView()
   }
 
-
   renderChildren() {
-
-    const {
-      Image,
-    } = this.context;
+    const { Image } = this.context
 
     // {...this.getRenderProps()}
 
@@ -74,52 +55,38 @@ class ObjectImage extends EditorComponent {
       field_name,
 
       ...other
-    } = this.getComponentProps(this);
+    } = this.getComponentProps(this)
 
-    let name = nameProp;
+    let name = nameProp
 
     if (name === undefined) {
-      name = field_name;
+      name = field_name
     }
 
+    return (
+      <ObjectContext.Consumer key="object_context">
+        {(context) => {
+          const { object } = context
 
-    return <ObjectContext.Consumer
-      key="object_context"
-    >
-      {context => {
+          if (!object) {
+            return null
+          }
 
-        const {
-          object,
-        } = context;
+          const { [name]: image } = object
 
-        if (!object) {
-          return null;
-        }
-
-        const {
-          [name]: image,
-        } = object;
-
-
-        /**
+          /**
           Если нет картинки, то смотрим на текущий режим.
           Если в режиме редактирования работаем, 
          */
-        if (!image) {
-          return null;
-        }
+          if (!image) {
+            return null
+          }
 
-
-        return <Image
-          {...other}
-          src={image}
-        >
-        </Image>;
-
-      }}
-    </ObjectContext.Consumer>
+          return <Image {...other} src={image}></Image>
+        }}
+      </ObjectContext.Consumer>
+    )
   }
-
 }
 
-export default ObjectImage;
+export default ObjectImage

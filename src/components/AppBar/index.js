@@ -1,38 +1,25 @@
-import React from 'react';
-import EditorComponent from '../../EditorComponent';
+import React from 'react'
+import EditorComponent from '../../EditorComponent'
 
-import MuiAppBar from 'material-ui/AppBar';
+import MuiAppBar from 'material-ui/AppBar'
 
 class AppBar extends EditorComponent {
-
   static defaultProps = {
     ...EditorComponent.defaultProps,
-    position: "static",
+    position: 'static',
   }
 
-  static Name = "AppBar"
+  static Name = 'AppBar'
 
   renderPanelView(content) {
-
-    const {
-      classes,
-    } = this.getEditorContext();
-
     return super.renderPanelView(
-      content ||
-      <div
-        className={classes.panelButton}
-      >
-        AppBar
-    </div>);
+      content || <div className="editor-component--panel-icon">AppBar</div>
+    )
   }
-
 
   getRootElement() {
-
-    return MuiAppBar;
+    return MuiAppBar
   }
-
 }
 
-export default AppBar;
+export default AppBar

@@ -1,147 +1,108 @@
-import React from 'react';
-import EditorComponent from '../../../EditorComponent';
+import React from 'react'
+import EditorComponent from '../../../EditorComponent'
 
-import Icon from "material-ui-icons/SwapHoriz";
-import CloseIcon from "material-ui-icons/Close";
+import Icon from 'material-ui-icons/SwapHoriz'
+import CloseIcon from 'material-ui-icons/Close'
 
-import QueryBuilder from "@prisma-cms/query-builder";
-import Drawer from 'material-ui/Drawer';
-import Button from 'material-ui/Button';
+import QueryBuilder from '@prisma-cms/query-builder'
+import Drawer from 'material-ui/Drawer'
+import Button from 'material-ui/Button'
 
 class Query extends EditorComponent {
-
   static defaultProps = {
     ...EditorComponent.defaultProps,
     hide_wrapper_in_default_mode: true,
   }
 
-  static Name = "Query"
-  static help_url = "https://front-editor.prisma-cms.com/topics/query.html";
-
+  static Name = 'Query'
+  static help_url = 'https://front-editor.prisma-cms.com/topics/query.html'
 
   constructor(props) {
-
-    super(props);
+    super(props)
 
     this.state = {
       ...this.state,
       expanded: false,
     }
-
   }
-
 
   renderPanelView(content) {
-
-    const {
-      classes,
-    } = this.getEditorContext();
-
     return super.renderPanelView(
-      content ||
-      <div
-        className={classes.panelButton}
-      >
-        <Icon /> Query
-    </div>);
+      content || (
+        <div className="editor-component--panel-icon">
+          <Icon /> Query
+        </div>
+      )
+    )
   }
 
-
   onClick(event) {
-
     if (event.target === event.currentTarget) {
-
-      const {
-        active,
-        expanded,
-      } = this.state;
+      const { active, expanded } = this.state
 
       if (active && !expanded) {
         this.setState({
           expanded: true,
-        });
+        })
       }
-
     }
 
-    return super.onClick(event);
-
+    return super.onClick(event)
   }
 
-  onEditQuery = query => {
-    this.updateComponentProperty("query", query)
+  onEditQuery = (query) => {
+    this.updateComponentProperty('query', query)
   }
-
 
   renderChildren() {
+    const { activeItem } = this.getEditorContext()
 
-    const {
-      activeItem,
-    } = this.getEditorContext();
+    let output = null
 
-    let output = null;
+    const { query } = this.getComponentProps(this)
 
-
-    const {
-      query,
-    } = this.getComponentProps(this);
-
-
-    const {
-      expanded,
-    } = this.state;
-
+    const { expanded } = this.state
 
     if (activeItem && activeItem === this && expanded) {
-
-      output = <Drawer
-        key="drawer"
-        anchor="top"
-        open={true}
-        onClose={this.close}
-        style={{
-          zIndex: 3000,
-        }}
-        PaperProps={{
-          style: {
-            height: "100%",
-          },
-        }}
-      >
-
-        <div
+      output = (
+        <Drawer
+          key="drawer"
+          anchor="top"
+          open={true}
+          onClose={this.close}
           style={{
-            textAlign: "right",
+            zIndex: 3000,
+          }}
+          PaperProps={{
+            style: {
+              height: '100%',
+            },
           }}
         >
-          <Button
-            onClick={this.close}
+          <div
+            style={{
+              textAlign: 'right',
+            }}
           >
-            <CloseIcon />
-          </Button>
-        </div>
+            <Button onClick={this.close}>
+              <CloseIcon />
+            </Button>
+          </div>
 
-        <QueryBuilder
-          query={query || ""}
-          onEditQuery={this.onEditQuery }
-        />
-        {/* </div> */}
-      </Drawer>
-
-    }
-    else {
-      output = super.renderChildren();
+          <QueryBuilder query={query || ''} onEditQuery={this.onEditQuery} />
+          {/* </div> */}
+        </Drawer>
+      )
+    } else {
+      output = super.renderChildren()
     }
 
-    return output;
-
+    return output
   }
 
-
-  close = event => {
-
-    event.preventDefault();
-    event.stopPropagation();
+  close = (event) => {
+    event.preventDefault()
+    event.stopPropagation()
 
     // const {
     //   setActiveItem,
@@ -151,10 +112,8 @@ class Query extends EditorComponent {
 
     this.setState({
       expanded: false,
-    });
-
+    })
   }
-
 }
 
-export default Query;
+export default Query

@@ -1,78 +1,54 @@
-import React from 'react';
+import React from 'react'
 
-import { ObjectContext } from '../ListView';
+import { ObjectContext } from '../ListView'
 
-import UserIcon from "material-ui-icons/Face";
-import EditorComponent from '../../../../EditorComponent';
+import UserIcon from 'material-ui-icons/Face'
+import EditorComponent from '../../../../EditorComponent'
 
 class UserLink extends EditorComponent {
-
-
-  static Name = "UserLink"
-
+  static Name = 'UserLink'
 
   static defaultProps = {
     ...EditorComponent.defaultProps,
     hide_wrapper_in_default_mode: true,
   }
-  
 
   renderPanelView(content) {
-
-    const {
-      classes,
-    } = this.getEditorContext();
-
     return super.renderPanelView(
-      content ||
-      <div
-        className={classes.panelButton}
-      >
-        <UserIcon /> User link
-    </div>);
+      content || (
+        <div className="editor-component--panel-icon">
+          <UserIcon /> User link
+        </div>
+      )
+    )
   }
-
 
   getRootElement() {
-
-    return "span";
+    return 'span'
   }
-
 
   renderChildren() {
+    const { UserLink: PrismaCmsUserLink } = this.context
 
-    const {
-      UserLink: PrismaCmsUserLink,
-    } = this.context;
-
-    if(!PrismaCmsUserLink) {
-      console.error("UserLink not defined");
-      return null;
+    if (!PrismaCmsUserLink) {
+      console.error('UserLink not defined')
+      return null
     }
 
-    return <ObjectContext.Consumer
-      key="object_context"
-    >
-      {context => {
+    return (
+      <ObjectContext.Consumer key="object_context">
+        {(context) => {
+          const { object, ...other } = context
 
-        const {
-          object,
-          ...other
-        } = context;
+          if (!object) {
+            return null
+          }
 
-        if (!object) {
-          return null;
-        }
-
-        return <PrismaCmsUserLink
-          user={object}
-          {...other}
-        />
-
-      }}
-    </ObjectContext.Consumer>
+          return <PrismaCmsUserLink user={object} {...other} />
+        }}
+      </ObjectContext.Consumer>
+    )
   }
-
 }
 
-export default UserLink;
+export default UserLink

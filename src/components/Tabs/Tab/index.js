@@ -1,55 +1,37 @@
-import React from 'react';
+import React from 'react'
 
-import Tabs from '..';
-import EditorComponent from '../../../EditorComponent';
+import Tabs from '..'
+import EditorComponent from '../../../EditorComponent'
 
 export class Tab extends EditorComponent {
+  static Name = 'Tab'
 
-  static Name = 'Tab';
-
-  static saveable = false;
+  static saveable = false
 
   static defaultProps = {
     ...EditorComponent.defaultProps,
-    label: "",
+    label: '',
     disabled: false,
     value: undefined,
   }
 
-
   renderPanelView() {
-
-    const {
-      classes,
-    } = this.getEditorContext();
-
     return super.renderPanelView(
-      <div
-        className={classes.panelButton}
-      >
-        Tab
-      </div>
-    );
+      <div className="editor-component--panel-icon">Tab</div>
+    )
   }
-
 
   getRootElement() {
-
-    return super.getRootElement();
+    return super.getRootElement()
   }
-
 
   canBeParent(parent) {
-
-    return parent instanceof Tabs;
+    return parent instanceof Tabs
   }
-
 
   canBeChild(child) {
-
-    return super.canBeChild(child);
+    return super.canBeChild(child)
   }
-
 
   // renderChildren() {
 
@@ -65,7 +47,6 @@ export class Tab extends EditorComponent {
 
   //   return super.renderChildren();
   // }
-
 }
 
-export default Tab;
+export default Tab

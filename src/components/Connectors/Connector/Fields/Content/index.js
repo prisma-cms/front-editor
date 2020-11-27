@@ -1,11 +1,11 @@
-import React from 'react';
+import React from 'react'
 // import PropTypes from 'prop-types';
 
 import Editor from '@prisma-cms/editor'
-import Icon from "material-ui-icons/Subject";
+import Icon from 'material-ui-icons/Subject'
 
-import EditorComponent from '../../../../../EditorComponent';
-import { ObjectContext } from '../../ListView';
+import EditorComponent from '../../../../../EditorComponent'
+import { ObjectContext } from '../../ListView'
 
 // TODO replace with RichText
 /**
@@ -13,73 +13,50 @@ import { ObjectContext } from '../../ListView';
  * Use RichText instead
  */
 class Content extends EditorComponent {
-
-
   static defaultProps = {
     ...EditorComponent.defaultProps,
     readOnly: true,
     hide_wrapper_in_default_mode: true,
   }
 
-  static Name = "Content"
-
+  static Name = 'Content'
 
   renderPanelView(content) {
-
-    const {
-      classes,
-    } = this.getEditorContext();
-
     return super.renderPanelView(
-      content ||
-      <div
-      className={classes.panelButton}
-    >
-      <Icon /> Content
-    </div>);
+      content || (
+        <div className="editor-component--panel-icon">
+          <Icon /> Content
+        </div>
+      )
+    )
   }
-
 
   getRootElement() {
-
-    return "div";
+    return 'div'
   }
-
-
 
   renderChildren() {
+    const { readOnly } = this.props
 
-    const {
-      readOnly,
-    } = this.props;
+    return (
+      <ObjectContext.Consumer key="object_context">
+        {(context) => {
+          const {
+            object,
+            // ...other
+          } = context
 
-    return <ObjectContext.Consumer
-      key="object_context"
-    >
-      {context => {
+          if (!object) {
+            return null
+          }
 
-        const {
-          object,
-          // ...other
-        } = context;
+          const { content } = object
 
-        if (!object) {
-          return null;
-        }
-
-        const {
-          content,
-        } = object;
-
-        return content ? <Editor
-          value={content}
-          readOnly={readOnly}
-        /> : null;
-
-      }}
-    </ObjectContext.Consumer>;
+          return content ? <Editor value={content} readOnly={readOnly} /> : null
+        }}
+      </ObjectContext.Consumer>
+    )
   }
-
 }
 
-export default Content;
+export default Content

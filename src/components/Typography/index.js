@@ -1,52 +1,39 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import React, { Component, Fragment } from 'react';
-import PropTypes from 'prop-types';
-import EditorComponent from '../../EditorComponent';
+import React, { Component, Fragment } from 'react'
+import PropTypes from 'prop-types'
+import EditorComponent from '../../EditorComponent'
 
-import Icon from "material-ui-icons/TextFormat";
-import MuiTypography from "material-ui/Typography";
-
+import Icon from 'material-ui-icons/TextFormat'
+import MuiTypography from 'material-ui/Typography'
 
 class Typography extends EditorComponent {
-
-  static Name = "Typography"
+  static Name = 'Typography'
 
   static defaultProps = {
     ...EditorComponent.defaultProps,
-    variant: "body1",
-    color: "default",
-    text: "",
-    displayType: "span",
-    display: "inline-block",
+    variant: 'body1',
+    color: 'default',
+    text: '',
+    displayType: 'span',
+    display: 'inline-block',
   }
-
 
   renderPanelView(content) {
-
-    const {
-      classes,
-    } = this.getEditorContext();
-
     return super.renderPanelView(
-      content ||
-      <div
-        className={classes.panelButton}
-      >
-        <Icon /> Typography
-    </div>);
+      content || (
+        <div className="editor-component--panel-icon">
+          <Icon /> Typography
+        </div>
+      )
+    )
   }
-
-
 
   getRootElement() {
-    return MuiTypography;
+    return MuiTypography
   }
 
-
   getRenderProps() {
-
     const {
-      classes,
       style,
       display,
       displayType,
@@ -60,7 +47,7 @@ class Typography extends EditorComponent {
         ...otherProps
       },
       ...other
-    } = super.getRenderProps();
+    } = super.getRenderProps()
 
     // const {
     //   text,
@@ -71,8 +58,6 @@ class Typography extends EditorComponent {
     //   displayType,
     //   ...otherProps
     // } = this.getComponentProps(this);
-
-
 
     return {
       ...other,
@@ -86,9 +71,7 @@ class Typography extends EditorComponent {
     }
   }
 
-
   renderChildren() {
-
     const {
       text,
       // type,
@@ -97,13 +80,7 @@ class Typography extends EditorComponent {
       // display,
       // displayType,
       // ...otherProps
-    } = this.getComponentProps(this);
-
-
-
-
-
-
+    } = this.getComponentProps(this)
 
     // const {
     //   // text,
@@ -118,20 +95,22 @@ class Typography extends EditorComponent {
     //   ...other
     // } = this.getRenderProps();
 
-
-    return <Fragment
-      // {...other}
-      // style={{
-      //   ...style,
-      //   display,
-      // }}
-      // color={color}
-      // component={displayType}
-      // {...otherProps}
-      key="typography"
-    >
-      {text}{super.renderChildren()}
-    </Fragment>;
+    return (
+      <Fragment
+        // {...other}
+        // style={{
+        //   ...style,
+        //   display,
+        // }}
+        // color={color}
+        // component={displayType}
+        // {...otherProps}
+        key="typography"
+      >
+        {text}
+        {super.renderChildren()}
+      </Fragment>
+    )
   }
 
   // renderMainView() {
@@ -146,12 +125,6 @@ class Typography extends EditorComponent {
   //     ...otherProps
   //   } = this.getComponentProps(this);
 
-
-
-
-
-
-
   //   const {
   //     // text,
   //     // type,
@@ -164,7 +137,6 @@ class Typography extends EditorComponent {
   //     // },
   //     ...other
   //   } = this.getRenderProps();
-
 
   //   return <MuiTypography
   //     {...other}
@@ -179,7 +151,6 @@ class Typography extends EditorComponent {
   //     {text}{super.renderMainView()}
   //   </MuiTypography>;
   // }
-
 }
 
-export default Typography;
+export default Typography
