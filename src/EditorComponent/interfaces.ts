@@ -41,6 +41,8 @@ export interface EditorComponentProps extends EditableObjectProps {
   mode: 'main' | 'panel' | 'settings' | 'add_child'
 
   object: EditorComponentObject
+  _dirty: Partial<EditorComponentObject>
+
   props?: EditorComponentObject['props']
 
   /**

@@ -301,7 +301,7 @@ export class EditorComponent<
    * Так как компоненты рендерятся на основании передаваемых свойств,
    * надо обновить данные абсолютного родителя, а не просто текущего элемента
    */
-  updateObject(data: Partial<EditorComponentObject>) {
+  updateObject(data: P["_dirty"]) {
     const object = this.getObjectWithMutations()
 
     const activeParent = this.getActiveParent()
@@ -2569,6 +2569,9 @@ export class EditorComponent<
       can_be_edited,
       delete_component,
       // contentEditable,
+      onChangeState,
+      parentId,
+      isActive,
       ...other
     } = props
 
@@ -2726,6 +2729,7 @@ export class EditorComponent<
       if (inEditMode) {
         return (
           <Typography
+            key={`MissedComponent--${index}`}
             // size="small"
             // variant="raised"
             color="error"
