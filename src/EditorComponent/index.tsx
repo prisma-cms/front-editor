@@ -117,6 +117,7 @@ const defaultProps: typeof EditableObject.defaultProps & {
   hide_wrapper_in_default_mode: false,
   render_badge: true,
   can_be_edited: true,
+  render_add_button: true,
 }
 
 export class EditorComponent<
@@ -1383,8 +1384,13 @@ export class EditorComponent<
     const {
       className,
       style,
+      render_add_button,
       // ...other
     } = this.props
+
+    if (!render_add_button) {
+      return null
+    }
 
     return (
       <Grid item>
@@ -2546,6 +2552,9 @@ export class EditorComponent<
       onChangeState,
       parentId,
       isActive,
+      render_add_button,
+      render_toolbar,
+      editable,
       ...other
     } = props
 

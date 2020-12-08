@@ -111,6 +111,11 @@ export interface EditorComponentProps extends EditableObjectProps {
   onChangeState?: (
     data: EditorComponentProps['_dirty']
   ) => EditorComponentProps['_dirty']
+
+  /**
+   * Show button in add children panel
+   */
+  render_add_button?: boolean
 }
 
 export interface EditorComponentState extends EditableObjectState {

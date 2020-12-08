@@ -13,6 +13,7 @@ export class Tag extends HtmlTag {
     ...HtmlTag.defaultProps,
     render_badge: true,
     can_be_edited: true,
+    render_add_button: true,
   }
 
   renderPanelView(content?: React.ReactNode) {

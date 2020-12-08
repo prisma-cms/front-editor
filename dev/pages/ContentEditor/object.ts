@@ -1,6 +1,7 @@
 import { EditorComponentObject } from '../../../src/EditorComponent'
 
 const object: EditorComponentObject = {
+  id: 'test-content-editor',
   name: 'Section',
   props: {},
   components: [

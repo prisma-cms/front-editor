@@ -5,8 +5,7 @@ import EditorComponent from '../../../EditorComponent'
 import { HtmlTagProps, HtmlTagState } from './interfaces'
 export * from './interfaces'
 
-// TODO: Restore
-// import CSSTransform from "./CSSTransform";
+import CSSTransform from './CSSTransform'
 
 export default class HtmlTag<
   P extends HtmlTagProps = HtmlTagProps,
@@ -21,6 +20,7 @@ export default class HtmlTag<
     contentEditable: undefined,
     render_badge: false,
     can_be_edited: false,
+    render_add_button: false,
   }
 
   constructor(props: P) {
@@ -232,7 +232,7 @@ export default class HtmlTag<
   }
 
   updateContent(
-    node: InstanceType<typeof EditorComponent> | HTMLElement | ChildNode,
+    node: InstanceType<typeof EditorComponent> | Element | ChildNode,
     content?: P['object']
   ) {
     // if (!node || (typeof node !== "object") || typeof node.reactComponent === "undefined") {
@@ -269,9 +269,10 @@ export default class HtmlTag<
       }
 
       return
-    } else if (!(node instanceof HTMLElement)) {
-      return
     }
+    // else if (!(node instanceof HTMLElement)) {
+    //   return
+    // }
 
     const nodes = node.childNodes
 
@@ -283,11 +284,12 @@ export default class HtmlTag<
 
     if (node.nodeType === Node.TEXT_NODE) {
       content.props.text = node.textContent
-    } else if (node.nodeType === Node.ELEMENT_NODE) {
+    } else if (node instanceof Element && node.nodeType === Node.ELEMENT_NODE) {
       const attributes = node.attributes
 
       node.getAttributeNames().map((name: string) => {
-        const value = attributes.getNamedItem(name)?.value
+        let value: string | Record<string, any> | undefined =
+          attributes.getNamedItem(name)?.value ?? undefined
 
         switch (name) {
           // case "id":
@@ -320,15 +322,12 @@ export default class HtmlTag<
 
           case 'style':
             // TODO Restore
-            // try {
-
-            //   value = value ? CSSTransform(value) : undefined;
-
-            // }
-            // catch (error) {
-            //   console.error(error);
-            //   value = undefined;
-            // }
+            try {
+              value = value ? CSSTransform(value) : undefined
+            } catch (error) {
+              console.error(error)
+              value = undefined
+            }
 
             break
 

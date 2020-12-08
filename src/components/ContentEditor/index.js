@@ -1,4 +1,6 @@
 /* eslint-disable react/forbid-foreign-prop-types */
+
+
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
@@ -27,6 +29,7 @@ import UndoIcon from 'material-ui-icons/Undo'
 import SaveIcon from 'material-ui-icons/Save'
 import Grid from '../../common/Grid'
 
+// TODO move to separated file
 export class TagEditor extends HtmlTag {
   static propTypes = {
     ...HtmlTag.propTypes,
@@ -591,6 +594,7 @@ export class TagEditor extends HtmlTag {
   }
 }
 
+// TODO move to separated file
 export class ContentProxy extends Component {
   state = {
     // inEditMode: false,
@@ -647,6 +651,7 @@ export class ContentProxy extends Component {
   }
 }
 
+// TODO remove withStyles
 export const tagEditorStyles = {
   root: {
     '& table': {
@@ -685,6 +690,7 @@ export const tagEditorStyles = {
   },
 }
 
+// TODO move to separated file
 export const ContentProxyStyled = withStyles(tagEditorStyles)(ContentProxy)
 
 export class ContentEditor extends EditorComponent {
