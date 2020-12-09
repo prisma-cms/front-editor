@@ -1,6 +1,13 @@
 {
   "presets": ["next/babel"],
   "plugins": [
+    [
+      // https://github.com/facebook/create-react-app/issues/8918
+      "@babel/plugin-transform-typescript",
+      {
+        "allowDeclareFields": true
+      }
+    ]
     // [
     // Не используем этот плагин, так как из-за него магия с тестами происходит.
     // https://github.com/styled-components/jest-styled-components/issues/294

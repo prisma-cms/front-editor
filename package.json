@@ -36,6 +36,7 @@
   },
   "dependencies": {},
   "devDependencies": {
+    "@babel/plugin-transform-typescript": "^7.12.1",
     "@next/bundle-analyzer": "^9.5.5",
     "@storybook/addon-actions": "^6.1.6",
     "@storybook/addon-docs": "^6.1.6",
