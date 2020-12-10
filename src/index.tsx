@@ -539,6 +539,41 @@ export class FrontEditor<
     this.actionPanel = el
   }
 
+  onWindowClick = () => {
+    /**
+     * Unset all active items
+     */
+    this.setActiveItem(null)
+  }
+
+  componentDidMount() {
+    this.addEvents()
+
+    super.componentDidMount && super.componentDidMount()
+  }
+
+  componentWillUnmount() {
+    this.removeEvents()
+
+    super.componentWillUnmount && super.componentWillUnmount()
+  }
+
+  addEvents() {
+    if (typeof window !== 'undefined') {
+      window.addEventListener('click', this.onWindowClick)
+    }
+  }
+
+  removeEvents() {
+    if (typeof window !== 'undefined') {
+      window.removeEventListener('click', this.onWindowClick)
+    }
+  }
+
+  stopPropagation = (event: React.MouseEvent<HTMLDivElement>) => {
+    event.stopPropagation()
+  }
+
   render() {
     const { inEditMode, className, itemsOnly } = this.props
 
@@ -576,12 +611,14 @@ export class FrontEditor<
               <div
                 ref={this.actionPanelRef}
                 className="front-editor--action-panel actionPanel"
+                onClick={this.stopPropagation}
               ></div>
             </div>
 
             <div
               id="prisma-cms-front-editor--panel"
               className="panel bordered opened"
+              onClick={this.stopPropagation}
             >
               {this.renderPanels()}
             </div>

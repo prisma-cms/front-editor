@@ -41,7 +41,7 @@ export interface EditorComponentProps extends EditableObjectProps {
   mode: 'main' | 'panel' | 'settings' | 'add_child'
 
   object: EditorComponentObject
-  _dirty?: Partial<EditorComponentProps["object"]>
+  _dirty?: Partial<EditorComponentProps['object']>
 
   props?: EditorComponentProps['object']['props']
 
@@ -108,9 +108,7 @@ export interface EditorComponentProps extends EditableObjectProps {
   /**
    * Handler on change component data
    */
-  onChangeState?: (
-    data: EditorComponentProps['_dirty']
-  ) => EditorComponentProps['_dirty']
+  onChangeState?: EditorComponent['prepareDirty']
 
   /**
    * Show button in add children panel
