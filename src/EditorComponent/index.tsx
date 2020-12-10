@@ -57,7 +57,7 @@ import {
 export * from './interfaces'
 
 // eslint-disable-next-line @typescript-eslint/no-empty-function
-const emptyMutate = async () => {}
+const emptyMutate = async () => { }
 
 const defaultProps: typeof EditableObject.defaultProps & {
   contentEditable: boolean | undefined
@@ -123,7 +123,7 @@ const defaultProps: typeof EditableObject.defaultProps & {
 export class EditorComponent<
   P extends EditorComponentProps = EditorComponentProps,
   S extends EditorComponentState = EditorComponentState
-> extends EditableObject<P, S> {
+  > extends EditableObject<P, S> {
   // static id = module.id;
 
   context!: PrismaCmsContext
@@ -287,10 +287,15 @@ export class EditorComponent<
   //   return false
   // }
 
-  prepareDirty(data: P['_dirty']) {
+  prepareDirty(data: P['_dirty']): P['_dirty'] | undefined {
     const newData = super.prepareDirty(data)
 
     this.props.onChangeState && this.props.onChangeState(newData)
+
+    if (this.props.onChangeState) {
+      this.props.onChangeState(newData);
+      return;
+    }
 
     return newData
   }
@@ -1398,7 +1403,7 @@ export class EditorComponent<
           className={['panelItem', className].join(' ')}
           onClick={this.onAddButtonClick}
           style={style}
-          // {...other}
+        // {...other}
         >
           {content || (this.constructor as typeof EditorComponent).Name}{' '}
           {help_url ? (
@@ -1537,9 +1542,9 @@ export class EditorComponent<
           style={
             canEdit
               ? {
-                  border: '1px dashed #ddd',
-                  padding: 3,
-                }
+                border: '1px dashed #ddd',
+                padding: 3,
+              }
               : undefined
           }
           onInput={this.onInputSettings}
@@ -1615,9 +1620,9 @@ export class EditorComponent<
         container
         spacing={8}
         alignItems="center"
-        // style={{
-        //   flexDirection: "row-reverse",
-        // }}
+      // style={{
+      //   flexDirection: "row-reverse",
+      // }}
       >
         <Grid item xs></Grid>
 
@@ -1975,7 +1980,7 @@ export class EditorComponent<
                   />
                 }
                 label={name}
-                // fullWidth
+              // fullWidth
               />
             </Grid>
             {deleteButton ? <Grid item>{deleteButton}</Grid> : null}
@@ -2768,8 +2773,8 @@ export class EditorComponent<
     return !name && !component
       ? ''
       : name === component
-      ? name
-      : `${name} (${component})`
+        ? name
+        : `${name} (${component})`
   }
 
   renderEmpty() {

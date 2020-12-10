@@ -16,9 +16,9 @@ export interface EditorComponentObject<
   __typename?: string | undefined
   id?: string
   name: string
-  description?: string
+  description?: string | null
   component: string | EditorComponent
-  components: EditorComponentObject[]
+  components: Array<EditorComponentObject<P>>
   // props: React.AllHTMLAttributes<P> & {
   props: P & {
     // TODO maybe replace with "content"
@@ -41,9 +41,9 @@ export interface EditorComponentProps extends EditableObjectProps {
   mode: 'main' | 'panel' | 'settings' | 'add_child'
 
   object: EditorComponentObject
-  _dirty: Partial<EditorComponentObject>
+  _dirty?: Partial<EditorComponentProps["object"]>
 
-  props?: EditorComponentObject['props']
+  props?: EditorComponentProps['object']['props']
 
   /**
    * Родительский инстанс компонента.
