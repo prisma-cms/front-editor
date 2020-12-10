@@ -290,8 +290,6 @@ export class EditorComponent<
   prepareDirty(data: P['_dirty']): P['_dirty'] | undefined {
     const newData = super.prepareDirty(data)
 
-    this.props.onChangeState && this.props.onChangeState(newData)
-
     if (this.props.onChangeState) {
       this.props.onChangeState(newData);
       return;
