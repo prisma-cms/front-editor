@@ -12,7 +12,7 @@ class Page<
     hide_wrapper_in_default_mode: true,
   }
 
-  static Name = 'Page'
+  static Name = 'Page' as 'Page'
 
   canBeParent() {
     return false

@@ -11,7 +11,7 @@ export default class HtmlTag<
   P extends HtmlTagProps = HtmlTagProps,
   S extends HtmlTagState = HtmlTagState
 > extends EditorComponent<P, S> {
-  static Name = 'HtmlTag'
+  static Name: "HtmlTag" | "Tag" = 'HtmlTag'
   static help_url = 'https://front-editor.prisma-cms.com/topics/html-tag.html'
 
   static defaultProps = {

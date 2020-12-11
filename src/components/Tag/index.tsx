@@ -4,10 +4,12 @@ import React from 'react'
 
 import Icon from 'material-ui-icons/Title'
 
-import HtmlTag, { HtmlTagProps } from './HtmlTag'
+import HtmlTag from './HtmlTag'
+import { TagProps, TagState } from './interfaces'
 
-export class Tag extends HtmlTag {
-  static Name = 'Tag'
+export class Tag<P extends TagProps = TagProps, S extends TagState = TagState>
+  extends HtmlTag<P, S> {
+  static Name = 'Tag' as 'Tag'
 
   static defaultProps = {
     ...HtmlTag.defaultProps,
@@ -32,7 +34,7 @@ export class Tag extends HtmlTag {
     return inEditMode ? true : false
   }
 
-  prepareRootElementProps(props: HtmlTagProps & Record<string, any>) {
+  prepareRootElementProps(props: P & Record<string, any>): Record<string, any> {
     const {
       initialContent,
       read_only,

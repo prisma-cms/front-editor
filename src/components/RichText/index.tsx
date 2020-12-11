@@ -6,7 +6,7 @@ import Editor from '@prisma-cms/editor'
 import EditorComponent, { EditorComponentProps } from '../../EditorComponent'
 
 export class RichText extends EditorComponent {
-  static Name = 'RichText'
+  static Name = 'RichText' as 'RichText'
 
   static defaultProps = {
     ...EditorComponent.defaultProps,

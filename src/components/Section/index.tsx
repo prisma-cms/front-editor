@@ -17,7 +17,7 @@ class Section<
   //   // fontSize: 20,
   // }
 
-  static Name = 'Section'
+  static Name = 'Section' as 'Section'
 
   renderPanelView(content?: React.ReactNode) {
     return super.renderPanelView(

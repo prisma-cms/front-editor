@@ -24,7 +24,7 @@ class Grid<
     alignItems: undefined,
   }
 
-  static Name = 'Grid'
+  static Name = 'Grid' as 'Grid'
 
   onBeforeDrop = () => {
     return
