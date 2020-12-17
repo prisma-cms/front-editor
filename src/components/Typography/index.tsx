@@ -1,13 +1,18 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import React, { Component, Fragment } from 'react'
-import PropTypes from 'prop-types'
-import EditorComponent from '../../EditorComponent'
+import React, { Fragment } from 'react'
+import EditorComponent, {
+  EditorComponentProps,
+  EditorComponentState,
+} from '../../EditorComponent'
 
 import Icon from 'material-ui-icons/TextFormat'
 import MuiTypography from 'material-ui/Typography'
 
-class Typography extends EditorComponent {
-  static Name = 'Typography'
+class Typography<
+  P extends EditorComponentProps = EditorComponentProps,
+  S extends EditorComponentState = EditorComponentState
+> extends EditorComponent<P, S> {
+  static Name = 'Typography' as 'Typography'
 
   static defaultProps = {
     ...EditorComponent.defaultProps,
@@ -18,7 +23,7 @@ class Typography extends EditorComponent {
     display: 'inline-block',
   }
 
-  renderPanelView(content) {
+  renderPanelView(content?: React.ReactNode) {
     return super.renderPanelView(
       content || (
         <div className="editor-component--panel-icon">

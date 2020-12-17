@@ -1,12 +1,6 @@
 /* eslint-disable react/jsx-no-bind */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { PureComponent } from 'react'
-// import PropTypes from 'prop-types';
-// import withStyles from 'material-ui/styles/withStyles'
-
-// import CloseIcon from 'material-ui-icons/Close';
-// import OpenTemplatesIcon from 'material-ui-icons/ArrowForward'
-// import CloseTemplatesIcon from 'material-ui-icons/ArrowBack'
 
 import Context, { PrismaCmsContext } from '@prisma-cms/context'
 
@@ -25,164 +19,18 @@ export * from './interfaces'
 export * from './EditorComponent'
 export * from './context'
 
-// const styles = (theme: any) => {
-//   const {
-//     breakpoints,
-//     palette: {
-//       background: {
-//         default: bgDefault,
-//         // paper: bgPaper,
-//       },
-//       text: { primary: textPrimary },
-//     },
-//   } = theme
-
-//   const desktop = breakpoints.up('sm')
-
-//   const dragOveredBorderColor = '#15e408'
-//   const hoveredBorderColor = '#7509da'
-//   const activeBorderColor = '#b806bb'
-//   const dirtyBorderColor = 'red'
-
-//   const itemsPanelWidth = 290
-
-//   return {
-//     root: {
-//       [desktop]: {
-//         flex: 1,
-//         display: 'flex' as 'flex',
-//         // flexDirection: "row-reverse",
-//       },
-
-//       '&.fullheight': {
-//         // height: '100vh',
-//         height: '100%',
-//       },
-//     },
-//     editor: {
-//       position: 'relative' as 'relative',
-
-//       [desktop]: {
-//         flex: 1,
-//         overflow: 'auto',
-//         height: '100%',
-//       },
-//     },
-//     panel: {
-//       [desktop]: {
-//         width: 'min-content',
-//         height: '100%',
-//         overflow: 'auto',
-//         position: 'relative' as 'relative',
-//         transition: 'width 0.5s',
-//         '&.opened': {
-//           width: itemsPanelWidth,
-//         },
-//       },
-//     },
-//     panelItems: {
-//       [desktop]: {
-//         height: '100%',
-//         width: '100%',
-//         // width: itemsPanelWidth,
-//         // position: "absolute",
-//         overflow: 'auto',
-//       },
-//     },
-//     panelItem: {
-//       cursor: 'grab',
-//       padding: 10,
-//       border: '1px solid #ddd',
-//       display: 'flex',
-//       flexDirection: 'row' as 'row',
-//       alignItems: 'center' as 'center',
-//       '&:hover': {
-//         border: `1px solid ${hoveredBorderColor}`,
-//       },
-//       '&.active': {
-//         border: `1px solid ${activeBorderColor}`,
-//       },
-//       '&.hovered': {
-//         border: `1px solid ${hoveredBorderColor}`,
-//       },
-//       '&.dragOvered': {
-//         border: `1px solid ${dragOveredBorderColor}`,
-//       },
-
-//       '&.add_child': {
-//         cursor: 'pointer' as 'pointer',
-//       },
-//     },
-//     items: {
-//       position: 'relative' as 'relative',
-//     },
-//     item: {},
-//     // inEditMode
-//     itemEditable: {
-//       position: 'relative' as 'relative',
-//       minHeight: '30px',
-//       border: '1px dotted #ddd',
-//       padding: 7,
-
-//       '&.dirty': {
-//         border: `1px solid ${dirtyBorderColor}`,
-//       },
-//       '&.active': {
-//         border: `1px solid ${activeBorderColor}`,
-//       },
-//       '&.dragOvered': {
-//         border: `1px solid ${dragOveredBorderColor}`,
-//       },
-//       '&.hovered': {
-//         border: `1px solid ${hoveredBorderColor}`,
-//       },
-//       '&.root': {
-//         borderWidth: 2,
-//       },
-//       '&.disabled': {
-//         borderColor: 'transparent' as 'transparent',
-//       },
-
-//       // https://habr.com/ru/post/456248/
-//       '&[contenteditable=true]': {
-//         '&:empty:before': {
-//           content: 'unset' as 'unset',
-//         },
-//       },
-//     },
-//     blockBadge: {
-//       border: '1px solid #ddd',
-//       position: 'absolute' as 'absolute',
-//       bottom: '100%',
-//       right: 0,
-//       zIndex: 2000,
-//       background: bgDefault,
-//       color: textPrimary,
-//       padding: 3,
-//     },
-//     badgeButton: {
-//       height: 34,
-//       width: 34,
-//     },
-//     panelButton: {
-//       display: 'flex' as 'flex',
-//       flexDirection: 'row' as 'row',
-//       alignItems: 'center' as 'center',
-//     },
-//     bordered: {
-//       border: '1px solid #ddd',
-//     },
-//     helpLink: {
-//       color: 'inherit' as 'inherit',
-//       marginLeft: 3,
-//     },
-//     actionPanel: {
-//       borderTop: '1px solid #ddd',
-//       maxHeight: 250,
-//       overflow: 'auto',
-//     },
-//   }
-// }
+export function registerComponents<T extends typeof EditorComponent>(
+  _keys: T[]
+): (
+  p: EditorComponentObject & {
+    component: typeof _keys[number]['Name']
+    // I make eslint crazy)))
+    // eslint-disable-next-line no-undef
+    components: Array<typeof p>
+  }
+) => EditorComponentObject {
+  return (n) => n
+}
 
 export class FrontEditor<
   P extends FrontEditorProps = FrontEditorProps,
@@ -632,9 +480,3 @@ export class FrontEditor<
 }
 
 export default FrontEditor
-
-// const FrontEditorRenderer = withStyles(styles)((props: FrontEditorProps) => (
-//   <FrontEditor {...props} />
-// ))
-
-// export default FrontEditorRenderer

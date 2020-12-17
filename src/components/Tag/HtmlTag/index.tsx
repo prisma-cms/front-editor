@@ -11,7 +11,7 @@ export default class HtmlTag<
   P extends HtmlTagProps = HtmlTagProps,
   S extends HtmlTagState = HtmlTagState
 > extends EditorComponent<P, S> {
-  static Name: "HtmlTag" | "Tag" = 'HtmlTag'
+  static Name: 'HtmlTag' | 'Tag' = 'HtmlTag'
   static help_url = 'https://front-editor.prisma-cms.com/topics/html-tag.html'
 
   static defaultProps = {
@@ -32,6 +32,7 @@ export default class HtmlTag<
       ...this.state,
       focused: false,
       components: components ? components.slice(0) : [],
+      newContent: null,
     }
 
     this.saveChanges = this.saveChanges.bind(this)
@@ -117,7 +118,10 @@ export default class HtmlTag<
       this.setState({
         newContent: null,
       })
+      return true
     }
+
+    return false
   }
 
   /**
@@ -212,7 +216,9 @@ export default class HtmlTag<
     return tag && ['img'].indexOf(tag) !== -1 ? true : super.isVoidElement()
   }
 
-  makeNewContent(node: HTMLElement | (EventTarget & Element)) {
+  // makeNewContent(node: HTMLElement | (EventTarget & Element)) {
+  // makeNewContent(node: EventTarget & Element) {
+  makeNewContent(node: Node) {
     const nodes = node.childNodes
 
     const components: P['object']['components'] = []
@@ -321,7 +327,6 @@ export default class HtmlTag<
             break
 
           case 'style':
-            // TODO Restore
             try {
               value = value ? CSSTransform(value) : undefined
             } catch (error) {

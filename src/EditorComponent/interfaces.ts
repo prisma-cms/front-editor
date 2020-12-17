@@ -114,6 +114,8 @@ export interface EditorComponentProps extends EditableObjectProps {
    * Show button in add children panel
    */
   render_add_button?: boolean
+
+  updateObject?: EditorComponent['updateObject']
 }
 
 export interface EditorComponentState extends EditableObjectState {

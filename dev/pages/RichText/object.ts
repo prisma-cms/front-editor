@@ -3,9 +3,6 @@ import { EditorComponentObject } from '../../../src/EditorComponent'
 const object: EditorComponentObject = {
   name: 'RichText',
   props: {
-    // TODO Fix content property
-    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-    // @ts-ignore @prisma-cms/editor raw content
     content: {
       blocks: [
         {

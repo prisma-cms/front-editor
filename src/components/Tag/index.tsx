@@ -7,8 +7,10 @@ import Icon from 'material-ui-icons/Title'
 import HtmlTag from './HtmlTag'
 import { TagProps, TagState } from './interfaces'
 
-export class Tag<P extends TagProps = TagProps, S extends TagState = TagState>
-  extends HtmlTag<P, S> {
+export class Tag<
+  P extends TagProps = TagProps,
+  S extends TagState = TagState
+> extends HtmlTag<P, S> {
   static Name = 'Tag' as 'Tag'
 
   static defaultProps = {

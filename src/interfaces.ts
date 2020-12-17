@@ -9,17 +9,12 @@ type ComponentsArray = Array<typeof EditorComponent>
 export interface FrontEditorProps {
   object: EditorComponentObject | undefined
 
-  // classes?: Record<string, any>
-
   className?: string
 
   inEditMode?: boolean
 
   onChange?: (components: EditorComponentObject[]) => void
 
-  // toolbar?: React.Component;
-
-  // TODO: Fix types
   createTemplate?: (options: any) => Promise<any>
   updateTemplate?: (options: any) => Promise<any>
   deleteTemplate?: (options: any) => Promise<any>

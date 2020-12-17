@@ -10,5 +10,9 @@ export interface HtmlTagProps extends EditorComponentProps {
 }
 
 export interface HtmlTagState extends EditorComponentState {
-  newContent?: Partial<EditorComponentProps['object']> | null
+  // newContent?: Partial<EditorComponentProps['object']> | null
+
+  newContent?: {
+    components: HtmlTagProps['object']['components']
+  } | null
 }

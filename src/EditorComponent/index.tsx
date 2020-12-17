@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-ignore */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable no-lone-blocks */
 
@@ -28,7 +29,6 @@ import CloneIcon from 'material-ui-icons/ContentCopy'
 import DragIcon from 'material-ui-icons/DragHandle'
 import ArrowUpIcon from 'material-ui-icons/ArrowUpward'
 import ArrowDownIcon from 'material-ui-icons/ArrowDownward'
-import LinkIcon from 'material-ui-icons/Link'
 import HelpIcon from 'material-ui-icons/HelpOutline'
 
 import FormControlLabel from 'material-ui/Form/FormControlLabel'
@@ -47,7 +47,6 @@ import { PrismaCmsContext } from '@prisma-cms/context'
 import Uploader from '@prisma-cms/uploader'
 import Typography from 'material-ui/Typography'
 import Grid from '../common/Grid'
-import Link from '../common/Link'
 
 import {
   EditorComponentObject,
@@ -181,7 +180,7 @@ export class EditorComponent<
 
   // TODO: check types
   // container: Element | Text | null = null;
-  container: EditorComponent | null = null
+  container: EditorComponent | Node | null = null
   reactComponent: EditorComponent | null = null
 
   componentDidMount() {
@@ -199,6 +198,7 @@ export class EditorComponent<
     // TODO check instanceof extended components
     // if (this.container && this.container instanceof EditorComponent) {
     if (this.container) {
+      // @ts-ignore
       this.container.reactComponent = this
     }
 
@@ -1143,36 +1143,18 @@ export class EditorComponent<
     }
   }
 
-  getComponentProps(component: EditorComponent): P['object']['props'] {
-    // const {
-    //   component: {
-    //     type,
-    //     components,
-    //     ...props
-    //   },
-    // } = this.props;
+  // getComponentProps(component: EditorComponent):
+  //   P['object']['props']
+  //   // & Omit<P, "mode" | "deletable" | "parent" | "style" | "createTemplate" | "updateTemplate" | "deleteTemplate" | "errorDelay" | "SaveIcon" | "ResetIcon" | "EditIcon" | "cacheKeyPrefix" | "mutate" | "props" | "object">
+  //   & Pick<P, "mode" >
+  //    {
 
+  getComponentProps(component: EditorComponent): P['object']['props'] {
     const {
       mode,
       deletable,
       parent,
-      // components,
-      // component: {
-      //   name,
-      //   components: itemComponents,
-      //   props: componentProps,
-      // },
-      // props,
-      // errorDelay,
-      // object: {
-      //   props,
-      // },
-      // fontFamily,
-      // fontSize,
-      // marginTop,
-      // marginBottom,
       style: defaultStyle,
-
       createTemplate,
       updateTemplate,
       deleteTemplate,
@@ -1182,36 +1164,22 @@ export class EditorComponent<
       EditIcon,
       cacheKeyPrefix,
       mutate,
-      // fullWidth,
       ...other
     } = component.props
-
-    // const {
-    //   // name,
-    //   // components,
-    //   props: objectProps,
-    // } = component.getObjectWithMutations()
 
     const { style, ...componentProps } =
       component.getObjectWithMutations()?.props || {}
 
-    return {
+    const result = {
       ...other,
       ...componentProps,
       style: {
         ...defaultStyle,
         ...style,
       },
-      // style: {
-      //   ...style,
-      //   fontFamily,
-      //   fontSize,
-      //   marginTop,
-      //   marginBottom,
-      // },
     }
 
-    // return props || {};
+    return result
   }
 
   getRenderProps(componentProps = {}): any {
@@ -1613,6 +1581,8 @@ export class EditorComponent<
       })
     }
 
+    const isDirty = this.isDirty()
+
     const buttons = (
       <Grid
         container
@@ -1625,13 +1595,19 @@ export class EditorComponent<
         <Grid item xs></Grid>
 
         {/* {!isRoot && !objectId && activeParent && parentId ? */}
-        {objectId ? (
+
+        {/* 
+          TODO: Fix reset object for Editor
+        */}
+        {isDirty ? this.renderResetButton() : null}
+
+        {/* {objectId ? (
           <Grid item>
             <Link href={`/templates/${objectId}`}>
               <LinkIcon />
             </Link>
           </Grid>
-        ) : null}
+        ) : null} */}
         {!isRoot && !objectId && activeParent && saveable ? (
           <Grid item>
             <IconButton
@@ -2755,7 +2731,7 @@ export class EditorComponent<
 
   /**
    * Do not render header for all components.
-   * If newwd render, use renderComponentHeader()
+   * If in render, use renderComponentHeader()
    */
   renderHeader() {
     return null
