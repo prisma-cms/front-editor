@@ -3,6 +3,11 @@ import { addDecorator, Parameters } from '@storybook/react'
 import theme from '../dev/theme'
 import { ThemeProvider } from 'styled-components'
 import { makeDecorator } from '@storybook/addons'
+import { linkTo } from '@storybook/addon-links'
+
+import { RouterContext } from 'next/dist/next-server/lib/router-context'
+import { MittEmitter } from 'next/dist/next-server/lib/mitt'
+
 import { createGlobalStyle } from 'styled-components'
 
 const GlobalStyle = createGlobalStyle`
@@ -41,6 +46,10 @@ export const parameters: Parameters = {
   },
 }
 
+const startCase = (str: string) => {
+  return str.charAt(0).toUpperCase() + str.slice(1)
+}
+
 addDecorator(
   makeDecorator({
     name: 'withSomething',
@@ -49,7 +58,46 @@ addDecorator(
       return (
         <>
           <GlobalStyle />
-          <ThemeProvider theme={theme}>{storyFn(context)}</ThemeProvider>
+          <ThemeProvider theme={theme}>
+            {/* 
+              https://github.com/vercel/next.js/issues/15543#issuecomment-664955766
+            */}
+            <RouterContext.Provider
+              value={{
+                route: '/',
+                pathname: '/',
+                asPath: '/',
+                query: {},
+                basePath: '',
+                push: (_url, as) => {
+                  if (as) {
+                    linkTo(
+                      'Routes',
+                      as !== '/' ? startCase(as.toString()) : 'Index'
+                    )()
+                  }
+                  return Promise.resolve(true)
+                },
+                replace: (_url, as) => {
+                  if (as) {
+                    linkTo(
+                      'Routes',
+                      as !== '/' ? startCase(as.toString()) : 'Index'
+                    )()
+                  }
+                  return Promise.resolve(true)
+                },
+                reload: () => {},
+                prefetch: async () => {},
+                back: () => {},
+                beforePopState: () => {},
+                isFallback: false,
+                events: {} as MittEmitter,
+              }}
+            >
+              {storyFn(context)}
+            </RouterContext.Provider>
+          </ThemeProvider>
         </>
       )
     },
