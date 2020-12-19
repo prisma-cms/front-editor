@@ -53,6 +53,7 @@ import {
   EditorComponentProps,
   EditorComponentState,
 } from './interfaces'
+import { ElementWithReactComponent } from '..'
 export * from './interfaces'
 
 // eslint-disable-next-line @typescript-eslint/no-empty-function
@@ -178,29 +179,43 @@ export class EditorComponent<
   //   return null;
   // }
 
-  // TODO: check types
   // container: Element | Text | null = null;
-  container: EditorComponent | Node | null = null
+  // container: EditorComponent | Node | null = null
+  container: EditorComponent | ElementWithReactComponent | Text | null = null
+
   reactComponent: EditorComponent | null = null
 
   componentDidMount() {
     const { registerMountedComponent } = this.getEditorContext()
 
+    // if (!this.container) {
+    //   // eslint-disable-next-line react/no-find-dom-node
+    //   const container = ReactDOM.findDOMNode(this)
+
+    //   if (container instanceof EditorComponent) {
+    //     this.container = container
+    //   }
+    // }
+
+    // // TODO check instanceof extended components
+    // // if (this.container && this.container instanceof EditorComponent) {
+    // if (this.container) {
+    //   // @ts-ignore
+    //   this.container.reactComponent = this
+    // }
+
     if (!this.container) {
       // eslint-disable-next-line react/no-find-dom-node
-      const container = ReactDOM.findDOMNode(this)
-
-      if (container instanceof EditorComponent) {
-        this.container = container
-      }
+      this.container = ReactDOM.findDOMNode(this)
     }
 
-    // TODO check instanceof extended components
-    // if (this.container && this.container instanceof EditorComponent) {
-    if (this.container) {
-      // @ts-ignore
+    // console.log('this.container instanceof Element', this.container instanceof Element);
+    // if (this.container) {
+    if (this.container && this.container instanceof Element) {
       this.container.reactComponent = this
     }
+
+    // console.log('this.container.reactComponent', this.container?.reactComponent);
 
     registerMountedComponent && registerMountedComponent(this)
 
@@ -2534,6 +2549,11 @@ export class EditorComponent<
       render_add_button,
       render_toolbar,
       editable,
+      name,
+      object,
+      props: propsFoo,
+      tag,
+      className,
       ...other
     } = props
 
@@ -2559,6 +2579,7 @@ export class EditorComponent<
 
     return {
       ...other,
+      className: className || undefined,
       // contentEditable,
       // render_badge: render_badge !== undefined ? render_badge.toString() : undefined,
       style,

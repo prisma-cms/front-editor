@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/ban-ts-ignore */
-import React from 'react'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 
 import IconButton from 'material-ui/IconButton'
+import Button from 'material-ui/Button'
 
 import FormatClearIcon from 'material-ui-icons/FormatClear'
 import SelectAllIcon from 'material-ui-icons/SelectAll'
@@ -20,184 +21,134 @@ import FormatIndentDecreaseIcon from 'material-ui-icons/FormatIndentDecrease'
 import RedoIcon from 'material-ui-icons/Redo'
 import UndoIcon from 'material-ui-icons/Undo'
 import SaveIcon from 'material-ui-icons/Save'
-import Grid from '../../../common/Grid'
-import HtmlTag from '../../Tag/HtmlTag'
-import { TagEditorProps, TagEditorState } from './interfaces'
-import { TagEditorStyled } from './styles'
-import { TagEditorToolbarStyled } from './styles/toolbar'
 
-type ToolbarButton = {
-  name: string
-  title: string
-  disabled: boolean
-  icon: JSX.Element
-  onClick?: () => boolean
-}
+import Grid from '../../../../common/Grid'
+import { TagEditorToolbarStyled } from '../../TagEditor/styles/toolbar'
+import {
+  ContentEditorToolbarButton,
+  ContentEditorToolbarProps,
+} from './interfaces'
+import { ContentProxyEditMode } from '../interfaces'
+import { nodeChildsToEditorComponentObjectComponents } from '../helpers/nodeToEditorComponentObject'
+import Section from '../../../Section'
 
-class TagEditor<
-  P extends TagEditorProps = TagEditorProps,
-  S extends TagEditorState = TagEditorState
-> extends HtmlTag<P, S> {
-  static defaultProps = {
-    ...HtmlTag.defaultProps,
-    editable: false,
-    render_badge: false,
-    can_be_edited: false,
-  }
+const ContentEditorToolbar: React.FC<ContentEditorToolbarProps> = (props) => {
+  const {
+    // selection,
+    newContent,
+    closestInSelection,
+    saveChanges,
+    editMode,
+    setEditMode,
+    contentEditableContainer,
+    updateObject,
+  } = props
 
-  constructor(props: P) {
-    super(props)
+  const [selection, setSelection] = useState<Selection | null>(null)
+  const [selectionType, setSelectionType] = useState<Selection["type"] | undefined>(undefined)
 
-    this.state = {
-      ...this.state,
+  const [
+    contentEditableContainerSelected,
+    setContentEditableContainerSelected,
+  ] = useState(false)
 
-      /**
-       * Deprecated. Use selection instead
-       */
-      hasSelection: false,
+  // console.log('contentEditableContainerSelected', contentEditableContainerSelected);
+  // console.log('contentEditableContainer', contentEditableContainer);
 
-      /**
-       * DOM selection object
-       */
-      selection: null,
+  const onSelectionChange = useCallback(
+    (_event) => {
+      // const container = ref.current;
+
+      const selection = document.getSelection()
+
+      // console.log('Toolbar onSelectionChange selection', selection);
+
+      // if (selection2 && container && selection2.containsNode(container, true)) {
+
+      //   setSelection(selection2);
+      // }
+      // else {
+      //   setSelection(null);
+      // }
+
+      const contentEditableContainerSelected =
+        (contentEditableContainer &&
+          selection?.containsNode(contentEditableContainer, true)) ||
+        false
+
+      // console.log('Toolbar contentEditableContainerSelected', contentEditableContainerSelected);
+
+
+      setContentEditableContainerSelected(contentEditableContainerSelected)
+      // setSelection(selection);
+
+      setSelectionType(selection?.type);
+    },
+    [contentEditableContainer]
+  )
+
+  useEffect(() => {
+    setSelection(global.document?.getSelection())
+
+    document.addEventListener('selectionchange', onSelectionChange)
+
+    return () => {
+      document.removeEventListener('selectionchange', onSelectionChange)
     }
+  }, [onSelectionChange])
 
-    this.onSelectionChange = this.onSelectionChange.bind(this)
-  }
+  // console.log('ContentEditorToolbar selection', selection);
 
-  readOnly() {
-    const { editable } = this.props
+  const execCommand = useCallback(
+    (commandId: string, showUI?: boolean, value?: string) => {
+      return document.execCommand(commandId, showUI, value)
+    },
+    []
+  )
 
-    return editable === true ? false : true
-  }
-
-  onSelectionChange() {
-    const { container } = this
-
-    let selection = document.getSelection()
-
-    if (selection && container) {
-      let hasSelection = false
-
-      // @ts-ignore
-      if (selection.containsNode(container, true)) {
-        hasSelection = true
-      } else {
-        selection = null
-      }
-
-      if (selection && selection === this.state.selection) {
-        this.forceUpdate()
-      } else {
-        this.setState({
-          hasSelection,
-          selection,
-        })
-      }
-    }
-  }
-
-  // componentDidMount() {
-
-  //   this.addEventListeners();
-
-  //   // if (!this.readOnly()) {
-
-  //   //   this.setActiveItem(this);
-
-  //   // }
-
-  //   super.componentDidMount && super.componentDidMount();
-  // }
-
-  componentWillUnmount() {
-    this.removeEventListeners()
-
-    super.componentWillUnmount && super.componentWillUnmount()
-  }
-
-  addEventListeners() {
-    if (!this.readOnly()) {
-      const { container } = this
-
-      if (container && container instanceof Node) {
-        // container.addEventListener("DOMSubtreeModified", this.onDOMSubtreeModified);
-
-        const config = {
-          attributes: true,
-          childList: true,
-          subtree: true,
-          characterData: true,
-        }
-
-        // Create an observer instance linked to the callback function
-        // const observer = new MutationObserver(this.onDOMSubtreeModified);
-        const observer = new MutationObserver((_changes, _observer) => {
-          this.onChangeDom(container)
-        })
-
-        // Start observing the target node for configured mutations
-        observer.observe(container, config)
-      }
-
-      document.addEventListener('selectionchange', this.onSelectionChange)
-    }
-
-    super.addEventListeners && super.addEventListeners()
-  }
-
-  removeEventListeners() {
-    const { container } = this
-
-    if (container) {
-      // container.removeEventListener("DOMSubtreeModified", this.onDOMSubtreeModified);
-    }
-
-    document.removeEventListener('selectionchange', this.onSelectionChange)
-
-    // super.removeEventListeners && super.removeEventListeners()
-  }
-
-  // onChangeDom(container: HTMLElement | (EventTarget & Element)) {
-  onChangeDom(container: Node) {
-    const content = this.makeNewContent(container)
-
-    const { components } = content
-
-    components && this.onChangeContent(components)
-  }
-
-  updateObject(data: P['_dirty']) {
-    const { updateObject } = this.props
-
-    updateObject && updateObject(data)
-  }
-
-  onChangeContent(components: P['object']['components']) {
-    this.setState({
-      newContent: {
-        components,
-      },
-    })
-  }
+  const onButtonClick = useCallback(
+    (event: React.MouseEvent<HTMLButtonElement>) => {
+      // return document.execCommand(event.currentTarget.name)
+      return execCommand(event.currentTarget.name)
+    },
+    [execCommand]
+  )
 
   /**
-   * Для отлавливания изменений мы используем не событие oninput,
-   * а DOMSubtreeModified,
-   * поэтому перехватываем родительский обработчик
+   * Вставляем колонку
    */
-  tagOnInput() {
-    return false
-  }
+  const insertTableCell = useCallback(
+    (tr: HTMLTableRowElement, index?: number) => {
+      return !!tr.insertCell(index)
+    },
+    []
+  )
 
-  tagOnKeyDown() {
-    return false
-  }
+  /**
+   * Вставляем новую строку в таблицу
+   */
+  const insertTableRow = useCallback(
+    (table: HTMLTableElement, index?: number, columnsCount = 1) => {
+      const tr = table.insertRow(index)
 
-  getToolbarButtons() {
-    const { selection, newContent } = this.state
+      if (tr) {
+        let i = 0
 
-    const hasSelection = selection ? true : null
+        while (i < columnsCount) {
+          insertTableCell(tr)
+          i++
+        }
+
+        return true
+      }
+
+      return false
+    },
+    [insertTableCell]
+  )
+
+  const renderToolbarButtons = useMemo(() => {
+    const hasSelection = contentEditableContainerSelected ? true : null
 
     const tableControls = [
       {
@@ -206,7 +157,7 @@ class TagEditor<
         title: 'Вставить таблицу',
         disabled: hasSelection ? false : true,
         onClick: () =>
-          this.execCommand(
+          execCommand(
             'insertHTML',
             true,
             `<table><tbody><tr><td></td></tr></tbody></table>`
@@ -221,9 +172,9 @@ class TagEditor<
             y="0px"
             viewBox="0 0 512 512"
             xmlSpace="preserve"
-            // style={{
-            //   enableBackground: 'new 0 0 512 512',
-            // }}
+          // style={{
+          //   enableBackground: 'new 0 0 512 512',
+          // }}
           >
             <g>
               <g>
@@ -257,13 +208,10 @@ class TagEditor<
     ]
 
     if (selection) {
-      const table = this.closestInSelection<HTMLTableElement>(
-        selection,
-        'table'
-      )
+      const table = closestInSelection<HTMLTableElement>('table')
 
       if (table) {
-        const tr = this.closestInSelection<HTMLTableRowElement>(selection, 'tr')
+        const tr = closestInSelection<HTMLTableRowElement>('tr')
 
         table &&
           tableControls.push({
@@ -271,15 +219,13 @@ class TagEditor<
             name: 'insertRow',
             title: 'Вставить строку',
             disabled: hasSelection ? false : true,
-            // onClick: event => this.execCommand('insertHTML', true, `<table width="100%" border="1"><tbody><tr><td></td></tr></tbody></table>`),
-            // onClick: event => document.execCommand('insertHTML', true, `<span>eded</span>`),
             onClick: () => {
               const index =
                 tr && tr.parentElement
                   ? Array.from(tr.parentElement.childNodes).indexOf(tr)
                   : -1
 
-              return this.insertTableRow(
+              return insertTableRow(
                 table,
                 index + 1,
                 tr?.childElementCount
@@ -311,14 +257,14 @@ class TagEditor<
             title: 'Вставить колонку',
             disabled: hasSelection ? false : true,
             onClick: () => {
-              const cell = this.closestInSelection(selection, 'td,th')
+              const cell = closestInSelection('td,th')
 
               const index = cell?.parentElement
                 ? Array.from(cell.parentElement.childNodes).indexOf(cell)
                 : -1
 
               // return this.insertTableCell(tr, index + 1, selection)
-              return this.insertTableCell(tr, index + 1)
+              return insertTableCell(tr, index + 1)
             },
             icon: (
               <svg
@@ -343,7 +289,7 @@ class TagEditor<
       }
     }
 
-    const buttons: ToolbarButton[] = [
+    const buttons: ContentEditorToolbarButton[] = [
       {
         name: 'bold',
         title: 'Жирный текст',
@@ -445,11 +391,12 @@ class TagEditor<
         },
       ])
 
-    if (newContent) {
+    if (newContent?.length) {
       buttons.push({
         name: 'save',
         title: 'Сохранить изменения',
         // disabled: hasSelection ? false : true,
+        className: 'save',
         icon: (
           <SaveIcon
             style={{
@@ -458,99 +405,34 @@ class TagEditor<
           />
         ),
         disabled: false,
-        onClick: this.saveChanges,
+        onClick: saveChanges,
       })
     }
 
-    return buttons
-  }
-
-  onButtonClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    return document.execCommand(event.currentTarget.name)
-  }
-
-  closestInSelection<E extends HTMLElement>(
-    selection: S['selection'],
-    selector: string
-  ): E | null {
-    if (!selection?.focusNode) {
-      return null
-    }
-
-    let node: Node | null | undefined = selection.focusNode
-
-    if (node.nodeType === Node.TEXT_NODE) {
-      node = selection.focusNode?.parentNode
-    }
-
-    if (node && node instanceof Element) {
-      return node.closest(selector)
-    }
-
-    return null
-  }
-
-  /**
-   * Вставляем новую строку в таблицу
-   */
-  insertTableRow(table: HTMLTableElement, index?: number, columnsCount = 1) {
-    const tr = table.insertRow(index)
-
-    if (tr) {
-      let i = 0
-
-      while (i < columnsCount) {
-        this.insertTableCell(tr)
-        i++
-      }
-
-      return true
-    }
-
-    return false
-  }
-
-  /**
-   * Вставляем колонку
-   */
-  insertTableCell(tr: HTMLTableRowElement, index?: number) {
-    return !!tr.insertCell(index)
-  }
-
-  execCommand = (commandId: string, showUI?: boolean, value?: string) => {
-    return document.execCommand(commandId, showUI, value)
-  }
-
-  renderToolbar() {
-    if (this.readOnly()) {
-      return null
-    }
-
-    const { render_toolbar } = this.props
-
-    const buttons = this.getToolbarButtons()
-
-    if (!buttons.length) {
-      return null
-    }
-
-    return render_toolbar ? (
-      <TagEditorToolbarStyled>
-        <Grid container>{this.renderToolbarButtons(buttons)}</Grid>
-      </TagEditorToolbarStyled>
-    ) : null
-  }
-
-  renderToolbarButtons(buttons: ToolbarButton[]) {
     return buttons.map((n, index) => {
-      const { name, icon, onClick, ...other } = n
+      const { disabled, name, icon, onClick, className, ...other } = n
+
+      // return (
+      //   <Grid key={name || index} item>
+      //     <IconButton
+      //       className={'TagEditorToolbar--iconButton'}
+      //       name={name}
+      //       onClick={onClick ? onClick : onButtonClick}
+      //       disabled={disabled}
+      //       {...other}
+      //     >
+      //       {icon}
+      //     </IconButton>
+      //   </Grid>
+      // )
 
       return (
         <Grid key={name || index} item>
           <IconButton
-            className={'TagEditorToolbar--iconButton'}
+            className={['TagEditorToolbar--iconButton', className].join(' ')}
             name={name}
-            onClick={onClick ? onClick : this.onButtonClick}
+            onClick={onClick ? onClick : onButtonClick}
+            disabled={disabled}
             {...other}
           >
             {icon}
@@ -558,45 +440,212 @@ class TagEditor<
         </Grid>
       )
     })
-  }
+  }, [
+    closestInSelection,
+    contentEditableContainerSelected,
+    execCommand,
+    insertTableCell,
+    insertTableRow,
+    newContent?.length,
+    onButtonClick,
+    saveChanges,
+    selection,
+  ])
 
-  renderMainView(options = {}) {
-    if (!this.readOnly()) {
-      options = {
-        contentEditable: true,
-        suppressContentEditableWarning: true,
-        onFocus: () => this.tagOnFocus(),
-        onBlur: () => this.tagOnBlur(),
-        onKeyDown: () => this.tagOnKeyDown(),
-        ref: (el: Element) => {
-          this.container = el
-        },
-        ...options,
-      }
+  const onMouseDown = useCallback((event: React.MouseEvent) => {
+    event.preventDefault()
+  }, [])
+
+  const setEditModeHTML = useCallback(() => {
+    setEditMode(
+      editMode === ContentProxyEditMode.HTML ? null : ContentProxyEditMode.HTML
+    )
+  }, [editMode, setEditMode])
+
+  const setEditModeReact = useCallback(() => {
+    setEditMode(
+      editMode === ContentProxyEditMode.React
+        ? null
+        : ContentProxyEditMode.React
+    )
+  }, [editMode, setEditMode])
+
+
+  const addSection = useCallback(() => {
+
+    /**
+     * Нельзя просто так взять и вставить реакт-компонент в готовый HTML, чтобы он в контексте был и т.п.
+     * Придется брать текущий HTML, вставлять в него новый элемент,
+     * перегонять в JSON и обновлять базовый компонент.
+     * Важно! Этого нельзя делать в contentEditable=true, потому что новый реакт-компонент
+     * не отрендерится полноценно.
+     */
+
+    // console.log('addSection contentEditableContainerSelected', contentEditableContainerSelected);
+
+    if (!contentEditableContainerSelected || !contentEditableContainer) {
+      return false;
     }
 
-    // const content = super.renderMainView(options);
-    const content = super.renderMainView(options)
+    const selection = document.getSelection();
 
-    return this.readOnly() ? (
-      content
-    ) : (
-      <TagEditorStyled>
-        {this.renderToolbar()}
-        {content}
-      </TagEditorStyled>
+
+    let focusNode = selection?.focusNode;
+
+    if (focusNode?.nodeType === Node.TEXT_NODE) {
+      focusNode = focusNode.parentNode;
+    }
+
+    if (focusNode) {
+      const div = document.createElement('div');
+      // div.contentEditable = "false";
+
+      const section = new Section({
+        mode: "main",
+        object: {
+          name: "Section",
+          component: "Section",
+          components: [],
+          props: {},
+        },
+      });
+
+      // // const content = section.render();
+
+      // // console.log('section content', content);
+
+      // @ts-ignore
+      div.reactComponent = section;
+
+      focusNode.appendChild(div);
+
+      // TODO Add carret movement into new node
+      // div.focus();
+
+      // const object = {
+      //   name: "Section",
+      //   component: "Section",
+      //   components: [
+      //     {
+      //       name: 'HtmlTag',
+      //       component: 'HtmlTag',
+      //       props: {
+      //         name: 'HtmlTag',
+      //         tag: 'div',
+      //         className: '',
+      //       },
+      //       components: [
+      //         {
+      //           name: 'HtmlTag',
+      //           component: 'HtmlTag',
+      //           props: {
+      //             text: 'text dfsdfsdfsdf',
+      //           },
+      //           components: [],
+      //         },
+      //         {
+      //           name: 'HtmlTag',
+      //           component: 'HtmlTag',
+      //           props: {
+      //             tag: 'br',
+      //           },
+      //           components: [],
+      //         },
+      //       ],
+      //     },
+      //   ],
+      //   props: {},
+      // }
+
+      /**
+       * Получаем новый JSON
+       */
+
+      const newObject = nodeChildsToEditorComponentObjectComponents(contentEditableContainer);
+
+      // console.log('newObject', newObject);
+
+      updateObject(newObject);
+
+      // const section = <Section
+      //   mode="main"
+      //   object={object}
+      // />;
+
+      // const withContext = <EditorContext.Provider
+      //   value={editorContext}
+      // >
+      //   {section}
+      // </EditorContext.Provider>
+
+      // const renderToString = ReactDOMServer.renderToString(section);
+      // const renderToString = ReactDOMServer.renderToString(withContext);
+
+      // console.log('renderToString', renderToString);
+
+      // ReactDOM.unstable_renderSubtreeIntoContainer();
+
+      // ReactDOM.render(section, div)
+    }
+
+  }, [contentEditableContainer, contentEditableContainerSelected, updateObject]);
+
+  return useMemo(() => {
+    const editModes = (
+      <>
+        <Grid item>
+          <Button
+            size="small"
+            onClick={setEditModeHTML}
+            color={
+              editMode === ContentProxyEditMode.HTML ? 'primary' : undefined
+            }
+            name="setEditModeHTML"
+          >
+            Edit as HTML
+          </Button>
+        </Grid>
+        <Grid item>
+          <Button
+            size="small"
+            onClick={setEditModeReact}
+            color={
+              editMode === ContentProxyEditMode.React ? 'primary' : undefined
+            }
+            name="setEditModeReact"
+          >
+            Edit as React
+          </Button>
+        </Grid>
+        <Grid item>
+          <Button
+            size="small"
+            onClick={addSection}
+            color={
+              editMode === ContentProxyEditMode.React ? 'primary' : undefined
+            }
+            name="addSection"
+            disabled={!contentEditableContainerSelected || !!editMode || selectionType !== "Caret"}
+          >
+            Add Section
+          </Button>
+        </Grid>
+      </>
     )
-  }
 
-  // prepareRootElementProps(props: P) {
-  //   const { className, style } = this.props
-
-  //   return {
-  //     ...super.prepareRootElementProps(props),
-  //     className,
-  //     style,
-  //   }
-  // }
+    return (
+      <TagEditorToolbarStyled
+        contentEditable={false}
+        onMouseDown={onMouseDown}
+        className="ContentEditorToolbar"
+      >
+        <Grid container>
+          {renderToolbarButtons}
+          {editModes}
+        </Grid>
+      </TagEditorToolbarStyled>
+    )
+  }, [addSection, contentEditableContainerSelected, editMode, onMouseDown, renderToolbarButtons, selectionType, setEditModeHTML, setEditModeReact])
 }
 
-export default TagEditor
+export default ContentEditorToolbar

@@ -1,10 +1,10 @@
 import styled from 'styled-components'
 
-export const TagEditorToolbarStyled = styled.div`
+export const ContentProxyToolbarStyled = styled.div`
   margin: 5px 0;
   border: 1px solid #ddd;
 
-  .TagEditorToolbar--iconButton {
+  .ContentProxyToolbar--iconButton {
     height: 34px;
     width: 34px;
 

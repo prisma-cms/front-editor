@@ -15,3 +15,11 @@ export type ContentProxyProps = {
 
   mode?: TagEditorProps['mode']
 } & Omit<TagEditorProps, 'object' | 'mode'>
+
+/**
+ * Edit mode
+ */
+export enum ContentProxyEditMode {
+  React,
+  HTML,
+}

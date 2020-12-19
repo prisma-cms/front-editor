@@ -4,8 +4,6 @@ import {
 } from '../../../EditorComponent'
 
 export interface HtmlTagProps extends EditorComponentProps {
-  contentEditable?: boolean | undefined
-
   tag?: string
 }
 

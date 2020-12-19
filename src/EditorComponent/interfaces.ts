@@ -8,6 +8,10 @@ import { FrontEditorProps } from '..'
 //   }
 // > {
 
+export interface ElementWithReactComponent extends Element {
+  reactComponent?: EditorComponent
+}
+
 export interface EditorComponentObject<
   P extends Record<string, any> & {
     text?: string
@@ -116,6 +120,8 @@ export interface EditorComponentProps extends EditableObjectProps {
   render_add_button?: boolean
 
   updateObject?: EditorComponent['updateObject']
+  
+  contentEditable?: boolean | undefined
 }
 
 export interface EditorComponentState extends EditableObjectState {

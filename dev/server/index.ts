@@ -32,7 +32,7 @@ const createProxy = (props: any) => {
 }
 
 const apiProxy = createProxy({
-  ws: true,
+  // ws: true,
   pathRewrite: {
     '^/api(/|$)': '/',
   },

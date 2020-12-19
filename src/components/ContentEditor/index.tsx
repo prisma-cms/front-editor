@@ -93,6 +93,7 @@ export class ContentEditor<
       read_only,
       // TagEditor,
       render_toolbar,
+      contentproxyclassname,
     } = this.getComponentProps(this)
 
     const object = this.getObjectWithMutations()
@@ -113,7 +114,10 @@ export class ContentEditor<
         editable={editable}
         initialContent={initialContent}
         render_toolbar={render_toolbar}
-      />
+        className={contentproxyclassname}
+      >
+        {super.renderChildren()}
+      </ContentProxy>
     ) : (
       super.renderChildren()
     )

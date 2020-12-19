@@ -1,6 +1,8 @@
 import React from 'react'
 
-import EditorComponent from '../../../EditorComponent'
+import EditorComponent, {
+  ElementWithReactComponent,
+} from '../../../EditorComponent'
 
 import { HtmlTagProps, HtmlTagState } from './interfaces'
 export * from './interfaces'
@@ -226,7 +228,12 @@ export default class HtmlTag<
     const content: Partial<P['object']> = {}
 
     nodes.forEach((n) => {
+      // console.log('makeNewContent n', n)
+
       const component = this.updateContent(n)
+
+      // console.log('makeNewContent component', component)
+
       component && components.push(component)
     })
 
@@ -238,6 +245,127 @@ export default class HtmlTag<
   }
 
   updateContent(
+    // node: NonNullable<InstanceType<typeof EditorComponent> | ElementWithReactComponent | Text | ChildNode>,
+    node: NonNullable<ElementWithReactComponent | Text | ChildNode>,
+    content?: P['object']
+  ) {
+    if (!content) {
+      content = {
+        name: 'HtmlTag',
+        component: 'HtmlTag',
+        props: {},
+        components: [],
+      }
+    }
+
+    /**
+     * Если это реакт-нода, то возвращаем его состояние
+     */
+    if (node instanceof Element) {
+      const { reactComponent } = node
+
+      if (reactComponent && !(reactComponent instanceof HtmlTag)) {
+        const component = reactComponent.getObjectWithMutations()
+
+        return component
+      }
+    }
+
+    const nodes = node.childNodes
+
+    let NodeName: string | undefined = node.nodeName.toLowerCase()
+
+    if (NodeName === '#text') {
+      NodeName = undefined
+    }
+
+    if (node.nodeType === Node.TEXT_NODE) {
+      content.props.text = node.textContent
+    } else if (node instanceof Element && node.nodeType === Node.ELEMENT_NODE) {
+      const attributes = node.attributes
+
+      node.getAttributeNames().map((name) => {
+        // let value = attributes[name].value;
+
+        let value: string | Record<string, any> | undefined =
+          attributes.getNamedItem(name)?.value ?? undefined
+
+        switch (name) {
+          // case "id":
+          // case "src":
+          // case "href":
+          //   // case "editable":
+
+          //   break;
+
+          case 'props':
+          case 'object':
+          case 'data':
+            return null
+
+          case 'contenteditable':
+            // name = "contentEditable";
+            // break;
+
+            return null
+
+          case 'class':
+            name = 'className'
+
+            break
+
+          case 'staticcontext':
+            name = 'staticContext'
+
+            break
+
+          case 'style':
+            try {
+              // console.log("CSSTransform style", value);
+
+              value = value ? CSSTransform(value) : undefined
+
+              // console.log("CSSTransform new style", value);
+            } catch (error) {
+              console.error(error)
+              value = undefined
+            }
+
+            break
+
+          default:
+        }
+
+        content &&
+          Object.assign(content.props, {
+            [name]: value,
+          })
+
+        return null
+      })
+
+      const components: P['object']['components'] = []
+
+      nodes.forEach((node) => {
+        const component = this.updateContent(node)
+        component && components.push(component)
+      })
+
+      Object.assign(content, {
+        components,
+      })
+    }
+
+    content.props.tag = NodeName
+
+    return content
+  }
+
+  // TODO Remove
+  /**
+   * @deprecated
+   */
+  updateContent__(
     node: InstanceType<typeof EditorComponent> | Element | ChildNode,
     content?: P['object']
   ) {
@@ -257,6 +385,13 @@ export default class HtmlTag<
         components: [],
       }
     }
+
+    // console.log('updateContent node', node)
+    // console.log(
+    //   'updateContent node instanceof EditorComponent',
+    //   node instanceof EditorComponent
+    // )
+    // console.log('updateContent node.reactComponent', node.reactComponent)
 
     // TODO check logic
     /**

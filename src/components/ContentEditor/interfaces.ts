@@ -16,4 +16,6 @@ export interface ContentEditorProps extends EditorComponentProps {
   //   render_toolbar: PropTypes.bool.isRequired,
 
   initialContent?: EditorComponentObject[]
+
+  contentproxyclassname?: string
 }

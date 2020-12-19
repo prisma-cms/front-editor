@@ -431,49 +431,52 @@ export class FrontEditor<
 
     return (
       <EditorContext.Provider value={editorContext}>
-        {inEditMode && !itemsOnly ? (
-          <FrontEditorStyled
-            id="prisma-cms-front-editor--wrapper"
-            className={['root', className].join(' ')}
-          >
-            <div
-              id="prisma-cms-front-editor--content"
-              className="editor bordered"
-              style={{
-                height: '100%',
-                display: 'flex',
-                flexDirection: 'column' as 'column',
-              }}
-            >
+        <FrontEditorStyled
+          // id="prisma-cms-front-editor--wrapper"
+          // className={['root', className].join(' ')}
+          className={className}
+        >
+          {inEditMode && !itemsOnly ? (
+            <>
               <div
-                id="prisma-cms-front-editor--items"
-                className="items"
+                id="prisma-cms-front-editor--content"
+                className="editor bordered"
                 style={{
-                  flex: 1,
-                  overflow: 'auto',
+                  height: '100%',
+                  display: 'flex',
+                  flexDirection: 'column' as 'column',
                 }}
               >
-                {items}
+                <div
+                  id="prisma-cms-front-editor--items"
+                  className="items"
+                  style={{
+                    flex: 1,
+                    overflow: 'auto',
+                  }}
+                >
+                  {items}
+                </div>
+
+                <div
+                  ref={this.actionPanelRef}
+                  className="front-editor--action-panel actionPanel"
+                  onClick={this.stopPropagation}
+                ></div>
               </div>
 
               <div
-                ref={this.actionPanelRef}
-                className="front-editor--action-panel actionPanel"
+                id="prisma-cms-front-editor--panel"
+                className="panel bordered opened"
                 onClick={this.stopPropagation}
-              ></div>
-            </div>
-
-            <div
-              id="prisma-cms-front-editor--panel"
-              className="panel bordered opened"
-              onClick={this.stopPropagation}
-            >
-              {this.renderPanels()}
-            </div>
-          </FrontEditorStyled>
-        ) : (
-          items
-        )}
+              >
+                {this.renderPanels()}
+              </div>
+            </>
+          ) : (
+            items
+          )}
+        </FrontEditorStyled>
       </EditorContext.Provider>
     )
   }

@@ -1,59 +1,179 @@
-import React from 'react'
+import React, { useCallback, useMemo, useState } from 'react'
+import { EditorComponentObject } from '../../..'
+// import Context from './Context';
+// import { HtmlTagProps } from '../../Tag/HtmlTag';
+import useMutationObserver from './hooks/useMutationObserver'
 
-import { ContentProxyProps } from './interfaces'
+import { ContentProxyEditMode, ContentProxyProps } from './interfaces'
 
-import TagEditor from '../TagEditor'
+// import TagEditor from '../TagEditor'
 
-export class ContentProxy extends React.Component<ContentProxyProps> {
-  // static propTypes = {
-  //   updateObject: PropTypes.func.isRequired,
-  //   editable: PropTypes.bool.isRequired,
-  //   classes: PropTypes.object.isRequired,
-  //   TagEditor: PropTypes.func.isRequired,
-  // }
+import { ContentProxyStyled } from './styles'
+import { ContentEditableStyled } from './styles/contentEditable'
+import ContentEditorToolbar from './Toolbar'
 
-  // static defaultProps = {
-  //   TagEditor,
-  // }
+/**
+ * Компонент-обертка для contenteditable элемента.
+ * Предназначение: дать возможность редактировать содержимое в браузере.
+ * Особенности:
+ * - внутренние теги, формируемые реакт-компонентами не редактировать.
+ * - Selection есть всегда. Просто не всегда есть фокус-теги. Меняется при клике в любую часть документа.
+ * Сценарий:
+ * - По клику делать компонент редактируемый
+ * - По выходу из области делать его опять не редактируемым
+ */
+const ContentProxy: React.FC<ContentProxyProps> = (props) => {
+  const {
+    // components,
+    // editable,
+    // initialContent,
+    // mode = 'main',
+    // TagEditor,
+    updateObject,
+    className,
+    // ...other
+    children,
+  } = props
 
-  shouldComponentUpdate() {
-    const { editable } = this.props
+  const [editMode, setEditMode] = useState<ContentProxyEditMode | null>(null)
 
-    return editable ? false : true
-  }
+  // const ref = useRef<HTMLDivElement>(null);
+  // const [wrapper, setWrapper] = useState<HTMLDivElement | null>(null);
 
-  render() {
-    const {
-      components,
-      editable,
-      initialContent,
-      mode = 'main',
-      // TagEditor,
-      ...other
-    } = this.props
+  const [
+    contentEditableContainer,
+    setContentEditableContainer,
+  ] = useState<HTMLDivElement | null>(null)
 
+  const [newContent, setNewContent] = useState<
+    EditorComponentObject['components'] | null
+  >(null)
+
+  /**
+   * Сохраняем временный контент в JSON компонента
+   */
+  const saveChanges = useCallback(() => {
+
+    if (!newContent) {
+      return false;
+    }
+
+    /**
+     * Выключаем режим редактирования
+     */
+    setEditMode(null)
+
+    /**
+     * Обновляем компонент
+     */
+    updateObject({
+      components: newContent || [],
+    })
+
+    /**
+     * Сбрасываем временный контент
+     */
+    setNewContent(null)
+
+    return true
+  }, [newContent, updateObject])
+
+  const [focused, setFocused] = useState(false)
+
+  const onFocus = useCallback(() => {
+    return setFocused(true)
+  }, [])
+  const onBlur = useCallback(() => {
+
+    // Сохраняем изменения, если есть
+    saveChanges();
+
+    return setFocused(false)
+  }, [saveChanges])
+
+  /**
+   * Find closest node
+   */
+
+  // useMutationObserver(ref.current, setNewContent);
+  useMutationObserver(contentEditableContainer, setNewContent, editMode)
+
+  const selection = useMemo(() => global.document?.getSelection() ?? null, [])
+
+  const closestInSelection = useCallback(
+    <T extends HTMLElement>(selector: string): T | null => {
+      if (!selection?.focusNode) {
+        return null
+      }
+
+      let node: Node | null | undefined = selection.focusNode
+
+      if (node.nodeType === Node.TEXT_NODE) {
+        node = selection.focusNode?.parentNode
+      }
+
+      if (node && node instanceof Element) {
+        return node.closest(selector)
+      }
+
+      return null
+    },
+    [selection]
+  )
+
+  const contentProxy = useMemo(() => {
     return (
-      <TagEditor
-        mode={mode}
-        editable={editable}
-        object={{
-          name: 'HtmlTag',
-          component: 'HtmlTag',
-          props: {
-            tag: 'div',
-          },
-          components: editable
-            ? components && components.length
-              ? components
-              : initialContent
-              ? initialContent
-              : []
-            : components || [],
-        }}
-        {...other}
-      />
+      <ContentProxyStyled
+        // ref={setWrapper}
+        // suppressContentEditableWarning
+        // contentEditable={true}
+        // onFocus={onFocus}
+        // onBlur={onBlur}
+        className={[
+          className,
+          'ContentProxyStyled',
+          focused ? 'focused' : '',
+        ].join(' ')}
+      >
+        {/* <div
+        contentEditable={false}
+      >
+        <div>
+          {contentEditable ? "contentEditable YES" : "contentEditable NO"}
+        </div>
+      </div> */}
+
+        <ContentEditorToolbar
+          // selection={selection}
+          closestInSelection={closestInSelection}
+          newContent={newContent}
+          saveChanges={saveChanges}
+          editMode={editMode}
+          setEditMode={setEditMode}
+          contentEditableContainer={contentEditableContainer}
+          updateObject={updateObject}
+        />
+
+        {/* <div className="ContentProxyContent"> */}
+          <ContentEditableStyled
+            key={editMode}
+            className="contentProxyEditor"
+            // ref={ref}
+            ref={setContentEditableContainer}
+            onFocus={onFocus}
+            onBlur={onBlur}
+            // contentEditable={contentEditable}
+            contentEditable={editMode === ContentProxyEditMode.HTML}
+            suppressContentEditableWarning
+          >
+            {children}
+          </ContentEditableStyled>
+        {/* </div> */}
+      </ContentProxyStyled>
     )
-  }
+  }, [children, className, closestInSelection, contentEditableContainer, editMode, focused, newContent, onBlur, onFocus, saveChanges, updateObject])
+
+  return <>{contentProxy}</>
 }
 
-export default ContentProxy;
+export default ContentProxy

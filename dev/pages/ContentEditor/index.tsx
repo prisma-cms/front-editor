@@ -32,50 +32,105 @@ const object = initLayout({
       component: 'ContentEditor',
       props: {},
       components: [
+        {
+          name: 'HtmlTag',
+          component: 'HtmlTag',
+          props: {
+            name: 'HtmlTag',
+            tag: 'div',
+            className: '',
+            id: 'HtmlTagRootElement',
+          },
+          components: [
+            {
+              name: 'Section',
+              component: 'Section',
+              props: {},
+              components: [
+                {
+                  name: 'HtmlTag',
+                  component: 'HtmlTag',
+                  props: {
+                    name: 'HtmlTag',
+                    tag: 'div',
+                    className: '',
+                  },
+                  components: [
+                    {
+                      name: 'HtmlTag',
+                      component: 'HtmlTag',
+                      props: {
+                        text: 'text',
+                      },
+                      components: [],
+                    },
+                    {
+                      name: 'HtmlTag',
+                      component: 'HtmlTag',
+                      props: {
+                        tag: 'br',
+                      },
+                      components: [],
+                    },
+                  ],
+                },
+              ],
+            },
+            {
+              name: 'HtmlTag',
+              component: 'HtmlTag',
+              props: {
+                name: 'HtmlTag',
+                tag: 'div',
+                className: '',
+              },
+              components: [
+                {
+                  name: 'HtmlTag',
+                  component: 'HtmlTag',
+                  props: {
+                    text: 'text eeeeere',
+                  },
+                  components: [],
+                },
+                {
+                  name: 'HtmlTag',
+                  component: 'HtmlTag',
+                  props: {
+                    tag: 'br',
+                  },
+                  components: [],
+                },
+              ],
+            },
+          ],
+        },
         // {
-        //   "name": "HtmlTag",
-        //   "component": "HtmlTag",
-        //   "props": {
-        //     "name": "HtmlTag",
-        //     "tag": "div",
-        //     "className": ""
+        //   name: 'HtmlTag',
+        //   component: 'HtmlTag',
+        //   props: {
+        //     name: 'HtmlTag',
+        //     tag: 'div',
+        //     className: '',
         //   },
-        //   "components": [
+        //   components: [
         //     {
-        //       "name": "Section",
-        //       "component": "Section",
-        //       "props": {
+        //       name: 'HtmlTag',
+        //       component: 'HtmlTag',
+        //       props: {
+        //         text: 'text',
         //       },
-        //       "components": []
-        //     }
-        //   ]
-        // },
-        // {
-        //   "name": "HtmlTag",
-        //   "component": "HtmlTag",
-        //   "props": {
-        //     "name": "HtmlTag",
-        //     "tag": "div",
-        //     "className": ""
-        //   },
-        //   "components": [
-        //     {
-        //       "name": "HtmlTag",
-        //       "component": "HtmlTag",
-        //       "props": {
-        //         "text": "text"
-        //       },
-        //       "components": []
+        //       components: [],
         //     },
         //     {
-        //       "name": "HtmlTag",
-        //       "component": "HtmlTag",
-        //       "props": {
-        //         "tag": "br"
+        //       name: 'HtmlTag',
+        //       component: 'HtmlTag',
+        //       props: {
+        //         tag: 'br',
         //       },
-        //       "components": []
-        //     }
-        //   ]
+        //       components: [],
+        //     },
+        //   ],
         // },
         //   {
         //     name: 'HtmlTag',

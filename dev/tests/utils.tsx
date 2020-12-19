@@ -10,6 +10,8 @@ import 'jest-styled-components'
 
 import { HeadManagerContext } from 'next/dist/next-server/lib/head-manager-context'
 
+import { toMatchImageSnapshot } from 'jest-image-snapshot'
+
 /**
  * Base renderer from @testing-library/react
  */
@@ -17,6 +19,8 @@ export { baseRender }
 
 // re-export everything
 export * from '@testing-library/react'
+
+expect.extend({ toMatchImageSnapshot })
 
 /**
  * Collect tags from next/head
