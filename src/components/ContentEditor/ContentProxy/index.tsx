@@ -29,11 +29,21 @@ const ContentProxy: React.FC<ContentProxyProps> = (props) => {
     // initialContent,
     // mode = 'main',
     // TagEditor,
+    // updateObject: updateObjectProps,
     updateObject,
     className,
     // ...other
     children,
+    experimental,
   } = props
+
+
+  // const updateObject = useCallback((data) => {
+  //   console.log('ContentProxy updateObject data', data);
+  //   updateObjectProps(data);
+  // }, [
+  //   updateObjectProps
+  // ]);
 
   const [editMode, setEditMode] = useState<ContentProxyEditMode | null>(null)
 
@@ -152,26 +162,26 @@ const ContentProxy: React.FC<ContentProxyProps> = (props) => {
           setEditMode={setEditMode}
           contentEditableContainer={contentEditableContainer}
           updateObject={updateObject}
+          experimental={experimental}
         />
 
-        {/* <div className="ContentProxyContent"> */}
-          <ContentEditableStyled
-            key={editMode}
-            className="contentProxyEditor"
-            // ref={ref}
-            ref={setContentEditableContainer}
-            onFocus={onFocus}
-            onBlur={onBlur}
-            // contentEditable={contentEditable}
-            contentEditable={editMode === ContentProxyEditMode.HTML}
-            suppressContentEditableWarning
-          >
-            {children}
-          </ContentEditableStyled>
-        {/* </div> */}
+        <ContentEditableStyled
+          key={editMode}
+          className="contentProxyEditor"
+          // ref={ref}
+          ref={setContentEditableContainer}
+          onFocus={onFocus}
+          onBlur={onBlur}
+          // contentEditable={contentEditable}
+          contentEditable={editMode === ContentProxyEditMode.HTML}
+          suppressContentEditableWarning
+        >
+          {children}
+        </ContentEditableStyled>
+
       </ContentProxyStyled>
     )
-  }, [children, className, closestInSelection, contentEditableContainer, editMode, focused, newContent, onBlur, onFocus, saveChanges, updateObject])
+  }, [children, className, closestInSelection, contentEditableContainer, editMode, experimental, focused, newContent, onBlur, onFocus, saveChanges, updateObject])
 
   return <>{contentProxy}</>
 }

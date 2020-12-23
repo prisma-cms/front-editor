@@ -1,6 +1,8 @@
 import { EditorComponentObject, EditorComponentProps } from '../..'
 
 export interface ContentEditorProps extends EditorComponentProps {
+  experimental?: "true" | "false"
+
   render_toolbar?: boolean
 
   //   read_only: PropTypes.bool.isRequired,

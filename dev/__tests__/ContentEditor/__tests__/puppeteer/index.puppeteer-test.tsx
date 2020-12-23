@@ -146,15 +146,6 @@ describe('ContentEditor', () => {
 
       expect(setEditModeHTMLButton).toBeTruthy()
 
-      /**
-       * Кнопка выставления режима редактирования React
-       */
-
-      const setEditModeReactButton = await toolbar?.$(
-        '[name=setEditModeReact]'
-      )
-
-      expect(setEditModeReactButton).toBeTruthy()
 
       const contentProxyEditor = await contentProxyStyled?.$(
         '.contentProxyEditor'
@@ -314,7 +305,7 @@ describe('ContentEditor', () => {
          * По умолчанию все кнопки кроме переключения режимов редактирования
          * должны быть неактивными
          */
-        expect((await toolbar?.$$('button:enabled'))?.length).toBe(2)
+        expect((await toolbar?.$$('button:enabled'))?.length).toBe(1)
         expect(
           (await toolbar?.$$('button:disabled'))?.length
         ).toBeGreaterThan(0)

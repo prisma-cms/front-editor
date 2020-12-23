@@ -22,7 +22,11 @@ const nodeToEditorComponentObject = (
    * Если это реакт-нода, то возвращаем его состояние
    */
   if (node instanceof Element) {
-    const { reactComponent } = node
+    const { reactComponent, editorComponentObject } = node
+
+    if(editorComponentObject) {
+      return editorComponentObject;
+    }
 
     if (reactComponent && !(reactComponent instanceof HtmlTag)) {
       const component = reactComponent.getObjectWithMutations()

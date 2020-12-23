@@ -104,11 +104,11 @@ describe('ContentEditor', () => {
        * Кнопка выставления режима редактирования React
        */
 
-      const setEditModeReactButton = await toolbar?.$(
-        '[name=setEditModeReact]'
-      )
+      // const setEditModeReactButton = await toolbar?.$(
+      //   '[name=setEditModeReact]'
+      // )
 
-      expect(setEditModeReactButton).toBeTruthy()
+      // expect(setEditModeReactButton).toBeTruthy()
 
       {
         /**
@@ -291,7 +291,7 @@ describe('ContentEditor', () => {
          * По умолчанию все кнопки кроме переключения режимов редактирования
          * должны быть неактивными
          */
-        expect((await toolbar?.$$('button:enabled'))?.length).toBe(2)
+        expect((await toolbar?.$$('button:enabled'))?.length).toBe(1)
         expect(
           (await toolbar?.$$('button:disabled'))?.length
         ).toBeGreaterThan(0)
@@ -426,10 +426,19 @@ describe('ContentEditor', () => {
         ).toMatchImageSnapshot()
 
         /**
+         * Фиксируем кол-во дочерних компонентов в контейнере
+         */
+
+        let childsCount = await NewDiv1?.evaluate(node => node.childElementCount) || 0;
+
+        expect(await NewDiv1?.evaluate(node => node.outerHTML)).toMatchSnapshot("Check NewDiv1 childs count");
+
+        /**
          * Вставляем секцию
          */
         await insertSectionButton?.click();
         await sleep();
+        childsCount++;
 
 
         expect(
@@ -437,6 +446,57 @@ describe('ContentEditor', () => {
             fullPage: true,
           })
         ).toMatchImageSnapshot()
+
+
+        expect(await NewDiv1?.evaluate(node => node.outerHTML)).toMatchSnapshot("Check NewDiv1 childs count");
+
+        /**
+         * Проверяем кол-во дочерних элементов
+         */
+        expect((await NewDiv1?.$$(':scope > *'))?.length).toBe(childsCount)
+
+
+        /**
+         * Вставляем еще секцию (проверяем на задвоение действия)
+         */
+        await insertSectionButton?.click();
+        await sleep();
+        childsCount++;
+
+
+        expect(
+          await page.screenshot({
+            fullPage: true,
+          })
+        ).toMatchImageSnapshot()
+
+
+        /**
+         * Проверяем кол-во дочерних элементов
+         */
+        expect((await NewDiv1?.$$(':scope > *'))?.length).toBe(childsCount)
+
+
+        /**
+         * Вставляем еще секцию (проверяем на задвоение действия)
+         */
+        await insertSectionButton?.click();
+        await sleep();
+        childsCount++;
+
+
+        expect(
+          await page.screenshot({
+            fullPage: true,
+          })
+        ).toMatchImageSnapshot()
+
+
+
+        /**
+         * Проверяем кол-во дочерних элементов
+         */
+        expect((await NewDiv1?.$$(':scope > *'))?.length).toBe(childsCount)
 
         /**
          * Удаляем выделенные элементы

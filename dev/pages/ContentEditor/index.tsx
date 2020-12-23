@@ -30,7 +30,9 @@ const object = initLayout({
     {
       name: 'ContentEditor',
       component: 'ContentEditor',
-      props: {},
+      props: {
+        experimental: "true",
+      },
       components: [
         {
           name: 'HtmlTag',

@@ -10,6 +10,11 @@ import { FrontEditorProps } from '..'
 
 export interface ElementWithReactComponent extends Element {
   reactComponent?: EditorComponent
+
+  /**
+   * Используется при вставке новых компонентов в текущий HTML
+   */
+  editorComponentObject?: EditorComponentObject
 }
 
 export interface EditorComponentObject<

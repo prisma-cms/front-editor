@@ -34,6 +34,10 @@ type ToolbarButton = {
   onClick?: () => boolean
 }
 
+// TODO Remove
+/**
+ * @deprecated
+ */
 class TagEditor<
   P extends TagEditorProps = TagEditorProps,
   S extends TagEditorState = TagEditorState
