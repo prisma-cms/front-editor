@@ -1,10 +1,11 @@
-import ContentEditor from '../../..'
-import { registerComponents } from '../../../../..'
-import Section from '../../../../Section'
-import HtmlTag from '../../../../Tag/HtmlTag'
-import Typography from '../../../../Typography'
+import { EditorComponent } from '../../../../../../src'
+import ContentEditor from '../../../../../../src/components/ContentEditor'
+import { registerComponents } from '../../../../../../src'
+import Section from '../../../../../../src/components/Section'
+import HtmlTag from '../../../../../../src/components/Tag/HtmlTag'
+import Typography from '../../../../../../src/components/Typography'
 
-export const Components = [Section, ContentEditor, HtmlTag, Typography]
+export const Components: typeof EditorComponent[] = [Section, ContentEditor, HtmlTag, Typography]
 
 export const initLayout = registerComponents(Components)
 

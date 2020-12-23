@@ -1,4 +1,4 @@
-import { EditableObjectProps, EditableObjectState } from 'apollo-cms/dist'
+import { EditableObjectProps, EditableObjectState } from 'apollo-cms'
 import EditorComponent from '.'
 import { FrontEditorProps } from '..'
 

@@ -16,7 +16,7 @@
     "lint": "eslint . --ext ts --ext tsx --ext js",
     "test": "jest",
     "test:puppeteer": "jest -c jest.puppetter.config.js",
-    "test:all": "yarn lint && yarn types && yarn test && yarn test:puppeteer",
+    "test:all": "yarn lint && yarn types && yarn test",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
     "preversion": "yarn test && yarn clean && yarn build",

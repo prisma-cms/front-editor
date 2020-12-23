@@ -1,8 +1,8 @@
-import ContentEditor from '../..'
-import Section from '../../../Section'
-import HtmlTag from '../../../Tag/HtmlTag'
-import Typography from '../../../Typography'
-import { registerComponents } from '../../../..'
+import ContentEditor from '../../../../../src/components/ContentEditor'
+import Section from '../../../../../src/components/Section'
+import HtmlTag from '../../../../../src/components/Tag/HtmlTag'
+import Typography from '../../../../../src/components/Typography'
+import { registerComponents } from '../../../../../src'
 
 export const Components = [Section, ContentEditor, HtmlTag, Typography]
 

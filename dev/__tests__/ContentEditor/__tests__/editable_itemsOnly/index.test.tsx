@@ -1,6 +1,6 @@
 import React from 'react'
-import { appRender, act } from '../../../../../dev/tests/utils'
-import FrontEditor from '../../../..'
+import { appRender, act } from '../../../../tests/utils'
+import FrontEditor from '../../../../../src'
 import { Components, object } from '../mock'
 
 describe('CodeChallenge', () => {

@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { PrismaCmsEditorRawContent } from '@prisma-cms/editor/dist'
+import { PrismaCmsEditorRawContent } from '@prisma-cms/editor'
 import React from 'react'
 import Editor from '@prisma-cms/editor'
 

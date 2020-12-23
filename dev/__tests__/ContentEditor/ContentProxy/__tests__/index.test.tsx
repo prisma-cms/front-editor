@@ -1,6 +1,6 @@
 import React from 'react'
-import FrontEditor from '../../../..'
-import { baseRender, act } from '../../../../../dev/tests/utils'
+import FrontEditor from '../../../../../src'
+import { baseRender, act } from '../../../../tests/utils'
 import { object, Components } from './mock'
 
 const Wrapper: React.FC = ({ children }) => {
