@@ -7,6 +7,7 @@ export * from './interfaces'
 // TODO Restore
 
 /**
+ * @deprecated
  * Load template via API and render
  */
 const TemplateRenderer: React.FC<TemplateRendererProps> = () => {

@@ -37,7 +37,6 @@ const ContentProxy: React.FC<ContentProxyProps> = (props) => {
     experimental,
   } = props
 
-
   // const updateObject = useCallback((data) => {
   //   console.log('ContentProxy updateObject data', data);
   //   updateObjectProps(data);
@@ -63,9 +62,8 @@ const ContentProxy: React.FC<ContentProxyProps> = (props) => {
    * Сохраняем временный контент в JSON компонента
    */
   const saveChanges = useCallback(() => {
-
     if (!newContent) {
-      return false;
+      return false
     }
 
     /**
@@ -94,9 +92,8 @@ const ContentProxy: React.FC<ContentProxyProps> = (props) => {
     return setFocused(true)
   }, [])
   const onBlur = useCallback(() => {
-
     // Сохраняем изменения, если есть
-    saveChanges();
+    saveChanges()
 
     return setFocused(false)
   }, [saveChanges])
@@ -178,10 +175,22 @@ const ContentProxy: React.FC<ContentProxyProps> = (props) => {
         >
           {children}
         </ContentEditableStyled>
-
       </ContentProxyStyled>
     )
-  }, [children, className, closestInSelection, contentEditableContainer, editMode, experimental, focused, newContent, onBlur, onFocus, saveChanges, updateObject])
+  }, [
+    children,
+    className,
+    closestInSelection,
+    contentEditableContainer,
+    editMode,
+    experimental,
+    focused,
+    newContent,
+    onBlur,
+    onFocus,
+    saveChanges,
+    updateObject,
+  ])
 
   return <>{contentProxy}</>
 }

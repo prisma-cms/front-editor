@@ -1,7 +1,7 @@
 import { EditorComponentObject, EditorComponentProps } from '../..'
 
 export interface ContentEditorProps extends EditorComponentProps {
-  experimental?: "true" | "false"
+  experimental?: 'true' | 'false'
 
   render_toolbar?: boolean
 

@@ -6,17 +6,14 @@ jest.setTimeout(30000)
 
 expect.extend({ toMatchImageSnapshot })
 
-
 /**
- * При кликах по кнопкам бывают эффекты, поэтому надо ставить 
+ * При кликах по кнопкам бывают эффекты, поэтому надо ставить
  */
 const sleep = (delay = 3000) => {
-
-  return new Promise(resolve => {
-    setTimeout(resolve, delay);
+  return new Promise((resolve) => {
+    setTimeout(resolve, delay)
   })
 }
-
 
 /**
  * Проверяем вставку реакт-компонентов в HTML-контент
@@ -29,7 +26,6 @@ describe('ContentEditor', () => {
     // await page.goto('https://google.com');
 
     // const logs = [];
-
 
     try {
       let error: Error | null = null
@@ -127,8 +123,11 @@ describe('ContentEditor', () => {
          * Пока не перевели в режим редактирования,
          * редактируемой области не должно быть
          */
-        expect(await contentProxyEditor?.evaluate(node => node.attributes.getNamedItem("contenteditable")?.value)).toBe("false")
-
+        expect(
+          await contentProxyEditor?.evaluate(
+            (node) => node.attributes.getNamedItem('contenteditable')?.value
+          )
+        ).toBe('false')
 
         /**
          * Фиксируем начальный контент
@@ -159,13 +158,11 @@ describe('ContentEditor', () => {
        */
 
       await setEditModeHTMLButton?.click()
-      await sleep();
-
+      await sleep()
 
       expect(
         await setEditModeHTMLButton?.evaluate((node) => node.outerHTML)
       ).toMatchSnapshot('setEditModeHTMLButton active')
-
 
       expect(
         await page.screenshot({
@@ -234,13 +231,11 @@ describe('ContentEditor', () => {
        */
 
       {
-
         const contentProxyEditor = await contentProxyStyled?.$(
           '.contentProxyEditor'
         )
 
         expect(contentProxyEditor).toBeTruthy()
-
 
         const saveButton = await toolbar?.$(
           '.TagEditorToolbar--iconButton.save'
@@ -256,7 +251,7 @@ describe('ContentEditor', () => {
          * Жмем кноку сохранения
          */
         await saveButton?.click()
-        await sleep();
+        await sleep()
 
         /**
          * Делаем снимок
@@ -279,40 +274,38 @@ describe('ContentEditor', () => {
        * Проверяем вставку React-компонентов
        */
       {
-
         const contentProxyEditor = await contentProxyStyled?.$(
           '.contentProxyEditor'
         )
 
         expect(contentProxyEditor).toBeTruthy()
 
-
         /**
          * По умолчанию все кнопки кроме переключения режимов редактирования
          * должны быть неактивными
          */
         expect((await toolbar?.$$('button:enabled'))?.length).toBe(1)
-        expect(
-          (await toolbar?.$$('button:disabled'))?.length
-        ).toBeGreaterThan(0)
+        expect((await toolbar?.$$('button:disabled'))?.length).toBeGreaterThan(
+          0
+        )
 
         /**
          * Кнопка вставки секции
          */
-        const insertSectionButton = await toolbar?.$(
-          'button[name=addSection]'
-        )
+        const insertSectionButton = await toolbar?.$('button[name=addSection]')
 
-        expect(insertSectionButton).toBeTruthy();
+        expect(insertSectionButton).toBeTruthy()
 
-        expect(await insertSectionButton?.evaluate((node) => node.attributes.getNamedItem("disabled")?.value)).toBe("");
-
+        expect(
+          await insertSectionButton?.evaluate(
+            (node) => node.attributes.getNamedItem('disabled')?.value
+          )
+        ).toBe('')
 
         /**
          * Переключаемся в режим редактирования (Нет)
          */
         // await setEditModeHTMLButton?.click()
-
 
         /**
          * Фокусируемся в редактор
@@ -339,27 +332,35 @@ describe('ContentEditor', () => {
         //   )
         // ).toBe(false)
 
-
         /**
          * Выделяем конкретные элементы и удаляем их.
          */
 
-        expect(await contentProxyEditor?.evaluate(node => node.outerHTML)).toMatchSnapshot('NewDiv1 outerHTML expect 3 childs contentProxyEditor')
+        expect(
+          await contentProxyEditor?.evaluate((node) => node.outerHTML)
+        ).toMatchSnapshot(
+          'NewDiv1 outerHTML expect 3 childs contentProxyEditor'
+        )
 
         {
           const contentProxyEditor = await contentProxyStyled?.$(
             '.contentProxyEditor'
           )
 
-          expect(await contentProxyEditor?.evaluate(node => node.outerHTML)).toMatchSnapshot('NewDiv1 outerHTML expect 3 childs contentProxyEditor')
+          expect(
+            await contentProxyEditor?.evaluate((node) => node.outerHTML)
+          ).toMatchSnapshot(
+            'NewDiv1 outerHTML expect 3 childs contentProxyEditor'
+          )
         }
 
         const NewDiv1 = await contentProxyEditor?.$('#NewDiv1')
 
         expect(NewDiv1).toBeTruthy()
 
-
-        expect(await NewDiv1?.evaluate(node => node.outerHTML)).toMatchSnapshot('NewDiv1 outerHTML expect 3 childs')
+        expect(
+          await NewDiv1?.evaluate((node) => node.outerHTML)
+        ).toMatchSnapshot('NewDiv1 outerHTML expect 3 childs')
 
         /**
          * Ожидаем 3 дочерних элемента
@@ -403,21 +404,30 @@ describe('ContentEditor', () => {
          * Проверяем, что есть выделенные элементы.
          * При этом кнопка вставки секции не должна быть активной.
          */
-        expect(await page.evaluate(() => document.getSelection()?.rangeCount)).toBeGreaterThan(0);
-        expect(await insertSectionButton?.evaluate((node) => node.attributes.getNamedItem("disabled")?.value)).toBe("");
-
+        expect(
+          await page.evaluate(() => document.getSelection()?.rangeCount)
+        ).toBeGreaterThan(0)
+        expect(
+          await insertSectionButton?.evaluate(
+            (node) => node.attributes.getNamedItem('disabled')?.value
+          )
+        ).toBe('')
 
         /**
          * Сбрасываем ранж и вставляем секцию
          */
         const selectionType = await page.evaluate(() => {
-          document.getSelection()?.getRangeAt(0).collapse();
-          return document.getSelection()?.type;
-        });
+          document.getSelection()?.getRangeAt(0).collapse()
+          return document.getSelection()?.type
+        })
 
-        expect(selectionType).toBe("Caret");
+        expect(selectionType).toBe('Caret')
 
-        expect(await insertSectionButton?.evaluate((node) => node.attributes.getNamedItem("disabled")?.value)).toBe(undefined);
+        expect(
+          await insertSectionButton?.evaluate(
+            (node) => node.attributes.getNamedItem('disabled')?.value
+          )
+        ).toBe(undefined)
 
         expect(
           await page.screenshot({
@@ -429,17 +439,19 @@ describe('ContentEditor', () => {
          * Фиксируем кол-во дочерних компонентов в контейнере
          */
 
-        let childsCount = await NewDiv1?.evaluate(node => node.childElementCount) || 0;
+        let childsCount =
+          (await NewDiv1?.evaluate((node) => node.childElementCount)) || 0
 
-        expect(await NewDiv1?.evaluate(node => node.outerHTML)).toMatchSnapshot("Check NewDiv1 childs count");
+        expect(
+          await NewDiv1?.evaluate((node) => node.outerHTML)
+        ).toMatchSnapshot('Check NewDiv1 childs count')
 
         /**
          * Вставляем секцию
          */
-        await insertSectionButton?.click();
-        await sleep();
-        childsCount++;
-
+        await insertSectionButton?.click()
+        await sleep()
+        childsCount++
 
         expect(
           await page.screenshot({
@@ -447,51 +459,45 @@ describe('ContentEditor', () => {
           })
         ).toMatchImageSnapshot()
 
-
-        expect(await NewDiv1?.evaluate(node => node.outerHTML)).toMatchSnapshot("Check NewDiv1 childs count");
+        expect(
+          await NewDiv1?.evaluate((node) => node.outerHTML)
+        ).toMatchSnapshot('Check NewDiv1 childs count')
 
         /**
          * Проверяем кол-во дочерних элементов
          */
         expect((await NewDiv1?.$$(':scope > *'))?.length).toBe(childsCount)
 
-
         /**
          * Вставляем еще секцию (проверяем на задвоение действия)
          */
-        await insertSectionButton?.click();
-        await sleep();
-        childsCount++;
-
+        await insertSectionButton?.click()
+        await sleep()
+        childsCount++
 
         expect(
           await page.screenshot({
             fullPage: true,
           })
         ).toMatchImageSnapshot()
-
 
         /**
          * Проверяем кол-во дочерних элементов
          */
         expect((await NewDiv1?.$$(':scope > *'))?.length).toBe(childsCount)
 
-
         /**
          * Вставляем еще секцию (проверяем на задвоение действия)
          */
-        await insertSectionButton?.click();
-        await sleep();
-        childsCount++;
-
+        await insertSectionButton?.click()
+        await sleep()
+        childsCount++
 
         expect(
           await page.screenshot({
             fullPage: true,
           })
         ).toMatchImageSnapshot()
-
-
 
         /**
          * Проверяем кол-во дочерних элементов
@@ -514,7 +520,6 @@ describe('ContentEditor', () => {
          */
         // expect((await NewDiv1?.$$(':scope > *'))?.length).toBe(1)
 
-
         /**
          * Сейчас у нас каретка на месте удаленных элементов.
          * Вставляем Реакт-компонент.
@@ -529,7 +534,6 @@ describe('ContentEditor', () => {
         // console.log('focusNode', focusNode);
 
         // expect(focusNode).toBeTruthy();
-
 
         // const newItem = await focusNode?.evaluate((node: HTMLDivElement) => {
 
@@ -566,7 +570,6 @@ describe('ContentEditor', () => {
 
         //   const focusNode = document.getSelection()?.focusNode
 
-
         //   /**
         //    * Если фокус-нода - Text, то в нее нельзя вставить элемент.
         //    */
@@ -581,7 +584,6 @@ describe('ContentEditor', () => {
         //   // const element = focusNode.asElement();
         //   // console.log('element', element);
 
-
         //   // node.appendChild(div);
 
         //   return div.outerHTML;
@@ -589,7 +591,6 @@ describe('ContentEditor', () => {
 
         // expect(newItem).toMatchSnapshot('Insert React newItem')
         // expect(await NewDiv1?.evaluate(node => node.outerHTML)).toMatchSnapshot('Insert React newItem NewDiv1')
-
 
         // expect(
         //   await page.screenshot({

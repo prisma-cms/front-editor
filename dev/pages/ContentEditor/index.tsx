@@ -31,7 +31,7 @@ const object = initLayout({
       name: 'ContentEditor',
       component: 'ContentEditor',
       props: {
-        experimental: "true",
+        experimental: 'true',
       },
       components: [
         {

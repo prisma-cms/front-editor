@@ -5,9 +5,8 @@ import { TagEditorProps } from '../TagEditor/interfaces'
 // import { TagEditorProps } from "../TagEditor/interfaces";
 
 export type ContentProxyProps = {
-
   experimental: boolean
-  
+
   editable?: boolean
 
   components?: EditorComponentObject['components']
@@ -24,5 +23,5 @@ export type ContentProxyProps = {
  */
 export enum ContentProxyEditMode {
   // React,
-  HTML = "HTML",
+  HTML = 'HTML',
 }

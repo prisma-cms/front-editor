@@ -11,7 +11,21 @@ const object: EditorComponentObject = {
       props: {
         children: 'Some text',
       },
-      components: [],
+      components: [
+        {
+          name: 'Section',
+          props: {},
+          components: [],
+          component: 'Section',
+        },
+        {
+          id: 'section_2',
+          name: 'Section',
+          props: {},
+          components: [],
+          component: 'Section',
+        },
+      ],
     },
   ],
 }

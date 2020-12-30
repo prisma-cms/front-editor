@@ -27,13 +27,12 @@ expect.extend({ toMatchImageSnapshot })
  * И можно будет в useMutationObserver реагировать на изменения и вызывать его.
  */
 
- /**
-  * При кликах по кнопкам бывают эффекты, поэтому надо ставить 
-  */
+/**
+ * При кликах по кнопкам бывают эффекты, поэтому надо ставить
+ */
 const sleep = (delay = 3000) => {
-
-  return new Promise(resolve => {
-    setTimeout(resolve, delay);
+  return new Promise((resolve) => {
+    setTimeout(resolve, delay)
   })
 }
 
@@ -146,7 +145,6 @@ describe('ContentEditor', () => {
 
       expect(setEditModeHTMLButton).toBeTruthy()
 
-
       const contentProxyEditor = await contentProxyStyled?.$(
         '.contentProxyEditor'
       )
@@ -157,7 +155,11 @@ describe('ContentEditor', () => {
        * Пока не перевели в режим редактирования,
        * редактируемой области не должно быть
        */
-      expect(await contentProxyEditor?.evaluate(node => node.attributes.getNamedItem("contenteditable")?.value)).toBe("false")
+      expect(
+        await contentProxyEditor?.evaluate(
+          (node) => node.attributes.getNamedItem('contenteditable')?.value
+        )
+      ).toBe('false')
 
       /**
        * Фиксируем начальный контент
@@ -188,7 +190,7 @@ describe('ContentEditor', () => {
 
       await setEditModeHTMLButton?.click()
 
-      await sleep();
+      await sleep()
 
       expect(
         await page.screenshot({
@@ -278,7 +280,7 @@ describe('ContentEditor', () => {
          */
         await saveButton?.click()
 
-        await sleep();
+        await sleep()
 
         /**
          * Делаем снимок
@@ -306,9 +308,9 @@ describe('ContentEditor', () => {
          * должны быть неактивными
          */
         expect((await toolbar?.$$('button:enabled'))?.length).toBe(1)
-        expect(
-          (await toolbar?.$$('button:disabled'))?.length
-        ).toBeGreaterThan(0)
+        expect((await toolbar?.$$('button:disabled'))?.length).toBeGreaterThan(
+          0
+        )
 
         /**
          * Переключаемся в режим редактирования
@@ -319,7 +321,7 @@ describe('ContentEditor', () => {
         /**
          * Делаем паузу, потому что на кнопке эффекты имеются
          */
-        await sleep();
+        await sleep()
 
         /**
          * Фокусируемся в редактор
@@ -351,7 +353,7 @@ describe('ContentEditor', () => {
          */
         await contentProxyEditor?.click()
 
-        await sleep();
+        await sleep()
 
         /**
          * Проверяем, чтобы был фокус на этом элементе
@@ -472,7 +474,7 @@ describe('ContentEditor', () => {
 
         await saveButton?.click()
 
-        await sleep();
+        await sleep()
 
         expect(
           await page.screenshot({

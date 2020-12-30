@@ -46,16 +46,17 @@ const ContentEditorToolbar: React.FC<ContentEditorToolbarProps> = (props) => {
     experimental,
   } = props
 
-
   const setEditModeHTML = useCallback(() => {
     setEditMode(
       editMode === ContentProxyEditMode.HTML ? null : ContentProxyEditMode.HTML
     )
-    return true;
+    return true
   }, [editMode, setEditMode])
 
   const [selection, setSelection] = useState<Selection | null>(null)
-  const [selectionType, setSelectionType] = useState<Selection["type"] | undefined>(undefined)
+  const [selectionType, setSelectionType] = useState<
+    Selection['type'] | undefined
+  >(undefined)
 
   const [
     contentEditableContainerSelected,
@@ -88,11 +89,10 @@ const ContentEditorToolbar: React.FC<ContentEditorToolbarProps> = (props) => {
 
       // console.log('Toolbar contentEditableContainerSelected', contentEditableContainerSelected);
 
-
       setContentEditableContainerSelected(contentEditableContainerSelected)
       // setSelection(selection);
 
-      setSelectionType(selection?.type);
+      setSelectionType(selection?.type)
     },
     [contentEditableContainer]
   )
@@ -158,7 +158,10 @@ const ContentEditorToolbar: React.FC<ContentEditorToolbarProps> = (props) => {
   )
 
   const renderToolbarButtons = useMemo(() => {
-    const hasSelection = contentEditableContainerSelected && editMode === ContentProxyEditMode.HTML ? true : null
+    const hasSelection =
+      contentEditableContainerSelected && editMode === ContentProxyEditMode.HTML
+        ? true
+        : null
 
     const tableControls: ContentEditorToolbarButton[] = [
       {
@@ -182,9 +185,9 @@ const ContentEditorToolbar: React.FC<ContentEditorToolbarProps> = (props) => {
             y="0px"
             viewBox="0 0 512 512"
             xmlSpace="preserve"
-          // style={{
-          //   enableBackground: 'new 0 0 512 512',
-          // }}
+            // style={{
+            //   enableBackground: 'new 0 0 512 512',
+            // }}
           >
             <g>
               <g>
@@ -299,19 +302,20 @@ const ContentEditorToolbar: React.FC<ContentEditorToolbarProps> = (props) => {
       }
     }
 
-
     const editButton: ContentEditorToolbarButton = {
       onClick: setEditModeHTML,
-      name: "setEditModeHTML",
+      name: 'setEditModeHTML',
       title: 'Редактировать как HTML',
       // disabled: hasSelection ? false : true,
-      color: editMode === ContentProxyEditMode.HTML ? 'primary' as 'primary' : undefined,
+      color:
+        editMode === ContentProxyEditMode.HTML
+          ? ('primary' as 'primary')
+          : undefined,
       disabled: false,
       icon: <ModeEditHtmlIcon />,
-    };
+    }
 
     const buttons = [
-
       /**
        * Первый элемент выносим в отдельную переменную, чтобы TS правильно понял
        * массив каких типов используется.
@@ -468,12 +472,23 @@ const ContentEditorToolbar: React.FC<ContentEditorToolbarProps> = (props) => {
         </Grid>
       )
     })
-  }, [closestInSelection, contentEditableContainerSelected, editMode, execCommand, insertTableCell, insertTableRow, newContent?.length, onButtonClick, saveChanges, selection, setEditModeHTML])
+  }, [
+    closestInSelection,
+    contentEditableContainerSelected,
+    editMode,
+    execCommand,
+    insertTableCell,
+    insertTableRow,
+    newContent?.length,
+    onButtonClick,
+    saveChanges,
+    selection,
+    setEditModeHTML,
+  ])
 
   const onMouseDown = useCallback((event: React.MouseEvent) => {
     event.preventDefault()
   }, [])
-
 
   // const setEditModeReact = useCallback(() => {
   //   setEditMode(
@@ -483,9 +498,7 @@ const ContentEditorToolbar: React.FC<ContentEditorToolbarProps> = (props) => {
   //   )
   // }, [editMode, setEditMode])
 
-
   const addSection = useCallback(() => {
-
     /**
      * Нельзя просто так взять и вставить реакт-компонент в готовый HTML, чтобы он в контексте был и т.п.
      * Придется брать текущий HTML, вставлять в него новый элемент,
@@ -497,25 +510,24 @@ const ContentEditorToolbar: React.FC<ContentEditorToolbarProps> = (props) => {
     // console.log('addSection contentEditableContainerSelected', contentEditableContainerSelected);
 
     if (!contentEditableContainerSelected || !contentEditableContainer) {
-      return false;
+      return false
     }
 
-    const selection = document.getSelection();
+    const selection = document.getSelection()
 
-
-    let focusNode = selection?.focusNode;
+    let focusNode = selection?.focusNode
 
     if (focusNode?.nodeType === Node.TEXT_NODE) {
-      focusNode = focusNode.parentNode;
+      focusNode = focusNode.parentNode
     }
 
     if (focusNode) {
-      const div: ElementWithReactComponent = document.createElement('div');
+      const div: ElementWithReactComponent = document.createElement('div')
       // div.contentEditable = "false";
 
       const object = {
-        name: "Section",
-        component: "Section",
+        name: 'Section',
+        component: 'Section',
         components: [],
         props: {},
       }
@@ -525,34 +537,33 @@ const ContentEditorToolbar: React.FC<ContentEditorToolbarProps> = (props) => {
       //   object,
       // });
 
-
       // @ts-ignore
       // div.reactComponent = section;
 
-      div.editorComponentObject = object;
+      div.editorComponentObject = object
 
-      focusNode.appendChild(div);
+      focusNode.appendChild(div)
 
       // TODO Add carret movement into new node
       // div.focus();
-
 
       /**
        * Получаем новый JSON
        */
 
-      const newObject = nodeChildsToEditorComponentObjectComponents(contentEditableContainer);
-
+      const newObject = nodeChildsToEditorComponentObjectComponents(
+        contentEditableContainer
+      )
 
       /**
        * Удаляем вставленный элемент во избежание дублирования
        */
-      focusNode.removeChild(div);
+      focusNode.removeChild(div)
 
       /**
        * Обновляем основной компонент
        */
-      updateObject(newObject);
+      updateObject(newObject)
 
       // const section = <Section
       //   mode="main"
@@ -574,8 +585,7 @@ const ContentEditorToolbar: React.FC<ContentEditorToolbarProps> = (props) => {
 
       // ReactDOM.render(section, div)
     }
-
-  }, [contentEditableContainer, contentEditableContainerSelected, updateObject]);
+  }, [contentEditableContainer, contentEditableContainerSelected, updateObject])
 
   return useMemo(() => {
     const editModes = (
@@ -604,8 +614,8 @@ const ContentEditorToolbar: React.FC<ContentEditorToolbarProps> = (props) => {
             Edit as React
           </Button>
         </Grid> */}
-        {experimental
-          ? <Grid item>
+        {experimental ? (
+          <Grid item>
             <Button
               size="small"
               onClick={addSection}
@@ -613,17 +623,19 @@ const ContentEditorToolbar: React.FC<ContentEditorToolbarProps> = (props) => {
               //   editMode === ContentProxyEditMode.React ? 'primary' : undefined
               // }
               name="addSection"
-
               // TODO Добавить корректную проверку активности кнопки.
               // Сейчас проблема в том, что если каретка на нередактируемом элементе,
               // то секция не вставляется
-              disabled={!contentEditableContainerSelected || !!editMode || selectionType !== "Caret"}
+              disabled={
+                !contentEditableContainerSelected ||
+                !!editMode ||
+                selectionType !== 'Caret'
+              }
             >
               Add Section
-          </Button>
+            </Button>
           </Grid>
-          : null
-        }
+        ) : null}
       </>
     )
 
@@ -639,7 +651,15 @@ const ContentEditorToolbar: React.FC<ContentEditorToolbarProps> = (props) => {
         </Grid>
       </TagEditorToolbarStyled>
     )
-  }, [addSection, contentEditableContainerSelected, editMode, experimental, onMouseDown, renderToolbarButtons, selectionType])
+  }, [
+    addSection,
+    contentEditableContainerSelected,
+    editMode,
+    experimental,
+    onMouseDown,
+    renderToolbarButtons,
+    selectionType,
+  ])
 }
 
 export default ContentEditorToolbar

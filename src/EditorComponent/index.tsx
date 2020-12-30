@@ -2640,7 +2640,7 @@ export class EditorComponent<
   renderComponent(objectComponent: P['object'], index: number) {
     const {
       Components,
-      TemplateRenderer,
+      // TemplateRenderer,
       // inEditMode,
     } = this.getEditorContext()
 
@@ -2671,45 +2671,45 @@ export class EditorComponent<
     ) as unknown) as React.ComponentClass
 
     if (Component) {
-      if (templateId) {
-        if (!TemplateRenderer) {
-          return null
-        }
+      // if (templateId) {
+      //   if (!TemplateRenderer) {
+      //     return null
+      //   }
 
-        // TODO: restore
-        return (
-          <TemplateRenderer
-            key={`${templateId}--${index}`}
-            Component={Component}
-            mode="main"
-            parent={this}
-            {...other}
-            where={{
-              id: templateId,
-            }}
-            mutate={updateTemplate}
-            createTemplate={createTemplate}
-            updateTemplate={updateTemplate}
-            index={index}
-            delete_component={this.deleteComponentByIndex}
-          />
-        )
-      } else {
-        return Component ? (
-          <Component
-            key={index}
-            mode="main"
-            parent={this}
-            props={props}
-            components={components}
-            object={objectComponent}
-            mutate={createTemplate}
-            createTemplate={createTemplate}
-            updateTemplate={updateTemplate}
-            {...other}
-          />
-        ) : null
-      }
+      //   // TODO: restore
+      //   return (
+      //     <TemplateRenderer
+      //       key={`${templateId}--${index}`}
+      //       Component={Component}
+      //       mode="main"
+      //       parent={this}
+      //       {...other}
+      //       where={{
+      //         id: templateId,
+      //       }}
+      //       mutate={updateTemplate}
+      //       createTemplate={createTemplate}
+      //       updateTemplate={updateTemplate}
+      //       index={index}
+      //       delete_component={this.deleteComponentByIndex}
+      //     />
+      //   )
+      // } else {
+      return Component ? (
+        <Component
+          key={index}
+          mode="main"
+          parent={this}
+          props={props}
+          components={components}
+          object={objectComponent}
+          mutate={createTemplate}
+          createTemplate={createTemplate}
+          updateTemplate={updateTemplate}
+          {...other}
+        />
+      ) : null
+      // }
     } else {
       if (inEditMode) {
         return (

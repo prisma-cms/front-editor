@@ -1,6 +1,6 @@
-import { EditorComponentObject, ElementWithReactComponent } from "../../../..";
-import HtmlTag from "../../../Tag/HtmlTag";
-import CSSTransform from "../../../Tag/HtmlTag/CSSTransform";
+import { EditorComponentObject, ElementWithReactComponent } from '../../../..'
+import HtmlTag from '../../../Tag/HtmlTag'
+import CSSTransform from '../../../Tag/HtmlTag/CSSTransform'
 
 /**
  * Convert HTML Node to EditorComponentObject JSON
@@ -24,8 +24,8 @@ const nodeToEditorComponentObject = (
   if (node instanceof Element) {
     const { reactComponent, editorComponentObject } = node
 
-    if(editorComponentObject) {
-      return editorComponentObject;
+    if (editorComponentObject) {
+      return editorComponentObject
     }
 
     if (reactComponent && !(reactComponent instanceof HtmlTag)) {
@@ -46,10 +46,7 @@ const nodeToEditorComponentObject = (
   if (node.nodeType === Node.TEXT_NODE) {
     // https://stackoverflow.com/questions/12754256/removing-invalid-characters-in-javascript
     content.props.text = node.textContent?.replace(/\uFFFD/g, '') || ''
-  } else if (
-    node instanceof Element &&
-    node.nodeType === Node.ELEMENT_NODE
-  ) {
+  } else if (node instanceof Element && node.nodeType === Node.ELEMENT_NODE) {
     const attributes = node.attributes
 
     node.getAttributeNames().map((name) => {
@@ -127,8 +124,7 @@ const nodeToEditorComponentObject = (
   content.props.tag = NodeName
 
   return content
-};
-
+}
 
 /**
  * Конвертируем содержимое HTML-ноды в компоненты
@@ -155,7 +151,6 @@ export const nodeChildsToEditorComponentObjectComponents = (node: Node) => {
   })
 
   return content
-};
+}
 
-
-export default nodeToEditorComponentObject;
+export default nodeToEditorComponentObject

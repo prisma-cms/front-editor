@@ -165,7 +165,7 @@ const useMutationObserver = (
      */
     // TODO Перепроверить логику
     if (editMode !== ContentProxyEditMode.HTML) {
-      return;
+      return
     }
 
     container?.addEventListener('click', onClick)
@@ -190,10 +190,12 @@ const useMutationObserver = (
     }
   }, [container])
 
-
   // const updateContent = useCallback(nodeToEditorComponentObject, [])
 
-  const makeNewContent = useCallback(nodeChildsToEditorComponentObjectComponents, [])
+  const makeNewContent = useCallback(
+    nodeChildsToEditorComponentObjectComponents,
+    []
+  )
 
   const onChangeDom = useCallback(
     (container: Node) => {

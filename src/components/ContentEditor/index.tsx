@@ -8,7 +8,7 @@ import { ContentEditorProps } from './interfaces'
 export class ContentEditor<
   P extends ContentEditorProps = ContentEditorProps,
   S extends EditorComponentState = EditorComponentState
-  > extends EditorComponent<P, S> {
+> extends EditorComponent<P, S> {
   static Name = 'ContentEditor' as 'ContentEditor'
 
   static defaultProps = {
@@ -109,7 +109,7 @@ export class ContentEditor<
 
     return editable ? (
       <ContentProxy
-        experimental={experimental === "true"}
+        experimental={experimental === 'true'}
         key={editable.toString()}
         updateObject={this.updateObject}
         components={components}
@@ -121,8 +121,8 @@ export class ContentEditor<
         {super.renderChildren()}
       </ContentProxy>
     ) : (
-        super.renderChildren()
-      )
+      super.renderChildren()
+    )
   }
 }
 

@@ -7,7 +7,7 @@ import Context, { PrismaCmsContext } from '@prisma-cms/context'
 import { EditorContext } from './context'
 import { EditorContextValue } from './context/EditorContext/interfaces'
 // import { EditorComponentObject } from './components/interfaces'
-import TemplateRenderer from './TemplateRenderer'
+// import TemplateRenderer from './TemplateRenderer'
 import Grid from './common/Grid'
 
 import EditorComponent, { EditorComponentObject } from './EditorComponent'
@@ -240,7 +240,7 @@ export class FrontEditor<
       setActiveItem: this.setActiveItem,
       setHoveredItem: this.setHoveredItem,
       forceUpdate: this.forceUpdate,
-      TemplateRenderer,
+      // TemplateRenderer,
       getActionPanel: this.getActionPanel,
 
       registerMountedComponent: this.registerMountedComponent,

@@ -5,7 +5,12 @@ import Section from '../../../../../../src/components/Section'
 import HtmlTag from '../../../../../../src/components/Tag/HtmlTag'
 import Typography from '../../../../../../src/components/Typography'
 
-export const Components: typeof EditorComponent[] = [Section, ContentEditor, HtmlTag, Typography]
+export const Components: typeof EditorComponent[] = [
+  Section,
+  ContentEditor,
+  HtmlTag,
+  Typography,
+]
 
 export const initLayout = registerComponents(Components)
 

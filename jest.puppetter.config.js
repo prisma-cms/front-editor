@@ -1,11 +1,11 @@
-const defaultConfig = require("./jest.config");
+const defaultConfig = require('./jest.config')
 
 // console.log("defaultConfig", defaultConfig);
 
 module.exports = {
   ...defaultConfig,
   testMatch: ['**/__tests__/**/*.puppeteer-test.(ts|tsx|js)'],
-};
+}
 
 // module.exports = {
 //   roots: ['<rootDir>'],

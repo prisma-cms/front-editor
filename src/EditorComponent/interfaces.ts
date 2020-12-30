@@ -125,7 +125,7 @@ export interface EditorComponentProps extends EditableObjectProps {
   render_add_button?: boolean
 
   updateObject?: EditorComponent['updateObject']
-  
+
   contentEditable?: boolean | undefined
 }
 

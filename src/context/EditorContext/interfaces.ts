@@ -1,5 +1,5 @@
 import { FrontEditor, FrontEditorProps, FrontEditorState } from '../..'
-import TemplateRenderer from '../../TemplateRenderer'
+// import TemplateRenderer from '../../TemplateRenderer'
 
 export interface EditorContextValue {
   Components?: FrontEditorProps['Components']
@@ -34,5 +34,5 @@ export interface EditorContextValue {
    */
   setPageMeta?: FrontEditor['setPageMeta']
 
-  TemplateRenderer?: typeof TemplateRenderer
+  // TemplateRenderer?: typeof TemplateRenderer
 }
