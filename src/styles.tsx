@@ -11,8 +11,11 @@ const dirtyBorderColor = 'red'
 
 export const FrontEditorStyled = styled.div`
   /* [desktop] { */
-  flex: 1;
-  display: flex;
+
+  &.flex {
+    flex: 1;
+    display: flex;
+  }
   /* }; */
 
   &.fullheight {

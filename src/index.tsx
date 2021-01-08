@@ -434,7 +434,7 @@ export class FrontEditor<
         <FrontEditorStyled
           // id="prisma-cms-front-editor--wrapper"
           // className={['root', className].join(' ')}
-          className={className}
+          className={[className, !itemsOnly ? "flex" : ""].join(" ")}
         >
           {inEditMode && !itemsOnly ? (
             <>

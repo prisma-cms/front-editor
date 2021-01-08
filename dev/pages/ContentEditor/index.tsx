@@ -502,6 +502,7 @@ const ContentEditorPage: React.FC = (props) => {
         </div>
         <App
           {...props}
+          // itemsOnly
           object={object}
           createTemplate={createTemplate}
           updateTemplate={updateTemplate}
