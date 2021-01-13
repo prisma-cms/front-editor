@@ -12,7 +12,7 @@ import CSSTransform from './CSSTransform'
 export default class HtmlTag<
   P extends HtmlTagProps = HtmlTagProps,
   S extends HtmlTagState = HtmlTagState
-> extends EditorComponent<P, S> {
+  > extends EditorComponent<P, S> {
   static Name: 'HtmlTag' | 'Tag' = 'HtmlTag'
   static help_url = 'https://front-editor.prisma-cms.com/topics/html-tag.html'
 
@@ -146,14 +146,22 @@ export default class HtmlTag<
     const tag = object?.props.tag
     const text = object?.props.text
 
+    const context = this.getEditorContext();
+
     if (!tag) {
       return text
     } else {
       switch (tag.toLowerCase()) {
         case 'script':
-          console.error(`Tag "${tag}" not allowed`)
 
-          return null
+          if (!context.allowScriptTags) {
+
+            console.error(`Tag "${tag}" not allowed`)
+
+            return null
+          }
+
+          break;
 
         default:
       }
@@ -228,11 +236,7 @@ export default class HtmlTag<
     const content: Partial<P['object']> = {}
 
     nodes.forEach((n) => {
-      // console.log('makeNewContent n', n)
-
       const component = this.updateContent(n)
-
-      // console.log('makeNewContent component', component)
 
       component && components.push(component)
     })
@@ -321,11 +325,9 @@ export default class HtmlTag<
 
           case 'style':
             try {
-              // console.log("CSSTransform style", value);
 
               value = value ? CSSTransform(value) : undefined
 
-              // console.log("CSSTransform new style", value);
             } catch (error) {
               console.error(error)
               value = undefined
@@ -385,13 +387,6 @@ export default class HtmlTag<
         components: [],
       }
     }
-
-    // console.log('updateContent node', node)
-    // console.log(
-    //   'updateContent node instanceof EditorComponent',
-    //   node instanceof EditorComponent
-    // )
-    // console.log('updateContent node.reactComponent', node.reactComponent)
 
     // TODO check logic
     /**

@@ -217,7 +217,7 @@ export class FrontEditor<
   }
 
   initContext() {
-    const { inEditMode } = this.props
+    const { inEditMode, allowScriptTags } = this.props
 
     const Components = this.getComponents()
 
@@ -248,6 +248,8 @@ export class FrontEditor<
       unregisterMountedComponent: this.unregisterMountedComponent,
 
       setPageMeta: this.setPageMeta,
+
+      allowScriptTags: allowScriptTags ?? false,
     }
 
     // eslint-disable-next-line react/no-direct-mutation-state

@@ -32,6 +32,11 @@ export interface FrontEditorProps {
    * Handle on change components data
    */
   onChangeState?: EditorComponentProps['onChangeState']
+
+  /**
+   * Danger! If true, can user <script> in HtmlTag component
+   */
+  allowScriptTags?: EditorContextValue["allowScriptTags"]
 }
 
 export interface FrontEditorState {

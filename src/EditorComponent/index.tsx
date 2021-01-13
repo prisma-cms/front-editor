@@ -2506,6 +2506,7 @@ export class EditorComponent<
     // }
 
     const {
+      dangerouslySetInnerHTML,
       createTemplate,
       updateTemplate,
       deleteTemplate,
@@ -2794,7 +2795,7 @@ export class EditorComponent<
     return (
       <EditorContext.Consumer>
         {(context) => {
-          const { Components } = context
+          const Components = context?.Components
 
           Object.assign(this, {
             Components,
