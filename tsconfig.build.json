@@ -8,5 +8,5 @@
   },
   "exclude": ["**/stories"],
   // Include in dist this paths only
-  "include": ["./src"]
+  "include": ["./src/**/*"]
 }
