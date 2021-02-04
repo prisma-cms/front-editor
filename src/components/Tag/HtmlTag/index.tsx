@@ -277,7 +277,7 @@ export default class HtmlTag<
 
     const nodes = node.childNodes
 
-    let NodeName: string | undefined = node.nodeName.toLowerCase()
+    let NodeName = node.nodeName.toLowerCase() as keyof JSX.IntrinsicElements | '#text' | undefined
 
     if (NodeName === '#text') {
       NodeName = undefined
@@ -350,138 +350,6 @@ export default class HtmlTag<
 
       nodes.forEach((node) => {
         const component = this.updateContent(node)
-        component && components.push(component)
-      })
-
-      Object.assign(content, {
-        components,
-      })
-    }
-
-    content.props.tag = NodeName
-
-    return content
-  }
-
-  // TODO Remove
-  /**
-   * @deprecated
-   */
-  updateContent__(
-    node: InstanceType<typeof EditorComponent> | Element | ChildNode,
-    content?: P['object']
-  ) {
-    // if (!node || (typeof node !== "object") || typeof node.reactComponent === "undefined") {
-    //   return;
-    // }
-
-    if (!node) {
-      return
-    }
-
-    if (!content) {
-      content = {
-        name: 'HtmlTag',
-        component: 'HtmlTag',
-        props: {},
-        components: [],
-      }
-    }
-
-    // TODO check logic
-    /**
-     * Если это реакт-нода, то возвращаем его состояние
-     */
-    // const reactComponent = node instanceof EditorComponent ? node.reactComponent : null;
-    // if (reactComponent && !(reactComponent instanceof HtmlTag)) {
-
-    //   const component = reactComponent.getObjectWithMutations();
-
-    //   return component;
-    // }
-    if (node instanceof EditorComponent) {
-      if (!(node.reactComponent instanceof HtmlTag)) {
-        return node.reactComponent?.getObjectWithMutations()
-      }
-
-      return
-    }
-    // else if (!(node instanceof HTMLElement)) {
-    //   return
-    // }
-
-    const nodes = node.childNodes
-
-    let NodeName: string | undefined = node.nodeName.toLowerCase()
-
-    if (NodeName === '#text') {
-      NodeName = undefined
-    }
-
-    if (node.nodeType === Node.TEXT_NODE) {
-      content.props.text = node.textContent
-    } else if (node instanceof Element && node.nodeType === Node.ELEMENT_NODE) {
-      const attributes = node.attributes
-
-      node.getAttributeNames().map((name: string) => {
-        let value: string | Record<string, any> | undefined =
-          attributes.getNamedItem(name)?.value ?? undefined
-
-        switch (name) {
-          // case "id":
-          // case "src":
-          // case "href":
-          //   // case "editable":
-
-          //   break;
-
-          case 'props':
-          case 'object':
-          case 'data':
-            return null
-
-          case 'contenteditable':
-            // name = "contentEditable";
-            // break;
-
-            return null
-
-          case 'class':
-            name = 'className'
-
-            break
-
-          case 'staticcontext':
-            name = 'staticContext'
-
-            break
-
-          case 'style':
-            try {
-              value = value ? CSSTransform(value) : undefined
-            } catch (error) {
-              console.error(error)
-              value = undefined
-            }
-
-            break
-
-          default:
-        }
-
-        content &&
-          Object.assign(content.props, {
-            [name]: value,
-          })
-
-        return null
-      })
-
-      const components: P['object']['components'] = []
-
-      nodes.forEach((node) => {
-        const component = this.updateContent(node)
-
         component && components.push(component)
       })
 

@@ -4,7 +4,7 @@ import {
 } from '../../../EditorComponent'
 
 export interface HtmlTagProps extends EditorComponentProps {
-  tag?: string
+  tag?: keyof JSX.IntrinsicElements | undefined
 }
 
 export interface HtmlTagState extends EditorComponentState {

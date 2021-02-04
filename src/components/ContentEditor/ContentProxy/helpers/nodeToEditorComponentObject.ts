@@ -37,7 +37,7 @@ const nodeToEditorComponentObject = (
 
   const nodes = node.childNodes
 
-  let NodeName: string | undefined = node.nodeName.toLowerCase()
+  let NodeName = node.nodeName.toLowerCase() as keyof JSX.IntrinsicElements | '#text' | undefined
 
   if (NodeName === '#text') {
     NodeName = undefined

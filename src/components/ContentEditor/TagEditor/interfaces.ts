@@ -4,7 +4,7 @@ import { HtmlTagProps, HtmlTagState } from '../../Tag/HtmlTag'
 export interface TagEditorProps extends HtmlTagProps {
   contentEditable?: boolean | undefined
 
-  tag?: string
+  tag?: keyof JSX.IntrinsicElements | undefined
 
   editable?: boolean
 

@@ -33,13 +33,13 @@ export interface EditorComponentObject<
     // TODO maybe replace with "content"
     text?: string | undefined | null
 
-    tag?: string | undefined
+    tag?: keyof JSX.IntrinsicElements | undefined
 
     query?: string | undefined
 
     first?: number | undefined
 
-    style?: Record<string, any> | null | undefined
+    style?: React.CSSProperties
   } & Record<string, any>
   createdAt?: string
   updatedAt?: string
