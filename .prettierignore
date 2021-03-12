@@ -11,3 +11,4 @@ storybook-static
 .github
 .vscode
 /packages
+/cypress
