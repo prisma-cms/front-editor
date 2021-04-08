@@ -1,7 +1,7 @@
 {
   "name": "@prisma-cms/component-boilerplate",
   "description": "Component for prisma-cms",
-  "version": "2.0.0",
+  "version": "0.0.0",
   "private": false,
   "main": "dist",
   "scripts": {
