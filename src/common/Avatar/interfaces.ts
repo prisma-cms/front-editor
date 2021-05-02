@@ -5,5 +5,5 @@ export interface UserAvatarProps {
 
   editable?: boolean
 
-  user: any
+  user?: any
 }

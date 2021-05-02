@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import PropTypes from 'prop-types'
+// import PropTypes from 'prop-types'
 
 import Context from '@prisma-cms/context'
 
@@ -35,12 +35,12 @@ const styles = {
 }
 
 export class UserAvatar extends Component<UserAvatarProps> {
-  static propTypes = {
-    classes: PropTypes.object.isRequired,
-    user: PropTypes.object.isRequired,
-    size: PropTypes.string.isRequired,
-    editable: PropTypes.bool.isRequired,
-  }
+  // static propTypes = {
+  //   classes: PropTypes.object.isRequired,
+  //   user: PropTypes.object.isRequired,
+  //   size: PropTypes.string.isRequired,
+  //   editable: PropTypes.bool.isRequired,
+  // }
 
   static defaultProps = {
     size: 'normal',
