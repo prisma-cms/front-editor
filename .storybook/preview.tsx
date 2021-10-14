@@ -9,6 +9,7 @@ import { RouterContext } from 'next/dist/next-server/lib/router-context'
 import { MittEmitter } from 'next/dist/next-server/lib/mitt'
 
 import { createGlobalStyle } from 'styled-components'
+import { UiGlobalStylesDev } from '../dev/pages/_App/styles/GlobalStyle'
 
 const GlobalStyle = createGlobalStyle`
 
@@ -57,8 +58,9 @@ addDecorator(
     wrapper: (storyFn, context) => {
       return (
         <>
-          <GlobalStyle />
           <ThemeProvider theme={theme}>
+            <GlobalStyle />
+            <UiGlobalStylesDev />
             {/* 
               https://github.com/vercel/next.js/issues/15543#issuecomment-664955766
             */}
