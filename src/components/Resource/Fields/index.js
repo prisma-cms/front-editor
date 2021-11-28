@@ -124,10 +124,8 @@ export class ResourceFields extends EditorComponent {
 
     const { objectContext } = this
 
-    const {
-      inEditMode: objectInEditMode,
-      getObjectWithMutations,
-    } = objectContext
+    const { inEditMode: objectInEditMode, getObjectWithMutations } =
+      objectContext
 
     if (!getObjectWithMutations) {
       if (inEditMode) {

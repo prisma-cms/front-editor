@@ -65,14 +65,8 @@ export class FileUploader extends EditorComponent {
   }
 
   renderChildren() {
-    const {
-      name,
-      accept,
-      directory,
-      filename_as_name,
-      multiple,
-      ...other
-    } = this.getComponentProps(this)
+    const { name, accept, directory, filename_as_name, multiple, ...other } =
+      this.getComponentProps(this)
 
     const { inEditMode } = this.getEditorContext()
 
@@ -87,11 +81,8 @@ export class FileUploader extends EditorComponent {
     return (
       <EditableObjectContext.Consumer key="editableobject_context">
         {(editableObjectContext) => {
-          const {
-            getEditor,
-            updateObject,
-            getObjectWithMutations,
-          } = editableObjectContext
+          const { getEditor, updateObject, getObjectWithMutations } =
+            editableObjectContext
 
           if (!updateObject) {
             if (inEditMode) {

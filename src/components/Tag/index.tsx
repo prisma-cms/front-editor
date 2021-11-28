@@ -37,13 +37,8 @@ export class Tag<
   }
 
   prepareRootElementProps(props: P & Record<string, any>): Record<string, any> {
-    const {
-      initialContent,
-      read_only,
-      updateObject,
-      editable,
-      ...other
-    } = super.prepareRootElementProps(props)
+    const { initialContent, read_only, updateObject, editable, ...other } =
+      super.prepareRootElementProps(props)
 
     return other
   }

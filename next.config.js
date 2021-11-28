@@ -26,14 +26,6 @@ const webpack = (config) => {
   // });
 
   return config
-
-  // Important: return the modified config
-  // return {
-  //   ...config,
-
-  //   // https://nextjs.org/docs/api-reference/next.config.js/disabling-etag-generation
-  //   generateEtags: false,
-  // }
 }
 
 const config = withBundleAnalyzer({

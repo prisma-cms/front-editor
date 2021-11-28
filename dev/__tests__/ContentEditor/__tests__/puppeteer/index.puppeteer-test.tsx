@@ -215,11 +215,10 @@ describe('ContentEditor', () => {
         /**
          * HTML редактора до манипуляций с ним
          */
-        const contentProxyEditorInitialHTML = await contentProxyEditor?.evaluate(
-          (node) => {
+        const contentProxyEditorInitialHTML =
+          await contentProxyEditor?.evaluate((node) => {
             return node.innerHTML
-          }
-        )
+          })
 
         expect(contentProxyEditorInitialHTML).toMatchSnapshot(
           'contentProxyEditorInitialHTML'
@@ -234,8 +233,8 @@ describe('ContentEditor', () => {
         /**
          * Добавляем новый контент в редактируемую область
          */
-        const contentProxyEditorUpdatedHTML = await contentProxyEditor?.evaluate(
-          (node) => {
+        const contentProxyEditorUpdatedHTML =
+          await contentProxyEditor?.evaluate((node) => {
             const div = document.createElement('div')
             div.id = 'NewDiv1'
 
@@ -244,8 +243,7 @@ describe('ContentEditor', () => {
             node.appendChild(div)
 
             return node.innerHTML
-          }
-        )
+          })
 
         expect(await contentProxyEditor?.$('#NewDiv1')).toBeTruthy()
 

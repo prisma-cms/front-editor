@@ -30,9 +30,8 @@ describe('ContentProxy', () => {
     expect(contentEditor).toMatchSnapshot()
 
     // const editorContainer = tree.baseElement.querySelector(".ContentProxy") as HTMLElement | null
-    const editorContainer = tree.baseElement.querySelector<HTMLElement>(
-      '.ContentProxy'
-    )
+    const editorContainer =
+      tree.baseElement.querySelector<HTMLElement>('.ContentProxy')
 
     expect(editorContainer).not.toBeNull()
 

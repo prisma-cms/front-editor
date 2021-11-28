@@ -49,10 +49,8 @@ const ContentProxy: React.FC<ContentProxyProps> = (props) => {
   // const ref = useRef<HTMLDivElement>(null);
   // const [wrapper, setWrapper] = useState<HTMLDivElement | null>(null);
 
-  const [
-    contentEditableContainer,
-    setContentEditableContainer,
-  ] = useState<HTMLDivElement | null>(null)
+  const [contentEditableContainer, setContentEditableContainer] =
+    useState<HTMLDivElement | null>(null)
 
   const [newContent, setNewContent] = useState<
     EditorComponentObject['components'] | null

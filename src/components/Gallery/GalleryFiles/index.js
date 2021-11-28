@@ -59,11 +59,8 @@ export class GalleryFiles extends EditorComponent {
     return (
       <EditableObjectContext.Consumer key="GalleryFiles">
         {(editableObjectContext) => {
-          const {
-            object,
-            getObjectWithMutations,
-            _dirty,
-          } = editableObjectContext
+          const { object, getObjectWithMutations, _dirty } =
+            editableObjectContext
 
           if (!getObjectWithMutations) {
             return null

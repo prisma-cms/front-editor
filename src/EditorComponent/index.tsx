@@ -2259,7 +2259,7 @@ export class EditorComponent<
       ? getSettingsViewContainer()
       : null
 
-    const RootElement = (this.getRootElement() as unknown) as React.ComponentClass
+    const RootElement = this.getRootElement() as unknown as React.ComponentClass
 
     let settingsView
 
@@ -2667,9 +2667,9 @@ export class EditorComponent<
       ...other
     } = objectComponent
 
-    const Component = (Components.find(
+    const Component = Components.find(
       (n) => n.Name === component
-    ) as unknown) as React.ComponentClass
+    ) as unknown as React.ComponentClass
 
     if (Component) {
       // if (templateId) {

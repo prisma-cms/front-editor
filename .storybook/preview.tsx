@@ -5,10 +5,11 @@ import { ThemeProvider } from 'styled-components'
 import { makeDecorator } from '@storybook/addons'
 import { linkTo } from '@storybook/addon-links'
 
-import { RouterContext } from 'next/dist/next-server/lib/router-context'
-import { MittEmitter } from 'next/dist/next-server/lib/mitt'
+import { RouterContext } from 'next/dist/shared/lib/router-context'
+import { MittEmitter } from 'next/dist/shared/lib/mitt'
 
 import { createGlobalStyle } from 'styled-components'
+import { UiGlobalStylesDev } from '../dev/pages/_App/styles/GlobalStyle'
 
 const GlobalStyle = createGlobalStyle`
 
@@ -57,8 +58,9 @@ addDecorator(
     wrapper: (storyFn, context) => {
       return (
         <>
-          <GlobalStyle />
           <ThemeProvider theme={theme}>
+            <GlobalStyle />
+            <UiGlobalStylesDev />
             {/* 
               https://github.com/vercel/next.js/issues/15543#issuecomment-664955766
             */}
@@ -92,12 +94,13 @@ addDecorator(
                 back: () => {},
                 beforePopState: () => {},
                 isFallback: false,
-                events: {} as MittEmitter,
                 isReady: true,
+                events: {} as MittEmitter<any>,
                 isLocaleDomain: false,
+                isPreview: false,
               }}
             >
-              {storyFn(context)}
+              {storyFn(context) as JSX.Element}
             </RouterContext.Provider>
           </ThemeProvider>
         </>

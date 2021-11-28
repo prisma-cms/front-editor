@@ -12,7 +12,7 @@ import CSSTransform from './CSSTransform'
 export default class HtmlTag<
   P extends HtmlTagProps = HtmlTagProps,
   S extends HtmlTagState = HtmlTagState
-  > extends EditorComponent<P, S> {
+> extends EditorComponent<P, S> {
   static Name: 'HtmlTag' | 'Tag' = 'HtmlTag'
   static help_url = 'https://front-editor.prisma-cms.com/topics/html-tag.html'
 
@@ -146,22 +146,20 @@ export default class HtmlTag<
     const tag = object?.props.tag
     const text = object?.props.text
 
-    const context = this.getEditorContext();
+    const context = this.getEditorContext()
 
     if (!tag) {
       return text
     } else {
       switch (tag.toLowerCase()) {
         case 'script':
-
           if (!context.allowScriptTags) {
-
             console.error(`Tag "${tag}" not allowed`)
 
             return null
           }
 
-          break;
+          break
 
         default:
       }
@@ -277,7 +275,10 @@ export default class HtmlTag<
 
     const nodes = node.childNodes
 
-    let NodeName = node.nodeName.toLowerCase() as keyof JSX.IntrinsicElements | '#text' | undefined
+    let NodeName = node.nodeName.toLowerCase() as
+      | keyof JSX.IntrinsicElements
+      | '#text'
+      | undefined
 
     if (NodeName === '#text') {
       NodeName = undefined
@@ -325,9 +326,7 @@ export default class HtmlTag<
 
           case 'style':
             try {
-
               value = value ? CSSTransform(value) : undefined
-
             } catch (error) {
               console.error(error)
               value = undefined

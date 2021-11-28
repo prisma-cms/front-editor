@@ -36,7 +36,7 @@ export interface FrontEditorProps {
   /**
    * Danger! If true, can user <script> in HtmlTag component
    */
-  allowScriptTags?: EditorContextValue["allowScriptTags"]
+  allowScriptTags?: EditorContextValue['allowScriptTags']
 }
 
 export interface FrontEditorState {

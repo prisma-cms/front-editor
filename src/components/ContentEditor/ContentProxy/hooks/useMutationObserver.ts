@@ -99,9 +99,8 @@ const useMutationObserver = (
 
         // if (path instanceof HTMLElement && path.attributes.getNamedItem("contenteditable")?.value === "false") {
         if (path instanceof HTMLElement) {
-          const contenteditable = path.attributes.getNamedItem(
-            'contenteditable'
-          )?.value
+          const contenteditable =
+            path.attributes.getNamedItem('contenteditable')?.value
 
           if (contenteditable === 'false') {
             canBeEditable = false
