@@ -40,10 +40,10 @@
   "devDependencies": {
     "@babel/plugin-transform-typescript": "^7.12.1",
     "@next/bundle-analyzer": "^9.5.5",
-    "@storybook/addon-actions": "^6.3.12",
-    "@storybook/addon-docs": "^6.3.12",
-    "@storybook/addon-links": "^6.3.12",
-    "@storybook/react": "^6.3.12",
+    "@storybook/addon-actions": "^6.4.0",
+    "@storybook/addon-docs": "^6.4.0",
+    "@storybook/addon-links": "^6.4.0",
+    "@storybook/react": "^6.4.0",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/react-hooks": "^3.4.2",
@@ -64,7 +64,7 @@
     "css-loader": "^5.0.1",
     "cypress": "^6.2.0",
     "dotenv": "^8.2.0",
-    "eslint": "^6.8.0",
+    "eslint": "^7.0.0",
     "eslint-config-prettier": "^6.10.1",
     "eslint-plugin-cypress": "^2.11.2",
     "eslint-plugin-deprecate": "^0.7.0",
@@ -78,7 +78,7 @@
     "lint-staged": "^10.5.1",
     "moment": "^2.29.1",
     "moment-locales-webpack-plugin": "^1.2.0",
-    "next": "^10.0.8",
+    "next": "^12.0.4",
     "nodemon": "^2.0.13",
     "npm": "^6.14.8",
     "prettier": "^2.1.2",
@@ -90,12 +90,10 @@
     "styled-components": "^5.2.1",
     "ts-jest": "^26.4.3",
     "ts-node": "^9.0.0",
-    "typescript": "^4.0.5",
+    "typescript": "^4.5.2",
     "typescript-styled-plugin": "^0.15.0"
   },
-  "resolutions": {
-    "immer": "^9.0.6"
-  },
+  "resolutions": {},
   "browserslist": {
     "production": [
       ">0.2%",

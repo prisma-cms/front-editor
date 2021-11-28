@@ -8,7 +8,7 @@ import { ThemeProvider } from 'styled-components'
 // For handle css
 import 'jest-styled-components'
 
-import { HeadManagerContext } from 'next/dist/next-server/lib/head-manager-context'
+import { HeadManagerContext } from 'next/dist/shared/lib/head-manager-context'
 
 /**
  * Base renderer from @testing-library/react
