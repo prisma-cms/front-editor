@@ -33,5 +33,6 @@ __image_snapshots__
 
 # next-js
 /.next
+tsconfig.types.tsbuildinfo
 
 .vscode

@@ -1,5 +1,6 @@
 node_modules
-.next
+/.next
+tsconfig.types.tsbuildinfo
 yarn.lock
 package-lock.json
 public
